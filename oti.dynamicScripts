@@ -1,0 +1,32 @@
+#
+
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Package ]
+      scripts {
+          
+          BrowserContextMenuAction(
+              name: 'Compute Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.computePackageExtentIDs
+              method: doit
+          )
+          
+})
+          
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Profile ]
+      scripts {
+
+          BrowserContextMenuAction(
+              name: 'Compute Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.computePackageExtentIDs
+              method: doit
+          )
+})
