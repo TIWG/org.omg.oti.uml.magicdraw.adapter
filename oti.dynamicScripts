@@ -1,5 +1,99 @@
 #
 
+toolbarMenuScripts(
+	name='OMG Tool Infrastructure'
+	scripts {		
+		MainToolbarMenuAction(
+			toolbarMenuPath: { 'OMG > Migration Support' }
+			name: 'Open Local Project (skipping local module)'
+			project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+			class: org.omg.oti.magicdraw.scripts.openLocalProjectSkipLocalModule
+			method: doit )
+		MainToolbarMenuAction(
+			toolbarMenuPath: { 'OMG > Migration Support' }
+			name: 'Name Test'
+			project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+			class: org.omg.oti.magicdraw.scripts.nameTest
+			method: doit )
+	})
+	
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Association ]
+      scripts {        
+          DiagramContextMenuAction(
+              name: 'Set names of link instances of selected Associations (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.nameAssociationLinkInstancesWithinPackageExtent
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Set names of link instances of selected Associations (r/o)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.nameAssociationLinkInstancesWithinPackageExtent
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Inspect Associations (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.inspectAssociations
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Inspect Associations (r/o)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.inspectAssociations
+              method: doit
+          )
+      })
+      
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Association ]
+      scripts {
+          
+          BrowserContextMenuAction(
+              name: 'Set names of link instances of selected Associations (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              class: org.omg.oti.magicdraw.scripts.nameAssociationLinkInstancesWithinPackageExtent
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Set names of link instances of selected Associations (r/o)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.nameAssociationLinkInstancesWithinPackageExtent
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Inspect Associations (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              class: org.omg.oti.magicdraw.scripts.inspectAssociations
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Inspect Associations (r/o)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.inspectAssociations
+              method: doit
+          )
+    })
+   
 dynamicScripts(
       name='OMG Tool Infrastructure'
       [ m: Package ]
@@ -13,7 +107,22 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.computePackageExtentIDs
               method: doit
           )
-          
+          BrowserContextMenuAction(
+              name: 'Change Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.changePackageExtentIDs
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Migrate Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.migratePackageExtentIDs
+              method: doit
+          )
 })
           
 dynamicScripts(
@@ -27,6 +136,22 @@ dynamicScripts(
               dependencies: { org.omg.oti }
               access: r/w
               class: org.omg.oti.magicdraw.scripts.computePackageExtentIDs
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Change Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.changePackageExtentIDs
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Migrate Package Extent xmi:ids'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.migratePackageExtentIDs
               method: doit
           )
 })

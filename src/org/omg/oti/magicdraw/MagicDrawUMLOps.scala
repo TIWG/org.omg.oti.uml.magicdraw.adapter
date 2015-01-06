@@ -1,46 +1,204 @@
 package org.omg.oti.magicdraw
 
+import scala.reflect.runtime.universe._
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
-import scala.reflect.ClassTag
-
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage
-
 import org.eclipse.emf.ecore.EStructuralFeature
+import org.omg.oti.UMLOps
+import org.omg.oti.EarlyInit
 
-trait MagicDrawUMLOps extends org.omg.oti.UMLOps[MagicDrawUML] {
+trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
   
   val project: Project
   
   import scala.reflect._
     
-  override implicit val tag0 = classTag[MagicDrawUML#Element]
-  override implicit val tag1 = classTag[MagicDrawUML#NamedElement]
-  override implicit val tag2 = classTag[MagicDrawUML#Comment]
-  override implicit val tag3 = classTag[MagicDrawUML#Relationship]
-  override implicit val tag4 = classTag[MagicDrawUML#DirectedRelationship]
-  override implicit val tag5 = classTag[MagicDrawUML#ElementImport]
-  override implicit val tag6 = classTag[MagicDrawUML#PackageImport]
-  override implicit val tag7 = classTag[MagicDrawUML#PackageMerge]
-  override implicit val tag8 = classTag[MagicDrawUML#Generalization]
-  override implicit val tag9 = classTag[MagicDrawUML#ProfileApplication]
-  override implicit val tag10 = classTag[MagicDrawUML#Feature]
-  override implicit val tag11 = classTag[MagicDrawUML#BehavioralFeature]
-  override implicit val tag12 = classTag[MagicDrawUML#StructuralFeature]
-  override implicit val tag13 = classTag[MagicDrawUML#PackageableElement]
-  override implicit val tag14 = classTag[MagicDrawUML#InstanceSpecification]
-  override implicit val tag15 = classTag[MagicDrawUML#TypedElement]
-  override implicit val tag16 = classTag[MagicDrawUML#Type]
-  override implicit val tag17 = classTag[MagicDrawUML#Parameter]
-  override implicit val tag18 = classTag[MagicDrawUML#ValueSpecification]
-  override implicit val tag19 = classTag[MagicDrawUML#InstanceValue]
-  override implicit val tag20 = classTag[MagicDrawUML#Package]
-  override implicit val tag21 = classTag[MagicDrawUML#Slot]
-  override implicit val tag22 = classTag[MagicDrawUML#Stereotype]
-  override implicit val tag23 = classTag[MagicDrawUML#Image]
-    
+  val MD_ELEMENT: TypeTag[MagicDrawUML#Element] = typeTag[MagicDrawUML#Element] 
+  override implicit val ELEMENT = MD_ELEMENT
+  
+  val MD_COMMENT: TypeTag[MagicDrawUML#Comment] = typeTag[MagicDrawUML#Comment] 
+  override implicit val COMMENT = MD_COMMENT
+  
+  val MD_RELATIONSHIP: TypeTag[MagicDrawUML#Relationship] = typeTag[MagicDrawUML#Relationship]
+  override implicit val RELATIONSHIP = MD_RELATIONSHIP
+  
+  val MD_DIRECTED_RELATIONSHIP: TypeTag[MagicDrawUML#DirectedRelationship] = typeTag[MagicDrawUML#DirectedRelationship] 
+  override implicit val DIRECTED_RELATIONSHIP = MD_DIRECTED_RELATIONSHIP
+  
+  val MD_NAMED_ELEMENT: TypeTag[MagicDrawUML#NamedElement] = typeTag[MagicDrawUML#NamedElement]
+  override implicit val NAMED_ELEMENT = MD_NAMED_ELEMENT
+  
+  val MD_NAMESPACE: TypeTag[MagicDrawUML#Namespace] = typeTag[MagicDrawUML#Namespace]
+  override implicit val NAMESPACE = MD_NAMESPACE
+  
+  val MD_ELEMENT_IMPORT: TypeTag[MagicDrawUML#ElementImport] = typeTag[MagicDrawUML#ElementImport]
+  override implicit val ELEMENT_IMPORT = MD_ELEMENT_IMPORT
+  
+  val MD_PACKAGE_IMPORT: TypeTag[MagicDrawUML#PackageImport] = typeTag[MagicDrawUML#PackageImport]
+  override implicit val PACKAGE_IMPORT = MD_PACKAGE_IMPORT
+  
+  val MD_PACKAGEABLE_ELEMENT: TypeTag[MagicDrawUML#PackageableElement] = typeTag[MagicDrawUML#PackageableElement]
+  override implicit val PACKAGEABLE_ELEMENT = MD_PACKAGEABLE_ELEMENT
+  
+  val MD_TYPE: TypeTag[MagicDrawUML#Type] = typeTag[MagicDrawUML#Type]  
+  override implicit val TYPE = MD_TYPE
+  
+  val MD_TYPED_ELEMENT: TypeTag[MagicDrawUML#TypedElement] = typeTag[MagicDrawUML#TypedElement]
+  override implicit val TYPED_ELEMENT = MD_TYPED_ELEMENT
+  
+  val MD_MULTIPLICITY_ELEMENT: TypeTag[MagicDrawUML#MultiplicityElement] = typeTag[MagicDrawUML#MultiplicityElement]
+  override implicit val MULTIPLICITY_ELEMENT = MD_MULTIPLICITY_ELEMENT
+  
+  val MD_CONSTRAINT: TypeTag[MagicDrawUML#Constraint] = typeTag[MagicDrawUML#Constraint]  
+  override implicit val CONSTRAINT = MD_CONSTRAINT
+  
+  val MD_VALUE_SPECIFICATION: TypeTag[MagicDrawUML#ValueSpecification] = typeTag[MagicDrawUML#ValueSpecification]  
+  override implicit val VALUE_SPECIFICATION = MD_VALUE_SPECIFICATION
+  
+  val MD_LITERAL_SPECIFICATION: TypeTag[MagicDrawUML#LiteralSpecification] = typeTag[MagicDrawUML#LiteralSpecification]  
+  override implicit val LITERAL_SPECIFICATION = MD_LITERAL_SPECIFICATION
+  
+  val MD_LITERAL_NULL: TypeTag[MagicDrawUML#LiteralNull] = typeTag[MagicDrawUML#LiteralNull]  
+  override implicit val LITERAL_NULL = MD_LITERAL_NULL
+  
+  val MD_LITERAL_BOOLEAN: TypeTag[MagicDrawUML#LiteralBoolean] = typeTag[MagicDrawUML#LiteralBoolean]  
+  override implicit val LITERAL_BOOLEAN = MD_LITERAL_BOOLEAN
+  
+  val MD_LITERAL_INTEGER: TypeTag[MagicDrawUML#LiteralInteger] = typeTag[MagicDrawUML#LiteralInteger]  
+  override implicit val LITERAL_INTEGER = MD_LITERAL_INTEGER
+  
+  val MD_LITERAL_REAL: TypeTag[MagicDrawUML#LiteralReal] = typeTag[MagicDrawUML#LiteralReal]  
+  override implicit val LITERAL_REAL = MD_LITERAL_REAL
+  
+  val MD_LITERAL_STRING: TypeTag[MagicDrawUML#LiteralString] = typeTag[MagicDrawUML#LiteralString]  
+  override implicit val LITERAL_STRING = MD_LITERAL_STRING
+  
+  val MD_LITERAL_UNLIMITED_NATURAL: TypeTag[MagicDrawUML#LiteralUnlimitedNatural] = typeTag[MagicDrawUML#LiteralUnlimitedNatural]  
+  override implicit val LITERAL_UNLIMITED_NATURAL = MD_LITERAL_UNLIMITED_NATURAL  
+  
+  val MD_EXPRESSION: TypeTag[MagicDrawUML#Expression] = typeTag[MagicDrawUML#Expression]  
+  override implicit val EXPRESSION = MD_EXPRESSION
+  
+  val MD_STRING_EXPRESSION: TypeTag[MagicDrawUML#StringExpression] = typeTag[MagicDrawUML#StringExpression]  
+  override implicit val STRING_EXPRESSION = MD_STRING_EXPRESSION
+  
+  val MD_OPAQUE_EXPRESSION: TypeTag[MagicDrawUML#OpaqueExpression] = typeTag[MagicDrawUML#OpaqueExpression]  
+  override implicit val OPAQUE_EXPRESSION = MD_OPAQUE_EXPRESSION
+  
+  val MD_INTERVAL: TypeTag[MagicDrawUML#Interval] = typeTag[MagicDrawUML#Interval]  
+  override implicit val INTERVAL = MD_INTERVAL
+  
+  val MD_CLASSIFIER: TypeTag[MagicDrawUML#Classifier] = typeTag[MagicDrawUML#Classifier]
+  override implicit val CLASSIFIER = MD_CLASSIFIER
+  
+  val MD_GENERALIZATION: TypeTag[MagicDrawUML#Generalization] = typeTag[MagicDrawUML#Generalization]
+  override implicit val GENERALIZATION = MD_GENERALIZATION
+  
+  val MD_REDEFINABLE_ELEMENT: TypeTag[MagicDrawUML#RedefinableElement] = typeTag[MagicDrawUML#RedefinableElement]
+  override implicit val REDEFINABLE_ELEMENT = MD_REDEFINABLE_ELEMENT
+  
+  val MD_FEATURE: TypeTag[MagicDrawUML#Feature] = typeTag[MagicDrawUML#Feature]  
+  override implicit val FEATURE = MD_FEATURE
+  
+  val MD_STRUCTURAL_FEATURE: TypeTag[MagicDrawUML#StructuralFeature] = typeTag[MagicDrawUML#StructuralFeature]
+  override implicit val STRUCTURAL_FEATURE = MD_STRUCTURAL_FEATURE
+  
+  val MD_BEHAVIORAL_FEATURE: TypeTag[MagicDrawUML#BehavioralFeature] = typeTag[MagicDrawUML#BehavioralFeature]
+  override implicit val BEHAVIORAL_FEATURE = MD_BEHAVIORAL_FEATURE
+  
+  val MD_CONNECTABLE_ELEMENT: TypeTag[MagicDrawUML#ConnectableElement] = typeTag[MagicDrawUML#ConnectableElement]
+  override implicit val CONNECTABLE_ELEMENT = MD_CONNECTABLE_ELEMENT
+  
+  val MD_PARAMETER: TypeTag[MagicDrawUML#Parameter] = typeTag[MagicDrawUML#Parameter]
+  override implicit val PARAMETER = MD_PARAMETER
+  
+  val MD_PROPERTY: TypeTag[MagicDrawUML#Property] = typeTag[MagicDrawUML#Property]  
+  override implicit val PROPERTY = MD_PROPERTY
+  
+  val MD_OPERATION: TypeTag[MagicDrawUML#Operation] = typeTag[MagicDrawUML#Operation]  
+  override implicit val OPERATION = MD_OPERATION
+  
+  val MD_INSTANCE_SPECIFICATION: TypeTag[MagicDrawUML#InstanceSpecification] = typeTag[MagicDrawUML#InstanceSpecification]
+  override implicit val INSTANCE_SPECIFICATION = MD_INSTANCE_SPECIFICATION
+  
+  val MD_SLOT: TypeTag[MagicDrawUML#Slot] = typeTag[MagicDrawUML#Slot]
+  override implicit val SLOT = MD_SLOT
+  
+  val MD_INSTANCE_VALUE: TypeTag[MagicDrawUML#InstanceValue] = typeTag[MagicDrawUML#InstanceValue]
+  override implicit val INSTANCE_VALUE = MD_INSTANCE_VALUE
+  
+  val MD_DATA_TYPE: TypeTag[MagicDrawUML#DataType] = typeTag[MagicDrawUML#DataType]
+  override implicit val DATA_TYPE = MD_DATA_TYPE
+  
+  val MD_PRIMITIVE_TYPE: TypeTag[MagicDrawUML#PrimitiveType] = typeTag[MagicDrawUML#PrimitiveType]
+  override implicit val PRIMITIVE_TYPE = MD_PRIMITIVE_TYPE
+  
+  val MD_ENUMERATION: TypeTag[MagicDrawUML#Enumeration] = typeTag[MagicDrawUML#Enumeration]
+  override implicit val ENUMERATION = MD_ENUMERATION
+  
+  val MD_ENUMERATION_LITERAL: TypeTag[MagicDrawUML#EnumerationLiteral] = typeTag[MagicDrawUML#EnumerationLiteral]
+  override implicit val ENUMERATION_LITERAL = MD_ENUMERATION_LITERAL
+  
+  val MD_BEHAVIORED_CLASSIFIER: TypeTag[MagicDrawUML#BehavioredClassifier] = typeTag[MagicDrawUML#BehavioredClassifier]  
+  override implicit val BEHAVIORED_CLASSIFIER = MD_BEHAVIORED_CLASSIFIER
+  
+  val MD_STRUCTURED_CLASSIFIER: TypeTag[MagicDrawUML#StructuredClassifier] = typeTag[MagicDrawUML#StructuredClassifier]   
+  override implicit val STRUCTURED_CLASSIFIER = MD_STRUCTURED_CLASSIFIER
+  
+  val MD_CONNECTOR: TypeTag[MagicDrawUML#Connector] = typeTag[MagicDrawUML#Connector]
+  override implicit val CONNECTOR = MD_CONNECTOR
+  
+  val MD_CONNECTOR_END: TypeTag[MagicDrawUML#ConnectorEnd] = typeTag[MagicDrawUML#ConnectorEnd]
+  override implicit val CONNECTOR_END = MD_CONNECTOR_END
+  
+  val MD_ENCAPSULATED_CLASSIFIER: TypeTag[MagicDrawUML#EncapsulatedClassifier] = typeTag[MagicDrawUML#EncapsulatedClassifier]  
+  override implicit val ENCAPSULATED_CLASSIFIER = MD_ENCAPSULATED_CLASSIFIER
+  
+  val MD_PORT: TypeTag[MagicDrawUML#Port] = typeTag[MagicDrawUML#Port]
+  override implicit val PORT = MD_PORT
+  
+  val MD_CLASS: TypeTag[MagicDrawUML#Class] = typeTag[MagicDrawUML#Class]  
+  override implicit val CLASS = MD_CLASS
+  
+  val MD_ASSOCIATION: TypeTag[MagicDrawUML#Association] = typeTag[MagicDrawUML#Association]  
+  override implicit val ASSOCIATION = MD_ASSOCIATION
+  
+  val MD_ASSOCIATION_CLASS: TypeTag[MagicDrawUML#AssociationClass] = typeTag[MagicDrawUML#AssociationClass]
+  override implicit val ASSOCIATION_CLASS = MD_ASSOCIATION_CLASS
+  
+  val MD_PACKAGE: TypeTag[MagicDrawUML#Package] = typeTag[MagicDrawUML#Package]  
+  override implicit val PACKAGE = MD_PACKAGE
+  
+  val MD_PACKAGE_MERGE: TypeTag[MagicDrawUML#PackageMerge] = typeTag[MagicDrawUML#PackageMerge]
+  override implicit val PACKAGE_MERGE = MD_PACKAGE_MERGE
+  
+  val MD_PROFILE: TypeTag[MagicDrawUML#Profile] = typeTag[MagicDrawUML#Profile]  
+  override implicit val PROFILE = MD_PROFILE
+  
+  val MD_PROFILE_APPLICATION: TypeTag[MagicDrawUML#ProfileApplication] = typeTag[MagicDrawUML#ProfileApplication]  
+  override implicit val PROFILE_APPLICATION = MD_PROFILE_APPLICATION
+  
+  val MD_STEREOTYPE: TypeTag[MagicDrawUML#Stereotype] = typeTag[MagicDrawUML#Stereotype]
+  override implicit val STEREOTYPE = MD_STEREOTYPE
+  
+  val MD_EXTENSION: TypeTag[MagicDrawUML#Extension] = typeTag[MagicDrawUML#Extension]
+  override implicit val EXTENSION = MD_EXTENSION
+  
+  val MD_EXTENSION_END: TypeTag[MagicDrawUML#ExtensionEnd] = typeTag[MagicDrawUML#ExtensionEnd]
+  override implicit val EXTENSION_END = MD_EXTENSION_END
+  
+  val MD_IMAGE: TypeTag[MagicDrawUML#Image] = typeTag[MagicDrawUML#Image]
+  override implicit val IMAGE = MD_IMAGE
+  
+  // MagicDraw-specific
+  
+  implicit val DIAGRAM: TypeTag[MagicDrawUML#Diagram] = typeTag[MagicDrawUML#Diagram]
+  
+  implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
+  
   override val OTI_SPECIFICATION_ROOT_S = {
     StereotypesHelper.getProfile( project, "OTI") match {
       case null => throw new IllegalArgumentException("Cannot find the MD version of the OTI profile")
@@ -51,60 +209,6 @@ trait MagicDrawUMLOps extends org.omg.oti.UMLOps[MagicDrawUML] {
     }
   }
   
-  override def getElementID( e: MagicDrawUML#Element ) = e.getID
-  
-  override def hasStereotype( e: MagicDrawUML#Element, s: MagicDrawUML#Stereotype ) = StereotypesHelper.hasStereotype( e, s )
-    
-  override def getAllOwnedElementIterator( e: MagicDrawUML#Element ) = e.eAllContents flatMap {
-    case e: MagicDrawUML#Element => Some( e )
-    case _ => None
-  }
-  
-  override def getContainedElement_eContainingFeature( e: MagicDrawUML#Element ) = e.eContainingFeature
-    
   override val SLOT_VALUE = UMLPackage.eINSTANCE.getSlot_Value
-  
-  override def getElement_owner( e: MagicDrawUML#Element ) = Option.apply( e.getOwner )
-  
-  override def getElementContainer_eFeatureValue( e: MagicDrawUML#Element, f: EStructuralFeature ) =  
-    e.eContainer.eGet( f ) match {
-    case values: java.util.Collection[_] =>
-      values.toIterable flatMap { 
-        case v: MagicDrawUML#Element => Some( v )
-        case _ => None
-      }
-  }
-    
-  override def getCommentOwnerIndex( c: MagicDrawUML#Comment ) = c.getOwner.getOwnedComment.toList.indexOf( c )
-  
-  override def getNamedElement_name( ne: MagicDrawUML#NamedElement ) = ne.getName match {
-    case null => None
-    case "" => None
-    case n => Some( n )
-  }
-  
-  override def getBinaryDirectedRelationship_target( dr: MagicDrawUML#DirectedRelationship ) =
-    dr.getTarget.toList match {
-    case Nil => None
-    case t :: ts =>
-      require( ts == Nil )
-      Some( t )
-  }
-  
-  override def getImage_location( i: MagicDrawUML#Image ) = i.getLocation match {
-    case null => None
-    case "" => None
-    case s => Some( s )
-  }
-  
-  override def getSlot_value( s: MagicDrawUML#Slot ) = s.getValue.toList
-  override def getSlot_definingFeature( s: MagicDrawUML#Slot ) = Option.apply( s.getDefiningFeature )
-  
-  override def getStructuralFeature_upper( sf: MagicDrawUML#StructuralFeature ) = sf.getUpper
-  
-  override def getInstanceValue_instance( iv: MagicDrawUML#InstanceValue ) = Option.apply( iv.getInstance )
-
-  override def getBehavioralFeature_ownedParameter( bf: MagicDrawUML#BehavioralFeature ) = bf.getOwnedParameter.toList
-  override def getTypedElement_type( te: MagicDrawUML#TypedElement ) = Option.apply( te.getType )
   
 }
