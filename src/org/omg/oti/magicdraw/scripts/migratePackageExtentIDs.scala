@@ -56,14 +56,6 @@ object migratePackageExtentIDs {
     val guiLog = a.getGUILog()
     guiLog.clearLog()
 
-    val umlUtil = MagicDrawUMLUtil( project )
-
-    val mdInstallDir = new File( ApplicationEnvironment.getInstallRoot )
-    require( mdInstallDir.exists && mdInstallDir.isDirectory )
-    val otiDir = new File( mdInstallDir, "dynamicScripts/org.omg.oti" )
-    require( otiDir.exists && otiDir.isDirectory )
-    val migrationMM = Metamodel( otiDir )
-
     val proxyManager = project.getProxyManager
     if ( !proxyManager.isElementProxy( pkg ) )
       return Failure( new IllegalArgumentException( s"Select a r/o, proxy shared package" ) )
@@ -75,70 +67,7 @@ object migratePackageExtentIDs {
     val migrationF = new File( new File( uri.path ).getParentFile.getParentFile, uri.trimFileExtension.lastSegment + ".migration.xmi" )
     guiLog.log( s"Migration file: ${migrationF}" )
     require( migrationF.exists && migrationF.canRead )
-    val migrationURI = URI.createFileURI( migrationF.getAbsolutePath )
-
-    migrationMM.loadOld2NewIDMappingResource( migrationURI ) match {
-      case Failure( t ) => Failure( t )
-      case Success( old2newIDmigration ) =>
-        val entries = old2newIDmigration.getEntries
-        guiLog.log( s" Loaded ${entries.size} old2new ID migration entries" )
-
-        val iPrimaryProject = project.getPrimaryProject
-
-        if ( ModulesServiceInternal.useLocalModuleWithWizard( iPrimaryProject ) ) {
-          var error: Throwable = null
-
-          val runnable = new RunnableWithProgress() {
-            def run( progressStatus: ProgressStatus ): Unit = {
-
-              val proxyManager = project.getProxyManager
-
-              val migrationPairs = entries flatMap { entry =>
-                project.getElementByID( entry.getOldID.get ) match {
-                  case oe: Element if ( proxyManager.isElementProxy( oe ) ) =>
-                    project.getElementByID( entry.getNewID.get ) match {
-                      case ne: Element => Some( ( oe, ne ) )
-                      case _           => None
-                    }
-                  case _ => None
-                }
-              } toList
-
-              if ( migrationPairs.size > 2000 ) {
-                migrationPairs foreach { case ( oe, ne ) => System.out.println( s" new=${ne.getID} => old=${oe.getID}" ) }
-              }
-              else {
-                migrationPairs foreach {
-                  case ( oe, ne ) =>
-                    guiLog.addHyperlinkedText(
-                      s" new=<A>${ne.getID}</A> <= old=${oe.getID}",
-                      Map( ne.getID -> new SelectInContainmentTreeRunnable( ne ) ) )
-                }
-              }
-              if ( migrationPairs.isEmpty ) {
-                error = new IllegalArgumentException( s"Migration metadata does not match anything. No proxy migration rules created." )
-                return
-              }
-
-              progressStatus.setCurrent( 0 )
-              progressStatus.setMax( migrationPairs.size )
-              migrationPairs.foreach {
-                case ( oe, ne ) =>
-                  val info = new ConvertElementInfo( oe.getClassType )
-                  info.setConvertOnlyIncomingReferences( false )
-                  Refactoring.Replacing.replace( oe, ne, info )
-                  progressStatus.increase
-              }
-            }
-          }
-
-          MagicDrawProgressStatusRunner.runWithProgressStatus( runnable, s"Migrate XMI:IDs", true, 0 )
-
-          if ( error != null )
-            return Failure( error )
-        }
-
-        Success( None )
-    }
+    
+    MigrationHelper.migrate( project, migrationF )
   }
 }

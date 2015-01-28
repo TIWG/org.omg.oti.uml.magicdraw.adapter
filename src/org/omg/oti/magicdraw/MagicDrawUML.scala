@@ -20,6 +20,8 @@ trait MagicDrawUML extends org.omg.oti.UML {
   
   override type Constraint = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Constraint
   
+  override type Dependency = com.nomagic.uml2.ext.magicdraw.classes.mddependencies.Dependency
+  
   override type ValueSpecification = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ValueSpecification
   override type LiteralSpecification = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.LiteralSpecification
   override type LiteralNull = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.LiteralNull
@@ -82,6 +84,9 @@ trait MagicDrawUML extends org.omg.oti.UML {
   override type Extension = com.nomagic.uml2.ext.magicdraw.mdprofiles.Extension
   override type ExtensionEnd = com.nomagic.uml2.ext.magicdraw.mdprofiles.ExtensionEnd
   override type Image = com.nomagic.uml2.ext.magicdraw.mdprofiles.Image
+  
+  override type Actor = com.nomagic.uml2.ext.magicdraw.mdusecases.Actor
+  override type UseCase = com.nomagic.uml2.ext.magicdraw.mdusecases.UseCase
   
   // MagicDraw-specific
   

@@ -18,7 +18,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   implicit val ops: MagicDrawUMLUtil
   import ops._
 
-  override protected def e: Uml#Element
+  protected def e: Uml#Element
 
   override def ownedComments = e.getOwnedComment.toSeq
   override def annotatedElementOfComments = e.get_commentOfAnnotatedElement.toSeq
@@ -33,10 +33,10 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     case values: java.util.Collection[_] => values.toIterator.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
   }
 
-  override def relatedElementOfRelationships = e.get_relationshipOfRelatedElement.toSeq
+  override def relatedElementOfRelationships = e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
 
-  override def sourceOfDirectedRelationships = e.get_directedRelationshipOfSource.toSeq
-  override def targetOfDirectedRelationships = e.get_directedRelationshipOfTarget.toSeq
+  override def sourceOfDirectedRelationships = e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
+  override def targetOfDirectedRelationships = e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
 
   override def id: String = e.getID
 

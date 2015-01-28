@@ -12,6 +12,13 @@ toolbarMenuScripts(
 			method: doit )
 		MainToolbarMenuAction(
 			toolbarMenuPath: { 'OMG > Migration Support' }
+			name: 'Custom Migration'
+			project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+			class: org.omg.oti.magicdraw.scripts.MigrationHelper
+			method: customMigration )
+		MainToolbarMenuAction(
+			toolbarMenuPath: { 'OMG > Migration Support' }
 			name: 'Name Test'
 			project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }

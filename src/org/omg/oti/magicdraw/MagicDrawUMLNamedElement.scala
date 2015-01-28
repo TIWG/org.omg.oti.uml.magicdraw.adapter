@@ -18,4 +18,6 @@ trait MagicDrawUMLNamedElement extends UMLNamedElement[MagicDrawUML] with MagicD
   def memberOfMemberNamespaces = e.get_namespaceOfMember.toIterator
   def ownedMemberOfNamespaces = Option.apply( e.getNamespace )
 
+  def supplierTargetOfSupplierDependency = e.getSupplierDependency.toIterator
+  def clientSourceOfClientDependency = e.getClientDependency.toIterator
 }

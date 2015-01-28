@@ -1,17 +1,17 @@
 package org.omg.oti.magicdraw
 
 import scala.language.implicitConversions
+import scala.reflect.runtime.universe
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
+
 import com.nomagic.magicdraw.core.Project
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ElementValue
-import org.omg.oti.IllegalElementException
-import org.omg.oti.UMLUtil
+
 import org.omg.oti.UMLElement
-import org.omg.oti.UMLInstanceSpecification
 import org.omg.oti.UMLNamedElement
 import org.omg.oti.UMLStereotype
+import org.omg.oti.UMLUtil
 
 case class MagicDrawUMLUtil( val project: Project )
   extends MagicDrawUMLOps with UMLUtil[MagicDrawUML] { self =>
@@ -63,11 +63,11 @@ case class MagicDrawUMLUtil( val project: Project )
     case _e: Uml#EnumerationLiteral => cache.getOrElseUpdate(_e, new MagicDrawUMLEnumerationLiteral() { override val e = _e; override val ops = self })    
     case _e: Uml#InstanceSpecification => cache.getOrElseUpdate(_e, new MagicDrawUMLInstanceSpecification() { override val e = _e; override val ops = self })    
 
-    case _e: Uml#Image => cache.getOrElseUpdate(_e, new MagicDrawUMLImage() { override val e = _e; override val ops = self })    
-
     case _e: Uml#Generalization => cache.getOrElseUpdate(_e, new MagicDrawUMLGeneralization() { override val e = _e; override val ops = self })    
     
     case _e: Uml#Constraint => cache.getOrElseUpdate(_e, new MagicDrawUMLConstraint() { override val e = _e; override val ops = self })    
+
+    case _e: Uml#Dependency => cache.getOrElseUpdate(_e, new MagicDrawUMLDependency() { override val e = _e; override val ops = self })    
 
     case _e: Uml#LiteralNull => cache.getOrElseUpdate(_e, new MagicDrawUMLLiteralNull() { override val e = _e; override val ops = self })    
     case _e: Uml#LiteralBoolean => cache.getOrElseUpdate(_e, new MagicDrawUMLLiteralBoolean() { override val e = _e; override val ops = self })    
@@ -79,8 +79,13 @@ case class MagicDrawUMLUtil( val project: Project )
     case _e: Uml#StringExpression => cache.getOrElseUpdate(_e, new MagicDrawUMLStringExpression() { override val e = _e; override val ops = self })    
     case _e: Uml#Expression => cache.getOrElseUpdate(_e, new MagicDrawUMLExpression() { override val e = _e; override val ops = self })    
     case _e: Uml#OpaqueExpression => cache.getOrElseUpdate(_e, new MagicDrawUMLOpaqueExpression() { override val e = _e; override val ops = self })    
-    
+        
     case _e: Uml#Interval => cache.getOrElseUpdate(_e, new MagicDrawUMLInterval() { override val e = _e; override val ops = self })    
+
+    case _e: Uml#Image => cache.getOrElseUpdate(_e, new MagicDrawUMLImage() { override val e = _e; override val ops = self })    
+
+    case _e: Uml#Actor => cache.getOrElseUpdate(_e, new MagicDrawUMLActor() { override val e = _e; override val ops = self })    
+    case _e: Uml#UseCase => cache.getOrElseUpdate(_e, new MagicDrawUMLUseCase() { override val e = _e; override val ops = self })    
 
     // MagicDraw-specific    
     case _e: Uml#Diagram => cache.getOrElseUpdate(_e, new MagicDrawUMLDiagram() { override val e = _e; override val ops = self })    
@@ -89,6 +94,7 @@ case class MagicDrawUMLUtil( val project: Project )
     
   }
   
+  implicit def umlActor( _e: Uml#Actor ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLActor]
   implicit def umlAssociation( _e: Uml#Association ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLAssociation]
   implicit def umlAssociationClass( _e: Uml#AssociationClass ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLAssociationClass]
   implicit def umlBehavioralFeature( _e: Uml#BehavioralFeature ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLBehavioralFeature]
@@ -101,6 +107,7 @@ case class MagicDrawUMLUtil( val project: Project )
   implicit def umlConnectorEnd( _e: Uml#ConnectorEnd ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLConnectorEnd]
   implicit def umlConstraint( _e: Uml#Constraint ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLConstraint]
   implicit def umlDataType( _e: Uml#DataType ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLDataType]
+  implicit def umlDependency( _e: Uml#Dependency ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLDependency]
   implicit def umlDirectedRelationship( _e: Uml#DirectedRelationship ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLDirectedRelationship]
   implicit def umlElement( _e: Uml#Element ) = cacheLookupOrUpdate(_e)
   implicit def umlElementImport( _e: Uml#ElementImport ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLElementImport]
@@ -147,6 +154,7 @@ case class MagicDrawUMLUtil( val project: Project )
   implicit def umlStructuredClassifier( _e: Uml#StructuredClassifier ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLStructuredClassifier]
   implicit def umlType( _e: Uml#Type ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLType]
   implicit def umlTypedElement( _e: Uml#TypedElement ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLTypedElement]
+  implicit def umlUseCase( _e: Uml#UseCase ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLUseCase]
   implicit def umlValueSpecification( _e: Uml#ValueSpecification ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLValueSpecification]
 
   // MagicDraw-specific
