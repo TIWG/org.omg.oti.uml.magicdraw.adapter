@@ -10,4 +10,5 @@ trait MagicDrawUMLConstraint extends UMLConstraint[MagicDrawUML] with MagicDrawU
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
+  override def constrainedElements = for { c <- e.getConstrainedElement } yield umlElement( c )
 }

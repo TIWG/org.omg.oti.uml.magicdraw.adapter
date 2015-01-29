@@ -10,5 +10,5 @@ trait MagicDrawUMLBehavioralFeature extends UMLBehavioralFeature[MagicDrawUML] w
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def ownedParameters = e.getOwnedParameter.toIterator
+  def ownedParameters = umlParameter(e.getOwnedParameter.toIterator).toSeq
 }

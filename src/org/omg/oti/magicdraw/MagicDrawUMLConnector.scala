@@ -8,4 +8,5 @@ trait MagicDrawUMLConnector extends UMLConnector[MagicDrawUML] with MagicDrawUML
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
+  override def connectorType = Option.apply(e.getType)
 }

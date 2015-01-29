@@ -22,6 +22,6 @@ trait MagicDrawUMLProperty extends UMLProperty[MagicDrawUML] with MagicDrawUMLSt
   def memberEndOfAssociation = Option.apply( e.getAssociation )
    
   def subsettedProperties = e.getSubsettedProperty.toIterator
-  def redefinedProperties = e.getRedefinedProperty.toIterator
+  override def redefinedProperties = e.getRedefinedProperty.toIterator
   
 }

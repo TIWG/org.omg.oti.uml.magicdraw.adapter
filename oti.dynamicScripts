@@ -130,6 +130,14 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.migratePackageExtentIDs
               method: doit
           )
+          BrowserContextMenuAction(
+              name: 'Export Selected Packages to OMG TI Canonical XMI'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.exportPackageExtents
+              method: doit
+          )
 })
           
 dynamicScripts(
@@ -161,4 +169,12 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.migratePackageExtentIDs
               method: doit
           )
+          BrowserContextMenuAction(
+              name: 'Export Selected Packages to OMG TI Canonical XMI'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.exportPackageExtents
+              method: doit
+          )          
 })

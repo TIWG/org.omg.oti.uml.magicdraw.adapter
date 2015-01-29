@@ -178,6 +178,9 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
   val MD_PACKAGE_MERGE: TypeTag[MagicDrawUML#PackageMerge] = typeTag[MagicDrawUML#PackageMerge]
   override implicit val PACKAGE_MERGE = MD_PACKAGE_MERGE
 
+  val MD_MODEL: TypeTag[MagicDrawUML#Model] = typeTag[MagicDrawUML#Model]  
+  override implicit val MODEL = MD_MODEL
+  
   val MD_PROFILE: TypeTag[MagicDrawUML#Profile] = typeTag[MagicDrawUML#Profile]
   override implicit val PROFILE = MD_PROFILE
 

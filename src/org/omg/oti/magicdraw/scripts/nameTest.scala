@@ -55,11 +55,23 @@ object nameTest {
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
 
+    val selectedElements = getMDBrowserSelectedElements map { e => umlElement( e ) }
+    selectedElements foreach { e => 
     
-    val n = "!@#$%^&*()_+=-{}[]\\|;:\\'\"<>,.?/~`"
-    val nc = getValidNCName( n )
-    guiLog.log(s" n='${n} nc='${nc}' ")
+      guiLog.log( s" ID=${e.id}")
+    }
     
     Success( None )
+  }
+    
+  def getMDBrowserSelectedElements(): Set[Element] = {
+    val project = Application.getInstance().getProjectsManager().getActiveProject()
+    if ( null == project )
+      return Set()
+
+    val tab = project.getBrowser().getActiveTree()
+    val elementFilter: ( Node => Option[Element] ) = { n => if ( n.getUserObject().isInstanceOf[Element] ) Some( n.getUserObject().asInstanceOf[Element] ) else None }
+    val elements = tab.getSelectedNodes().map( elementFilter( _ ) ) filter ( _.isDefined ) map ( _.get )
+    elements.toSet
   }
 }

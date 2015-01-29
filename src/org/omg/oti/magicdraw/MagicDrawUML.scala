@@ -77,6 +77,7 @@ trait MagicDrawUML extends org.omg.oti.UML {
     
   override type Package = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package  
   override type PackageMerge = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.PackageMerge
+  override type Model = com.nomagic.uml2.ext.magicdraw.auxiliaryconstructs.mdmodels.Model
   
   override type Profile = com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
   override type ProfileApplication = com.nomagic.uml2.ext.magicdraw.mdprofiles.ProfileApplication  

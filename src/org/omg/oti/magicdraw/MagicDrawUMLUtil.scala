@@ -53,6 +53,7 @@ case class MagicDrawUMLUtil( val project: Project )
     case _e: Uml#ProfileApplication => cache.getOrElseUpdate(_e, new MagicDrawUMLProfileApplication() { override val e = _e; override val ops = self })
     
     case _e: Uml#Profile => cache.getOrElseUpdate(_e, new MagicDrawUMLProfile() { override val e = _e; override val ops = self })
+    case _e: Uml#Model => cache.getOrElseUpdate(_e, new MagicDrawUMLModel() { override val e = _e; override val ops = self })
     case _e: Uml#Package => cache.getOrElseUpdate(_e, new MagicDrawUMLPackage() { override val e = _e; override val ops = self })    
     
     case _e: Uml#Slot => cache.getOrElseUpdate(_e, new MagicDrawUMLSlot() { override val e = _e; override val ops = self })    
@@ -130,6 +131,7 @@ case class MagicDrawUMLUtil( val project: Project )
   implicit def umlLiteralSpecification( _e: Uml#LiteralSpecification) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLLiteralSpecification]
   implicit def umlLiteralString( _e: Uml#LiteralString) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLLiteralString]
   implicit def umlLiteralUnlimitedNatural( _e: Uml#LiteralUnlimitedNatural) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLLiteralUnlimitedNatural]
+  implicit def umlModel( _e: Uml#Model ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLModel]
   implicit def umlMultiplicityElement( _e: Uml#MultiplicityElement ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLMultiplicityElement]
   implicit def umlNamedElement( _e: Uml#NamedElement ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLNamedElement]
   implicit def umlNamespace( _e: Uml#Namespace ) = cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLNamespace]

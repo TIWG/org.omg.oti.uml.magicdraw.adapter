@@ -7,5 +7,7 @@ trait MagicDrawUMLDiagram extends MagicDrawUMLNamedElement {
   
   implicit val ops: MagicDrawUMLUtil
   import ops._
-  
+    
+  override def forwardReferencesFromMetamodelAssociations = 
+    namedElement_forwardReferencesFromMetamodelAssociations
 }
