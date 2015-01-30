@@ -2,13 +2,12 @@ package org.omg.oti.magicdraw
 
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
-
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage
-
 import org.omg.oti.EarlyInit
 import org.omg.oti.UMLOps
+import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 
 trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
 
@@ -211,16 +210,37 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
 
   implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
 
-  override val OTI_SPECIFICATION_ROOT_S = {
+  override val OTI_SPECIFICATION_ROOT_S = 
     StereotypesHelper.getProfile( project, "OTI" ) match {
       case null => None
-      case pf => StereotypesHelper.getStereotype( project, "SpecificationRoot", pf ) match {
-        case null => None
-        case s    => Some( s )
-      }
+      case pf => Option.apply(StereotypesHelper.getStereotype( project, "SpecificationRoot", pf ))
     }
+   
+  override val OTI_SPECIFICATION_ROOT_packageURI = OTI_SPECIFICATION_ROOT_S match {
+    case None => None
+    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "packageURI"))
   }
 
+  override val OTI_ID_S =    
+    StereotypesHelper.getProfile( project, "OTI" ) match {
+      case null => None
+      case pf => Option.apply(StereotypesHelper.getStereotype( project, "OTI", pf ))
+    }
+  
+  override val OTI_ID_uuid = OTI_ID_S match {
+    case None => None
+    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "uuid"))
+  }
+    
   override val SLOT_VALUE = UMLPackage.eINSTANCE.getSlot_Value
 
+  val MD_OTI_ValidationSuite = MagicDrawValidationDataResults.lookupValidationSuite( project, "*::MagicDrawOTIValidation")
+  
+  val MD_OTI_ValidationConstraint_NotOTISpecificationRoot = MD_OTI_ValidationSuite match {
+    case None => None
+    case Some( vInfo ) => MagicDrawValidationDataResults.lookupValidationConstraint( vInfo, "*::NotOTISpecificationRoot" )
+  }
+  
+  
+  
 }

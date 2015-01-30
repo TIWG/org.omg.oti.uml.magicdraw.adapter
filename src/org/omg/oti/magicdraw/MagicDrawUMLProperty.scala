@@ -12,6 +12,8 @@ trait MagicDrawUMLProperty extends UMLProperty[MagicDrawUML] with MagicDrawUMLSt
   
   def isComposite = e.isComposite()
   
+  def defaultValue = Option.apply( e.getDefaultValue )
+  
   def opposite = memberEndOfAssociation match {
     case None => None
     case Some( a ) => Some( a.memberEnds.filter(_ != this).next() )

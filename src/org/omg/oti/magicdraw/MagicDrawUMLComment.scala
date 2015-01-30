@@ -11,5 +11,6 @@ trait MagicDrawUMLComment extends MagicDrawUMLElement with UMLComment[MagicDrawU
   import ops._
   
   def annotatedElements = e.getAnnotatedElement.toIterator
-  def getCommentOwnerIndex = e.getOwner.getOwnedComment.toList.indexOf( e )
+  def getCommentOwnerIndex = e.getOwner.getOwnedComment.toList.indexOf( e )  
+  def body = Option.apply(e.getBody)
 }

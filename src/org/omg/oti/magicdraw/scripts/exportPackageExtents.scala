@@ -32,7 +32,9 @@ import org.omg.oti.migration.Metamodel
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 import org.omg.oti.magicdraw.MagicDrawUMLElement
-import org.omg.oti.canonicalXMI.SerializableDocument
+import org.omg.oti._
+import org.omg.oti.canonicalXMI._
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov
@@ -58,13 +60,80 @@ object exportPackageExtents {
 
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
-    
-    val selectedPackages = selection.toIterator selectByKindOf ( { case p: Package => umlPackage( p ) } ) toList;
-    
-    val selectedDocuments = selectedPackages map { p => SerializableDocument( uri=null, scope=p) }
-          
 
-    guiLog.log( s"Done..." )
-    Success( None )
+    val selectedPackages = selection.toIterator selectByKindOf ( { case p: Package => umlPackage( p ) } ) toList;
+
+    val otiSpecificationRoot_s = umlStereotype( OTI_SPECIFICATION_ROOT_S.get )
+    val otiSpecificationRoot_packageURI = umlProperty( OTI_SPECIFICATION_ROOT_packageURI.get )
+
+    val ( roots, nonRoots ) = selectedPackages partition ( _.hasStereotype( otiSpecificationRoot_s) )
+
+    def specificationRootURI( p: UMLPackage[Uml] ): Option[String] = {
+      p.tagValues.get( otiSpecificationRoot_packageURI ) match {
+        case Some( Seq( uri: UMLLiteralString[_] ) ) => uri.value
+        case _ => None
+      }
+    }
+
+    val ( okRoots, anonymousRoots ) = roots partition ( specificationRootURI( _ ).isDefined )
+
+    guiLog.log(s"- roots: ${roots.size}")
+    guiLog.log(s"- nonRoots: ${nonRoots.size}")
+    guiLog.log(s"- okRoots: ${okRoots.size}")
+    guiLog.log(s"- anonymousRoots: ${anonymousRoots.size}")
+      
+    if ( nonRoots.nonEmpty ) {
+
+      guiLog.log(s"*** ${nonRoots.size} packages not stereotyped OTI::SpecificationRoot! ***")
+      
+      val elementMessages = nonRoots map { nr => ( nr.getMagicDrawElement -> ( "Not a SpecificationRoot", List() ) ) } toMap
+
+      Success( Some(
+        MagicDrawValidationDataResults.makeMDIllegalArgumentExceptionValidation( p, "Not OTI SpecificationRoot packages",
+          elementMessages,
+          "*::MagicDrawOTIValidation",
+          "*::NotOTISpecificationRoot" ).validationDataResults ) )
+
+    }
+    else if ( anonymousRoots.nonEmpty ) {
+
+      guiLog.log(s"*** ${anonymousRoots.size} anonymous OTI::SpecificationRoot-stereotyped packages! ***")
+      
+      val elementMessages = anonymousRoots map { nr => ( nr.getMagicDrawElement -> ( "SpecificationRoot without URI", List() ) ) } toMap
+
+      Success( Some(
+        MagicDrawValidationDataResults.makeMDIllegalArgumentExceptionValidation( p, "OTI SpecificationRoot packages must have a SpecificationRoot::packageURI",
+          elementMessages,
+          "*::MagicDrawOTIValidation",
+          "*::OTISpecificationRootMustHaveURI" ).validationDataResults ) )
+
+    }
+    else {
+      guiLog.log( s"Make ${okRoots.size} documents..." )
+      val selectedDocuments = for {
+        p <- okRoots
+        pURI <- specificationRootURI( p )
+      } yield {
+        val d = SerializableDocument( uri = new java.net.URI( pURI ), scope = p )
+        guiLog.log( s" => make document for: uri=${pURI} (p=${p.getMagicDrawElement.getID}) = ${d}" )
+        d
+      }
+
+      val ds = DocumentSet(
+        serializableDocuments = selectedDocuments.toSet,
+        builtInDocuments = Set[BuiltInDocument[Uml]]() )
+
+      val g = ds.externalReferenceDocumentGraph
+      guiLog.log( s"Graph: ${g}" )
+
+      ds.serialize match {
+        case Success( _ ) =>
+          guiLog.log( s"Done..." )
+          Success( None )
+
+        case Failure( t ) =>
+          Failure( t )
+      }
+    }
   }
 }

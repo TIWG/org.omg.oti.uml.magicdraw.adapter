@@ -7,4 +7,6 @@ trait MagicDrawUMLLiteralString extends UMLLiteralString[MagicDrawUML] with Magi
   
   implicit val ops: MagicDrawUMLUtil
   import ops._
+  
+  override def value = Option.apply(e.getValue)
 }

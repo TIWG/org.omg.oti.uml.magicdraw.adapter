@@ -51,19 +51,47 @@ object nameTest {
     val guiLog = a.getGUILog()
     guiLog.clearLog()
 
-    
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
 
     val selectedElements = getMDBrowserSelectedElements map { e => umlElement( e ) }
-    selectedElements foreach { e => 
-    
-      guiLog.log( s" ID=${e.id}")
+    selectedElements foreach { e =>
+
+      guiLog.log( s" ID=${e.id}" )
+
+      val tv = e.tagValues
+      guiLog.log( s"tv: ${tv.size}" )
+      tv foreach {
+        case ( tvp, tvv ) =>
+          guiLog.log( s" => ${tvp.qualifiedName.get}: ${tvv}" )
+
+      }
+
+      val mdE = e.getMagicDrawElement      
+      val mdIS = Option.apply( mdE.getAppliedStereotypeInstance ) 
+      guiLog.log( s" mdID=${mdE.getID}: mdIS=${mdIS.isDefined} =${mdIS}" )
+
+      mdIS match {
+        case None =>
+          guiLog.log( s" no AppliedStereotypeInstance!" )
+
+        case Some( is ) =>
+          guiLog.log( s" AppliedStereotypeInstance: ${is.getSlot.size} slots" )
+
+          for {
+            s <- is.getSlot
+            p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
+            v = umlValueSpecification( s.getValue.toIterator ).toSeq
+          } {
+            guiLog.log( s" => ${p.qualifiedName.get}: ${s.getValue}" )
+            guiLog.log( s" => ${p.qualifiedName.get}: ${v}" )
+          }
+      }
     }
-    
+
     Success( None )
   }
-    
+
   def getMDBrowserSelectedElements(): Set[Element] = {
     val project = Application.getInstance().getProjectsManager().getActiveProject()
     if ( null == project )

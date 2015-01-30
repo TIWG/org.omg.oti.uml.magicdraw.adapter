@@ -18,6 +18,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   protected def e: Uml#Element
 
+  def getMagicDrawElement = e
+  
   override def ownedComments = e.getOwnedComment.toSeq
   override def annotatedElementOfComments = e.get_commentOfAnnotatedElement.toSeq
 
@@ -47,14 +49,19 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         case Some( parent ) => isAncestorOf( parent )
       } )
 
-  def metaclass: UMLClass[Uml] = StereotypesHelper.getBaseClass(e)
+  def metaclass: UMLClass[Uml] = StereotypesHelper.getBaseClass( e )
 
   def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
-    (for {
-      s <- e.getAppliedStereotypeInstance.getSlot
-      p = s.getDefiningFeature match { case p: Uml#Property => umlProperty(p) }
-      v = umlValueSpecification( s.getValue.toIterator ).toSeq
-    } yield ( p -> v )) toMap
+    Option.apply( e.getAppliedStereotypeInstance ) match {
+      case None => Map()
+      case Some( is ) =>
+        val tv = for {
+          s <- is.getSlot
+          p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
+          v = umlValueSpecification( s.getValue.toIterator ).toSeq
+        } yield ( p -> v )
+        tv.toMap
+    }
 
   def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable( e )
 }
