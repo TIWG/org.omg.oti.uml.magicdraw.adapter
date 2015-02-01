@@ -8,5 +8,5 @@ trait MagicDrawUMLLiteralUnlimitedNatural extends UMLLiteralUnlimitedNatural[Mag
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  override def value = Option.apply(e.getValue)
+  override def value = e.getValue
 }

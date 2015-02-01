@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EStructuralFeature
 import org.omg.oti._
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+import com.nomagic.magicdraw.uml.UUIDRegistry
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
@@ -40,6 +41,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   override def id: String = e.getID
 
+  override def uuid: Option[String] = Some( UUIDRegistry.getUUID( e ) )
+  
   override def hasStereotype( s: UMLStereotype[Uml] ) = s.isStereotypeApplied( e )
 
   override def isAncestorOf( other: UMLElement[Uml] ) =

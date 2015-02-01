@@ -10,6 +10,9 @@ trait MagicDrawUMLElementValue extends MagicDrawUMLValueSpecification {
   
   def element: Option[UMLElement[Uml]] = Option.apply( e.getElement )
     
+  override def metaAttributes: MetaAttributeFunctions =
+    valueSpecification_metaAttributes
+    
   override def forwardReferencesFromMetamodelAssociations = 
     element_forwardReferencesFromMetamodelAssociations ++
     element

@@ -8,6 +8,9 @@ trait MagicDrawUMLDiagram extends MagicDrawUMLNamedElement {
   
   import ops._
     
+  override def metaAttributes: MetaAttributeFunctions =
+    namedElement_metaAttributes
+    
   override def forwardReferencesFromMetamodelAssociations = 
     namedElement_forwardReferencesFromMetamodelAssociations
     

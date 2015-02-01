@@ -8,8 +8,6 @@ trait MagicDrawUMLClass extends UMLClass[MagicDrawUML] with MagicDrawUMLEncapsul
   
   import ops._
   
-  override def isAbstract = e.isAbstract()
-  
   def nestedClassifiers = e.getNestedClassifier.toSeq
   def ownedAttributes = e.getOwnedAttribute.toSeq
   def ownedOperations = e.getOwnedOperation.toSeq

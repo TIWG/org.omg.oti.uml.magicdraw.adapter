@@ -8,5 +8,6 @@ trait MagicDrawUMLLiteralBoolean extends UMLLiteralBoolean[MagicDrawUML] with Ma
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  override def value = Option.apply(e.isValue)
+  override def value = e.isValue
+  
 }
