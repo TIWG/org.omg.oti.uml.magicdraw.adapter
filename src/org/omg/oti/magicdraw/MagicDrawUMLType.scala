@@ -10,7 +10,7 @@ trait MagicDrawUMLType extends UMLType[MagicDrawUML] with MagicDrawUMLPackageabl
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def typedElementsOfType = e.get_typedElementOfType.toIterator
+  def typedElementsOfType = e.get_typedElementOfType.toIterable
   
-  def endTypeOfAssociation = e.get_associationOfEndType.toIterator
+  def endTypeOfAssociation = e.get_associationOfEndType.toIterable
 }

@@ -10,7 +10,7 @@ trait MagicDrawUMLSlot extends UMLSlot[MagicDrawUML] with MagicDrawUMLElement {
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def values = e.getValue.toIterator
+  def values = e.getValue.toIterable
   def definingFeature = Option.apply( e.getDefiningFeature )
 
 }

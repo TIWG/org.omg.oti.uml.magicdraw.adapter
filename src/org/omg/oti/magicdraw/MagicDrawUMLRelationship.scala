@@ -10,5 +10,5 @@ trait MagicDrawUMLRelationship extends UMLRelationship[MagicDrawUML] with MagicD
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def relatedElements = e.getRelatedElement.toIterator
+  def relatedElements = e.getRelatedElement.toIterable
 }

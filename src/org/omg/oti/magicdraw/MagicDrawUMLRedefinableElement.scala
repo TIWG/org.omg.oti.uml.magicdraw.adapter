@@ -9,9 +9,9 @@ trait MagicDrawUMLRedefinableElement extends UMLRedefinableElement[MagicDrawUML]
   implicit val ops: MagicDrawUMLUtil
   import ops._
     
-  def redefiningElements = umlRedefinableElement( e.get_redefinableElementOfRedefinedElement.toIterator )
+  def redefiningElements = umlRedefinableElement( e.get_redefinableElementOfRedefinedElement )
   
-  def redefinedElements: Iterator[UMLRedefinableElement[Uml]] = umlRedefinableElement( e.getRedefinedElement.toIterator )
-  def redefinitionContexts: Iterator[UMLClassifier[Uml]] = umlClassifier( e.getRedefinitionContext.toIterator )
+  def redefinedElements: Iterable[UMLRedefinableElement[Uml]] = umlRedefinableElement( e.getRedefinedElement )
+  def redefinitionContexts: Iterable[UMLClassifier[Uml]] = umlClassifier( e.getRedefinitionContext )
   
 }

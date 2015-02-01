@@ -1,11 +1,12 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLPackage
+import org.omg.oti._
+import scala.collection.JavaConversions._
 
 trait MagicDrawUMLPackage extends UMLPackage[MagicDrawUML] with MagicDrawUMLNamespace with MagicDrawUMLPackageableElement {
   override protected def e: Uml#Package
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
+  def URI = Option.apply( e.getURI )
 }

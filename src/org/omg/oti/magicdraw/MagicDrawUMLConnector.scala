@@ -1,12 +1,15 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLConnector
+import org.omg.oti._
+import scala.collection.JavaConversions._
 
 trait MagicDrawUMLConnector extends UMLConnector[MagicDrawUML] with MagicDrawUMLFeature {
   override protected def e: Uml#Connector
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  override def connectorType = Option.apply(e.getType)
+  def ends = e.getEnd.toSeq
+  
+  def _type = Option.apply( e.getType )
+  
 }

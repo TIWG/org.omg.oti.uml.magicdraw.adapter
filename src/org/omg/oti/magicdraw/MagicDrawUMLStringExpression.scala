@@ -1,10 +1,12 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLStringExpression
+import org.omg.oti._
+import scala.collection.JavaConversions._
 
 trait MagicDrawUMLStringExpression extends UMLStringExpression[MagicDrawUML] with MagicDrawUMLExpression {
   override protected def e: Uml#StringExpression
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+  
+  def subExpressions = e.getSubExpression.toSeq
 }

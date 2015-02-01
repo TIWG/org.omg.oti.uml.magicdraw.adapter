@@ -4,10 +4,11 @@ import scala.language.postfixOps
 import scala.reflect.runtime.universe._
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
-import com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage
-import org.omg.oti.EarlyInit
-import org.omg.oti.UMLOps
+import org.omg.oti._
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
+import org.omg.oti.canonicalXMI.BuiltInDocument
+import java.net.URI
+import com.nomagic.uml2.ext.jmi.helpers.ModelHelper 
 
 trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
 
@@ -232,7 +233,7 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "uuid"))
   }
     
-  override val SLOT_VALUE = UMLPackage.eINSTANCE.getSlot_Value
+  override val SLOT_VALUE = com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage.eINSTANCE.getSlot_Value
 
   val MD_OTI_ValidationSuite = MagicDrawValidationDataResults.lookupValidationSuite( project, "*::MagicDrawOTIValidation")
   
@@ -241,6 +242,48 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     case Some( vInfo ) => MagicDrawValidationDataResults.lookupValidationConstraint( vInfo, "*::NotOTISpecificationRoot" )
   }
   
+  // val stdProfile = ModelHelper.getUMLStandardProfile(project)
+  lazy val MDBuiltInPrimitiveTypes = {
+    
+    val mdPrimitiveTypesPkg = 
+      umlPackage( project.getElementByID("_12_0EAPbeta_be00301_1157529392394_202602_1").asInstanceOf[MagicDrawUML#Package] )
+ 
+    val mdPrimitiveTypesExtent: Set[UMLElement[MagicDrawUML]] =
+      Set(mdPrimitiveTypesPkg) ++ mdPrimitiveTypesPkg.ownedTypes.toSet
+      
+    BuiltInDocument(
+        uri=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
+        scope=mdPrimitiveTypesPkg,
+        builtInExtent=mdPrimitiveTypesExtent )( this )
+  }
   
+  lazy val MDBuiltInUML = {
+    
+    val mdUMLPkg = 
+      umlPackage( project.getElementByID("_9_0_be00301_1108053761194_467635_11463").asInstanceOf[MagicDrawUML#Package] )
+ 
+    val mdUMLExtent: Set[UMLElement[MagicDrawUML]] =
+      Set(mdUMLPkg) ++ mdUMLPkg.ownedTypes.selectByKindOf { case mc: UMLClass[MagicDrawUML] => mc }
+      
+    BuiltInDocument(
+        uri=new URI("http://www.omg.org/spec/UML/20131001"),
+        scope=mdUMLPkg,
+        builtInExtent=mdUMLExtent )( this )
+  }
   
+  lazy val MDBuiltInStandardProfile = {
+    
+    val mdStandardProfile = 
+      umlProfile( project.getElementByID("_9_0_be00301_1108050582343_527400_10847").asInstanceOf[MagicDrawUML#Profile] )
+ 
+    val mdStandardProfileClassifiers = mdStandardProfile.ownedTypes.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
+    val mdStandardProfileFeatures = mdStandardProfileClassifiers flatMap (_.features)
+    val mdStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
+      Set(mdStandardProfile) ++ mdStandardProfileClassifiers ++ mdStandardProfileFeatures
+      
+    BuiltInDocument(
+        uri=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
+        scope=mdStandardProfile,
+        builtInExtent=mdStandardProfileExtent )( this )
+  }
 }

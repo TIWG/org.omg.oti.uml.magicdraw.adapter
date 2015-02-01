@@ -10,9 +10,9 @@ trait MagicDrawUMLAssociation extends UMLAssociation[MagicDrawUML] with MagicDra
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def isDerived = e.isDerived
-  def ownedEnds = e.getOwnedEnd.toIterator
-  def navigableOwnedEnds = e.getNavigableOwnedEnd.toIterator
-  def memberEnds = e.getMemberEnd.toIterator
-  def endTypes = e.getEndType.toIterator
+  override def isDerived = e.isDerived
+  def ownedEnds = e.getOwnedEnd.toIterable
+  def navigableOwnedEnds = e.getNavigableOwnedEnd.toIterable
+  def memberEnds = e.getMemberEnd.toIterable
+  def endTypes = e.getEndType.toIterable
 }

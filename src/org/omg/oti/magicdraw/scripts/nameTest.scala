@@ -81,7 +81,7 @@ object nameTest {
           for {
             s <- is.getSlot
             p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
-            v = umlValueSpecification( s.getValue.toIterator ).toSeq
+            v = umlValueSpecification( s.getValue ).toSeq
           } {
             guiLog.log( s" => ${p.qualifiedName.get}: ${s.getValue}" )
             guiLog.log( s" => ${p.qualifiedName.get}: ${v}" )

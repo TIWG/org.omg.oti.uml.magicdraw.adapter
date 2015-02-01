@@ -5,7 +5,7 @@ import org.omg.oti.UMLProfileApplication
 trait MagicDrawUMLProfileApplication extends UMLProfileApplication[MagicDrawUML] with MagicDrawUMLDirectedRelationship {
   override protected def e: Uml#ProfileApplication
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
+  override def isStrict = e.isStrict()
 }

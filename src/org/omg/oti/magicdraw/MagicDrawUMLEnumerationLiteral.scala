@@ -1,11 +1,12 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLEnumerationLiteral
+import org.omg.oti._
 
 trait MagicDrawUMLEnumerationLiteral extends UMLEnumerationLiteral[MagicDrawUML] with MagicDrawUMLInstanceSpecification {
   override protected def e: Uml#EnumerationLiteral
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+    
+  override def classifiers: Iterable[UMLClassifier[Uml]] = super.classifiers
   
 }

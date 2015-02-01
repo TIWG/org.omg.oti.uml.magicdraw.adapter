@@ -102,7 +102,7 @@ object nameAssociationLinkInstancesWithinPackageExtent {
       case Some( ( sourceEnd, targetEnd ) ) =>
         guiLog.log( s" association: ${a.qualifiedName.get}" )
 
-        val links = a.classifierOfInstanceSpecifications.toList
+        val links = a.instanceSpecifications.toList
         guiLog.log( s" Refactor ${links.size} instance specifications..." )
 
         var count = 0
@@ -110,11 +110,11 @@ object nameAssociationLinkInstancesWithinPackageExtent {
         links foreach { link =>
           val slots = link.slots
           val sourceSlot = slots.find( _.definingFeature == Some( sourceEnd ) ) getOrElse { throw new IllegalArgumentException( s"Broken Link ${a.name.get} from '${sourceEnd.name}' to '${targetEnd.name}'" ) }
-          val sourceInstance = sourceSlot.values.next() match {
+          val sourceInstance = sourceSlot.values.head match {
             case iv: UMLInstanceValue[Uml] => iv.instance.get
           }
           val targetSlot = slots.find( _.definingFeature == Some( targetEnd ) ) getOrElse { throw new IllegalArgumentException( s"Broken Link ${a.name.get} from '${sourceEnd.name}' to '${targetEnd.name}'" ) }
-          val targetInstance = targetSlot.values.next() match {
+          val targetInstance = targetSlot.values.head match {
             case iv: UMLInstanceValue[Uml] => iv.instance.get
           }
           ( sourceInstance.name, targetInstance.name ) match {

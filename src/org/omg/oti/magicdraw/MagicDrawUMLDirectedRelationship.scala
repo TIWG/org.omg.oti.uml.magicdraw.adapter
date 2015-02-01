@@ -10,7 +10,7 @@ trait MagicDrawUMLDirectedRelationship extends UMLDirectedRelationship[MagicDraw
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def sources = e.getSource.toIterator
-  def targets = e.getTarget.toIterator
+  def sources = e.getSource.toIterable
+  def targets = e.getTarget.toIterable
 
 }

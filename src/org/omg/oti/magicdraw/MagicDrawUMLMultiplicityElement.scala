@@ -8,6 +8,9 @@ trait MagicDrawUMLMultiplicityElement extends UMLMultiplicityElement[MagicDrawUM
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
+  override def isOrdered = e.isOrdered
+  override def isUnique = e.isUnique
+  
   def lower: Int = e.getLower
   def upper: Int = e.getUpper
 }

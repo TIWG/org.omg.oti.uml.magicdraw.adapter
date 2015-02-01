@@ -10,8 +10,8 @@ trait MagicDrawUMLClassifier extends UMLClassifier[MagicDrawUML] with MagicDrawU
   implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def attribute: Seq[UMLProperty[Uml]] = e.getAttribute.toSeq
+  def attributes = e.getAttribute.toSeq
   
-  def classifierOfInstanceSpecifications: Set[UMLInstanceSpecification[Uml]] = umlInstanceSpecification( e.get_instanceSpecificationOfClassifier.toSet )
+  def instanceSpecifications: Set[UMLInstanceSpecification[Uml]] = umlInstanceSpecification( e.get_instanceSpecificationOfClassifier.toSet )
   
 }
