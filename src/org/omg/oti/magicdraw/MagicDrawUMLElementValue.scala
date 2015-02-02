@@ -22,6 +22,6 @@ trait MagicDrawUMLElementValue extends MagicDrawUMLValueSpecification {
     
   override def referenceMetaProperties: MetaPropertyFunctions =
     valueSpecification_referenceMetaProperties ++
-    Seq( MetaPropertyFunction[MagicDrawUMLElementValue, UMLElement[Uml]]( "element", _.element ) )
+    Seq( MetaPropertyReference[MagicDrawUMLElementValue, UMLElement[Uml]]( "element", _.element ) )
     
 }

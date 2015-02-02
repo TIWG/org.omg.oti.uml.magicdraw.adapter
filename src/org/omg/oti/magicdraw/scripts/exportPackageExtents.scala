@@ -37,11 +37,48 @@ import org.omg.oti._
 import org.omg.oti.canonicalXMI._
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
+import org.apache.xml.resolver.CatalogManager
+import com.nomagic.magicdraw.core.project.ProjectsManager
+import javax.swing.JFileChooser
+import javax.swing.filechooser.FileFilter
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov
  */
 object exportPackageExtents {
+
+  def chooseCatalogFile: Option[File] = {
+
+    val ff = new FileFilter() {
+
+      def getDescription: String = "*.catalog.xml"
+
+      def accept( f: File ): Boolean =
+        f.isDirectory() ||
+          ( f.isFile() && f.getName.endsWith( ".catalog.xml" ) )
+
+    }
+
+    val mdInstallDir = new File( ApplicationEnvironment.getInstallRoot )
+    val fc = new JFileChooser( mdInstallDir ) {
+
+      override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
+
+      override def getDialogTitle = "Select a *.catalog.xml file"
+    }
+
+    fc.setFileFilter( ff )
+    fc.setFileHidingEnabled( true )
+    fc.setAcceptAllFileFilterUsed( false )
+
+    fc.showOpenDialog( Application.getInstance().getMainFrame ) match {
+      case JFileChooser.APPROVE_OPTION =>
+        val migrationFile = fc.getSelectedFile
+        Some( migrationFile )
+      case _ =>
+        None
+    }
+  }
 
   def doit(
     p: Project, ev: ActionEvent,
@@ -85,9 +122,9 @@ object exportPackageExtents {
       case ne: UMLNamedElement[Uml] =>
         val neQName = ne.qualifiedName.get
         DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
-        DynamicScriptsPlugin.wildCardMatch( neQName, "*::OTI::*" ) ||
-        DynamicScriptsPlugin.wildCardMatch( neQName, "*OMG*" ) ||
-        DynamicScriptsPlugin.wildCardMatch( neQName, "Specifications::*" )
+          DynamicScriptsPlugin.wildCardMatch( neQName, "*::OTI::*" ) ||
+          DynamicScriptsPlugin.wildCardMatch( neQName, "*OMG*" ) ||
+          DynamicScriptsPlugin.wildCardMatch( neQName, "Specifications::*" )
 
       case e =>
         false
@@ -136,11 +173,28 @@ object exportPackageExtents {
         d
       }
 
+      val catalog = new CatalogManager()
+      val mapper = new CatalogURIMapper( catalog )
+
+      val omgCatalogFile = new File( new File( ApplicationEnvironment.getInstallRoot ).toURI.resolve( "dynamicScripts/org.omg.oti/omgCatalog/omg.local.catalog.xml" ) )
+      if ( omgCatalogFile.exists() )
+        mapper.parseCatalog( omgCatalogFile.toURI )
+      else
+        chooseCatalogFile match {
+          case None => ()
+          case Some( catalogFile ) =>
+            mapper.parseCatalog( catalogFile.toURI ) match {
+              case Failure( t ) => return Failure( t )
+              case Success( _ ) => ()
+            }
+        }
+
       val ds = DocumentSet(
         serializableDocuments = selectedDocuments.toSet,
-        builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ) )
+        builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ),
+        catalogURIMapper = mapper )
 
-      val ( g, unresolved ) = ds.externalReferenceDocumentGraph( ignoreCrossReferencedElementFilter )
+      val ( g, element2document, unresolved ) = ds.externalReferenceDocumentGraph( ignoreCrossReferencedElementFilter )
       guiLog.log( s"Graph: ${g}" )
 
       if ( unresolved.nonEmpty ) {
@@ -168,7 +222,7 @@ object exportPackageExtents {
       }
       else {
 
-        ds.serialize match {
+        ds.serialize( g, element2document ) match {
           case Success( _ ) =>
             guiLog.log( s"Done..." )
             Success( None )
