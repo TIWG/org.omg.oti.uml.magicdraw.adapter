@@ -7,7 +7,6 @@ import scala.collection.JavaConversions._
 trait MagicDrawUMLBehavioralFeature extends UMLBehavioralFeature[MagicDrawUML] with MagicDrawUMLFeature with MagicDrawUMLNamespace {
   override protected def e: Uml#BehavioralFeature
   
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
   def ownedParameters = umlParameter(e.getOwnedParameter).toSeq
