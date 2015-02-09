@@ -192,7 +192,8 @@ object exportPackageExtents {
       val ds = DocumentSet(
         serializableDocuments = selectedDocuments.toSet,
         builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ),
-        catalogURIMapper = mapper )
+        catalogURIMapper = mapper,
+        valueSpecificationTagConverter = DocumentSet.serializeValueSpecificationAsTagValue[Uml] _ )
 
       val ( g, element2document, unresolved ) = ds.externalReferenceDocumentGraph( ignoreCrossReferencedElementFilter )
       guiLog.log( s"Graph: ${g}" )

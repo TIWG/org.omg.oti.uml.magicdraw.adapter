@@ -20,7 +20,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   protected def e: Uml#Element
 
   def getMagicDrawElement = e
-  
+
   override def ownedComments = e.getOwnedComment.toSeq
   override def annotatedElementOfComments = e.get_commentOfAnnotatedElement.toSeq
 
@@ -42,8 +42,27 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def id: String = e.getID
 
   override def uuid: Option[String] = Some( UUIDRegistry.getUUID( e ) )
-  
+
   override def hasStereotype( s: UMLStereotype[Uml] ) = s.isStereotypeApplied( e )
+
+  /**
+   * MagicDraw's representation of applied stereotypes on an element E involves a special InstanceSpecification IS owned by E.
+   * The applied stereotypes are the classifiers of IS.
+   * Values of stereotype properties other than ends of the stereotype's extension are represented in slots of IS.
+   * There is no slot corresponding to the "base_<metaclass>" properties of the stereotype's extensions.
+   * This means that we have to calculate what these "base_<metaclass>" properties are for each applied stereotype (i.e., classifier of E's IS).
+   */
+  override def getAppliedStereotypes: Map[UMLStereotype[Uml], UMLProperty[Uml]] = {
+    val eMetaclass = e.getClassType
+    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] map { s =>
+      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, false ) filter { p =>
+        val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
+        eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
+      }
+      require( metaProperties.nonEmpty )
+      ( umlStereotype(s) -> umlProperty(metaProperties.head) )
+    } toMap
+  }
 
   override def isAncestorOf( other: UMLElement[Uml] ) =
     ( e == other.e ) ||
