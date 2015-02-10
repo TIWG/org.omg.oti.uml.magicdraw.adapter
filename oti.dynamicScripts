@@ -138,6 +138,23 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.exportPackageExtents
               method: doit
           )
+          
+          DiagramContextMenuAction(
+              name: 'Check primary package selection can access secondary package selection'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Check primary package selection cannot access secondary package selection'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionCannotAccessSecondaryPackageSelection
+              method: doit
+          )
 })
           
 dynamicScripts(
