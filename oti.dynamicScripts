@@ -123,6 +123,14 @@ dynamicScripts(
               method: doit
           )
           BrowserContextMenuAction(
+              name: 'Set OTI xmi:uuids for Package Extent'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.setOTIUUIDs
+              method: doit
+          )
+          BrowserContextMenuAction(
               name: 'Migrate Package Extent xmi:ids'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
@@ -135,7 +143,7 @@ dynamicScripts(
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/o
-              class: org.omg.oti.magicdraw.scripts.exportPackageExtents
+              class: org.omg.oti.magicdraw.scripts.exportPackageExtents2OTICanonicalXMI
               method: doit
           )
           
@@ -155,15 +163,62 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionCannotAccessSecondaryPackageSelection
               method: doit
           )
+          
+          DiagramContextMenuAction(
+              name: 'Check primary package selection can access secondary profile selection'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionCanAccessSecondaryProfileSelection
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Check primary package selection cannot access secondary profile selection'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionCannotAccessSecondaryProfileSelection
+              method: doit
+          )          
+          DiagramContextMenuAction(
+              name: 'Check primary package selection does not reference members of secondary package selection'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSelection
+              method: doit
+          )   
+          BrowserContextMenuAction(
+              name: 'Generate Catalog URI Mapping for built-in Document Package'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.generateCatalogURIMappingForBuiltInDocument
+              method: doit
+          )         
 })
           
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Model ]
+      scripts {
+          BrowserContextMenuAction(
+              name: 'Generate Catalog URI Mapping for built-in Document Model'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.generateCatalogURIMappingForBuiltInDocument
+              method: doit
+          )         
+})
+
 dynamicScripts(
       name='OMG Tool Infrastructure'
       [ m: Profile ]
       scripts {
 
           BrowserContextMenuAction(
-              name: 'Compute Package Extent xmi:ids'
+              name: 'Compute Profile Extent xmi:ids'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/w
@@ -171,7 +226,7 @@ dynamicScripts(
               method: doit
           )
           BrowserContextMenuAction(
-              name: 'Change Package Extent xmi:ids'
+              name: 'Change Profile Extent xmi:ids'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/w
@@ -179,7 +234,15 @@ dynamicScripts(
               method: doit
           )
           BrowserContextMenuAction(
-              name: 'Migrate Package Extent xmi:ids'
+              name: 'Set OTI xmi:uuids for Profile Extent'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.setOTIUUIDs
+              method: doit
+          )
+          BrowserContextMenuAction(
+              name: 'Migrate Profile Extent xmi:ids'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/o
@@ -187,11 +250,153 @@ dynamicScripts(
               method: doit
           )
           BrowserContextMenuAction(
-              name: 'Export Selected Packages to OMG TI Canonical XMI'
+              name: 'Export Selected Profiles to OMG TI Canonical XMI'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/o
-              class: org.omg.oti.magicdraw.scripts.exportPackageExtents
+              class: org.omg.oti.magicdraw.scripts.exportPackageExtents2OTICanonicalXMI
+              method: doit
+          )          
+          BrowserContextMenuAction(
+              name: 'Generate Catalog URI Mapping for built-in Document Profile'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/o
+              class: org.omg.oti.magicdraw.scripts.generateCatalogURIMappingForBuiltInDocument
               method: doit
           )          
 })
+
+characterization(
+	name='Namespace (OMG Tool Infrastructure)'
+	[ m: Namespace ]
+	features {	
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::importedPackages'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: importedPackages
+        )        
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::allImportedPackages'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: allImportedPackages
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::importedMembers'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: importedMembers
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::visibleMembers'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: visibleMembers
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::allVisibleMembers'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: allVisibleMembers
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Namespace::accessibleMembers'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: accessibleMembers
+        )
+    })
+    
+characterization(
+	name='Package (OMG Tool Infrastructure)'
+	[ m: Package ]
+	features {
+		EarlyDerivedProperty(
+			name: 'OTI Package::allApplicableStereotypes'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: allApplicableStereotypes
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Package::allNestingPackages'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: allNestingPackages
+        )
+        
+		EarlyDerivedProperty(
+			name: 'OTI Package::allProfileApplications'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: allProfileApplications
+        )
+        
+		EarlyDerivedProperty(
+			name: 'OTI Package::allAppliedProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: allAppliedProfiles
+        )
+		EarlyDerivedProperty(
+			name: 'OTI Package::accessibleMembersIncludingAllAppliedProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: accessibleMembersIncludingAllAppliedProfiles
+        )
+	})
+
+characterization(
+	name='Profile (OMG Tool Infrastructure)'
+	[ m: Profile ]
+	features {	        
+		EarlyDerivedProperty(
+			name: 'OTI Profile::allImportedProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ProfileInspectorWidget
+            method: allImportedProfiles
+        )
+        
+		EarlyDerivedProperty(
+			name: 'OTI Profile::allNestedProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ProfileInspectorWidget
+            method: allNestedProfiles
+        )
+        
+		EarlyDerivedProperty(
+			name: 'OTI Profile::allVisibleProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ProfileInspectorWidget
+            method: allVisibleProfiles
+        )
+	})

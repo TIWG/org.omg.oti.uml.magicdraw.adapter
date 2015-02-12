@@ -71,7 +71,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         case Some( parent ) => isAncestorOf( parent )
       } )
 
-  def mofMetaclass: UMLClass[Uml] = StereotypesHelper.getBaseClass( e )
+  def mofMetaclassName: String = StereotypesHelper.getBaseClass( e ).getName
 
   def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
     Option.apply( e.getAppliedStereotypeInstance ) match {

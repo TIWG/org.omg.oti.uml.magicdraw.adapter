@@ -5,13 +5,17 @@ import scala.reflect.runtime.universe
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-
+import com.nomagic.magicdraw.core.Application
+import com.nomagic.magicdraw.core.ApplicationEnvironment
 import com.nomagic.magicdraw.core.Project
-
 import org.omg.oti.UMLElement
 import org.omg.oti.UMLNamedElement
 import org.omg.oti.UMLStereotype
 import org.omg.oti.UMLUtil
+import java.io.File
+import javax.swing.JFileChooser
+import javax.swing.filechooser.FileFilter
+import org.apache.xml.resolver.CatalogManager
 
 case class MagicDrawUMLUtil( val project: Project )
   extends MagicDrawUMLOps with UMLUtil[MagicDrawUML] { self =>
@@ -19,6 +23,39 @@ case class MagicDrawUMLUtil( val project: Project )
   type Uml = MagicDrawUML
 
   import self._
+
+  def chooseCatalogFile(title: String = "Select a *.catalog.xml file"): Option[File] = {
+
+    val ff = new FileFilter() {
+
+      def getDescription: String = "*.catalog.xml"
+
+      def accept( f: File ): Boolean =
+        f.isDirectory() ||
+          ( f.isFile() && f.getName.endsWith( ".catalog.xml" ) )
+
+    }
+
+    val mdInstallDir = new File( ApplicationEnvironment.getInstallRoot )
+    val fc = new JFileChooser( mdInstallDir ) {
+
+      override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
+
+      override def getDialogTitle = title
+    }
+
+    fc.setFileFilter( ff )
+    fc.setFileHidingEnabled( true )
+    fc.setAcceptAllFileFilterUsed( false )
+
+    fc.showOpenDialog( Application.getInstance().getMainFrame ) match {
+      case JFileChooser.APPROVE_OPTION =>
+        val migrationFile = fc.getSelectedFile
+        Some( migrationFile )
+      case _ =>
+        None
+    }
+  }
 
   override def cacheLookupOrUpdate( md: Uml#Element ) = md match {
     case null => null

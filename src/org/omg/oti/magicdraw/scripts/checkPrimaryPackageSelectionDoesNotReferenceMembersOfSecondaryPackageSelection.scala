@@ -30,7 +30,7 @@ import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
  *
  * @author Nicolas.F.Rouquette@jpl.nasa.gov
  */
-object checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection {
+object checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSelection {
 
   def doit(
     p: Project,
@@ -50,7 +50,7 @@ object checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection {
     
     val secondaryPackages = (selection.toSet - triggerView).toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } )
     
-    checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection( umlUtil, triggerElement, secondaryPackages )
+    checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSelection( umlUtil, triggerElement, secondaryPackages )
     
     Success( None )
   }
@@ -73,13 +73,13 @@ object checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection {
     
     val secondaryPackages = (selection.toSet - triggerView).toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } )
     
-    checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection( umlUtil, triggerElement, secondaryPackages )
+    checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSelection( umlUtil, triggerElement, secondaryPackages )
     
     Success( None )
   }
       
       
-  def checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection(
+  def checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSelection(
       umlUtil: MagicDrawUMLUtil, 
       primaryPkg: UMLPackage[MagicDrawUML], 
       secondaryPkgs: Iterable[UMLPackage[MagicDrawUML]] ): Unit = {
@@ -88,17 +88,25 @@ object checkPrimaryPackageSelectionCanAccessSecondaryPackageSelection {
     val app = Application.getInstance()
     val guiLog = app.getGUILog()
 
-    val primaryAccessible = primaryPkg.accessibleMembers
-    val secondaryContents = secondaryPkgs.flatMap (_.allOwnedElements.selectByKindOf { case pe: UMLPackageableElement[Uml] => pe } toSet) toSet
-    val secondaryVisible = secondaryPkgs.flatMap (_.allVisibleMembers) toSet
+    val primaryAccessible = primaryPkg.allVisibleMembers
+    val primaryAndAppliedProfiles = Set(primaryPkg) ++ primaryPkg.allAppliedProfiles
+    val primaryImported = primaryAndAppliedProfiles.flatMap (_.allImportedPackages) toSet
     
-    val excluded = (secondaryContents & secondaryVisible) -- primaryAccessible
-    guiLog.log(s"OK?: ${excluded.isEmpty}")
+    val secondaryExceptPrimaryOrImported = secondaryPkgs.toSet -- primaryImported
+    guiLog.log(s"secondaryExceptPrimaryOrImported: ${secondaryExceptPrimaryOrImported.size}")
+    secondaryExceptPrimaryOrImported.foreach { p => guiLog.log(s" - ${p.qualifiedName.get}") }
+    
+    val secondaryContents = secondaryExceptPrimaryOrImported.flatMap (_.allOwnedElements.selectByKindOf { case pe: UMLPackageableElement[Uml] => pe } toSet) toSet
+    val secondaryVisible = secondaryExceptPrimaryOrImported.flatMap (_.allVisibleMembers) toSet
         
-    excluded.foreach { e =>
+    val shouldBeImported = (secondaryContents & secondaryVisible) & primaryAccessible
+    guiLog.log(s"OK?: ${shouldBeImported.isEmpty}")
+    
+    shouldBeImported.foreach { e =>
       val mdE = e.getMagicDrawElement
       val link=s"${mdE.getHumanType}: ${mdE.getHumanName}"
-      guiLog.addHyperlinkedText(s" should be accessible: <A>${link}</A>", Map(link-> new SelectInContainmentTreeRunnable( mdE ) ) )
+      guiLog.addHyperlinkedText(s" should be imported: <A>${link}</A>", Map(link-> new SelectInContainmentTreeRunnable( mdE ) ) )
     }
+
   }
 }
