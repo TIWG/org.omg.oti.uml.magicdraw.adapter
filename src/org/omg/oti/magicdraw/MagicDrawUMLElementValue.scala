@@ -24,4 +24,9 @@ trait MagicDrawUMLElementValue extends MagicDrawUMLValueSpecification {
     valueSpecification_referenceMetaProperties ++
     Seq( MetaPropertyReference[MagicDrawUMLElementValue, UMLElement[Uml]]( "element", _.element ) )
     
+  override def asForwardReferencesToImportableOuterPackageableElements: Set[UMLPackageableElement[Uml]] = 
+    element.fold(Set[UMLPackageableElement[Uml]]())(_.asForwardReferencesToImportableOuterPackageableElements)
+
+  override def forwardReferencesFromStereotypeTagValue: Set[UMLElement[Uml]] = 
+    element.toSet
 }

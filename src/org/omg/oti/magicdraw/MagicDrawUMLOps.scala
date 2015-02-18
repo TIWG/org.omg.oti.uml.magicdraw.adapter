@@ -253,7 +253,9 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
       
     BuiltInDocument(
         uri=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
+        nsPrefix="PrimitiveTypes",
         scope=mdPrimitiveTypesPkg,
+        builtInURI=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
         builtInExtent=mdPrimitiveTypesExtent )( this )
   }
   
@@ -267,7 +269,9 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
       
     BuiltInDocument(
         uri=new URI("http://www.omg.org/spec/UML/20131001"),
+        nsPrefix="uml",
         scope=mdUMLPkg,
+        builtInURI=new URI("http://www.omg.org/spec/UML/20131001"),
         builtInExtent=mdUMLExtent )( this )
   }
   
@@ -283,7 +287,9 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
       
     BuiltInDocument(
         uri=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
+        nsPrefix="StandardProfile",
         scope=mdStandardProfile,
+        builtInURI=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
         builtInExtent=mdStandardProfileExtent )( this )
   }
 }

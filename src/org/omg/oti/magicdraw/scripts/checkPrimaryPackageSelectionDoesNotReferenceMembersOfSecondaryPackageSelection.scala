@@ -88,16 +88,16 @@ object checkPrimaryPackageSelectionDoesNotReferenceMembersOfSecondaryPackageSele
     val app = Application.getInstance()
     val guiLog = app.getGUILog()
 
-    val primaryAccessible = primaryPkg.allVisibleMembers
-    val primaryAndAppliedProfiles = Set(primaryPkg) ++ primaryPkg.allAppliedProfiles
-    val primaryImported = primaryAndAppliedProfiles.flatMap (_.allImportedPackages) toSet
+    val primaryAccessible = primaryPkg.allVisibleMembersTransitively
+    val primaryAndAppliedProfiles = Set(primaryPkg) ++ primaryPkg.allIndirectlyAppliedProfilesIncludingNestingPackagesTransitively
+    val primaryScope = primaryPkg.allDirectlyImportedPackagesIncludingNestingPackagesTransitively ++ primaryPkg.allImportedPackagesTransitively ++ primaryAndAppliedProfiles
     
-    val secondaryExceptPrimaryOrImported = secondaryPkgs.toSet -- primaryImported
+    val secondaryExceptPrimaryOrImported = secondaryPkgs.toSet -- primaryScope
     guiLog.log(s"secondaryExceptPrimaryOrImported: ${secondaryExceptPrimaryOrImported.size}")
     secondaryExceptPrimaryOrImported.foreach { p => guiLog.log(s" - ${p.qualifiedName.get}") }
     
     val secondaryContents = secondaryExceptPrimaryOrImported.flatMap (_.allOwnedElements.selectByKindOf { case pe: UMLPackageableElement[Uml] => pe } toSet) toSet
-    val secondaryVisible = secondaryExceptPrimaryOrImported.flatMap (_.allVisibleMembers) toSet
+    val secondaryVisible = secondaryExceptPrimaryOrImported.flatMap (_.allVisibleMembersTransitively) toSet
         
     val shouldBeImported = (secondaryContents & secondaryVisible) & primaryAccessible
     guiLog.log(s"OK?: ${shouldBeImported.isEmpty}")

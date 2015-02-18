@@ -1,38 +1,31 @@
 package org.omg.oti.magicdraw.scripts
 
 import java.awt.event.ActionEvent
-import scala.collection.JavaConversions._
+
+import scala.Iterable
 import scala.language.implicitConversions
 import scala.language.postfixOps
+import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
+
 import com.nomagic.magicdraw.core.Application
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.magicdraw.ui.browser.Node
 import com.nomagic.magicdraw.ui.browser.Tree
-import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
+import com.nomagic.uml2.ext.magicdraw.auxiliaryconstructs.mdmodels.Model
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
+
+import org.omg.oti.UMLClass
+import org.omg.oti.UMLExtension
+import org.omg.oti.UMLPrimitiveType
+import org.omg.oti.UMLStereotype
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
+
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
-import org.omg.oti._
-import org.omg.oti.migration.Metamodel
-import com.nomagic.magicdraw.core.ApplicationEnvironment
-import java.io.File
-import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.xmi.XMLResource
-import scala.util.Failure
-import com.nomagic.magicdraw.uml.UUIDRegistry
-import com.nomagic.magicdraw.core.utils.ChangeElementID
-import com.nomagic.task.RunnableWithProgress
-import com.nomagic.task.ProgressStatus
-import com.nomagic.magicdraw.ui.MagicDrawProgressStatusRunner
-import com.nomagic.magicdraw.core.ProjectUtilitiesInternal
-import java.util.UUID
-import com.nomagic.ci.persistence.local.spi.localproject.LocalPrimaryProject
-import com.nomagic.uml2.ext.magicdraw.auxiliaryconstructs.mdmodels.Model
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov

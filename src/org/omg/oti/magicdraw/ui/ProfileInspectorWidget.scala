@@ -34,7 +34,7 @@ object ProfileInspectorWidget {
           
     umlElement( e ) match { 
       case pf: UMLProfile[Uml] =>
-        val apf = pf.allImportedProfiles.toSeq.sortBy { pf => pf.qualifiedName.get }
+        val apf = pf.allImportedProfilesTransitively.toSeq.sortBy { pf => pf.qualifiedName.get }
         Success( apf.map { pf => ReferenceNodeInfo( pf.name.get, pf.getMagicDrawElement ) } )
         
       case x =>
@@ -52,7 +52,7 @@ object ProfileInspectorWidget {
           
     umlElement( e ) match { 
       case pf: UMLProfile[Uml] =>
-        val apf = pf.allNestedProfiles.toSeq.sortBy { pf => pf.qualifiedName.get }
+        val apf = pf.allNestedProfilesTransitively.toSeq.sortBy { pf => pf.qualifiedName.get }
         Success( apf.map { pf => ReferenceNodeInfo( pf.name.get, pf.getMagicDrawElement ) } )
         
       case x =>
@@ -69,7 +69,7 @@ object ProfileInspectorWidget {
           
     umlElement( e ) match { 
       case pf: UMLProfile[Uml] =>
-        val apf = pf.allVisibleProfiles.toSeq.sortBy { pf => pf.qualifiedName.get }
+        val apf = pf.allVisibleProfilesTransitively.toSeq.sortBy { pf => pf.qualifiedName.get }
         Success( apf.map { pf => ReferenceNodeInfo( pf.name.get, pf.getMagicDrawElement ) } )
         
       case x =>

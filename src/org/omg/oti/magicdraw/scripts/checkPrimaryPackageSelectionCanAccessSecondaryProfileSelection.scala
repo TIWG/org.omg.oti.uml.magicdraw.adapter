@@ -88,9 +88,9 @@ object checkPrimaryPackageSelectionCanAccessSecondaryProfileSelection {
     val app = Application.getInstance()
     val guiLog = app.getGUILog()
 
-    val primaryAccessible = primaryPkg.allAppliedProfiles.flatMap(_.allVisibleMembers)
+    val primaryAccessible = primaryPkg.allIndirectlyAppliedProfilesIncludingNestingPackagesTransitively.flatMap(_.allVisibleMembersTransitively)
     val secondaryContents = secondaryProfilesOrPackages.flatMap (_.allOwnedElements.selectByKindOf { case pe: UMLPackageableElement[Uml] => pe } toSet) toSet
-    val secondaryVisible = secondaryProfilesOrPackages.flatMap (_.allVisibleMembers) toSet
+    val secondaryVisible = secondaryProfilesOrPackages.flatMap (_.allVisibleMembersTransitively) toSet
     
     val excluded = (secondaryContents & secondaryVisible) -- primaryAccessible
     guiLog.log(s"OK?: ${excluded.isEmpty}")

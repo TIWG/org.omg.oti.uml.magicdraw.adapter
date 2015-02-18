@@ -8,6 +8,8 @@ trait MagicDrawUMLPackage extends UMLPackage[MagicDrawUML] with MagicDrawUMLName
 
   import ops._
 
+  def getMagicDrawPackage = e
+  
   def URI = e.getURI match {
     case null => None
     case ""   => None

@@ -88,9 +88,9 @@ object checkPrimaryPackageSelectionCannotAccessSecondaryPackageSelection {
     val app = Application.getInstance()
     val guiLog = app.getGUILog()
 
-    val primaryAccessible = primaryPkg.accessibleMembers
+    val primaryAccessible = primaryPkg.allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles
     val secondaryContents = secondaryPkgs.flatMap (_.allOwnedElements.selectByKindOf { case pe: UMLPackageableElement[Uml] => pe } toSet) toSet
-    val secondaryVisible = secondaryPkgs.flatMap (_.allVisibleMembers) toSet
+    val secondaryVisible = secondaryPkgs.flatMap (_.allVisibleMembersTransitively) toSet
         
     val included = (secondaryContents & secondaryVisible) & primaryAccessible
     guiLog.log(s"OK?: ${included.isEmpty}")
