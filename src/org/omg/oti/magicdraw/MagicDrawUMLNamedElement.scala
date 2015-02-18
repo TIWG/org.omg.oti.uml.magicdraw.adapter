@@ -9,7 +9,12 @@ trait MagicDrawUMLNamedElement extends UMLNamedElement[MagicDrawUML] with MagicD
   
   import ops._
   
-  def name = Option.apply( e.getName )  
+  def name = e.getName match {
+    case null => None
+    case "" => None
+    case n => Some(n)
+  }
+  
   def setName( name: String ) = e.setName( name )
   
   def qualifiedName = Option.apply( e.getQualifiedName )
