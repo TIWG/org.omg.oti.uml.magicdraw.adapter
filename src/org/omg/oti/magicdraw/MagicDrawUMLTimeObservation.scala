@@ -10,4 +10,13 @@ trait MagicDrawUMLTimeObservation
   override protected def e: Uml#TimeObservation
   import ops._
 
+  override def event = 
+    Option.apply( e.getEvent )
+    
+  override def firstEvent =
+    e.isFirstEvent() match {
+    case true => None
+    case false => Some( false )
+  }
+  
 }

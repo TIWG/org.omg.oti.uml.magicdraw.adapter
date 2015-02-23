@@ -18,8 +18,16 @@ trait MagicDrawUMLInstanceSpecification
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean = e == e.getOwner.getAppliedStereotypeInstance
   
-  def specification = Option.apply( e.getSpecification )
-  def slots = e.getSlot.toIterable
-  def classifiers = e.getClassifier.toIterable
-  def instanceValues = e.get_instanceValueOfInstance.toIterable
+  override def specification = 
+    Option.apply( e.getSpecification )
+    
+  override def slot = 
+    e.getSlot.toSet[Uml#Slot]
+  
+  override def classifier = 
+    e.getClassifier.toIterable
+  
+  override def instance_instanceValue =
+    e.get_instanceValueOfInstance.toSet[Uml#InstanceValue]
+  
 }

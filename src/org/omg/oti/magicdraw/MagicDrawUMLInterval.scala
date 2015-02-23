@@ -9,4 +9,11 @@ trait MagicDrawUMLInterval
 
   override protected def e: Uml#Interval
   import ops._
+  
+  override def max = 
+    Option.apply( e.getMax )
+    
+  override def min =
+    Option.apply( e.getMin )
+
 }

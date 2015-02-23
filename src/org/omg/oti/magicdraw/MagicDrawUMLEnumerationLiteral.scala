@@ -11,5 +11,5 @@ trait MagicDrawUMLEnumerationLiteral
   import ops._
     
   override def classifier = Iterable(e.getEnumeration)
-  
+
 }

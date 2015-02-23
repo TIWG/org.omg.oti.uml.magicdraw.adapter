@@ -63,7 +63,7 @@ object inspectAssociations {
     val selectedAssociations = selection.toIterator selectByKindOf ( { case a: AssociationView => umlAssociation( a.getAssociation ) } ) toList;
     
     selectedAssociations foreach { a =>      
-      a.memberEnds.toList match {
+      a.memberEnd.toList match {
         case end1 :: end2 :: Nil => inspectAssociation( umlUtil, a, end1, end2 )
         case _                   => ()
       }
@@ -92,7 +92,7 @@ object inspectAssociations {
 
     val selectedAssociations = selection.toIterator selectByKindOf ( { case a: Uml#Association => umlAssociation( a ) } ) toList;
     selectedAssociations foreach { a =>
-      a.ownedEnds.toList match {
+      a.ownedEnd.toList match {
         case end1 :: end2 :: Nil => inspectAssociation( umlUtil, a, end1, end2 )
         case _                   => ()
       }

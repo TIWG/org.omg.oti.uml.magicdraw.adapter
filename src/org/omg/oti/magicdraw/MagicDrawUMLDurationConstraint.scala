@@ -1,5 +1,8 @@
 package org.omg.oti.magicdraw
 
+import scala.collection.JavaConversions._
+import scala.language.postfixOps
+
 import org.omg.oti._
 import org.omg.oti.operations._
 
@@ -10,4 +13,7 @@ trait MagicDrawUMLDurationConstraint
   override protected def e: Uml#DurationConstraint
   import ops._
 
+  override def firstEvent =
+    e.isFirstEvent map ((b) => if (b) true else false) toSeq
+    
 }

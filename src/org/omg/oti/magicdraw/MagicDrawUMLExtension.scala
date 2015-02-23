@@ -11,7 +11,7 @@ trait MagicDrawUMLExtension
   import ops._
   
   override def ownedEnd = {
-    val extensionOwnedEnds = super[MagicDrawUMLAssociation].ownedEnds.selectByKindOf { case ee: UMLExtensionEnd[Uml] => ee }
+    val extensionOwnedEnds = super[MagicDrawUMLAssociation].ownedEnd.selectByKindOf { case ee: UMLExtensionEnd[Uml] => ee }
     require( extensionOwnedEnds.size <= 1 )
     extensionOwnedEnds
   }

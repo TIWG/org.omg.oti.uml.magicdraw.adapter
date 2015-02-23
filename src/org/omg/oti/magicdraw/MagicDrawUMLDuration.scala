@@ -1,5 +1,7 @@
 package org.omg.oti.magicdraw
 
+import scala.collection.JavaConversions._
+
 import org.omg.oti._
 import org.omg.oti.operations._
 
@@ -10,4 +12,16 @@ trait MagicDrawUMLDuration
   override protected def e: Uml#Duration
   import ops._
 
+  override def expr =
+    Option.apply( e.getExpr ) 
+    
+  override def observation =
+    e.getObservation.toSet[Uml#Observation]
+  
+  override def max_durationInterval =
+    e.get_durationIntervalOfMax.toIterable
+    
+  override def min_durationInterval =
+    e.get_durationIntervalOfMin.toIterable
+    
 }

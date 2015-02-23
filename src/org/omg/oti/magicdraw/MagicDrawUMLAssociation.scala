@@ -14,8 +14,16 @@ trait MagicDrawUMLAssociation
   import ops._
   
   override def isDerived = e.isDerived
-  def ownedEnds = e.getOwnedEnd.toIterable
-  def navigableOwnedEnds = e.getNavigableOwnedEnd.toIterable
-  def memberEnds = e.getMemberEnd.toIterable
-  def endTypes = e.getEndType.toIterable
+  
+  override def ownedEnd = e.getOwnedEnd.toIterable
+  
+  override def navigableOwnedEnd = e.getNavigableOwnedEnd.toSet[Uml#Property]
+  
+  override def memberEnd = e.getMemberEnd.toSeq
+  
+  override def type_connector = e.get_connectorOfType.toSet[Uml#Connector]
+    
+  override def association_clearAssociationAction =
+    Option.apply( e.get_clearAssociationActionOfAssociation )
+
 }

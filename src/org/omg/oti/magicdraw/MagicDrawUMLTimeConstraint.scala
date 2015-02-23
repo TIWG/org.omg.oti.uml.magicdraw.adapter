@@ -10,4 +10,11 @@ trait MagicDrawUMLTimeConstraint
   override protected def e: Uml#TimeConstraint
   import ops._
 
+  override def firstEvent =
+    if (e.isFirstEvent) None
+    else Some( false )
+    
+  override def timeConstraint_specification =
+    Option.apply( e.getSpecification )
+    
 }

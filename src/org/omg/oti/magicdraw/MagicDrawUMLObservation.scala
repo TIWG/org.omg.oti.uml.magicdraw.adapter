@@ -10,4 +10,10 @@ trait MagicDrawUMLObservation
   override protected def e: Uml#Observation
   import ops._
 
+  override def observation_timeExpression =
+    Option.apply( e.get_timeExpressionOfObservation )
+    
+  override def observation_duration =
+    Option.apply( e.get_durationOfObservation )
+    
 }
