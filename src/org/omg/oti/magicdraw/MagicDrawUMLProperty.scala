@@ -22,16 +22,17 @@ trait MagicDrawUMLProperty
     
   def defaultValue = Option.apply( e.getDefaultValue )
   
-  override def opposite = association_memberEnd match {
+  override def opposite = association match {
     case None => None
     case Some( a ) => a.memberEnd filter (_ != this) headOption
   }
   
-  def association_navigableOwnedEnd = Option.apply( e.get_associationOfNavigableOwnedEnd )
+  override def navigableOwnedEnd_association = Option.apply( e.get_associationOfNavigableOwnedEnd )
   
-  def association_memberEnd = Option.apply( e.getAssociation )
+  override def association = Option.apply( e.getAssociation )
    
+  override def associationEnd = Option.apply( e.getAssociationEnd )
+  
   override def subsettedProperty = e.getSubsettedProperty.toSet[Uml#Property]
-  override def redefinedProperty = e.getRedefinedProperty.toSet[Uml#Property]
   
 }

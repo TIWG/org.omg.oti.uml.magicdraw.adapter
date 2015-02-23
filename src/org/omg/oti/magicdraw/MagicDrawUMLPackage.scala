@@ -21,4 +21,11 @@ trait MagicDrawUMLPackage
     case ""   => None
     case uri  => Some( uri )
   }
+  
+  def importedPackage_packageImport: Set[UMLPackageImport[Uml]] = 
+    e.get_packageImportOfImportedPackage.toSet[Uml#PackageImport]
+  
+  def mergedPackage_packageMerge: Set[UMLPackageMerge[Uml]] = 
+    e.get_packageMergeOfMergedPackage.toSet[Uml#PackageMerge]
+  
 }
