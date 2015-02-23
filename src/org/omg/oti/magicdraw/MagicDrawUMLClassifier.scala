@@ -15,6 +15,8 @@ trait MagicDrawUMLClassifier
   override protected def e: Uml#Classifier
   import ops._
     
+  override def templateParameter: Option[UMLClassifierTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )
+    
   override def attribute = e.getAttribute.toSeq
   
   override def inheritedMember = e.getInheritedMember.toSet[Uml#NamedElement]
@@ -28,8 +30,6 @@ trait MagicDrawUMLClassifier
   override def powertypeExtent = e.getPowertypeExtent.toSet[Uml#GeneralizationSet]
   
   override def representation = Option.apply(e.getRepresentation)
-  
-  override def classifier_templateParameter = Option.apply( e.getTemplateParameter )
   
   override def useCase = e.getUseCase.toSet[Uml#UseCase]
   

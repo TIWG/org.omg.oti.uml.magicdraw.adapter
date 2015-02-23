@@ -12,7 +12,7 @@ trait MagicDrawUMLParameterableElement
   override protected def e: Uml#ParameterableElement
   import ops._
 
-  override def templateParameter = Option.apply( e.getTemplateParameter )
+  override def templateParameter: Option[UMLTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )
   
   override def actual_templateParameterSubstitution = e.get_templateParameterSubstitutionOfActual.toIterable
   
