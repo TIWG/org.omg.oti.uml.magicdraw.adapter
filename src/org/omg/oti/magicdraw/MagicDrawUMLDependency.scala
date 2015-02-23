@@ -1,14 +1,16 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLDependency
+import scala.collection.JavaConversions._
+import org.omg.oti._
+import org.omg.oti.operations._
 
 trait MagicDrawUMLDependency 
-extends UMLDependency[MagicDrawUML] 
-with MagicDrawUMLDirectedRelationship 
-with MagicDrawUMLPackageableElement {
+  extends UMLDependency[MagicDrawUML]
+  with MagicDrawUMLPackageableElement
+  with MagicDrawUMLDirectedRelationship {
+
   override protected def e: Uml#Dependency
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
-  
+
+  override def roleBinding_collaborationUse = Option.apply( e.get_collaborationUseOfRoleBinding )
 }

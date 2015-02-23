@@ -1,11 +1,14 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLFeature
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLFeature extends UMLFeature[MagicDrawUML] with MagicDrawUMLRedefinableElement {
+trait MagicDrawUMLFeature 
+  extends UMLFeature[MagicDrawUML]
+  with MagicDrawUMLRedefinableElement {
+
   override protected def e: Uml#Feature
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
-  
+
+  override def isStatic = e.isStatic
 }

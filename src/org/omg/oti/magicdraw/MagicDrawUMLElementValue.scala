@@ -1,11 +1,14 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLElementValue extends MagicDrawUMLValueSpecification {
-  override protected def e: Uml#ElementValue
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLElementValue 
+  extends MagicDrawUMLValueSpecification {
   
+  override protected def e: Uml#ElementValue
   import ops._
   
   def element: Option[UMLElement[Uml]] = Option.apply( e.getElement )

@@ -1,16 +1,18 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLDirectedRelationship
-
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLDirectedRelationship extends UMLDirectedRelationship[MagicDrawUML] with MagicDrawUMLRelationship {
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLDirectedRelationship 
+  extends UMLDirectedRelationship[MagicDrawUML]
+  with MagicDrawUMLRelationship {
+
   override protected def e: Uml#DirectedRelationship
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def sources = e.getSource.toIterable
-  def targets = e.getTarget.toIterable
+  def source = e.getSource.toSet[Uml#Element]
+  def target = e.getTarget.toSet[Uml#Element]
 
 }

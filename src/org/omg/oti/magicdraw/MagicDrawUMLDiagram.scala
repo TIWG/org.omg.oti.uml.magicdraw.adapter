@@ -1,11 +1,14 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLDiagram extends MagicDrawUMLNamedElement {
-  override protected def e: Uml#Diagram
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLDiagram 
+  extends MagicDrawUMLNamedElement {
   
+  override protected def e: Uml#Diagram
   import ops._
     
   override def metaAttributes: MetaAttributeFunctions =

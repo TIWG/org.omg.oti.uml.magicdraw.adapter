@@ -173,6 +173,7 @@ object exportPackageExtents2OTICanonicalXMI {
       specificationRootPackages,
       documentURIMapper, builtInURIMapper,
       builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ),
+      builtInDocumentEdges = Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML ),
       ignoreCrossReferencedElementFilter ) match {
         case Failure( t ) => Failure( t )
         case Success( ( resolved, unresolved ) ) =>

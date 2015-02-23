@@ -1,10 +1,13 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLActor
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLActor extends UMLActor[MagicDrawUML] with MagicDrawUMLBehavioredClassifier {
+trait MagicDrawUMLActor 
+  extends UMLActor[MagicDrawUML]
+  with MagicDrawUMLBehavioredClassifier {
+
   override protected def e: Uml#Actor
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+
 }

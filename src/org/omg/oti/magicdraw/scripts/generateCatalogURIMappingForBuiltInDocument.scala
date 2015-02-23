@@ -88,7 +88,7 @@ object generateCatalogURIMappingForBuiltInDocument {
     }
 
     val rewrites =
-      pkg.ownedTypes flatMap { t =>
+      pkg.ownedType flatMap { t =>
       t match {
         case pt: UMLPrimitiveType[Uml] => 
           Iterable( s"""<uri uri="${otiURI}#${pt.name.get}" name="${pkgURI}#${pt.id}"/>""" )
@@ -100,7 +100,7 @@ object generateCatalogURIMappingForBuiltInDocument {
           } yield s"""<uri uri="${otiURI}#${baseID}" name="${pkgURI}#${baseProperty.id}"/>""")
           
         case ex: UMLExtension[Uml] => 
-          val ee = ex.ownedEnds.head
+          val ee = ex.ownedEnd.head
           val end = ee._type.head.name.get
           val base = ex.metaclass.head.name.get
           val oti_extensionID = base+"_"+end

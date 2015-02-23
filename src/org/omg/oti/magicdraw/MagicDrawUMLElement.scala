@@ -6,6 +6,7 @@ import scala.language.postfixOps
 import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import org.eclipse.emf.ecore.EStructuralFeature
 import org.omg.oti._
+import org.omg.oti.operations._
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.magicdraw.uml.UUIDRegistry
@@ -21,23 +22,49 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   def getMagicDrawElement = e
 
-  override def ownedComments = e.getOwnedComment.toSeq
-  override def annotatedElementOfComments = e.get_commentOfAnnotatedElement.toSeq
+  // Element
+  
+  override def ownedComment = e.getOwnedComment.toSet[Uml#Comment]
+  
+  override def ownedElement = e.getOwnedElement.toSet[Uml#Element]
 
   override def owner = Option.apply( e.getOwner )
-  override def ownedElements = umlElement( e.getOwnedElement.toSet )
+  
+  override def constrainedElement_constraint = e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
+  
+  override def annotatedElement_comment = e.get_commentOfAnnotatedElement.toSet[Uml#Comment]
+  
+  override def represents_activityPartition = e.get_activityPartitionOfRepresents.toSet[Uml#ActivityPartition]
+  
+  override def relatedElement_relationship = e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
+  
+  override def target_directedRelationship = e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
+  
+  override def source_directedRelationship = e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
 
+  // ElementOps
+  
   override def allOwnedElements = e.eAllContents.toStream.selectByKindOf { case e: Uml#Element => umlElement( e ) } toStream
 
+  override def mofMetaclassName = StereotypesHelper.getBaseClass( e ).getName
+
+  override def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
+    Option.apply( e.getAppliedStereotypeInstance ) match {
+      case None => Map()
+      case Some( is ) =>
+        val tv = for {
+          s <- is.getSlot
+          p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
+          v = umlValueSpecification( s.getValue ).toSeq
+        } yield ( p -> v )
+        tv.toMap
+    }
+  
   override def getContainedElement_eContainingFeature: EStructuralFeature = e.eContainingFeature
+  
   override def getElementContainer_eFeatureValue( f: EStructuralFeature ) = e.eContainer.eGet( f ) match {
     case values: java.util.Collection[_] => values.toIterable.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
   }
-
-  override def relationships = e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
-
-  override def directedRelationships_source = e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
-  override def directedRelationships_target = e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
 
   override def id: String = e.getID
 
@@ -55,11 +82,11 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def getAppliedStereotypes: Map[UMLStereotype[Uml], UMLProperty[Uml]] = {
     val eMetaclass = e.getClassType
     StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] map { s =>
-      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, false ) filter { p =>
+      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
         val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
         eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
       }
-      require( metaProperties.nonEmpty )
+      require( metaProperties.nonEmpty, s"element: ${e.id}, stereotype: ${s.getQualifiedName} (ID=${s.id})")
       ( umlStereotype(s) -> umlProperty(metaProperties.head) )
     } toMap
   }
@@ -71,19 +98,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         case Some( parent ) => isAncestorOf( parent )
       } )
 
-  def mofMetaclassName: String = StereotypesHelper.getBaseClass( e ).getName
-
-  def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
-    Option.apply( e.getAppliedStereotypeInstance ) match {
-      case None => Map()
-      case Some( is ) =>
-        val tv = for {
-          s <- is.getSlot
-          p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
-          v = umlValueSpecification( s.getValue ).toSeq
-        } yield ( p -> v )
-        tv.toMap
-    }
-
+  // MagicDraw-specific
+      
   def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable( e )
 }

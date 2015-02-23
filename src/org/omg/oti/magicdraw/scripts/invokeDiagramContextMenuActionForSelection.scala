@@ -43,7 +43,7 @@ object invokeDiagramContextMenuActionForSelection {
 
     val dsInstance = umlInstanceSpecification( triggerElement )
     for {
-      comment <- dsInstance.ownedComments
+      comment <- dsInstance.ownedComment
       commentBody <- comment.body
       if ( commentBody == "selection" )
       classNames <- dsInstance.getValuesOfFeatureSlot( "className" )
@@ -52,10 +52,10 @@ object invokeDiagramContextMenuActionForSelection {
       case ( List( c: UMLLiteralString[Uml] ), List( m: UMLLiteralString[Uml] ) ) =>
         ( c.value, m.value ) match {
           case ( Some( className ), Some( methodName ) ) =>
-            val invokeTriggerElement = comment.annotatedElements.head
+            val invokeTriggerElement = comment.annotatedElement.head
             val invokeTriggerView = dpe.findPresentationElement( invokeTriggerElement.getMagicDrawElement, null )
             val peSelection = for {
-              e <- comment.annotatedElements
+              e <- comment.annotatedElement
               pe = dpe.findPresentationElement( e.getMagicDrawElement, null )
             } yield pe
 

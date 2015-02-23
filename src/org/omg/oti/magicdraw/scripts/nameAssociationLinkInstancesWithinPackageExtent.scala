@@ -95,26 +95,26 @@ object nameAssociationLinkInstancesWithinPackageExtent {
     val app = Application.getInstance()
     val guiLog = app.getGUILog()
 
-    a.getDirectedAssociationEnds match {
+    a.getDirectedAssociationEnd match {
       case None =>
         guiLog.log( "Not a directed association! " )
 
       case Some( ( sourceEnd, targetEnd ) ) =>
         guiLog.log( s" association: ${a.qualifiedName.get}" )
 
-        val links = a.instanceSpecifications.toList
+        val links = a.classifier_instanceSpecification.toList
         guiLog.log( s" Refactor ${links.size} instance specifications..." )
 
         var count = 0
         val prefix = a.name.get + "("
         links foreach { link =>
-          val slots = link.slots
+          val slots = link.slot
           val sourceSlot = slots.find( _.definingFeature == Some( sourceEnd ) ) getOrElse { throw new IllegalArgumentException( s"Broken Link ${a.name.get} from '${sourceEnd.name}' to '${targetEnd.name}'" ) }
-          val sourceInstance = sourceSlot.values.head match {
+          val sourceInstance = sourceSlot.value.head match {
             case iv: UMLInstanceValue[Uml] => iv.instance.get
           }
           val targetSlot = slots.find( _.definingFeature == Some( targetEnd ) ) getOrElse { throw new IllegalArgumentException( s"Broken Link ${a.name.get} from '${sourceEnd.name}' to '${targetEnd.name}'" ) }
-          val targetInstance = targetSlot.values.head match {
+          val targetInstance = targetSlot.value.head match {
             case iv: UMLInstanceValue[Uml] => iv.instance.get
           }
           ( sourceInstance.name, targetInstance.name ) match {
@@ -126,7 +126,7 @@ object nameAssociationLinkInstancesWithinPackageExtent {
                   ()
                 case _ =>
                   guiLog.log( s" Link (id=${link.id}) set name to: '${linkName}'")
-                  link.setName( linkName )
+                  link.getMagicDrawInstanceSpecification.setName( linkName )
                   count = count + 1
               }
             case ( Some( sName ), None ) => 

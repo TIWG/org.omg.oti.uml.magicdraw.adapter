@@ -1,11 +1,13 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLLiteralString
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLLiteralString extends UMLLiteralString[MagicDrawUML] with MagicDrawUMLLiteralSpecification {
+trait MagicDrawUMLLiteralString 
+  extends UMLLiteralString[MagicDrawUML]
+  with MagicDrawUMLLiteralSpecification {
+
   override protected def e: Uml#LiteralString
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
   override def value = Option.apply(e.getValue)

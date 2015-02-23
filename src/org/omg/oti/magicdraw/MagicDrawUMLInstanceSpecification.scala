@@ -1,13 +1,20 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLInstanceSpecification
-
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLInstanceSpecification extends UMLInstanceSpecification[MagicDrawUML] with MagicDrawUMLPackageableElement {
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLInstanceSpecification 
+  extends UMLInstanceSpecification[MagicDrawUML]
+  with MagicDrawUMLPackageableElement
+  with MagicDrawUMLDeploymentTarget
+  with MagicDrawUMLDeployedArtifact {
+
   override protected def e: Uml#InstanceSpecification
-  
   import ops._
+  
+  def getMagicDrawInstanceSpecification = e
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean = e == e.getOwner.getAppliedStereotypeInstance
   

@@ -107,7 +107,7 @@ object inspectAssociations {
     val guiLog = app.getGUILog()
 
     guiLog.log( s" association: ${a.qualifiedName.get}")
-    a.getDirectedAssociationEnds match {
+    a.getDirectedAssociationEnd match {
       case None =>
         guiLog.log( "Not a directed association! " )
         guiLog.log( s" end1: ${end1.qualifiedName.get}")

@@ -1,16 +1,19 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLComment
-
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLComment extends MagicDrawUMLElement with UMLComment[MagicDrawUML] {
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLComment 
+  extends UMLComment[MagicDrawUML]
+  with MagicDrawUMLElement {
+
   override protected def e: Uml#Comment
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+
   
-  def annotatedElements = e.getAnnotatedElement.toIterable
+  def annotatedElement = e.getAnnotatedElement.toSet[com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element]
   def getCommentOwnerIndex = e.getOwner.getOwnedComment.toList.indexOf( e )  
   def body = Option.apply(e.getBody)
 }

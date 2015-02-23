@@ -3,13 +3,11 @@ package org.omg.oti.magicdraw.scripts
 import java.awt.BorderLayout
 import java.awt.event.ActionEvent
 import java.io.File
-
 import javax.swing.BoxLayout
 import javax.swing.JLabel
 import javax.swing.JOptionPane
 import javax.swing.JPanel
 import javax.swing.JTextField
-
 import scala.collection.JavaConversions.asJavaCollection
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.collection.JavaConversions.mapAsJavaMap
@@ -18,7 +16,6 @@ import scala.language.postfixOps
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-
 import com.jidesoft.swing.JideBoxLayout
 import com.nomagic.actions.NMAction
 import com.nomagic.magicdraw.core.Application
@@ -36,7 +33,6 @@ import com.nomagic.task.RunnableWithProgress
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
-
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.omg.oti._
@@ -44,10 +40,12 @@ import org.omg.oti.migration._
 import org.omg.oti.canonicalXMI._
 import org.omg.oti.magicdraw._
 import org.omg.oti.magicdraw.canonicalXMI._
-
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
+import javax.swing.SwingUtilities
+import java.io.PrintWriter
+import java.io.FileWriter
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov
@@ -137,6 +135,9 @@ object generateIDsForPackageExtents {
      */
     def ignoreCrossReferencedElementFilter( e: UMLElement[Uml] ): Boolean = e match {
 
+      case i: UMLImage[Uml] =>
+        true
+
       case ne: UMLNamedElement[Uml] =>
         val neQName = ne.qualifiedName.get
         DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
@@ -205,6 +206,7 @@ object generateIDsForPackageExtents {
       specificationRootPackages,
       documentURIMapper, builtInURIMapper,
       builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ),
+      builtInDocumentEdges = Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML ),
       ignoreCrossReferencedElementFilter ) match {
         case Failure( t ) => Failure( t )
         case Success( ( resolved, unresolved ) ) if ( unresolved.nonEmpty ) =>
@@ -264,7 +266,7 @@ object generateIDsForPackageExtents {
 
           progressStatus.increase()
           progressStatus.setDescription( s"Constructing old/new migration map..." )
-            
+
           val id2element = elementIDs filter
             { case ( e, _ ) => specificationRootPackages.exists( p => p.isAncestorOf( e ) ) } flatMap {
               case ( e, Success( newID ) ) => Some( ( newID -> e ) )
@@ -308,6 +310,57 @@ object generateIDsForPackageExtents {
           r.save( options )
 
           guiLog.log( s" Saved migration model at: ${migrationF} " )
+
+          val cpanel = new JPanel()
+          cpanel.setLayout( new JideBoxLayout( cpanel, BoxLayout.Y_AXIS ) )
+
+          cpanel.add( new JLabel( s"Enter the URI of ${project.getName} : " ), BorderLayout.BEFORE_LINE_BEGINS )
+
+          val uriField = new JTextField
+          uriField.setText( "http://...." )
+          uriField.setColumns( 80 )
+          uriField.setEditable( true )
+          uriField.setFocusable( true )
+          cpanel.add( uriField )
+
+          cpanel.updateUI()
+
+          val cstatus = JOptionPane.showConfirmDialog(
+            Application.getInstance.getMainFrame,
+            cpanel,
+            "Specify the URI to map the project's URIs to:",
+            JOptionPane.OK_CANCEL_OPTION )
+
+          val curi = augmentString( uriField.getText )
+          if ( cstatus != JOptionPane.OK_OPTION || curi.isEmpty ) {
+            guiLog.log( s"No catalog generated" )
+            return Success( None )
+          }
+
+          val catalogF = new File( dir, project.getName + ".catalog.xml" )
+          guiLog.log( s"generate catalog: ${catalogF}" )
+
+          val catalogDir = catalogF.getParentFile
+          catalogDir.mkdirs()
+
+          val pw = new PrintWriter( new FileWriter( catalogF ) )
+          pw.println( """<?xml version='1.0' encoding='UTF-8'?>""" )
+          pw.println( """<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">""" )
+          for {
+            n <- 0 until sortedIDs.size
+            newID = sortedIDs( n )
+            e = id2element( newID )
+            oldID = e.id
+          } e.getPackageOwnerWithURI match {
+            case Some( pkg ) => pw.println( s"""<uri uri="${curi}#${newID}" name="${pkg.URI.get}#${oldID}"/>""")
+            case None => System.out.println(s"*** no owner package with URI found for ${e.id} (metaclass=${e.xmiType.head})")
+          }            
+           
+          pw.println( """</catalog>""" )
+          pw.close()
+
+          guiLog.log( s"Catalog generated at: ${catalogF}" )
+
           Success( None )
       }
   }

@@ -1,16 +1,25 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLType
-
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLType extends UMLType[MagicDrawUML] with MagicDrawUMLPackageableElement {
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLType 
+  extends UMLType[MagicDrawUML]
+  with MagicDrawUMLPackageableElement {
+
   override protected def e: Uml#Type
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
-  def typedElementsOfType = e.get_typedElementOfType.toIterable
+  override def endType_association = e.get_associationOfEndType.toSet[Uml#Association]
+
+  override def type_operation = ???
   
-  def endTypeOfAssociation = e.get_associationOfEndType.toIterable
+  override def type_typedElement = e.get_typedElementOfType.toSet[Uml#TypedElement]
+    
+  override def raisedException_behavioralFeature = e.get_behavioralFeatureOfRaisedException.toSet[Uml#BehavioralFeature]
+  
+  override def raisedException_operation = e.get_operationOfRaisedException.toSet[Uml#Operation]
+  
 }

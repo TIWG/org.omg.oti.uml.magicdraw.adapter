@@ -1,10 +1,12 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLInterval
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLInterval extends UMLInterval[MagicDrawUML] with MagicDrawUMLValueSpecification {
+trait MagicDrawUMLInterval 
+  extends UMLInterval[MagicDrawUML]
+  with MagicDrawUMLValueSpecification {
+
   override protected def e: Uml#Interval
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
 }

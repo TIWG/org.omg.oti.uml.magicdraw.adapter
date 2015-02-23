@@ -57,7 +57,7 @@ object NamespaceInspectorWidget {
   def importedMembers(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =    
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.importedMembers) )
+      namespaceOperationWidget( project, ev, derived, ek, e, (_.importedMember) )
 
   def visibleMembers(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,

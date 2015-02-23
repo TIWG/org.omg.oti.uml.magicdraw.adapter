@@ -1,10 +1,12 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLLiteralSpecification
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLLiteralSpecification extends UMLLiteralSpecification[MagicDrawUML] with MagicDrawUMLValueSpecification {
+trait MagicDrawUMLLiteralSpecification 
+  extends UMLLiteralSpecification[MagicDrawUML]
+  with MagicDrawUMLValueSpecification {
+
   override protected def e: Uml#LiteralSpecification
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
 }

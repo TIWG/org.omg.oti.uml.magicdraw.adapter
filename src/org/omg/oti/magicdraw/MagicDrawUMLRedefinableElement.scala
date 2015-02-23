@@ -1,17 +1,23 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
 
-trait MagicDrawUMLRedefinableElement extends UMLRedefinableElement[MagicDrawUML] with MagicDrawUMLNamedElement {
-  override protected def e: Uml#RedefinableElement
-  
-  implicit val ops: MagicDrawUMLUtil
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLRedefinableElement 
+  extends UMLRedefinableElement[MagicDrawUML]
+  with MagicDrawUMLNamedElement {
+
   import ops._
+  override protected def e: Uml#RedefinableElement
     
-  def redefiningElements = umlRedefinableElement( e.get_redefinableElementOfRedefinedElement )
+  override def isLeaf = e.isLeaf
   
-  def redefinedElements: Iterable[UMLRedefinableElement[Uml]] = umlRedefinableElement( e.getRedefinedElement )
-  def redefinitionContexts: Iterable[UMLClassifier[Uml]] = umlClassifier( e.getRedefinitionContext )
+  override def redefinedElement = e.get_redefinableElementOfRedefinedElement.toSet[Uml#RedefinableElement]
+  
+  override def redefinitionContext = e.getRedefinitionContext.toIterable
+  
+  override def redefinedElement_redefinableElement = e.get_redefinableElementOfRedefinedElement.toSet[Uml#RedefinableElement]
   
 }

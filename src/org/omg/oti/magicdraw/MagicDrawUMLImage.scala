@@ -1,11 +1,13 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLImage
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLImage extends UMLImage[MagicDrawUML] with MagicDrawUMLElement {
+trait MagicDrawUMLImage 
+  extends UMLImage[MagicDrawUML]
+  with MagicDrawUMLElement {
+
   override protected def e: Uml#Image
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
   def content: Option[String] = e.getContent  match {

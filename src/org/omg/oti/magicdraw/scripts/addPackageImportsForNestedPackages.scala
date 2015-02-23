@@ -36,18 +36,11 @@ object addPackageImportsForNestedPackages {
     triggerView: PackageView,
     triggerElement: Profile,
     selection: java.util.Collection[PresentationElement] ): Try[Option[MagicDrawValidationDataResults]] = {
-    
-    val app = Application.getInstance()
-    val guiLog = app.getGUILog()
-    guiLog.clearLog()
 
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
     
-    val selectedPackages = selection.toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } )
-    
-    addPackageImportsForNestedPackages( p, umlUtil, selectedPackages )
-    
+    addPackageImportsForNestedPackages( p, umlUtil, selection.toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } ) )
     Success( None )
   }
       
@@ -59,21 +52,27 @@ object addPackageImportsForNestedPackages {
     triggerView: PackageView,
     triggerElement: Package,
     selection: java.util.Collection[PresentationElement] ): Try[Option[MagicDrawValidationDataResults]] = {
-    
-    val app = Application.getInstance()
-    val guiLog = app.getGUILog()
-    guiLog.clearLog()
 
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
     
-    val selectedPackages = selection.toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } )
-    
-    addPackageImportsForNestedPackages( p, umlUtil, selectedPackages )
-    
+    addPackageImportsForNestedPackages( p, umlUtil, selection.toSet selectByKindOf ( { case pv: PackageView => umlPackage( pv.getPackage) } ) )    
     Success( None )
   }
-            
+       
+  def doit(
+    p: Project, ev: ActionEvent,
+    script: DynamicScriptsTypes.BrowserContextMenuAction,
+    tree: Tree, node: Node,
+    pkg: Profile, selection: java.util.Collection[Element] ): Try[Option[MagicDrawValidationDataResults]] = {
+        
+    val umlUtil = MagicDrawUMLUtil( p )
+    import umlUtil._
+    
+    addPackageImportsForNestedPackages( p, umlUtil, selection.toSet selectByKindOf ( { case pkg: Package => umlPackage( pkg ) } ) )    
+    Success( None )
+  }
+    
   def doit(
     p: Project, ev: ActionEvent,
     script: DynamicScriptsTypes.BrowserContextMenuAction,
@@ -83,13 +82,9 @@ object addPackageImportsForNestedPackages {
     val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
     
-    val selectedPackages = selection.toSet selectByKindOf ( { case pkg: Package => umlPackage( pkg ) } )
-    
-    addPackageImportsForNestedPackages( p, umlUtil, selectedPackages )
-    
+    addPackageImportsForNestedPackages( p, umlUtil, selection.toSet selectByKindOf ( { case pkg: Package => umlPackage( pkg ) } ) )    
     Success( None )
   }
-
     
   def addPackageImportsForNestedPackages(
       p: Project,
@@ -106,8 +101,8 @@ object addPackageImportsForNestedPackages {
     val allPkgs = pkgs ++ pkgs.flatMap (_.allNestedPackages)
     allPkgs foreach { pkg =>
       val mdPkg = pkg.getMagicDrawPackage
-      val importedPackages = pkg.packageImports.flatMap(_.importedPackage)
-      val nestedPackages2Import = pkg.nestedPackages -- importedPackages
+      val importedPackages = pkg.packageImport.flatMap(_.importedPackage)
+      val nestedPackages2Import = pkg.nestedPackage -- importedPackages
       nestedPackages2Import foreach { npkg =>
           val i = f.createPackageImportInstance
           i.setImportingNamespace(mdPkg)

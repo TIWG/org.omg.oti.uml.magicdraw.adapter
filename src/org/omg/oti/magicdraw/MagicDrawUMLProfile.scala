@@ -3,14 +3,17 @@ package org.omg.oti.magicdraw
 import scala.collection.JavaConversions._
 import scala.language.implicitConversions
 import scala.language.postfixOps
-import org.omg.oti.UMLProfile
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLProfile extends UMLProfile[MagicDrawUML] with MagicDrawUMLPackage {
+trait MagicDrawUMLProfile 
+  extends UMLProfile[MagicDrawUML]
+  with MagicDrawUMLPackage {
+
+  import ops._
   override protected def e: Uml#Profile
   
-  import ops._
-  
-  override def metamodelReferences = e.getMetamodelReference.toSet[Uml#PackageImport]
-  override def metaclassReferences = e.getMetaclassReference.toSet[Uml#ElementImport]
+  override def metamodelReference = e.getMetamodelReference.toSet[Uml#PackageImport]
+  override def metaclassReference = e.getMetaclassReference.toSet[Uml#ElementImport]
   
 }

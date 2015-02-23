@@ -1,12 +1,18 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
 import scala.collection.JavaConversions._
 
-trait MagicDrawUMLPackage extends UMLPackage[MagicDrawUML] with MagicDrawUMLNamespace with MagicDrawUMLPackageableElement {
-  override protected def e: Uml#Package
+import org.omg.oti._
+import org.omg.oti.operations._
+
+trait MagicDrawUMLPackage 
+  extends UMLPackage[MagicDrawUML]
+  with MagicDrawUMLPackageableElement
+  with MagicDrawUMLNamespace
+  with MagicDrawUMLTemplateableElement {
 
   import ops._
+  override protected def e: Uml#Package
 
   def getMagicDrawPackage = e
   

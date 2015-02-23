@@ -1,11 +1,15 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLValueSpecification
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLValueSpecification extends UMLValueSpecification[MagicDrawUML] with MagicDrawUMLPackageableElement with MagicDrawUMLTypedElement {
+trait MagicDrawUMLValueSpecification 
+  extends UMLValueSpecification[MagicDrawUML]
+  with MagicDrawUMLPackageableElement
+  with MagicDrawUMLTypedElement {
+
   override protected def e: Uml#ValueSpecification
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+
   
 }

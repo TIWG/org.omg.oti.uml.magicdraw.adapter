@@ -176,6 +176,14 @@ dynamicScripts(
               class: org.omg.oti.magicdraw.scripts.addPackageImportsForNestedPackages
               method: doit
           )
+          DiagramContextMenuAction(
+              name: 'Add PackageImports for nested packages'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.addPackageImportsForNestedPackages
+              method: doit
+          )
           BrowserContextMenuAction(
               name: 'Export Selected Packages to OMG TI Canonical XMI'
               project: org.omg.oti.magicdraw
@@ -333,6 +341,14 @@ dynamicScripts(
               method: doit
           )                        
           BrowserContextMenuAction(
+              name: 'Add PackageImports for nested packages'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.addPackageImportsForNestedPackages
+              method: doit
+          )                  
+          DiagramContextMenuAction(
               name: 'Add PackageImports for nested packages'
               project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }

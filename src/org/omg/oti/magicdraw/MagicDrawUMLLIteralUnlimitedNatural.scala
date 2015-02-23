@@ -1,11 +1,13 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLLiteralUnlimitedNatural
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLLiteralUnlimitedNatural extends UMLLiteralUnlimitedNatural[MagicDrawUML] with MagicDrawUMLLiteralSpecification {
+trait MagicDrawUMLLiteralUnlimitedNatural 
+  extends UMLLiteralUnlimitedNatural[MagicDrawUML]
+  with MagicDrawUMLLiteralSpecification {
+
   override protected def e: Uml#LiteralUnlimitedNatural
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
   
   override def value = e.getValue

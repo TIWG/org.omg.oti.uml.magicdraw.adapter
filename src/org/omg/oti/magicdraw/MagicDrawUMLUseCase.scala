@@ -1,10 +1,13 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti.UMLUseCase
+import org.omg.oti._
+import org.omg.oti.operations._
 
-trait MagicDrawUMLUseCase extends UMLUseCase[MagicDrawUML] with MagicDrawUMLBehavioredClassifier {
+trait MagicDrawUMLUseCase 
+  extends UMLUseCase[MagicDrawUML]
+  with MagicDrawUMLBehavioredClassifier {
+
   override protected def e: Uml#UseCase
-  
-  implicit val ops: MagicDrawUMLUtil
   import ops._
+
 }
