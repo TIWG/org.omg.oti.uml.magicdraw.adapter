@@ -10,4 +10,10 @@ trait MagicDrawUMLInteractionConstraint
   override protected def e: Uml#InteractionConstraint
   import ops._
 
+  // 17.11
+	override def maxint: Option[UMLValueSpecification[Uml]] = ???
+  
+  // 17.11  
+	override def minint: Option[UMLValueSpecification[Uml]] = ???
+  
 }

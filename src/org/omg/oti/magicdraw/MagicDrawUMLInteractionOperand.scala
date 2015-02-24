@@ -11,4 +11,10 @@ trait MagicDrawUMLInteractionOperand
   override protected def e: Uml#InteractionOperand
   import ops._
 
+  // 17.11
+	override def fragment: Seq[UMLInteractionFragment[Uml]] = ???
+  
+  // 17.11
+	override def guard: Option[UMLInteractionConstraint[Uml]] = ???
+
 }
