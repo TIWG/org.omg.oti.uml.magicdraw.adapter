@@ -20,5 +20,4 @@ trait MagicDrawUMLUseCase
   
   override def addition_include: Set[UMLInclude[Uml]] =
     e.get_includeOfAddition.toSet[Uml#Include]
-  
 }

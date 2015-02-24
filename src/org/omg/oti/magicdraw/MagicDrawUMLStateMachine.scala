@@ -10,4 +10,6 @@ trait MagicDrawUMLStateMachine
   override protected def e: Uml#StateMachine
   import ops._
 
+  // 14.1
+  def submachineState: Set[UMLState[Uml]] = ???
 }
