@@ -10,5 +10,6 @@ trait MagicDrawUMLPackageImport
   import ops._
   override protected def e: Uml#PackageImport
 
-  
+  // 12.12
+  override def metamodelReference_profile: Option[UMLProfile[Uml]] = ???
 }

@@ -10,4 +10,8 @@ trait MagicDrawUMLManifestation
   override protected def e: Uml#Manifestation
   import ops._
 
+  override def utilizedElement: Option[UMLPackageableElement[Uml]] = ???
+  
+  override def manifestation_artifact: Option[UMLArtifact[Uml]] = ???
+  
 }

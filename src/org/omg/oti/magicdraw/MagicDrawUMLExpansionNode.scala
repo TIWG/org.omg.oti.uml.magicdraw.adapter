@@ -10,4 +10,8 @@ trait MagicDrawUMLExpansionNode
   override protected def e: Uml#ExpansionNode
   import ops._
 
+  override def regionAsInput: Option[UMLExpansionRegion[Uml]] = ???
+  
+	override def regionAsOutput: Option[UMLExpansionRegion[Uml]] = ???
+  
 }

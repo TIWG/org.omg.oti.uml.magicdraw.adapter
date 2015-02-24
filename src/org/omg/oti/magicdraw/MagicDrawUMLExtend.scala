@@ -12,5 +12,9 @@ trait MagicDrawUMLExtend
   override protected def e: Uml#Extend
   import ops._
  
+  // 18.1
+  override def condition: Option[UMLConstraint[Uml]] = ???
+    
+  // 18.1
 	override def extensionLocation: Seq[UMLExtensionPoint[Uml]] = ??? 
 }

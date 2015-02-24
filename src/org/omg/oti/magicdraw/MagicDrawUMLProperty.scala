@@ -69,4 +69,8 @@ trait MagicDrawUMLProperty
     case Some( a ) => a.memberEnd filter (_ != this) headOption
   }
 
+  override def redefinedProperty_property: Set[UMLProperty[Uml]] = ???
+  
+  override def subsettedProperty_property: Set[UMLProperty[Uml]] = ???
+  
 }

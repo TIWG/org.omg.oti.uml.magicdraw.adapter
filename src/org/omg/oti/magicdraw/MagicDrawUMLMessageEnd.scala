@@ -10,4 +10,12 @@ trait MagicDrawUMLMessageEnd
   override protected def e: Uml#MessageEnd
   import ops._
 
+  // 17.7
+  override def message: Option[UMLMessage[Uml]] = ???
+  
+  // 17.7
+  override def receiveEvent_endMessage: Option[UMLMessage[Uml]] = ???
+  
+  // 17.7
+  override def sendEvent_endMessage: Option[UMLMessage[Uml]] = ???
 }

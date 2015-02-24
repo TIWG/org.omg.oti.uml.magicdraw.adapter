@@ -9,5 +9,9 @@ trait MagicDrawUMLGeneralOrdering
 
   override protected def e: Uml#GeneralOrdering
   import ops._
-
+  
+	override def after: Option[UMLOccurrenceSpecification[Uml]] = ???
+  
+  override def before: Option[UMLOccurrenceSpecification[Uml]] = ???
+  
 }

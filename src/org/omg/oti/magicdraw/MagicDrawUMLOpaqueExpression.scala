@@ -12,8 +12,16 @@ trait MagicDrawUMLOpaqueExpression
   override protected def e: Uml#OpaqueExpression
   import ops._
 
+  // 8.2
+  override def behavior: Option[UMLBehavior[Uml]] = ???
   
-  def body = e.getBody.toSeq
-  def language = e.getLanguage.toSeq
+  // 8.2
+  override def body = e.getBody.toSeq
+  
+  // 8.2
+  override def language = e.getLanguage.toSeq
+  
+  // 8.2
+  override def result: Option[UMLParameter[Uml]] = ???
   
 }
