@@ -13,5 +13,5 @@ trait MagicDrawUMLExpression
   import ops._
   
   def symbol = Option.apply( e.getSymbol )
-  def operands = e.getOperand.toSeq
+  def operand = e.getOperand.toSeq
 }

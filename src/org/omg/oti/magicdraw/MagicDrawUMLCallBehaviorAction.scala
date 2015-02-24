@@ -10,4 +10,7 @@ trait MagicDrawUMLCallBehaviorAction
   override protected def e: Uml#CallBehaviorAction
   import ops._
 
+  override def behavior: Option[UMLBehavior[Uml]] =
+    Option.apply( e.getBehavior )
+    
 }

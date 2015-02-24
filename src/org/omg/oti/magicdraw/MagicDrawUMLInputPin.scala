@@ -10,4 +10,10 @@ trait MagicDrawUMLInputPin
   override protected def e: Uml#InputPin
   import ops._
 
+	def value_linkEndData: Option[UMLLinkEndData[Uml]] =
+    Option.apply( e.get_linkEndDataOfValue )
+  
+	def value_qualifierValue: Option[UMLQualifierValue[Uml]] =
+    Option.apply( e.get_qualifierValueOfValue )
+
 }

@@ -10,4 +10,10 @@ trait MagicDrawUMLJoinNode
   override protected def e: Uml#JoinNode
   import ops._
 
+  override def isCombineDuplicate: Boolean =
+    e.isCombineDuplicate
+    
+  override def joinSpec: Option[UMLValueSpecification[Uml]] =
+    Option.apply( e.getJoinSpec )  
+    
 }

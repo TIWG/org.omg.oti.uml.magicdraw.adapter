@@ -10,5 +10,6 @@ trait MagicDrawUMLActionExecutionSpecification
   override protected def e: Uml#ActionExecutionSpecification
   import ops._
 
-  override def action = Option.apply( e.getAction )
+  override def action = 
+    Option.apply( e.getAction )
 }

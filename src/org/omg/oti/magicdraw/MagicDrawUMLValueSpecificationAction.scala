@@ -10,4 +10,10 @@ trait MagicDrawUMLValueSpecificationAction
   override protected def e: Uml#ValueSpecificationAction
   import ops._
 
+  override def result: Option[UMLOutputPin[Uml]] =
+    Option.apply( e.getResult )
+    
+  override def value: Option[UMLValueSpecification[Uml]] =
+    Option.apply( e.getValue )
+    
 }

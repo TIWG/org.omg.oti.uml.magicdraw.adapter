@@ -10,5 +10,7 @@ trait MagicDrawUMLAcceptCallAction
   override protected def e: Uml#AcceptCallAction
   import ops._
 
-  override def returnInformation = Option.apply( e.getReturnInformation )
+  override def returnInformation = 
+    Option.apply( e.getReturnInformation )
+    
 }

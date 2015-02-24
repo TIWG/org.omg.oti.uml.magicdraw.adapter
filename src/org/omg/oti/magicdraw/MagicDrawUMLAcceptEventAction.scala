@@ -12,10 +12,13 @@ trait MagicDrawUMLAcceptEventAction
   override protected def e: Uml#AcceptEventAction
   import ops._
 
-  override def isUnmarshall = e.isUnmarshall
+  override def isUnmarshall = 
+    e.isUnmarshall
   
-  override def result = e.getResult.toSeq
+  override def result = 
+    e.getResult.toSeq
   
-  override def trigger = e.getTrigger.toSet[Uml#Trigger]
+  override def trigger = 
+    e.getTrigger.toSet[Uml#Trigger]
   
 }

@@ -28,4 +28,7 @@ trait MagicDrawUMLAction
   
   override def fromAction_actionInputPin = Option.apply( e.get_actionInputPinOfFromAction )
   
+  override def action_actionExecutionSpecification: Set[UMLActionExecutionSpecification[Uml]] =
+    e.get_actionExecutionSpecificationOfAction.toSet[Uml#ActionExecutionSpecification]
+  
 }

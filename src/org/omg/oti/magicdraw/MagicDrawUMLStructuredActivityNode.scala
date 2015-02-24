@@ -12,4 +12,8 @@ trait MagicDrawUMLStructuredActivityNode
   override protected def e: Uml#StructuredActivityNode
   import ops._
 
+  override def mustIsolate: Boolean = 
+    e.isMustIsolate
+    
+  
 }

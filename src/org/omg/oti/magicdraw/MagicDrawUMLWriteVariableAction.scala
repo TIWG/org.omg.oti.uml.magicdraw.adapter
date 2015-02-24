@@ -10,4 +10,7 @@ trait MagicDrawUMLWriteVariableAction
   override protected def e: Uml#WriteVariableAction
   import ops._
 
+  override def value: Option[UMLInputPin[Uml]] =
+    Option.apply( e.getValue )
+    
 }

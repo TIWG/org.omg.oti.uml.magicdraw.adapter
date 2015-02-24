@@ -10,4 +10,8 @@ trait MagicDrawUMLVariableAction
   override protected def e: Uml#VariableAction
   import ops._
 
+  override def variable: Option[UMLVariable[Uml]] =
+    Option.apply( e.getVariable )
+    
+  
 }

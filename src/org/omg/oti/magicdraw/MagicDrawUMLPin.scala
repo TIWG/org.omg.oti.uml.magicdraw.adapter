@@ -11,4 +11,7 @@ trait MagicDrawUMLPin
   override protected def e: Uml#Pin
   import ops._
 
+  override def isControl: Boolean =
+    e.isControl
+    
 }

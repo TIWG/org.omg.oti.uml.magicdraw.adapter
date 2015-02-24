@@ -10,6 +10,7 @@ trait MagicDrawUMLCallEvent
   override protected def e: Uml#CallEvent
   import ops._
 
-  override def operation = Option.apply( e.getOperation )
+  override def operation = 
+    Option.apply( e.getOperation )
   
 }

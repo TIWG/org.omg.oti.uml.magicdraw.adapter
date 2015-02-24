@@ -10,6 +10,7 @@ trait MagicDrawUMLChangeEvent
   override protected def e: Uml#ChangeEvent
   import ops._
 
-  override def changeExpression = Option.apply( e.getChangeExpression )
+  override def changeExpression = 
+    Option.apply( e.getChangeExpression )
   
 }

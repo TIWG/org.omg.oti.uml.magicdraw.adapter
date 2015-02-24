@@ -10,4 +10,7 @@ trait MagicDrawUMLActivityParameterNode
   override protected def e: Uml#ActivityParameterNode
   import ops._
 
+  override def parameter: Option[UMLParameter[Uml]] = 
+    Option.apply( e.getParameter )
+
 }

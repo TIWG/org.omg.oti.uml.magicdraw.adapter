@@ -10,4 +10,10 @@ trait MagicDrawUMLAddVariableValueAction
   override protected def e: Uml#AddVariableValueAction
   import ops._
 
+  override def insertAt: Option[UMLInputPin[Uml]] =
+    Option.apply( e.getInsertAt )
+    
+  override def isReplaceAll: Boolean =
+    e.isReplaceAll
+  
 }
