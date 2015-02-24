@@ -12,4 +12,7 @@ trait MagicDrawUMLState
   override protected def e: Uml#State
   import ops._
 
+  def doActivity: Option[UMLBehavior[Uml]] = ??? 
+  def entry: Option[UMLBehavior[Uml]] = ??? 
+  def exit: Option[UMLBehavior[Uml]] = ???
 }

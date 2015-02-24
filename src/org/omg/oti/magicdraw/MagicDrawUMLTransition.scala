@@ -11,4 +11,6 @@ trait MagicDrawUMLTransition
   override protected def e: Uml#Transition
   import ops._
 
+   def source: Option[UMLVertex[Uml]] = ??? 
+   def target: Option[UMLVertex[Uml]] = ???
 }
