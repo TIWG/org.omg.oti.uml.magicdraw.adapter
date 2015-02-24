@@ -10,4 +10,6 @@ trait MagicDrawUMLReadSelfAction
   override protected def e: Uml#ReadSelfAction
   import ops._
 
+  // 16.30
+	override def result: Option[UMLOutputPin[Uml]] = ??? 
 }

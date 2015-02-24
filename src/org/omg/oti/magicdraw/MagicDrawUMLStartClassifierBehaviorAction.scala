@@ -10,4 +10,7 @@ trait MagicDrawUMLStartClassifierBehaviorAction
   override protected def e: Uml#StartClassifierBehaviorAction
   import ops._
 
+  // 16.30
+  override def _object: Option[UMLInputPin[Uml]] = ???
+  
 }

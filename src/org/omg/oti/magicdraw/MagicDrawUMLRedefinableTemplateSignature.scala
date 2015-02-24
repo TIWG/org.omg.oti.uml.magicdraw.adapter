@@ -11,4 +11,7 @@ trait MagicDrawUMLRedefinableTemplateSignature
   override protected def e: Uml#RedefinableTemplateSignature
   import ops._
 
+  // BUG: NO FIGURE
+  override def inheritedParameter: Set[UMLTemplateParameter[Uml]] = ???
+  
 }

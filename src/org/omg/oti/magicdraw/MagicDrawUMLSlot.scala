@@ -11,8 +11,12 @@ trait MagicDrawUMLSlot
 
   override protected def e: Uml#Slot
   import ops._
-  
-  def values = e.getValue.toIterable
-  def definingFeature = Option.apply( e.getDefiningFeature )
+    
+  // 9.27
+  def definingFeature = 
+    Option.apply( e.getDefiningFeature )
 
+  // 9.27
+  override def value = 
+    e.getValue.toSeq
 }

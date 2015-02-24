@@ -10,4 +10,6 @@ trait MagicDrawUMLRaiseExceptionAction
   override protected def e: Uml#RaiseExceptionAction
   import ops._
 
+  // 16.56
+  override def exception: Option[UMLInputPin[Uml]] = ???
 }

@@ -10,4 +10,6 @@ trait MagicDrawUMLReadStructuralFeatureAction
   override protected def e: Uml#ReadStructuralFeatureAction
   import ops._
 
+  // 16.36  
+	override def result: Option[UMLOutputPin[Uml]] = ??? 
 }

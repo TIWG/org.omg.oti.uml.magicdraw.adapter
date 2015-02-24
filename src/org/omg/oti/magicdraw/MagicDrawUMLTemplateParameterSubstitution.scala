@@ -10,4 +10,9 @@ trait MagicDrawUMLTemplateParameterSubstitution
   override protected def e: Uml#TemplateParameterSubstitution
   import ops._
 
+  // 7.4  
+	override def actual: Option[UMLParameterableElement[Uml]] = ???
+  
+  // 7.4
+  override def formal: Option[UMLTemplateParameter[Uml]] = ???
 }

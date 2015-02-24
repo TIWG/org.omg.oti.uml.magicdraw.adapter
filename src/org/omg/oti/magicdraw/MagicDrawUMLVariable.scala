@@ -11,4 +11,6 @@ trait MagicDrawUMLVariable
   override protected def e: Uml#Variable
   import ops._
 
+  // 16.37
+	override def variable_variableAction: Set[UMLVariableAction[Uml]] = ???
 }

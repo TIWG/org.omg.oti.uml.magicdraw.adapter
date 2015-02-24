@@ -10,4 +10,9 @@ trait MagicDrawUMLSendObjectAction
   override protected def e: Uml#SendObjectAction
   import ops._
 
+  // 16.13
+	override def request: Iterable[UMLInputPin[Uml]] = ???
+  
+  // 16.13
+	override def target: Option[UMLInputPin[Uml]] = ??? 
 }

@@ -10,4 +10,10 @@ trait MagicDrawUMLSendSignalAction
   override protected def e: Uml#SendSignalAction
   import ops._
 
+  // 16.13
+	override def signal: Option[UMLSignal[Uml]] = ???
+  
+  // 16.13
+	override def target: Option[UMLInputPin[Uml]] = ???
+  
 }

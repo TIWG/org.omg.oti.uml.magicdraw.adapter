@@ -10,4 +10,16 @@ trait MagicDrawUMLReclassifyObjectAction
   override protected def e: Uml#ReclassifyObjectAction
   import ops._
 
+  // 16.30
+	override def isReplaceAll: Boolean = ???
+  
+  // 16.30
+	override def newClassifier: Set[UMLClassifier[Uml]] = ??? 
+  
+  // 16.30
+	override def _object: Option[UMLInputPin[Uml]] = ???
+  
+  // 16.30  
+	override def oldClassifier: Set[UMLClassifier[Uml]] = ???
+  
 }

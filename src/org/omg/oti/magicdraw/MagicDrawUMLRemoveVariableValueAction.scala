@@ -10,4 +10,9 @@ trait MagicDrawUMLRemoveVariableValueAction
   override protected def e: Uml#RemoveVariableValueAction
   import ops._
 
+  // 16.37
+  override def isRemoveDuplicates: Boolean = ???
+  
+  // 16.37  
+	override def removeAt: Option[UMLInputPin[Uml]] = ???
 }

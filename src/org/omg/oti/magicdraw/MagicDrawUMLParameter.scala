@@ -12,7 +12,7 @@ trait MagicDrawUMLParameter
   import ops._
   override protected def e: Uml#Parameter
   
-	override def default: Option[String]
+	override def default: Option[String] = ???
 
 	// 9.9
 	override def defaultValue: Option[UMLValueSpecification[Uml]] = ???

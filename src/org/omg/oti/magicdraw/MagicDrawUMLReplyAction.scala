@@ -10,4 +10,14 @@ trait MagicDrawUMLReplyAction
   override protected def e: Uml#ReplyAction
   import ops._
 
+  // 16.39
+	override def replyToCall: Option[UMLTrigger[Uml]] = ??? 
+  
+  // 16.39
+	override def replyValue: Seq[UMLInputPin[Uml]] = ???
+  
+  // 16.39
+  override def returnInformation: Option[UMLInputPin[Uml]] = ???
+  
+  
 }

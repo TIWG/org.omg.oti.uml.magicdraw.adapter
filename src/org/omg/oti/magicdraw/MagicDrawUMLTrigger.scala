@@ -10,4 +10,13 @@ trait MagicDrawUMLTrigger
   override protected def e: Uml#Trigger
   import ops._
 
+  // 13.2
+  override def event: Option[UMLEvent[Uml]] = ???
+  
+  // 13.2
+  override def port: Set[UMLPort[Uml]] = ???
+  
+  // 16.39
+  override def replyToCall_replyAction: Option[UMLReplyAction[Uml]] = ???
+  
 }

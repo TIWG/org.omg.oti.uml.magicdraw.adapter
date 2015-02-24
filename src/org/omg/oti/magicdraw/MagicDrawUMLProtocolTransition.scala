@@ -10,4 +10,11 @@ trait MagicDrawUMLProtocolTransition
   override protected def e: Uml#ProtocolTransition
   import ops._
 
+  // 14.41
+  override def postCondition: Option[UMLConstraint[Uml]] = ???
+  
+  // 14.41
+  override def preCondition: Option[UMLConstraint[Uml]] = ???
+  
+  
 }

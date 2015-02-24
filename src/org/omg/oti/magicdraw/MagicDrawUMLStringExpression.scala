@@ -13,5 +13,6 @@ trait MagicDrawUMLStringExpression
   override protected def e: Uml#StringExpression
   import ops._
   
-  def subExpressions = e.getSubExpression.toSeq
+  // 8.2
+  override def subExpression = e.getSubExpression.toSeq
 }

@@ -10,4 +10,6 @@ trait MagicDrawUMLReception
   override protected def e: Uml#Reception
   import ops._
 
+  // 10.5
+  override def signal: Option[UMLSignal[Uml]] = ??? 
 }

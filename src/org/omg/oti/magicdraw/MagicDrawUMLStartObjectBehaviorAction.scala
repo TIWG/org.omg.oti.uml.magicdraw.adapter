@@ -10,4 +10,7 @@ trait MagicDrawUMLStartObjectBehaviorAction
   override protected def e: Uml#StartObjectBehaviorAction
   import ops._
 
+  // 16.13
+  override def _object: Option[UMLInputPin[Uml]] = ???
+  
 }

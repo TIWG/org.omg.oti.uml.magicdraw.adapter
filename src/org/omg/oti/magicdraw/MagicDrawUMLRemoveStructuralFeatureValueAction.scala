@@ -10,4 +10,9 @@ trait MagicDrawUMLRemoveStructuralFeatureValueAction
   override protected def e: Uml#RemoveStructuralFeatureValueAction
   import ops._
 
+  // 16.36
+	override def isRemoveDuplicates: Boolean = ???
+  
+  // 16.36
+	override def removeAt: Option[UMLInputPin[Uml]] = ???
 }

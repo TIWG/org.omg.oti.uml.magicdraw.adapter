@@ -10,4 +10,10 @@ trait MagicDrawUMLQualifierValue
   override protected def e: Uml#QualifierValue
   import ops._
 
+  // 16.33
+  override def qualifier: Option[UMLProperty[Uml]] = ??? 
+  
+  // 16.33
+  override def value: Option[UMLInputPin[Uml]] = ???
+  
 }
