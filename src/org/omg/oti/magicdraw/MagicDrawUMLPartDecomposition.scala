@@ -10,4 +10,7 @@ trait MagicDrawUMLPartDecomposition
   override protected def e: Uml#PartDecomposition
   import ops._
 
+  // 17.18
+	override def decomposedAs_lifeline: Option[UMLLifeline[Uml]] = ???
+  
 }

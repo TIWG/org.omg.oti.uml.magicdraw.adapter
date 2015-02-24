@@ -13,7 +13,14 @@ trait MagicDrawUMLProfile
   import ops._
   override protected def e: Uml#Profile
   
-  override def metamodelReference = e.getMetamodelReference.toSet[Uml#PackageImport]
-  override def metaclassReference = e.getMetaclassReference.toSet[Uml#ElementImport]
+  // 12.12
+  override def metamodelReference = 
+    e.getMetamodelReference.toSet[Uml#PackageImport]
+
+  // 12.12
+  override def metaclassReference = 
+    e.getMetaclassReference.toSet[Uml#ElementImport]
   
+  // 12.12
+  override def profile_stereotype: Set[UMLStereotype[Uml]] = ???
 }

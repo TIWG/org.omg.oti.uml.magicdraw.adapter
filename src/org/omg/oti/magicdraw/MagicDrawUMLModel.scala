@@ -10,4 +10,6 @@ trait MagicDrawUMLModel
   override protected def e: Uml#Model
   import ops._
   
+  // 12.1  
+	override def viewpoint: Option[String] = ???
 }
