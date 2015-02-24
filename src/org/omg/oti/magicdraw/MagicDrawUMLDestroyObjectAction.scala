@@ -10,4 +10,10 @@ trait MagicDrawUMLDestroyObjectAction
   override protected def e: Uml#DestroyObjectAction
   import ops._
 
+  override def isDestroyLinks: Boolean = ???
+  
+  override def isDestroyOwnedObjects: Boolean = ???
+  
+	override def target: Option[UMLInputPin[Uml]] = ???
+  
 }

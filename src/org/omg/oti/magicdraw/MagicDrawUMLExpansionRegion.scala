@@ -1,5 +1,6 @@
 package org.omg.oti.magicdraw
 
+import scala.collection.JavaConversions._
 import org.omg.oti._
 import org.omg.oti.operations._
 
@@ -10,4 +11,10 @@ trait MagicDrawUMLExpansionRegion
   override protected def e: Uml#ExpansionRegion
   import ops._
 
+  override def inputElement: Set[UMLExpansionNode[Uml]] = ???
+  
+  override def mode: UMLExpansionKind.Value = ???
+  
+  override def outputElement: Set[UMLExpansionNode[Uml]] = ???
+  
 }

@@ -10,6 +10,8 @@ trait MagicDrawUMLExtensionEnd
   override protected def e: Uml#ExtensionEnd
   import ops._
   
+  override def lower: Integer = ???
+  
   override def _type: Option[UMLStereotype[Uml]] = super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
   
 }

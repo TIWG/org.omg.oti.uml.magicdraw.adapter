@@ -10,4 +10,10 @@ trait MagicDrawUMLCombinedFragment
   override protected def e: Uml#CombinedFragment
   import ops._
 
+  override def cfragmentGate: Set[UMLGate[Uml]] = ???
+  
+  override def interactionOperator: UMLInteractionOperatorKind.Value = ???
+  
+  override def operand: Seq[UMLInteractionOperand[Uml]] = ??? 
+
 }

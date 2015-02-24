@@ -10,4 +10,6 @@ trait MagicDrawUMLClearStructuralFeatureAction
   override protected def e: Uml#ClearStructuralFeatureAction
   import ops._
 
+  override def result: Option[UMLOutputPin[Uml]] =
+    Option.apply( e.getResult )
 }

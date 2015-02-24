@@ -10,4 +10,6 @@ trait MagicDrawUMLExecutionOccurrenceSpecification
   override protected def e: Uml#ExecutionOccurrenceSpecification
   import ops._
 
+  override def execution: Option[UMLExecutionSpecification[Uml]] = ???
+  
 }

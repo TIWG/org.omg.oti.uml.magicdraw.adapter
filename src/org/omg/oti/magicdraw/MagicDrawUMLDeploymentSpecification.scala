@@ -10,4 +10,8 @@ trait MagicDrawUMLDeploymentSpecification
   override protected def e: Uml#DeploymentSpecification
   import ops._
 
+  override def deploymentLocation: Option[String] = ???
+  
+  override def executionLocation: Option[String] = ??? 
+
 }

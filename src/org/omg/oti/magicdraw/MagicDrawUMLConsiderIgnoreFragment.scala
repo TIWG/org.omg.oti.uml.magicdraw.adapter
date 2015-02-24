@@ -10,4 +10,6 @@ trait MagicDrawUMLConsiderIgnoreFragment
   override protected def e: Uml#ConsiderIgnoreFragment
   import ops._
 
+  override def message: Set[UMLNamedElement[Uml]] = ??? 
+
 }

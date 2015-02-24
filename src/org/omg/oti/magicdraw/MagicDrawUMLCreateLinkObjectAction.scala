@@ -10,4 +10,6 @@ trait MagicDrawUMLCreateLinkObjectAction
   override protected def e: Uml#CreateLinkObjectAction
   import ops._
 
+  override def result: Option[UMLOutputPin[Uml]] = ???
+  
 }

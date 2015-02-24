@@ -10,4 +10,7 @@ trait MagicDrawUMLConnectableElementTemplateParameter
   override protected def e: Uml#ConnectableElementTemplateParameter
   import ops._
 
+  override def parameteredElement: Option[UMLConnectableElement[Uml]] =
+    Option.apply( e.getParameteredElement )
+    
 }

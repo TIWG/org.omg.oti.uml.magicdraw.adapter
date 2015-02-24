@@ -10,4 +10,8 @@ trait MagicDrawUMLCreateObjectAction
   override protected def e: Uml#CreateObjectAction
   import ops._
 
+	override def classifier: Option[UMLClassifier[Uml]] = ???
+  
+  override def result: Option[UMLOutputPin[Uml]] = ??? 
+  
 }

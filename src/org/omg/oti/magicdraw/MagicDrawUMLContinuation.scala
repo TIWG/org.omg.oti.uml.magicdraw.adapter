@@ -10,4 +10,7 @@ trait MagicDrawUMLContinuation
   override protected def e: Uml#Continuation
   import ops._
 
+  override def setting: Boolean =
+    e.isSetting
+    
 }

@@ -10,4 +10,10 @@ trait MagicDrawUMLClearAssociationAction
   override protected def e: Uml#ClearAssociationAction
   import ops._
 
+  override def association: Option[UMLAssociation[Uml]] =
+    Option.apply( e.getAssociation )
+    
+  override def _object: Option[UMLInputPin[Uml]] =
+    Option.apply( e.getObject )
+    
 }
