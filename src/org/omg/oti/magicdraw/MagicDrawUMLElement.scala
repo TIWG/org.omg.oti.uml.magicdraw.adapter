@@ -81,13 +81,16 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
    */
   override def getAppliedStereotypes: Map[UMLStereotype[Uml], UMLProperty[Uml]] = {
     val eMetaclass = e.getClassType
-    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] map { s =>
+    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
         val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
         eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
       }
-      require( metaProperties.nonEmpty, s"element: ${e.id}, stereotype: ${s.getQualifiedName} (ID=${s.id})")
-      ( umlStereotype(s) -> umlProperty(metaProperties.head) )
+      if( metaProperties.isEmpty ) {
+        System.err.println(s"MagicDrawUMLElement.getAppliedStereotypes -- [${eMetaclass.getName}] ${e.getHumanType}: ${e.id}, stereotype: ${s.getQualifiedName} (ID=${s.id}) -- Ignoring the stereotype application because there is no stereotype 'base_...' property suitable for the element's metaclass (${eMetaclass.getName})")
+        None
+      } else
+        Some( ( umlStereotype(s) -> umlProperty(metaProperties.head) ) )
     } toMap
   }
 

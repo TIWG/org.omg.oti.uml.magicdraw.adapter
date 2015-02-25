@@ -31,3 +31,6 @@ trait MagicDrawUMLInstanceSpecification
     e.get_instanceValueOfInstance.toSet[Uml#InstanceValue]
   
 }
+
+case class MagicDrawUMLInstanceSpecificationImpl( val e: MagicDrawUML#InstanceSpecification, ops: MagicDrawUMLUtil )
+extends MagicDrawUMLInstanceSpecification

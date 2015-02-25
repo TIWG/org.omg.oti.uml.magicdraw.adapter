@@ -178,7 +178,8 @@ object exportPackageExtents2OTICanonicalXMI {
         case Failure( t ) => Failure( t )
         case Success( ( resolved, unresolved ) ) =>
 
-          if ( unresolved.nonEmpty ) {
+          val result = if ( unresolved.isEmpty ) Success( None )
+          else {
             guiLog.log( s"*** ${unresolved.size} unresolved cross-references ***" )
             val elementMessages = unresolved map { u =>
               val mdXRef = u.externalReference.getMagicDrawElement
@@ -197,17 +198,17 @@ object exportPackageExtents2OTICanonicalXMI {
                 "*::MagicDrawOTIValidation",
                 "*::UnresolvedCrossReference" ).validationDataResults ) )
           }
-          else
-            resolved.serialize( valueSpecificationTagConverter = DocumentSet.serializeValueSpecificationAsTagValue[Uml] _ ) match {
-              case Success( _ ) =>
-                progressStatus.increase()
-                guiLog.log( s"Graph: ${resolved.g}" )
-                guiLog.log( s"Done..." )
-                Success( None )
 
-              case Failure( t ) =>
-                Failure( t )
-            }
+          resolved.serialize( valueSpecificationTagConverter = DocumentSet.serializeValueSpecificationAsTagValue[Uml] _ ) match {
+            case Success( _ ) =>
+              progressStatus.increase()
+              guiLog.log( s"Graph: ${resolved.g}" )
+              guiLog.log( s"Done..." )
+              result
+
+            case Failure( t ) =>
+              Failure( t )
+          }
       }
   }
 }

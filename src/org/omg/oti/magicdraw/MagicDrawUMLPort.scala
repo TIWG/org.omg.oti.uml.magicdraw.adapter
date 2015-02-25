@@ -21,7 +21,8 @@ trait MagicDrawUMLPort
   override def isService: Boolean = ???
   
   // 11.10
-  override def protocol: Option[UMLProtocolStateMachine[Uml]] = ???
+  override def protocol: Option[UMLProtocolStateMachine[Uml]] = 
+    Option.apply( e.getProtocol )
   
   // 11.10
   override def provided: Set[UMLInterface[Uml]] = ???

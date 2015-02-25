@@ -12,28 +12,50 @@ trait MagicDrawUMLParameter
   import ops._
   override protected def e: Uml#Parameter
   
-	override def default: Option[String] = ???
+	override def default: Option[String] = 
+    e.getDefault match {
+    case null => None
+    case "" => None
+    case s => Some( s )
+  }
 
 	// 9.9
-	override def defaultValue: Option[UMLValueSpecification[Uml]] = ???
+	override def defaultValue: Option[UMLValueSpecification[Uml]] =
+    Option.apply( e.getDefaultValue )
   
   // 9.9
-	override def direction: UMLParameterDirectionKind.Value = ???
+	override def direction: UMLParameterDirectionKind.Value =
+    e.getDirection match {
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN => UMLParameterDirectionKind.in
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.OUT => UMLParameterDirectionKind.out
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.INOUT => UMLParameterDirectionKind.inout
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.RETURN => UMLParameterDirectionKind._return
+  }
   
   // 9.9
-	override def effect: UMLParameterEffectKind.Value = ???
+	override def effect: UMLParameterEffectKind.Value = 
+    e.getEffect match {
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE => UMLParameterEffectKind.create
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ => UMLParameterEffectKind.read
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE => UMLParameterEffectKind.update
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE => UMLParameterEffectKind.delete
+  }
   
   // 9.9
-	override def isException: Boolean = ???
+	override def isException: Boolean = 
+    e.isException
   
   // 9.9
-	override def isStream: Boolean = ???
+	override def isStream: Boolean =
+    e.isStream
   
   // 9.9
-	override def operation: Option[UMLOperation[Uml]] = ???
+	override def operation: Option[UMLOperation[Uml]] = 
+    Option.apply( e.getOperation )
   
   // 9.9
-	override def parameterSet: Set[UMLParameterSet[Uml]] = ???
+	override def parameterSet: Set[UMLParameterSet[Uml]] =
+    e.getParameterSet.toSet[Uml#ParameterSet]
   
   // 9.9
 	override def ownedParameter_ownerFormalParam: Option[UMLBehavioralFeature[Uml]] = ???

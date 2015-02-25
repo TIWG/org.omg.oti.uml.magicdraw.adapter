@@ -552,6 +552,14 @@ characterization(
             class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
             method: allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles
         )
+		EarlyDerivedWidget(
+			name: 'OTI Package::forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively
+        )
 	})
 
 characterization(

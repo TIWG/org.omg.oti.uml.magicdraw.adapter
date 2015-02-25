@@ -40,7 +40,8 @@ trait MagicDrawUMLProperty
     case Some( a ) => a.memberEnd filter (_ != this) headOption
   }
     
-	override def qualifier: Seq[UMLProperty[Uml]] = ??? 
+	override def qualifier: Seq[UMLProperty[Uml]] = 
+    e.getQualifier.toSeq
   
   override def subsettedProperty = e.getSubsettedProperty.toSet[Uml#Property]
   

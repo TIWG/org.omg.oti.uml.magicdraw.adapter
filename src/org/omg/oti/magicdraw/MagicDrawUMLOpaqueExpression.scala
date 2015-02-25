@@ -13,7 +13,8 @@ trait MagicDrawUMLOpaqueExpression
   import ops._
 
   // 8.2
-  override def behavior: Option[UMLBehavior[Uml]] = ???
+  override def behavior: Option[UMLBehavior[Uml]] = 
+    Option.apply( e.getBehavior )
   
   // 8.2
   override def body = e.getBody.toSeq

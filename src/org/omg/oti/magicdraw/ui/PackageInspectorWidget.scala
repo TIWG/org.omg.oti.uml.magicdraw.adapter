@@ -102,5 +102,10 @@ object PackageInspectorWidget {
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
       packageOperationWidget( project, ev, derived, ek, e, (_.allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles) )
+
+  def forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
+      packageOperationWidget( project, ev, derived, ek, e, (_.forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively) )
   
 }
