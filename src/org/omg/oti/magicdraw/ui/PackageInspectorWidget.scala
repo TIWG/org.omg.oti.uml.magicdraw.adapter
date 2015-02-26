@@ -11,6 +11,7 @@ import scala.util.Try
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.magicdraw.ui.dialogs.specifications.SpecificationDialogManager
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
 import gov.nasa.jpl.dynamicScripts.magicdraw.designations.MagicDrawElementKindDesignation
@@ -25,87 +26,122 @@ import org.omg.oti.magicdraw.MagicDrawUMLUtil
 object PackageInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
-  
-  def packageOperationWidget(
-    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element,
-    f: Function1[UMLPackage[MagicDrawUML], Iterable[UMLPackageableElement[MagicDrawUML]]]): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = {
+  import RelationTripleWidgetHelper._
 
-    implicit val umlUtil = MagicDrawUMLUtil( project )
-    import umlUtil._
-
-    umlElement( e ) match {
-      case pkg: UMLPackage[Uml] =>         
-        Success( createGroupTableUIPanelForPackageableElements( derived, f(pkg) ) )
-
-      case x =>
-        Failure( new IllegalArgumentException( s"Not a package; instead got a ${x.xmiType}" ) )
-    }
-  }
-  
   def nonImportedNestedPackages(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.nonImportedNestedPackages) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.nonImportedNestedPackages ),
+      MagicDrawUMLUtil( project ) )
+
   def allNestedPackages(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allNestedPackages) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allNestedPackages ),
+      MagicDrawUMLUtil( project ) )
+
   def allNestingPackagesTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allNestingPackagesTransitively) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allNestingPackagesTransitively ),
+      MagicDrawUMLUtil( project ) )
+
   def allDirectlyImportedPackagesIncludingNestingPackagesTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allDirectlyImportedPackagesIncludingNestingPackagesTransitively) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allDirectlyImportedPackagesIncludingNestingPackagesTransitively ),
+      MagicDrawUMLUtil( project ) )
+
   def allApplicableStereotypes(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allApplicableStereotypes) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allApplicableStereotypes ),
+      MagicDrawUMLUtil( project ) )
+
   def containingProfile(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.containingProfile) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.containingProfile ),
+      MagicDrawUMLUtil( project ) )
+
   def allDirectlyAppliedProfilesExceptNestingPackages(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allDirectlyAppliedProfilesExceptNestingPackages ) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allDirectlyAppliedProfilesExceptNestingPackages ),
+      MagicDrawUMLUtil( project ) )
+
   def allDirectlyAppliedProfilesIncludingNestingPackagesTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allDirectlyAppliedProfilesIncludingNestingPackagesTransitively ) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allDirectlyAppliedProfilesIncludingNestingPackagesTransitively ),
+      MagicDrawUMLUtil( project ) )
+
   def allDirectlyVisibleMembersTransitivelyAccessibleExceptNestingPackagesAndAppliedProfiles(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allDirectlyVisibleMembersTransitivelyAccessibleExceptNestingPackagesAndAppliedProfiles ) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allDirectlyVisibleMembersTransitivelyAccessibleExceptNestingPackagesAndAppliedProfiles ),
+      MagicDrawUMLUtil( project ) )
+
   def allIndirectlyAppliedProfilesIncludingNestingPackagesTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allIndirectlyAppliedProfilesIncludingNestingPackagesTransitively) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allIndirectlyAppliedProfilesIncludingNestingPackagesTransitively ),
+      MagicDrawUMLUtil( project ) )
+
   def allForwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allForwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allForwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively ),
+      MagicDrawUMLUtil( project ) )
 
   def allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles ),
+      MagicDrawUMLUtil( project ) )
 
-  def forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively(
+  def forwardReferencesToPackagesOrProfiles(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
-      packageOperationWidget( project, ev, derived, ek, e, (_.forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively) )
-  
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackageableElement[MagicDrawUML]](
+      derived, e,
+      ( _.forwardReferencesToPackagesOrProfiles.get ),
+      MagicDrawUMLUtil( project ) )
+
+  def forwardReferencesBeyondPackageScope(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    e match {
+      case p: Package =>
+        relationTripleWidget(
+          derived, p,
+          ( _.forwardReferencesBeyondPackageScope ),
+          MagicDrawUMLUtil( project ) )
+      case _ =>
+        Failure( new IllegalArgumentException( "Not a package!" ) )
+    }
 }

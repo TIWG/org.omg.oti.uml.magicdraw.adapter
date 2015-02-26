@@ -399,6 +399,57 @@ dynamicScripts(
 })
 
 characterization(
+	name='Element (OMG Tool Infrastructure)'
+	[ m: Element ]
+	features {		
+		EarlyDerivedWidget(
+			name: 'OTI Element::allOwnedElementsWithinPackageScope'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: allOwnedElementsWithinPackageScope
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Element::packageOrProfileOwner'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: packageOrProfileOwner
+        )
+	})
+characterization(
+	name='NamedElement (OMG Tool Infrastructure)'
+	[ m: NamedElement ]
+	features {		
+		EarlyDerivedWidget(
+			name: 'OTI NamedElement::allNamespaces'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamedElementInspectorWidget
+            method: allNamespaces
+        )
+		EarlyDerivedWidget(
+			name: 'OTI NamedElement::owningPackage'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamedElementInspectorWidget
+            method: owningPackage
+        )
+		EarlyDerivedWidget(
+			name: 'OTI NamedElement::allOwningPackages'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamedElementInspectorWidget
+            method: allOwningPackages
+        )
+	})
+	
+characterization(
 	name='Namespace (OMG Tool Infrastructure)'
 	[ m: Namespace ]
 	features {	
@@ -553,12 +604,20 @@ characterization(
             method: allIndirectlyVisibleMembersTransitivelyAccessibleFromNestingPackagesAndAppliedProfiles
         )
 		EarlyDerivedWidget(
-			name: 'OTI Package::forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively'
+			name: 'OTI Package::forwardReferencesToPackagesOrProfiles'
 			project: org.omg.oti.magicdraw
             dependencies: { org.omg.oti }
             access: r/o
             class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
-            method: forwardReferencesToImportablePackageableElementsFromAllOwnedElementsTransitively
+            method: forwardReferencesToPackagesOrProfiles
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Package::forwardReferencesBeyondPackageScope'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: forwardReferencesBeyondPackageScope
         )
 	})
 

@@ -26,7 +26,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   
   override def ownedComment = e.getOwnedComment.toSet[Uml#Comment]
   
-  override def ownedElement = e.getOwnedElement.toSet[Uml#Element]
+  override def ownedElement = e.getOwnedElement.toSet[Uml#Element] - umlElement(e.getAppliedStereotypeInstance)
 
   override def owner = Option.apply( e.getOwner )
   

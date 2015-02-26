@@ -26,51 +26,52 @@ object NamespaceInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
   
-  def namespaceOperationWidget(
-    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element,
-    f: Function1[UMLNamespace[MagicDrawUML], Iterable[UMLPackageableElement[MagicDrawUML]]]): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = {
-
-    implicit val umlUtil = MagicDrawUMLUtil( project )
-    import umlUtil._
-
-    umlElement( e ) match {
-      case ns: UMLNamespace[Uml] =>        
-        Success( createGroupTableUIPanelForPackageableElements( derived, f(ns) ) )
-
-      case x =>
-        Failure( new IllegalArgumentException( s"Not a namespace; instead got a ${x.xmiType}" ) )
-    }
-  }
-  
   def importedPackages(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =     
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.importedPackages) )
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.importedPackages), 
+          MagicDrawUMLUtil( project ) )
     
-
   def allImportedPackagesTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =    
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.allImportedPackagesTransitively) )
-
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =  
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.allImportedPackagesTransitively), 
+          MagicDrawUMLUtil( project ) )
+    
   def importedMembers(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =    
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.importedMember) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.importedMember), 
+          MagicDrawUMLUtil( project ) )  
 
   def visibleMembers(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =  
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.visibleMembers) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.visibleMembers), 
+          MagicDrawUMLUtil( project ) )  
       
   def allVisibleMembersTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = 
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.allVisibleMembersTransitively) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.allVisibleMembersTransitively), 
+          MagicDrawUMLUtil( project ) )  
 
   def allVisibleMembersAccessibleTransitively(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = 
-      namespaceOperationWidget( project, ev, derived, ek, e, (_.allVisibleMembersAccessibleTransitively) )
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =   
+      elementOperationWidget[UMLNamespace[MagicDrawUML], UMLPackageableElement[MagicDrawUML]]( 
+          derived, e, 
+          (_.allVisibleMembersAccessibleTransitively), 
+          MagicDrawUMLUtil( project ) )  
+          
 }
