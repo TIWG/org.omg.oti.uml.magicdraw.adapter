@@ -619,6 +619,14 @@ characterization(
             class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
             method: forwardReferencesBeyondPackageScope
         )
+		EarlyDerivedWidget(
+			name: 'OTI Package::allPackagesWithinScope'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PackageInspectorWidget
+            method: allPackagesWithinScope
+        )
 	})
 
 characterization(

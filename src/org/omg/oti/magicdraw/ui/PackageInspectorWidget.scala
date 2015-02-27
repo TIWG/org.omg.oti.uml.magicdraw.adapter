@@ -60,6 +60,14 @@ object PackageInspectorWidget {
       ( _.allDirectlyImportedPackagesIncludingNestingPackagesTransitively ),
       MagicDrawUMLUtil( project ) )
 
+  def allPackagesWithinScope(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    elementOperationWidget[UMLPackage[MagicDrawUML], UMLPackage[MagicDrawUML]](
+      derived, e,
+      ( _.allPackagesWithinScope ),
+      MagicDrawUMLUtil( project ) )
+      
   def allApplicableStereotypes(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
