@@ -5,7 +5,7 @@ import scala.language.implicitConversions
 import scala.language.postfixOps
 import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import org.eclipse.emf.ecore.EStructuralFeature
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
@@ -44,7 +44,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   // ElementOps
   
-  override def allOwnedElements = e.eAllContents.toStream.selectByKindOf { case e: Uml#Element => umlElement( e ) } toStream
+  override def allOwnedElements = 
+    e.eAllContents.toSet.selectByKindOf { case e: Uml#Element => umlElement( e ) }
 
   override def mofMetaclassName = StereotypesHelper.getBaseClass( e ).getName
 

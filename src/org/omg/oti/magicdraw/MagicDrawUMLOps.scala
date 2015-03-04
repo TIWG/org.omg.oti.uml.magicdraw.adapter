@@ -4,7 +4,7 @@ import scala.language.postfixOps
 import scala.reflect.runtime.universe._
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 import org.omg.oti.canonicalXMI.BuiltInDocument

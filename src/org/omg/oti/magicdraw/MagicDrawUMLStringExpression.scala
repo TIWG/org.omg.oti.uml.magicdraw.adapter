@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLStringExpression 
@@ -15,4 +15,6 @@ trait MagicDrawUMLStringExpression
   
   // 8.2
   override def subExpression = e.getSubExpression.toSeq
+    
+	override def nameExpression_namedElement: Option[UMLNamedElement[Uml]] = ???
 }

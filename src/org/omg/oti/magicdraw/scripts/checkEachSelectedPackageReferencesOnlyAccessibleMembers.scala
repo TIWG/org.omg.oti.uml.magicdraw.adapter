@@ -13,7 +13,7 @@ import com.nomagic.magicdraw.uml.symbols.PresentationElement
 import com.nomagic.magicdraw.uml.symbols.shapes.PackageView
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.magicdraw.MagicDrawUML
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes

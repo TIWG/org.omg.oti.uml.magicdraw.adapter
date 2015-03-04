@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLTransition 
@@ -11,6 +11,9 @@ trait MagicDrawUMLTransition
   override protected def e: Uml#Transition
   import ops._
 
-   def source: Option[UMLVertex[Uml]] = ??? 
-   def target: Option[UMLVertex[Uml]] = ???
+  override def kind: UMLTransitionKind.Value = ???
+
+  override def source: Option[UMLVertex[Uml]] = ??? 
+
+  override def target: Option[UMLVertex[Uml]] = ???
 }

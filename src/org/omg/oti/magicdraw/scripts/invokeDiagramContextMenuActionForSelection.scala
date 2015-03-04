@@ -16,7 +16,7 @@ import com.nomagic.magicdraw.uml.symbols.shapes.InstanceSpecificationView
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.InstanceSpecification
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.magicdraw._
 
 import gov.nasa.jpl.dynamicScripts._

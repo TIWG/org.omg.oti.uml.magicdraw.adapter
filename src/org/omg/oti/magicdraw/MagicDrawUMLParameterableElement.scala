@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLParameterableElement 
@@ -14,8 +14,10 @@ trait MagicDrawUMLParameterableElement
 
   override def templateParameter: Option[UMLTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )
   
-  override def actual_templateParameterSubstitution = e.get_templateParameterSubstitutionOfActual.toIterable
+  override def actual_templateParameterSubstitution = e.get_templateParameterSubstitutionOfActual.toSet[Uml#TemplateParameterSubstitution]
   
   override def default_templateParameter = e.get_templateParameterOfDefault.toIterable
   
+  override def ownedDefault_templateParameter: Iterable[UMLTemplateParameter[Uml]] =
+    e.get_templateParameterOfDefault.toIterable
 }

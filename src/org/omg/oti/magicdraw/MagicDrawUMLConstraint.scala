@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLConstraint 
@@ -57,7 +57,7 @@ trait MagicDrawUMLConstraint
   override def precondition_preContext =
     Option.apply( e.getPreContext )
     
-  override def specification =
+  override def specification: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getSpecification )
     
   override def stateInvariant_owningState =

@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLElementImport 
@@ -25,4 +25,7 @@ trait MagicDrawUMLElementImport
     
   override def metaclassReference_profile =
     Option.apply( e.get_profileOfMetaclassReference )
+    
+  override def visibility: UMLVisibilityKind.Value = ???
+  
 }

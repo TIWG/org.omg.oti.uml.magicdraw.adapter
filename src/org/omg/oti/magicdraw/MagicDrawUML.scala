@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-trait MagicDrawUML extends org.omg.oti.UML {
+trait MagicDrawUML extends org.omg.oti.api.UML {
   
   override type Element = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
   override type Comment = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment

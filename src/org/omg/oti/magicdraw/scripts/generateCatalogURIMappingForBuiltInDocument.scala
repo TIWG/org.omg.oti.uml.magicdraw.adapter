@@ -18,10 +18,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
 
-import org.omg.oti.UMLClass
-import org.omg.oti.UMLExtension
-import org.omg.oti.UMLPrimitiveType
-import org.omg.oti.UMLStereotype
+import org.omg.oti.api._
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
 
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes

@@ -32,12 +32,12 @@ import com.nomagic.magicdraw.ui.MagicDrawProgressStatusRunner
 import com.nomagic.magicdraw.core.ProjectUtilitiesInternal
 import java.util.UUID
 import com.nomagic.ci.persistence.local.spi.localproject.LocalPrimaryProject
-import org.omg.oti.UMLAssociation
+
+import org.omg.oti.api._
 import org.omg.oti.magicdraw.MagicDrawUML
 import com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement
 import com.nomagic.magicdraw.uml.symbols.paths.AssociationView
 import com.nomagic.magicdraw.uml.symbols.PresentationElement
-import org.omg.oti.UMLInstanceValue
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov

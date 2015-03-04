@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLLoopNode 
@@ -27,10 +27,10 @@ trait MagicDrawUMLLoopNode
   override def loopVariable: Seq[UMLOutputPin[Uml]] = ???
 
   // 16.45
-  override def loopVariableInput: Iterable[UMLInputPin[Uml]] = ???
+  override def loopVariableInput: Seq[UMLInputPin[Uml]] = ???
 
   // 16.45
-  override def result: Iterable[UMLOutputPin[Uml]] = ???
+  override def result: Seq[UMLOutputPin[Uml]] = ???
 
   // 16.45
   override def setupPart: Set[UMLExecutableNode[Uml]] = ???

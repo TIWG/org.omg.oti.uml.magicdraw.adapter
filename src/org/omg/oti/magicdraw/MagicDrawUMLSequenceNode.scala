@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLSequenceNode 
@@ -12,5 +12,5 @@ trait MagicDrawUMLSequenceNode
   import ops._
 
   // 16.45
-	override def executableNode: Iterable[UMLExecutableNode[Uml]] = ??? 
+	override def executableNode: Seq[UMLExecutableNode[Uml]] = ??? 
 }

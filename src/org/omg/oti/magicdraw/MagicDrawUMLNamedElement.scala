@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLNamedElement 
@@ -27,10 +27,10 @@ trait MagicDrawUMLNamedElement
   override def qualifiedName = Option.apply( e.getQualifiedName )
   
   override def visibility = e.getVisibility match {
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => UMLVisibilityKind.public
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => UMLVisibilityKind._private
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => UMLVisibilityKind._protected
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => UMLVisibilityKind._package
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => Some( UMLVisibilityKind.public )
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => Some( UMLVisibilityKind._private )
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => Some( UMLVisibilityKind._protected )
+    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => Some( UMLVisibilityKind._package )
   }
   
   override def event_durationObservation = e.get_durationObservationOfEvent.toSet[Uml#DurationObservation]

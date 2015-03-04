@@ -3,7 +3,7 @@ package org.omg.oti.magicdraw
 import scala.collection.JavaConversions._
 import scala.language.implicitConversions
 import scala.language.postfixOps
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLProfile 

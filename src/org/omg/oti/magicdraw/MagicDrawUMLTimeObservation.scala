@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLTimeObservation 
@@ -14,9 +14,6 @@ trait MagicDrawUMLTimeObservation
     Option.apply( e.getEvent )
     
   override def firstEvent =
-    e.isFirstEvent() match {
-    case true => None
-    case false => Some( false )
-  }
+    e.isFirstEvent
   
 }

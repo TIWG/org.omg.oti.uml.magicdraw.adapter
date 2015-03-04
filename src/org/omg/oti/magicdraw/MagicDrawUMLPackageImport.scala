@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLPackageImport 
@@ -12,4 +12,6 @@ trait MagicDrawUMLPackageImport
 
   // 12.12
   override def metamodelReference_profile: Option[UMLProfile[Uml]] = ???
+  
+  override def visibility: UMLVisibilityKind.Value = ???
 }

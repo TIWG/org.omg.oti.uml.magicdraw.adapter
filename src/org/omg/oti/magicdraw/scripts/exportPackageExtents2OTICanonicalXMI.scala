@@ -27,9 +27,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
 
-import org.omg.oti.UMLElement
-import org.omg.oti.UMLNamedElement
-import org.omg.oti.UMLPackage
+import org.omg.oti.api._
 import org.omg.oti.canonicalXMI.CatalogURIMapper
 import org.omg.oti.canonicalXMI.DocumentSet
 import org.omg.oti.magicdraw.MagicDrawUML

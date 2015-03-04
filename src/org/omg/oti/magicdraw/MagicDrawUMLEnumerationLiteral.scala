@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLEnumerationLiteral 
@@ -10,6 +10,7 @@ trait MagicDrawUMLEnumerationLiteral
   override protected def e: Uml#EnumerationLiteral
   import ops._
     
-  override def classifier = Iterable(e.getEnumeration)
+  override def classifier = 
+    Set[Uml#Classifier](e.getEnumeration)
 
 }

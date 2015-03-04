@@ -8,7 +8,7 @@ import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.canonicalXMI._
 
 import org.omg.oti.magicdraw._

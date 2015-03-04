@@ -35,7 +35,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.XMLResource
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.migration._
 import org.omg.oti.canonicalXMI._
 import org.omg.oti.magicdraw._

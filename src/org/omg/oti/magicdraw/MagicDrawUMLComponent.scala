@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLComponent 
@@ -18,5 +18,7 @@ trait MagicDrawUMLComponent
   override def realization = e.getRealization.toSet[Uml#ComponentRealization]
   
   override def required = e.getRequired.toSet[Uml#Interface]
+  
+  override def packagedElement: Set[UMLPackageableElement[Uml]] = ???
   
 }

@@ -22,32 +22,24 @@ import org.omg.oti.magicdraw.MagicDrawUML
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
 import com.nomagic.magicdraw.core.Application
 
-object NamedElementInspectorWidget {
+object ClassifierInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
   
-  def allNamespaces(
+  def general(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =     
-      elementOperationWidget[UMLNamedElement[MagicDrawUML], UMLNamespace[MagicDrawUML]]( 
+      elementOperationWidget[UMLClassifier[MagicDrawUML], UMLClassifier[MagicDrawUML]]( 
           derived, e, 
-          (_.allNamespaces), 
+          (_.general), 
           MagicDrawUMLUtil( project ) )
     
-  def owningPackage(
+  def generalClassifier(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =  
-      elementOperationWidget[UMLNamedElement[MagicDrawUML], UMLPackage[MagicDrawUML]]( 
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =     
+      elementOperationWidget[UMLClassifier[MagicDrawUML], UMLClassifier[MagicDrawUML]]( 
           derived, e, 
-          (_.owningPackage), 
-          MagicDrawUMLUtil( project ) )
-          
-  def allOwningPackages(
-    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
-    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =  
-      elementOperationWidget[UMLNamedElement[MagicDrawUML], UMLPackage[MagicDrawUML]]( 
-          derived, e, 
-          (_.allOwningPackages), 
+          (_.general_classifier), 
           MagicDrawUMLUtil( project ) )
     
 }

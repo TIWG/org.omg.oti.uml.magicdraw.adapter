@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLInstanceSpecification 
@@ -25,7 +25,7 @@ trait MagicDrawUMLInstanceSpecification
     e.getSlot.toSet[Uml#Slot]
   
   override def classifier = 
-    e.getClassifier.toIterable
+    e.getClassifier.toSet[Uml#Classifier]
   
   override def instance_instanceValue =
     e.get_instanceValueOfInstance.toSet[Uml#InstanceValue]

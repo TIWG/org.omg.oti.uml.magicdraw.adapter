@@ -20,6 +20,7 @@ import gov.nasa.jpl.dynamicScripts.magicdraw.ui.nodes._
 import gov.nasa.jpl.dynamicScripts.magicdraw.ui.tables._
 import gov.nasa.jpl.dynamicScripts.magicdraw.utils._
 import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.magicdraw._
 import scala.reflect.{ classTag, ClassTag }
 

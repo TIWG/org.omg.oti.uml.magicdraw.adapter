@@ -18,6 +18,7 @@ import gov.nasa.jpl.dynamicScripts.magicdraw.specificationDialog.SpecificationCo
 import gov.nasa.jpl.dynamicScripts.magicdraw.ui.nodes._
 import gov.nasa.jpl.dynamicScripts.magicdraw.utils._
 import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.magicdraw.MagicDrawUML
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
 import com.nomagic.magicdraw.core.Application
@@ -26,6 +27,14 @@ object ElementInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
     
+  def appliedStereotypes(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = 
+      elementOperationWidget[UMLElement[MagicDrawUML], UMLStereotype[MagicDrawUML]]( 
+          derived, e, 
+          (_.getAppliedStereotypes.keySet), 
+          MagicDrawUMLUtil( project ) )  
+          
   def allForwardReferencesFromStereotypeTagProperties(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = 

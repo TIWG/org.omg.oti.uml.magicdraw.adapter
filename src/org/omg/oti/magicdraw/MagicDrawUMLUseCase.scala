@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLUseCase 
@@ -20,4 +20,7 @@ trait MagicDrawUMLUseCase
   
   override def addition_include: Set[UMLInclude[Uml]] =
     e.get_includeOfAddition.toSet[Uml#Include]
+    
+	override def ownedUseCase_classifier: Option[UMLClassifier[Uml]] = ???
+  
 }

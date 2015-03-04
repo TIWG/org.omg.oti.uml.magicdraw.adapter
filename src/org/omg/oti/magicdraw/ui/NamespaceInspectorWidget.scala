@@ -17,7 +17,7 @@ import gov.nasa.jpl.dynamicScripts.magicdraw.designations.MagicDrawElementKindDe
 import gov.nasa.jpl.dynamicScripts.magicdraw.specificationDialog.SpecificationComputedComponent
 import gov.nasa.jpl.dynamicScripts.magicdraw.ui.nodes._
 import gov.nasa.jpl.dynamicScripts.magicdraw.utils._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.magicdraw.MagicDrawUML
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
 import com.nomagic.magicdraw.core.Application

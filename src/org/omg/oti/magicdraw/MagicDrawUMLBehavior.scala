@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLBehavior 
@@ -24,7 +24,7 @@ trait MagicDrawUMLBehavior
   
   override def specification = Option.apply( e.getSpecification )
   
-  override def redefinedBehavior = e.getRedefinedBehavior.toIterable
+  override def redefinedBehavior = e.getRedefinedBehavior.toSet[Uml#Behavior]
   
   override def selection_objectFlow = e.get_objectFlowOfSelection.toSet[Uml#ObjectFlow]
   
@@ -45,5 +45,22 @@ trait MagicDrawUMLBehavior
   override def behavior_opaqueExpression = e.get_opaqueExpressionOfBehavior.toSet[Uml#OpaqueExpression]
   
   override def contract_connector = e.get_connectorOfContract.toSet[Uml#Connector]
+  
+  override def classifierBehavior_behavioredClassifier: Option[UMLBehavioredClassifier[Uml]] = ???
+  
+  	override def ownedBehavior_behavioredClassifier: Option[UMLBehavioredClassifier[Uml]] = ???
+    
+  override def doActivity_state: Option[UMLState[Uml]] = ???
+  
+  override def entry_state: Option[UMLState[Uml]] = ???
+
+	/**
+	 * <!-- begin-model-doc -->
+	 * <!-- end-model-doc -->
+	 *
+	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * @opposite org.omg.oti.api.UMLState.exit
+	 */
+	override def exit_state: Option[UMLState[Uml]] = ???
   
 }

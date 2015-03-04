@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLClassifier 
@@ -25,7 +25,7 @@ trait MagicDrawUMLClassifier
   
   override def isFinalSpecialization = e.isFinalSpecialization
   
-  override def classifier_ownedTemplateSignature = Option.apply( e.getOwnedTemplateSignature )
+  override def ownedTemplateSignature = Option.apply( e.getOwnedTemplateSignature )
   
   override def powertypeExtent = e.getPowertypeExtent.toSet[Uml#GeneralizationSet]
   

@@ -13,7 +13,7 @@ import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 import org.apache.xml.resolver.CatalogManager
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 import com.nomagic.actions.NMAction
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults

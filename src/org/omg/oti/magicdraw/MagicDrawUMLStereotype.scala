@@ -2,7 +2,7 @@ package org.omg.oti.magicdraw
 
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLStereotype 

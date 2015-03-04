@@ -31,6 +31,13 @@ toolbarMenuScripts(
             dependencies: { org.omg.oti }
 			class: org.omg.oti.magicdraw.scripts.nameTest
 			method: doit )
+		MainToolbarMenuAction(
+			toolbarMenuPath: { 'Play' }
+			name: 'Enumeration'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+			class: org.omg.oti.magicdraw.scripts.playEnumeration
+			method: doit )
 	})
 	
 dynamicScripts(
@@ -403,6 +410,14 @@ characterization(
 	[ m: Element ]
 	features {		
 		EarlyDerivedWidget(
+			name: 'OTI Element::appliedStereotypes'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: appliedStereotypes
+        )
+		EarlyDerivedWidget(
 			name: 'OTI Element::allOwnedElementsWithinPackageScope'
 			project: org.omg.oti.magicdraw
             dependencies: { org.omg.oti }
@@ -503,6 +518,98 @@ characterization(
         )
     })
     
+characterization(
+	name='Classifier (OMG Tool Infrastructure)'
+	[ m: Classifier ]
+	features {	
+		EarlyDerivedWidget(
+			name: 'OTI Classifier::general'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ClassifierInspectorWidget
+            method: general
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Classifier::general_classifier'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ClassifierInspectorWidget
+            method: generalClassifier
+        )
+	})
+	    
+characterization(
+	name='Stereotype (OMG Tool Infrastructure)'
+	[ m: Stereotype ]
+	features {	
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::profile'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: profile
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getSpecializedStereotypes'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getSpecializedStereotypes
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getSpecializedStereotypes'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getSpecializedStereotypes
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getAllSpecializedStereotypes'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getAllSpecializedStereotypes
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getSpecializedStereotypesOutsideProfile'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getSpecializedStereotypesOutsideProfile
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getSpecializedStereotypesWithinProfile'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getSpecializedStereotypesWithinProfile
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getAllSpecializedStereotypesWithinProfile'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getAllSpecializedStereotypesWithinProfile
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::getSpecializedStereotypesFromOtherProfiles'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: getSpecializedStereotypesFromOtherProfiles
+        )
+	})
+	
 characterization(
 	name='Package (OMG Tool Infrastructure)'
 	[ m: Package ]

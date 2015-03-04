@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLParameter 
@@ -33,12 +33,12 @@ trait MagicDrawUMLParameter
   }
   
   // 9.9
-	override def effect: UMLParameterEffectKind.Value = 
+	override def effect: Option[UMLParameterEffectKind.Value] = 
     e.getEffect match {
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE => UMLParameterEffectKind.create
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ => UMLParameterEffectKind.read
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE => UMLParameterEffectKind.update
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE => UMLParameterEffectKind.delete
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE => Some( UMLParameterEffectKind.create )
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ => Some( UMLParameterEffectKind.read )
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE => Some( UMLParameterEffectKind.update )
+    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE => Some( UMLParameterEffectKind.delete )
   }
   
   // 9.9

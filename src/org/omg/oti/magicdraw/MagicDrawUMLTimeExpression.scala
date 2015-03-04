@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLTimeExpression 
@@ -18,8 +18,8 @@ trait MagicDrawUMLTimeExpression
   override def observation: Set[UMLObservation[Uml]] = ??? 
   
   // 8.4  
-	override def max_timeInterval: Iterable[UMLTimeInterval[Uml]] = ???
+	override def max_timeInterval: Set[UMLTimeInterval[Uml]] = ???
   
   // 8.4
-	override def min_timeInterval: Iterable[UMLTimeInterval[Uml]] = ???
+	override def min_timeInterval: Set[UMLTimeInterval[Uml]] = ???
 }

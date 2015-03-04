@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLSendObjectAction 
@@ -11,7 +11,7 @@ trait MagicDrawUMLSendObjectAction
   import ops._
 
   // 16.13
-	override def request: Iterable[UMLInputPin[Uml]] = ???
+	override def request: Option[UMLInputPin[Uml]] = ???
   
   // 16.13
 	override def target: Option[UMLInputPin[Uml]] = ??? 

@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLIntervalConstraint 
@@ -10,4 +10,7 @@ trait MagicDrawUMLIntervalConstraint
   override protected def e: Uml#IntervalConstraint
   import ops._
 
+  override def specification: Option[UMLInterval[Uml]] =
+    Option.apply( e.getSpecification )
+    
 }

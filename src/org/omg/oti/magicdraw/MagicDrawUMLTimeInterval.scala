@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLTimeInterval 
@@ -10,10 +10,10 @@ trait MagicDrawUMLTimeInterval
   override protected def e: Uml#TimeInterval
   import ops._
 
-  override def timeInterval_max =
+  override def max =
     Option.apply( e.getMax )
     
-  override def timeInterval_min =
+  override def min =
     Option.apply( e.getMin )
 
 }

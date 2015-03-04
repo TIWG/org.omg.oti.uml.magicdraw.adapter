@@ -1,6 +1,6 @@
 package org.omg.oti.magicdraw
 
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 
 trait MagicDrawUMLTimeConstraint 
@@ -14,7 +14,7 @@ trait MagicDrawUMLTimeConstraint
     if (e.isFirstEvent) None
     else Some( false )
     
-  override def timeConstraint_specification =
+  override def specification: Option[UMLTimeInterval[Uml]] =
     Option.apply( e.getSpecification )
     
 }

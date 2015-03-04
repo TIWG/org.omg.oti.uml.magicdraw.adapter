@@ -196,7 +196,7 @@ object OTIMagicDraw extends Build {
   val otiCoreInfo = DependentProjectInfo( "mysvn",
     "oti.core",
     "http://svn.omg.org/repos/TIWG/Eclipse%20Scala%20Projects/org.omg.oti",
-    "545" )
+    "620" )
     
   object Versions {
     val scala = "2.11.5"
@@ -206,7 +206,11 @@ object OTIMagicDraw extends Build {
   def makeProjectRef( uri: URI, id: String ) =
     if ( file( id ).exists ) ProjectRef( file( id ), id )
     else ProjectRef( uri, id )
-    
+
+  val addFromEclipseClasspath = TaskKey[Unit](
+    "addFromEclipseClasspath",
+    "Adds to the SBT classpath the contents of the Eclipse classpath")
+  
   lazy val oti = makeProjectRef( uri( Versions.oti_core_uri ), "oti-core" )
     
   lazy val md = Project(

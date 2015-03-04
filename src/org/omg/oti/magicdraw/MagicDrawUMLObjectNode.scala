@@ -1,7 +1,7 @@
 package org.omg.oti.magicdraw
 
 import scala.collection.JavaConversions._
-import org.omg.oti._
+import org.omg.oti.api._
 import org.omg.oti.operations._
 import com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum
 
@@ -22,7 +22,7 @@ trait MagicDrawUMLObjectNode
   override def exceptionInput_exceptionHandler: Set[UMLExceptionHandler[Uml]] =
     e.get_exceptionHandlerOfExceptionInput.toSet[Uml#ExceptionHandler]
 
-  override def upperBound: Option[UMLValueSpecification[Uml]] =
+  override def upperValue: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getUpperBound )
 
   override def selection: Option[UMLBehavior[Uml]] =
