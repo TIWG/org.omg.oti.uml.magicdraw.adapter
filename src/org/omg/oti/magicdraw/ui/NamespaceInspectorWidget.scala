@@ -11,6 +11,7 @@ import scala.util.Try
 import com.nomagic.magicdraw.core.Project
 import com.nomagic.magicdraw.ui.dialogs.specifications.SpecificationDialogManager
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
 import gov.nasa.jpl.dynamicScripts.magicdraw.designations.MagicDrawElementKindDesignation
@@ -25,6 +26,7 @@ import com.nomagic.magicdraw.core.Application
 object NamespaceInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
+  import RelationTripleWidgetHelper._
   
   def importedPackages(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
@@ -73,5 +75,17 @@ object NamespaceInspectorWidget {
           derived, e, 
           (_.allVisibleMembersAccessibleTransitively), 
           MagicDrawUMLUtil( project ) )  
-          
+      
+  def forwardReferencesBeyondNamespaceScope(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    e match {
+      case ns: Namespace =>
+        namespaceRelationTripleWidget(
+          derived, ns,
+          ( _.forwardReferencesBeyondNamespaceScope ),
+          MagicDrawUMLUtil( project ) )
+      case _ =>
+        Failure( new IllegalArgumentException( "Not a package!" ) )
+    }    
 }

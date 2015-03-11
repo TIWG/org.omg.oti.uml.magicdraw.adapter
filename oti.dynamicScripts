@@ -516,6 +516,14 @@ characterization(
             class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
             method: allVisibleMembersAccessibleTransitively
         )
+		EarlyDerivedWidget(
+			name: 'OTI Namespace::forwardReferencesBeyondNamespaceScope'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.NamespaceInspectorWidget
+            method: forwardReferencesBeyondNamespaceScope
+        )
     })
     
 characterization(
@@ -544,6 +552,22 @@ characterization(
 	name='Stereotype (OMG Tool Infrastructure)'
 	[ m: Stereotype ]
 	features {	
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::baseMetaProperties'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: baseMetaProperties
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Stereotype::baseMetaPropertiesExceptRedefined'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StereotypeInspectorWidget
+            method: baseMetaPropertiesExceptRedefined
+        )
 		EarlyDerivedWidget(
 			name: 'OTI Stereotype::profile'
 			project: org.omg.oti.magicdraw

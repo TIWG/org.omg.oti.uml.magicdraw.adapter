@@ -145,7 +145,7 @@ object PackageInspectorWidget {
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
     e match {
       case p: Package =>
-        relationTripleWidget(
+        packageRelationTripleWidget(
           derived, p,
           ( _.forwardReferencesBeyondPackageScope ),
           MagicDrawUMLUtil( project ) )

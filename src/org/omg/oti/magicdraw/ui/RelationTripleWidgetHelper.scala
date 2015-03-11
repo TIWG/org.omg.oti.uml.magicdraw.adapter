@@ -161,7 +161,7 @@ object RelationTripleWidgetHelper {
     Success( ( ui.panel, validationAnnotations ) )
   }
 
-  def relationTripleWidget(
+  def packageRelationTripleWidget(
     derived: DynamicScriptsTypes.ComputedDerivedWidget,
     mdPkg: MagicDrawUML#Package,
     f: Function1[UMLPackage[MagicDrawUML], Try[Set[RelationTriple[MagicDrawUML]]]],
@@ -172,4 +172,14 @@ object RelationTripleWidgetHelper {
         createGroupTableUIPanelForRelationTriples( derived, triples )( util )
     }
 
+  def namespaceRelationTripleWidget(
+    derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    mdNs: MagicDrawUML#Namespace,
+    f: Function1[UMLNamespace[MagicDrawUML], Try[Set[RelationTriple[MagicDrawUML]]]],
+    util: MagicDrawUMLUtil ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =
+    f( util.umlNamespace( mdNs ) ) match {
+      case Failure( t ) => Failure( t )
+      case Success( triples ) =>
+        createGroupTableUIPanelForRelationTriples( derived, triples )( util )
+    }
 }

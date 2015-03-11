@@ -14,7 +14,10 @@ import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
-import org.omg.oti.magicdraw.MagicDrawUMLUtil
+import org.omg.oti._
+import org.omg.oti.api._
+import org.omg.oti.operations._
+import org.omg.oti.magicdraw._
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 import org.omg.oti.migration.Metamodel
@@ -38,6 +41,9 @@ import com.nomagic.magicdraw.actions.ActionsID
 import com.nomagic.magicdraw.actions.ActionsProvider
 import gov.nasa.jpl.magicdraw.enhanced.migration.LocalModuleMigrationInterceptor
 import javax.swing.filechooser.FileFilter
+import org.omg.oti.api.UMLStereotype
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype
 
 /**
  * @author Nicolas.F.Rouquette@jpl.nasa.gov
@@ -51,12 +57,13 @@ object nameTest {
     val guiLog = a.getGUILog()
     guiLog.clearLog()
 
-    val umlUtil = MagicDrawUMLUtil( p )
+    implicit val umlUtil = MagicDrawUMLUtil( p )
     import umlUtil._
 
     val selectedElements = getMDBrowserSelectedElements map { e => umlElement( e ) }
     selectedElements foreach { e =>
-
+      val mdE = e.getMagicDrawElement
+      
       guiLog.log( s" ID=${e.id}" )
 
       val tv = e.tagValues
@@ -66,8 +73,7 @@ object nameTest {
           guiLog.log( s" => ${tvp.qualifiedName.get}: ${tvv}" )
 
       }
-
-      val mdE = e.getMagicDrawElement      
+  
       val mdIS = Option.apply( mdE.getAppliedStereotypeInstance ) 
       guiLog.log( s" mdID=${mdE.getID}: mdIS=${mdIS.isDefined} =${mdIS}" )
 
@@ -86,6 +92,48 @@ object nameTest {
             guiLog.log( s" => ${p.qualifiedName.get}: ${s.getValue}" )
             guiLog.log( s" => ${p.qualifiedName.get}: ${v}" )
           }
+      }
+      
+      
+      val eMetaclass = mdE.getClassType
+      val appliedS = StereotypesHelper.getStereotypes( mdE ).toSet[Uml#Stereotype].toList.sortBy(_.qualifiedName.get)
+      System.out.println(s"Applied stereotypes: ${appliedS.size}")
+      appliedS.foreach{ s => 
+        val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
+          val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
+          eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
+        }
+        val sGeneral = getAllGeneralStereotypes( s ).toList.sortBy(_.qualifiedName.get)   
+        System.out.println(s"Applied: ${s.qualifiedName.get} with ${metaProperties.size} meta-properties, ${sGeneral.size} general stereotypes")
+        metaProperties.foreach{p => System.out.println(s"meta-property: ${p.getQualifiedName}")}
+             
+        sGeneral.foreach{ sg =>
+          val mdSG = sg.getMagicDrawElement.asInstanceOf[Stereotype]
+          val gmetaProperties = StereotypesHelper.getExtensionMetaProperty( mdSG, true ) filter { p =>
+            val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
+            eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
+          }
+          System.out.println(s"General: ${sg.qualifiedName.get} with ${gmetaProperties.size} meta-properties")
+          gmetaProperties.foreach{p => System.out.println(s"general meta-property: ${p.getQualifiedName}")}
+        }
+          
+      }
+      
+      e match { 
+        case s: UMLStereotype[Uml] =>
+          val mdS = s.getMagicDrawElement.asInstanceOf[Stereotype]
+          val baseClasses1 = StereotypesHelper.getBaseClasses( mdS, false )          
+          System.out.println(s" baseClasses1: ${baseClasses1.size}")
+          baseClasses1.toList.sortBy(_.getQualifiedName).foreach{p => System.out.println(s"baseClass1: ${p.getQualifiedName}")}
+          
+          val baseClasses2 = StereotypesHelper.getBaseClasses( mdS, true ) 
+          System.out.println(s" baseClasses2: ${baseClasses2.size}")
+          baseClasses2.toList.sortBy(_.getQualifiedName).foreach{p => System.out.println(s"baseClass2: ${p.getQualifiedName}")}
+          
+          val metaProperties = StereotypesHelper.getExtensionMetaProperty( mdS, false ) 
+          System.out.println(s" metaProperties: ${metaProperties.size}")
+          metaProperties.toList.sortBy(_.getQualifiedName).foreach{p => System.out.println(s"meta property: ${p.getQualifiedName}")}
+        case _ => ()
       }
     }
 

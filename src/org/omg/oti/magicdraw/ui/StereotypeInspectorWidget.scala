@@ -26,6 +26,26 @@ object StereotypeInspectorWidget {
 
   import ComputedDerivedWidgetHelper._
 
+  def baseMetaProperties(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = {
+    implicit val umlUtil = MagicDrawUMLUtil( project )
+    elementOperationWidget[UMLStereotype[MagicDrawUML], UMLProperty[MagicDrawUML]](
+      derived, e,
+      ( _.baseMetaProperties.toList.sortBy(_.qualifiedName.get) ),
+      umlUtil )
+  }
+  
+  def baseMetaPropertiesExceptRedefined(
+    project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
+    ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = {
+    implicit val umlUtil = MagicDrawUMLUtil( project )
+    elementOperationWidget[UMLStereotype[MagicDrawUML], UMLProperty[MagicDrawUML]](
+      derived, e,
+      ( _.baseMetaPropertiesExceptRedefined.toList.sortBy(_.qualifiedName.get) ),
+      umlUtil )
+  }
+  
   def profile(
     project: Project, ev: ActionEvent, derived: DynamicScriptsTypes.ComputedDerivedWidget,
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] =

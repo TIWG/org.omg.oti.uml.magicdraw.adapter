@@ -23,28 +23,28 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   def getMagicDrawElement = e
 
   // Element
-  
+
   override def ownedComment = e.getOwnedComment.toSet[Uml#Comment]
-  
-  override def ownedElement = e.getOwnedElement.toSet[Uml#Element] - umlElement(e.getAppliedStereotypeInstance)
+
+  override def ownedElement = e.getOwnedElement.toSet[Uml#Element] - umlElement( e.getAppliedStereotypeInstance )
 
   override def owner = Option.apply( e.getOwner )
-  
+
   override def constrainedElement_constraint = e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
-  
+
   override def annotatedElement_comment = e.get_commentOfAnnotatedElement.toSet[Uml#Comment]
-  
+
   override def represents_activityPartition = e.get_activityPartitionOfRepresents.toSet[Uml#ActivityPartition]
-  
+
   override def relatedElement_relationship = e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
-  
+
   override def target_directedRelationship = e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
-  
+
   override def source_directedRelationship = e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
 
   // ElementOps
-  
-  override def allOwnedElements = 
+
+  override def allOwnedElements =
     e.eAllContents.toSet.selectByKindOf { case e: Uml#Element => umlElement( e ) }
 
   override def mofMetaclassName = StereotypesHelper.getBaseClass( e ).getName
@@ -60,9 +60,9 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         } yield ( p -> v )
         tv.toMap
     }
-  
+
   override def getContainedElement_eContainingFeature: EStructuralFeature = e.eContainingFeature
-  
+
   override def getElementContainer_eFeatureValue( f: EStructuralFeature ) = e.eContainer.eGet( f ) match {
     case values: java.util.Collection[_] => values.toIterable.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
   }
@@ -87,12 +87,25 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
         eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
       }
-      if( metaProperties.isEmpty ) {
-        System.err.println(s"MagicDrawUMLElement.getAppliedStereotypes -- [${eMetaclass.getName}] ${e.getHumanType}: ${e.id}, stereotype: ${s.getQualifiedName} (ID=${s.id}) -- Ignoring the stereotype application because there is no stereotype 'base_...' property suitable for the element's metaclass (${eMetaclass.getName})")
+      if ( metaProperties.isEmpty ) {
         None
       } else
-        Some( ( umlStereotype(s) -> umlProperty(metaProperties.head) ) )
+        Some( ( umlStereotype( s ) -> umlProperty( metaProperties.head ) ) )
     } toMap
+  }
+
+  override def getAppliedStereotypesWithoutMetaclassProperties: Set[UMLStereotype[Uml]] = {
+    val eMetaclass = e.getClassType
+    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] flatMap { s =>
+      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
+        val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
+        eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
+      }
+      if ( metaProperties.isEmpty )
+        Some( umlStereotype( s ) )
+      else
+        None
+    } toSet
   }
 
   override def isAncestorOf( other: UMLElement[Uml] ) =
@@ -103,6 +116,6 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
       } )
 
   // MagicDraw-specific
-      
+
   def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable( e )
 }
