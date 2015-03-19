@@ -2,7 +2,6 @@ package org.omg.oti.magicdraw.scripts
 
 import java.awt.event.ActionEvent
 import java.io.File
-
 import scala.collection.JavaConversions.asJavaCollection
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.language.implicitConversions
@@ -10,7 +9,6 @@ import scala.language.postfixOps
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
-
 import com.nomagic.actions.NMAction
 import com.nomagic.magicdraw.core.Application
 import com.nomagic.magicdraw.core.ApplicationEnvironment
@@ -26,16 +24,15 @@ import com.nomagic.task.RunnableWithProgress
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile
-
 import org.omg.oti.api._
 import org.omg.oti.canonicalXMI.CatalogURIMapper
 import org.omg.oti.canonicalXMI.DocumentSet
 import org.omg.oti.magicdraw.MagicDrawUML
 import org.omg.oti.magicdraw.MagicDrawUMLUtil
-
 import gov.nasa.jpl.dynamicScripts.DynamicScriptsTypes
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
+import com.nomagic.uml2.ext.magicdraw.auxiliaryconstructs.mdmodels.Model
 
 /**
  * Should be functionally equivalent to exportPackageExtents but simpler thanks to the methods in DocumentSet's companion object
@@ -56,6 +53,13 @@ object exportPackageExtents2OTICanonicalXMI {
     script: DynamicScriptsTypes.BrowserContextMenuAction,
     tree: Tree, node: Node,
     top: Package, selection: java.util.Collection[Element] ): Try[Option[MagicDrawValidationDataResults]] =
+    doit( p, selection )
+
+  def doit(
+    p: Project, ev: ActionEvent,
+    script: DynamicScriptsTypes.BrowserContextMenuAction,
+    tree: Tree, node: Node,
+    top: Model, selection: java.util.Collection[Element] ): Try[Option[MagicDrawValidationDataResults]] =
     doit( p, selection )
 
   def doit(

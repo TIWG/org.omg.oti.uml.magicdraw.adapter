@@ -549,6 +549,24 @@ characterization(
 	})
 	    
 characterization(
+	name='StructuredClassifier (OMG Tool Infrastructure)'
+	[ m: StructuredClassifier ]
+	features {	
+		EarlyDerivedTree(
+			name: 'OTI StructuredClassifier::compositeStructureTree'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.StructuredClassifierInspectorWidget
+            method: compositeStructureTree
+            columnValueTypes: {
+            		{ key: property, typeName: 'Property', typeInfo: String }
+            		{ key: type, typeName: 'Type', typeInfo: String }
+            }
+        )
+	})
+	
+characterization(
 	name='Stereotype (OMG Tool Infrastructure)'
 	[ m: Stereotype ]
 	features {	
