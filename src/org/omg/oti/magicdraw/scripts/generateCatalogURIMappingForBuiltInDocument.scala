@@ -74,11 +74,11 @@ object generateCatalogURIMappingForBuiltInDocument {
       case Some( pURI ) =>
         pURI match {
           case "http://www.omg.org/spec/PrimitiveTypes/20100901" => 
-            (pURI, "http://www.omg.org/spec/PrimitiveTypes/20131001")
+            (pURI, MDBuiltInPrimitiveTypes.documentURL.toString)
           case "http://www.omg.org/spec/UML/20131001" => 
-            (pURI, "http://www.omg.org/spec/UML/20131001")
+            (pURI, MDBuiltInUML.documentURL.toString)
           case "http://www.omg.org/spec/UML/20131001/StandardProfile" => 
-            (pURI, "http://www.omg.org/spec/UML/20131001/StandardProfile")
+            (pURI, MDBuiltInStandardProfile.documentURL.toString)
           case x => 
               return Failure( new IllegalArgumentException( s"Unrecognized package with built-in URI: ${x}" ) )
         }
@@ -88,13 +88,13 @@ object generateCatalogURIMappingForBuiltInDocument {
       pkg.ownedType flatMap { t =>
       t match {
         case pt: UMLPrimitiveType[Uml] => 
-          Iterable( s"""<uri uri="${otiURI}#${pt.name.get}" name="${pkgURI}#${pt.id}"/>""" )
+          Iterable( s"""<uri uri="${otiURI}#${pt.name.get}" name="${otiURI}#${pt.id}"/>""" )
         case s: UMLStereotype[Uml] => 
-          Iterable( s"""<uri uri="${otiURI}#${s.name.get}" name="${pkgURI}#${s.id}"/>""" ) ++          
+          Iterable( s"""<uri uri="${otiURI}#${s.name.get}" name="${otiURI}#${s.id}"/>""" ) ++          
           (for { 
             baseProperty <- s.baseMetaPropertiesExceptRedefined
             baseID = s"${s.name.get}_${baseProperty.name.get}"
-          } yield s"""<uri uri="${otiURI}#${baseID}" name="${pkgURI}#${baseProperty.id}"/>""")
+          } yield s"""<uri uri="${otiURI}#${baseID}" name="${otiURI}#${baseProperty.id}"/>""")
           
         case ex: UMLExtension[Uml] => 
           val ee = ex.ownedEnd.head
@@ -103,12 +103,12 @@ object generateCatalogURIMappingForBuiltInDocument {
           val oti_extensionID = base+"_"+end
           val oti_endID = oti_extensionID+"-extension_"+end
           Iterable( 
-              s"""<uri uri="${otiURI}#${oti_extensionID}" name="${pkgURI}#${ex.id}"/>""",
-              s"""<uri uri="${otiURI}#${oti_endID}" name="${pkgURI}#${ee.id}"/>""" 
+              s"""<uri uri="${otiURI}#${oti_extensionID}" name="${otiURI}#${ex.id}"/>""",
+              s"""<uri uri="${otiURI}#${oti_endID}" name="${otiURI}#${ee.id}"/>""" 
               )
           
         case c: UMLClass[Uml] => 
-          Iterable( s"""<uri uri="${otiURI}#${c.name.get}" name="${pkgURI}#${c.id}"/>""" )
+          Iterable( s"""<uri uri="${otiURI}#${c.name.get}" name="${otiURI}#${c.id}"/>""" )
           
         case _ =>
           Iterable()
@@ -116,7 +116,7 @@ object generateCatalogURIMappingForBuiltInDocument {
 
     }
 
-    val builtInRewrites = Iterable( s"""<uri uri="${otiURI}#_0" name="${pkgURI}#${pkg.id}"/>""" ) ++ rewrites
+    val builtInRewrites = Iterable( s"""<uri uri="${otiURI}#_0" name="${otiURI}#${pkg.id}"/>""" ) ++ rewrites
           
     builtInRewrites.foreach { rewrite => System.out.println(rewrite) }
     

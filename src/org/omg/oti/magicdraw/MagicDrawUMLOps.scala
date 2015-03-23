@@ -761,6 +761,11 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "packageURI"))
   }
 
+  override val OTI_SPECIFICATION_ROOT_documentURL = OTI_SPECIFICATION_ROOT_S match {
+    case None => None
+    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "documentURL"))
+  }
+
   override val OTI_ID_S =    
     StereotypesHelper.getProfile( project, "OTI" ) match {
       case null => None
@@ -794,7 +799,7 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
         uri=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
         nsPrefix="PrimitiveTypes",
         scope=mdPrimitiveTypesPkg,
-        builtInURI=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
+        documentURL=new URI("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"),
         builtInExtent=mdPrimitiveTypesExtent )( this )
   }
   
@@ -810,7 +815,7 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
         uri=new URI("http://www.omg.org/spec/UML/20131001"),
         nsPrefix="uml",
         scope=mdUMLPkg,
-        builtInURI=new URI("http://www.omg.org/spec/UML/20131001"),
+        documentURL=new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
         builtInExtent=mdUMLExtent )( this )
   }
   
@@ -828,7 +833,7 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
         uri=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
         nsPrefix="StandardProfile",
         scope=mdStandardProfile,
-        builtInURI=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
+        documentURL=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
         builtInExtent=mdStandardProfileExtent )( this )
   }
   

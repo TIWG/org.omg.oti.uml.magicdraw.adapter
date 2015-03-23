@@ -2,1165 +2,397 @@
 <catalog
 	xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"
 	prefer="public">
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#_0"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_be00301_1108053761194_467635_11463"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadLinkObjectEndAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904049_817856_9042"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Message"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888195_415551_8289"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ClassifierTemplateParameter"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704901157_279901_8966"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CallOperationAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887160_569760_8165"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Trigger"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907324_573147_9117"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Extension"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941686_391373_9690"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExecutionOccurrenceSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888868_726848_8417"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#FunctionBehavior"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884790_409021_7733"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AddVariableValueAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910072_346755_9217"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LinkEndData"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897068_938981_8759"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConnectableElementTemplateParameter"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704901288_213457_8983"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#GeneralizationSet"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704927407_799308_9455"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ParameterSet"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921145_783591_9372"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#SequenceNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892401_738929_8490"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Actor"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704919482_11686_9288"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CommunicationPath"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928458_703520_9522"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Slot"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885275_885607_7905"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#JoinNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704920844_549689_9337"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InitialNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893447_508814_8555"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Enumeration"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885400_895774_7947"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#PackageMerge"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885624_927264_8011"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StartClassifierBehaviorAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903928_843196_9025"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TemplateParameterSubstitution"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900866_586714_8929"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralInteger"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884947_594252_7798"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Usage"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885779_949036_8059"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TimeObservation"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227519356_865463_4007"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StructuralFeatureAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896675_779403_8703"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConnectorEnd"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884546_526097_7628"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TemplateBinding"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900812_735213_8921"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReclassifyObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903822_36535_9009"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DestroyObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896512_837942_8679"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TimeExpression"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704895761_64066_8583"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#BehavioredClassifier"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884683_360250_7684"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DeployedArtifact"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928388_9803_9514"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CombinedFragment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887866_658911_8238"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TemplateableElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900918_648825_8937"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#MessageEnd"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888340_990071_8321"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ProtocolTransition"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932447_458425_9559"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ControlFlow"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893364_624946_8539"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Connector"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884559_152470_7636"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DestroyLinkAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897273_173302_8791"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralNull"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885003_342880_7822"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InvocationAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887064_979432_8141"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadIsClassifiedObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903874_864575_9017"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#PackageableElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884883_670212_7773"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DurationConstraint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896124_718126_8639"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Type"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885727_795332_8043"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Namespace"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885497_588069_7979"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Manifestation"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932261_613241_9541"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#MultiplicityElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885067_105135_7846"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DirectedRelationship"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884846_260393_7757"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StateInvariant"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888416_506222_8337"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AddStructuralFeatureValueAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896930_275083_8743"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ObjectFlow"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893403_369088_8547"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#RaiseExceptionAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910191_31265_9233"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InterfaceRealization"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884665_934832_7676"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Model"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704920340_825592_9329"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StructuredClassifier"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884590_293684_7652"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ClearAssociationAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897377_529572_8807"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StringExpression"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900715_890391_8913"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#NamedElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884863_927714_7765"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#EncapsulatedClassifier"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704911283_887622_9277"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Lifeline"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887938_842870_8254"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Substitution"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885889_983575_8091"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Action"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887258_863804_8181"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InteractionOperand"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887361_983947_8206"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ParameterableElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900969_832991_8945"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Transition"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932761_361072_9592"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ProtocolStateMachine"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932517_261495_9567"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#FlowFinalNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921438_294509_9403"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityFinalNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893490_637380_8563"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Vertex"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932833_799001_9600"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Activity"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892254_121736_8466"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConditionalNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892132_915377_8442"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StructuredActivityNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892095_330690_8434"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ForkNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921375_808153_9395"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ElementImport"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885047_824117_7838"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralString"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884964_577317_7806"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InteractionConstraint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887391_255251_8214"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityPartition"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921570_774139_9419"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ObjectNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893267_8162_8522"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CollaborationUse"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884486_457683_7596"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#WriteVariableAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704909923_687782_9201"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#QualifierValue"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903982_7688_9033"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CreateLinkAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897221_909420_8783"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Operation"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884698_645168_7692"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LinkEndCreationData"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897169_828570_8775"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LinkAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897011_278202_8751"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#SendSignalAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887121_121073_8157"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ClearVariableAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910004_908767_9209"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityParameterNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893559_436315_8572"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InputPin"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887035_839239_8133"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#MergeNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921684_282475_9429"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DurationObservation"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227447739_704079_3844"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActionExecutionSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888495_278169_8353"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#PrimitiveType"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885449_652048_7963"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Class"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885343_144138_7929"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InformationItem"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704899836_442270_8880"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Generalization"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885195_432731_7879"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Clause"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892213_544240_8458"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#SignalEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907577_698817_9142"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ValuePin"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704886319_270101_8117"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ProfileApplication"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941572_937414_9682"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConnectableElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884604_454742_7660"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AcceptCallAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904303_180462_9075"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Image"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941500_175567_9674"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadLinkAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897124_532491_8767"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralUnlimitedNatural"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885703_732670_8035"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TimeEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896324_51502_8663"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#RemoveStructuralFeatureValueAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896878_576411_8735"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#RemoveVariableValueAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910133_619352_9225"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#WriteLinkAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897330_715729_8799"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Node"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928097_912503_9482"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Variable"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704890307_266823_8425"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Element"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884807_371561_7741"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExtensionPoint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704919767_187766_9320"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadVariableAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704909858_831429_9193"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LoopNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892169_230137_8450"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#UseCase"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704919680_932732_9312"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Feature"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885153_836117_7863"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadSelfAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896624_101949_8695"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExceptionHandler"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704898275_476746_8872"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TimeConstraint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704895977_530126_8615"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Device"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928167_806350_9490"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#BehavioralFeature"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884755_923432_7717"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#RedefinableElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885173_952834_7871"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityGroup"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892465_927741_8500"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#BehaviorExecutionSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888560_464349_8361"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LinkEndDestructionData"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897562_260957_8831"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Reception"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907408_866714_9126"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Behavior"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884715_427797_7700"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityEdge"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893217_304959_8514"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Association"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885473_18793_7971"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadExtentAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903747_836193_9001"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Constraint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885023_176929_7830"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Interface"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884649_358727_7668"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadLinkObjectEndQualifierAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904103_710448_9050"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ValueSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885549_50839_7995"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#EnumerationLiteral"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885423_380971_7955"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ClearStructuralFeatureAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896825_731209_8727"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DecisionNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921751_161098_9437"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Comment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884825_217290_7749"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#BroadcastSignalAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897450_215481_8815"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ComponentRealization"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227547971_982857_4117"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Realization"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885860_877151_8083"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralBoolean"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884985_340030_7814"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OpaqueExpression"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884738_770774_7709"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StartObjectBehaviorAction"
-		name="http://www.omg.org/spec/UML/20131001#_16_0beta1_62a020a_1219131557942_89085_240"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#IntervalConstraint"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896170_814021_8647"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#RedefinableTemplateSignature"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704901217_803639_8974"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Include"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704919620_597571_9304"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Stereotype"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941426_574917_9666"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Pin"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704886287_935006_8109"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExpansionNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704898100_833704_8847"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ProtocolConformance"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932354_30061_9549"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TemplateParameter"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900663_235770_8905"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConsiderIgnoreFragment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888127_412468_8278"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Dependency"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885833_713624_8075"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Extend"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704919558_745543_9296"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AnyReceiveEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907801_516752_9167"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Relationship"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885599_925260_8003"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Collaboration"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884500_158087_7604"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Port"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704911199_900094_9269"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExtensionEnd"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941342_247264_9658"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Interaction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887901_869040_8246"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CreateLinkObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904181_963443_9058"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InterruptibleActivityRegion"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921265_575333_9383"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InteractionFragment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888057_444832_8270"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#SendObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897504_144024_8823"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AcceptEventAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904246_626651_9067"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StateMachine"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932656_223024_9583"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExecutableNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892340_187059_8482"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DestructionOccurrenceSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_17_0_1beta1_641020e_1303285297245_245033_1703"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#MessageOccurrenceSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888825_465279_8409"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Property"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884574_96724_7644"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DataStoreNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704920907_627672_9345"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Continuation"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887979_908730_8262"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Package"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885298_713292_7913"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#AssociationClass"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704903198_579542_8992"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DurationInterval"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704895912_517624_8607"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ValueSpecificationAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704897612_977025_8839"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InteractionUse"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887302_348848_8190"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#FinalState"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932975_359279_9616"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InstanceSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885251_933969_7897"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#PackageImport"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885319_392905_7921"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReduceAction"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227280978_761467_467"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CallEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704906416_900968_9100"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReplyAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904356_235357_9083"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DeploymentTarget"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928324_491769_9506"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CallBehaviorAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887225_574298_8173"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#WriteStructuralFeatureAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896769_282989_8719"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExecutionSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888268_224535_8305"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Expression"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885754_51496_8051"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OpaqueAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704886256_729983_8101"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CallAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887093_429156_8149"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884926_203015_7790"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#GeneralOrdering"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888229_601341_8297"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Deployment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704927953_507488_9465"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Diagram"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1106296071977_61607_0"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExecutionEnvironment"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928255_655549_9498"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Observation"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227316455_415327_531"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#StructuralFeature"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885228_400432_7889"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OperationTemplateParameter"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704901058_400566_8956"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DeploymentSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928019_111206_9473"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#PartDecomposition"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887331_472205_8198"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Component"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910326_404756_9249"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OpaqueBehavior"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884771_85405_7725"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#MessageEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907728_648806_9159"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TestIdentityAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896581_982450_8687"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InstanceValue"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885650_203318_8019"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Duration"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704895827_777691_8591"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Artifact"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704928546_39588_9532"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ChangeEvent"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704906476_241761_9108"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#UnmarshallAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704904410_395906_9091"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#FinalNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921816_730725_9445"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#VariableAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704909724_568572_9185"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Abstraction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885806_49506_8067"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CreateObjectAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896464_764149_8671"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Gate"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704887836_236837_8230"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActionInputPin"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704910250_737922_9241"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#CentralBufferNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704921503_594569_9411"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Event"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907923_155432_9176"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TemplateSignature"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704900524_611695_8896"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Profile"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704941771_497275_9699"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OutputPin"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704886374_19265_8125"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Signal"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704907512_504308_9134"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ExpansionRegion"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704898151_886287_8855"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Parameter"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884528_587873_7620"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#InformationFlow"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704899911_307257_8888"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Pseudostate"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932903_534887_9608"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ActivityNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704892300_640426_8474"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ControlNode"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704893317_43821_8530"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ConnectionPointReference"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704933044_828010_9624"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#LiteralReal"
-		name="http://www.omg.org/spec/UML/20131001#_17_0beta_f720368_1291218250816_792539_1888"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#OccurrenceSpecification"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704888303_261838_8313"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Classifier"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704884514_638424_7612"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ReadStructuralFeatureAction"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896721_782477_8711"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Interval"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896213_281788_8655"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#Region"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704933219_299257_9640"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#State"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704932587_977586_9575"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#ElementValue"
-		name="http://www.omg.org/spec/UML/20131001#_15_0EAPbeta1_62a020a_1188227198752_444342_394"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TypedElement"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885097_350012_7854"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#DataType"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704885376_903292_7939"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001#TimeInterval"
-		name="http://www.omg.org/spec/UML/20131001#_9_0_62a020a_1105704896023_931757_8623"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#_0"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#_12_0EAPbeta_be00301_1157529392394_202602_1"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#Boolean"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#_12_0EAPbeta_be00301_1157529792739_987548_11"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#UnlimitedNatural"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#_12_0EAPbeta_be00301_1157529809864_59216_12"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#String"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#_9_0_2_91a0295_1110274713995_297054_0"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#Real"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#_17_0beta_f720368_1291217394082_340077_1886"/>
-	<uri
-		uri="http://www.omg.org/spec/PrimitiveTypes/20131001#Integer"
-		name="http://www.omg.org/spec/PrimitiveTypes/20100901#donce_1051693917650_319078_0"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#_0"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_be00301_1108050582343_527400_10847"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Service"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_be00301_1111679531449_358052_17505"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Classifier_Realization"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771477_127131_132"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#ImplementationClass_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771657_270624_175"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Implement"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771767_387104_199"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Entity_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772588_812830_377"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Instantiate"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771547_124683_147"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Call"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772558_497375_370"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Service"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772448_3761_344"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Implement_base_Component"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771767_513079_200"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Framework_base_Package"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772538_834504_366"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Executable"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_256728_41"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BehavioralFeature_Destroy-extension_Destroy"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771196_380954_109"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Library_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772238_887891_305"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Send-extension_Send"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772348_882340_321"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Specification_base_Classifier"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771727_509490_190"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Classifier_Specification"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771727_939493_189"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Model_SystemModel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771457_150061_127"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_BuildComponent"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771787_118215_205"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Create_base_BehavioralFeature"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771977_450058_244"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Create_base_Usage"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771997_188171_249"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Subsystem-extension_Subsystem"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772067_452890_266"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Auxiliary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_752229_1"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BehavioralFeature_Create"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771977_441965_243"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Document"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772188_343660_294"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Script"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771437_9842_122"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Trace_base_Abstraction"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771206_491283_113"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Auxiliary_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772037_774581_260"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Classifier_Realization-extension_Realization"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771477_163093_134"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_ImplementationClass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771657_727269_174"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Trace-extension_Trace"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771216_993068_114"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BehavioralFeature_Destroy"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771186_186307_107"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_File"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772728_197060_392"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BehavioralFeature_Create-extension_Create"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771977_750865_245"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Realization"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_be00301_1111679412748_910181_17354"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Refine"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_260147_44"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Derive"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771677_131672_179"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Create-extension_Create"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771997_658302_250"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Process"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_787633_26"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Specification"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_be00301_1111679791472_309998_22030"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Metaclass_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_16_8beta_62a020a_1256807897056_676124_387"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Document_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772188_578777_295"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Focus"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_373187_24"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#SystemModel_base_Model"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771457_199344_128"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Metaclass-extension_Metaclass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_16_8beta_62a020a_1256807897056_872244_388"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Derive_base_Abstraction"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771677_122902_180"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BuildComponent"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_be00301_1111680081329_426992_23336"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Send"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772338_421996_319"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Executable"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772168_242224_289"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Process"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771236_934570_117"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#ModelLibrary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_39100_29"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Model_Metamodel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771136_824883_97"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Metaclass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_16_8beta_62a020a_1256807873793_635443_380"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Focus-extension_Focus"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772368_680762_326"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Send"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_787534_7"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Source_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772408_892911_335"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Trace"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771206_35231_112"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Type-extension_Type"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772258_731865_311"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Subsystem"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772067_146901_264"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Library"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772238_610687_304"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Source-extension_Source"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772418_655517_336"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Entity-extension_Entity"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772668_25478_378"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Responsibility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771567_444984_152"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Responsibility-extension_Responsibility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771577_772869_154"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Executable-extension_Executable"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772178_530461_291"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#ModelLibrary_base_Package"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772478_490431_350"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Auxiliary-extension_Auxiliary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772047_990621_261"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Service-extension_Service"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772458_418246_346"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#File"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_248912_50"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Call"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_143362_35"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Create"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_236598_27"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Responsibility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_840245_9"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#SystemModel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_81292_30"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Package_ModelLibrary-extension_ModelLibrary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772478_585204_351"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Executable_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772168_119441_290"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Instantiate_base_Usage"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771547_811523_148"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Metamodel_base_Model"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771136_271406_98"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Refine"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771527_791354_142"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Call_base_Usage"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772558_358399_371"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Responsibility_base_Usage"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771567_745680_153"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Model_Metamodel-extension_Metamodel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771136_580423_99"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Source"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_477935_31"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Package_Framework-extension_Framework"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772538_480651_367"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Subsystem_base_Component"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772067_923099_265"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Source"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772408_512042_334"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Process_base_Component"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771236_919435_118"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Framework"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_673724_40"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Refine_base_Abstraction"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771527_844753_143"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Send_base_Usage"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772348_819936_320"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Metamodel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_601240_36"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Script-extension_Script"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771447_429238_124"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Realization_base_Classifier"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771477_483923_133"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Subsystem"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_91a0295_1111479028825_93211_0"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Metaclass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_16_8beta_62a020a_1256807897056_986381_386"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Refine-extension_Refine"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771527_983314_144"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Library-extension_Library"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772238_364834_306"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Trace"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421246_733231_63"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Instantiate-extension_Instantiate"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771557_598812_149"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_Document-extension_Document"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772198_934397_296"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_ImplementationClass-extension_ImplementationClass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771657_285450_176"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Entity"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772588_260518_376"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Derive"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421246_13781_70"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Destroy_base_BehavioralFeature"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771186_55976_108"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Type"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772258_188169_309"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Model_SystemModel-extension_SystemModel"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771457_229048_129"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Type_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772258_860806_310"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Script_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771437_691692_123"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Utility-extension_Utility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771887_795193_223"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_BuildComponent-extension_BuildComponent"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771817_878468_207"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Type"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421246_603748_67"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Focus"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772368_438521_324"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Document"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_296551_25"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#BuildComponent_base_Component"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771787_976441_206"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Utility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771877_452491_221"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Entity"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_813777_19"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Process-extension_Process"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771246_671484_119"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Component_Implement-extension_Implement"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771767_77466_201"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Abstraction_Derive-extension_Derive"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771687_181777_181"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Script"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_9_0_2_be00301_1111676953772_558747_12158"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Instantiate"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_266484_42"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Create"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771997_210055_248"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#File_base_Artifact"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772728_325120_393"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Service_base_Component"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772448_442819_345"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Destroy"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421246_752441_71"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Class_Auxiliary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772037_104360_259"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Utility_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771877_677264_222"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Classifier_Specification-extension_Specification"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081771727_840822_191"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#ImplementationClass"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421236_324444_45"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Utility"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_932627_12"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Library"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#magicdraw_1046861421226_793046_3"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Focus_base_Class"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772368_128292_325"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Implement"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#rimvydas_1048689091049_622839_0"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Usage_Call-extension_Call"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772558_256392_372"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Package_Framework"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772538_879360_365"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Artifact_File-extension_File"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772728_171914_394"/>
-	<uri
-		uri="http://www.omg.org/spec/UML/20131001/StandardProfile#Package_ModelLibrary"
-		name="http://www.omg.org/spec/UML/20131001/StandardProfile#_10_0EAPbeta_be00301_1123081772478_425419_349"/>
+
+
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_0" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_12_0EAPbeta_be00301_1157529392394_202602_1"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#UnlimitedNatural" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_12_0EAPbeta_be00301_1157529809864_59216_12"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Integer" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#donce_1051693917650_319078_0"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Real" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_17_0beta_f720368_1291217394082_340077_1886"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_9_0_2_91a0295_1110274713995_297054_0"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_12_0EAPbeta_be00301_1157529792739_987548_11"/>
+
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#_0" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_be00301_1108053761194_467635_11463"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Transition" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932761_361072_9592"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OpaqueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704886256_729983_8101"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Action" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887258_863804_8181"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Slot" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885275_885607_7905"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralReal" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_17_0beta_f720368_1291218250816_792539_1888"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#State" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932587_977586_9575"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AddStructuralFeatureValueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896930_275083_8743"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TypedElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885097_350012_7854"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ClearAssociationAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897377_529572_8807"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadLinkAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897124_532491_8767"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Dependency" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885833_713624_8075"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TemplateableElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900918_648825_8937"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Constraint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885023_176929_7830"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LinkEndCreationData" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897169_828570_8775"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InterfaceRealization" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884665_934832_7676"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#MergeNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921684_282475_9429"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Profile" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941771_497275_9699"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Generalization" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885195_432731_7879"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#RedefinableTemplateSignature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704901217_803639_8974"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StructuredActivityNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892095_330690_8434"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#PartDecomposition" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887331_472205_8198"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#PackageMerge" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885624_927264_8011"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StringExpression" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900715_890391_8913"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Event" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907923_155432_9176"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Device" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928167_806350_9490"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TemplateSignature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900524_611695_8896"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConnectableElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884604_454742_7660"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Lifeline" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887938_842870_8254"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Namespace" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885497_588069_7979"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadIsClassifiedObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903874_864575_9017"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CreateLinkAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897221_909420_8783"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ElementValue" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227198752_444342_394"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884926_203015_7790"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#QualifierValue" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903982_7688_9033"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Type" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885727_795332_8043"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#NamedElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884863_927714_7765"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#EncapsulatedClassifier" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704911283_887622_9277"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ClassifierTemplateParameter" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704901157_279901_8966"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TimeEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896324_51502_8663"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InvocationAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887064_979432_8141"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ElementImport" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885047_824117_7838"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CombinedFragment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887866_658911_8238"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ValueSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885549_50839_7995"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#SequenceNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892401_738929_8490"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#UnmarshallAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904410_395906_9091"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CallBehaviorAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887225_574298_8173"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Image" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941500_175567_9674"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ControlFlow" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893364_624946_8539"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#RaiseExceptionAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910191_31265_9233"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InitialNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893447_508814_8555"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralBoolean" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884985_340030_7814"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LinkEndDestructionData" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897562_260957_8831"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Model" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704920340_825592_9329"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralNull" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885003_342880_7822"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#BehaviorExecutionSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888560_464349_8361"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadSelfAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896624_101949_8695"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExtensionEnd" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941342_247264_9658"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Observation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227316455_415327_531"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#MessageEnd" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888340_990071_8321"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DestructionOccurrenceSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_17_0_1beta1_641020e_1303285297245_245033_1703"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OutputPin" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704886374_19265_8125"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ComponentRealization" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227547971_982857_4117"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#PrimitiveType" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885449_652048_7963"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Trigger" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907324_573147_9117"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ParameterSet" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921145_783591_9372"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InteractionFragment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888057_444832_8270"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ProfileApplication" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941572_937414_9682"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Variable" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704890307_266823_8425"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AcceptCallAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904303_180462_9075"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Node" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928097_912503_9482"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityParameterNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893559_436315_8572"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Classifier" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884514_638424_7612"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#VariableAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704909724_568572_9185"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#GeneralOrdering" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888229_601341_8297"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ParameterableElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900969_832991_8945"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#MessageEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907728_648806_9159"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Pin" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704886287_935006_8109"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Activity" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892254_121736_8466"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Signal" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907512_504308_9134"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Expression" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885754_51496_8051"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExpansionRegion" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704898151_886287_8855"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#WriteVariableAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704909923_687782_9201"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityFinalNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893490_637380_8563"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Parameter" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884528_587873_7620"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ObjectFlow" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893403_369088_8547"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#UseCase" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704919680_932732_9312"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConnectorEnd" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884546_526097_7628"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Relationship" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885599_925260_8003"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TimeInterval" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896023_931757_8623"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ChangeEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704906476_241761_9108"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExecutionSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888268_224535_8305"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OpaqueExpression" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884738_770774_7709"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralUnlimitedNatural" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885703_732670_8035"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#FinalNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921816_730725_9445"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DirectedRelationship" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884846_260393_7757"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Port" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704911199_900094_9269"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadExtentAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903747_836193_9001"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CentralBufferNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921503_594569_9411"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Include" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704919620_597571_9304"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityGroup" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892465_927741_8500"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralString" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884964_577317_7806"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Connector" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884559_152470_7636"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Clause" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892213_544240_8458"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LinkAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897011_278202_8751"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892300_640426_8474"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#SignalEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907577_698817_9142"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StartClassifierBehaviorAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903928_843196_9025"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExceptionHandler" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704898275_476746_8872"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Abstraction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885806_49506_8067"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Interval" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896213_281788_8655"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OpaqueBehavior" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884771_85405_7725"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Comment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884825_217290_7749"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TemplateBinding" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900812_735213_8921"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CreateLinkObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904181_963443_9058"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Pseudostate" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932903_534887_9608"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ProtocolTransition" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932447_458425_9559"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DeploymentTarget" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928324_491769_9506"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CreateObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896464_764149_8671"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConnectionPointReference" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704933044_828010_9624"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadVariableAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704909858_831429_9193"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InformationFlow" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704899911_307257_8888"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TemplateParameterSubstitution" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900866_586714_8929"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StateMachine" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932656_223024_9583"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ForkNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921375_808153_9395"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TimeExpression" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704895761_64066_8583"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Package" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885298_713292_7913"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityPartition" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921570_774139_9419"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InteractionUse" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887302_348848_8190"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Extend" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704919558_745543_9296"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Manifestation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932261_613241_9541"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#FinalState" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932975_359279_9616"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#FlowFinalNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921438_294509_9403"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AcceptEventAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904246_626651_9067"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ObjectNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893267_8162_8522"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Stereotype" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941426_574917_9666"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#BehavioralFeature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884755_923432_7717"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InstanceSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885251_933969_7897"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ClearVariableAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910004_908767_9209"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ValueSpecificationAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897612_977025_8839"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ClearStructuralFeatureAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896825_731209_8727"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Class" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885343_144138_7929"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LiteralInteger" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884947_594252_7798"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Reception" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907408_866714_9126"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#RemoveStructuralFeatureValueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896878_576411_8735"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Usage" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885779_949036_8059"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Artifact" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928546_39588_9532"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InterruptibleActivityRegion" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921265_575333_9383"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExecutableNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892340_187059_8482"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Component" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910326_404756_9249"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InputPin" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887035_839239_8133"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadLinkObjectEndQualifierAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904103_710448_9050"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Behavior" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884715_427797_7700"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ValuePin" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704886319_270101_8117"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DataStoreNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704920907_627672_9345"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExecutionEnvironment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928255_655549_9498"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Diagram" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1106296071977_61607_0"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LinkEndData" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897068_938981_8759"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StructuralFeatureAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896675_779403_8703"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DeployedArtifact" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928388_9803_9514"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Continuation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887979_908730_8262"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReplyAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904356_235357_9083"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#SendSignalAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887121_121073_8157"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#EnumerationLiteral" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885423_380971_7955"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Duration" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704895827_777691_8591"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#SendObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897504_144024_8823"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExtensionPoint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704919767_187766_9320"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TemplateParameter" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704900663_235770_8905"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DestroyObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896512_837942_8679"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Association" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885473_18793_7971"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DestroyLinkAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897273_173302_8791"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActionInputPin" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910250_737922_9241"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Region" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704933219_299257_9640"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#IntervalConstraint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896170_814021_8647"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConditionalNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892132_915377_8442"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Element" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884807_371561_7741"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Deployment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704927953_507488_9465"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#WriteStructuralFeatureAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896769_282989_8719"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StructuralFeature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885228_400432_7889"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CallOperationAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887160_569760_8165"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OccurrenceSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888303_261838_8313"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DurationConstraint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896124_718126_8639"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OperationTemplateParameter" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704901058_400566_8956"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Extension" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704941686_391373_9690"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Collaboration" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884500_158087_7604"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Enumeration" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885400_895774_7947"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StartObjectBehaviorAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_16_0beta1_62a020a_1219131557942_89085_240"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DurationInterval" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704895912_517624_8607"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InteractionConstraint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887391_255251_8214"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AssociationClass" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903198_579542_8992"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Actor" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704919482_11686_9288"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#LoopNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704892169_230137_8450"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReduceAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227280978_761467_467"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#JoinNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704920844_549689_9337"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReclassifyObjectAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704903822_36535_9009"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadStructuralFeatureAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896721_782477_8711"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExecutionOccurrenceSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888868_726848_8417"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Message" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888195_415551_8289"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#RedefinableElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885173_952834_7871"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ProtocolConformance" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932354_30061_9549"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConnectableElementTemplateParameter" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704901288_213457_8983"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CommunicationPath" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928458_703520_9522"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#PackageableElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884883_670212_7773"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StateInvariant" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888416_506222_8337"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#MessageOccurrenceSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888825_465279_8409"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AddVariableValueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910072_346755_9217"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DeploymentSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704928019_111206_9473"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InformationItem" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704899836_442270_8880"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActivityEdge" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893217_304959_8514"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TestIdentityAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704896581_982450_8687"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#MultiplicityElement" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885067_105135_7846"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TimeObservation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227519356_865463_4007"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ControlNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704893317_43821_8530"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#RemoveVariableValueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704910133_619352_9225"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#GeneralizationSet" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704927407_799308_9455"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#WriteLinkAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897330_715729_8799"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#FunctionBehavior" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884790_409021_7733"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#AnyReceiveEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704907801_516752_9167"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Realization" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885860_877151_8083"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#BroadcastSignalAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704897450_215481_8815"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ConsiderIgnoreFragment" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888127_412468_8278"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CallEvent" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704906416_900968_9100"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#TimeConstraint" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704895977_530126_8615"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Interface" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884649_358727_7668"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InteractionOperand" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887361_983947_8206"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CallAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887093_429156_8149"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#StructuredClassifier" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884590_293684_7652"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DurationObservation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_15_0EAPbeta1_62a020a_1188227447739_704079_3844"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DecisionNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704921751_161098_9437"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#DataType" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885376_903292_7939"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Operation" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884698_645168_7692"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#BehavioredClassifier" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884683_360250_7684"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ReadLinkObjectEndAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704904049_817856_9042"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Property" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884574_96724_7644"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ActionExecutionSpecification" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704888495_278169_8353"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Gate" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887836_236837_8230"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#CollaborationUse" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704884486_457683_7596"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ExpansionNode" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704898100_833704_8847"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#ProtocolStateMachine" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932517_261495_9567"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#PackageImport" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885319_392905_7921"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Vertex" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932833_799001_9600"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#InstanceValue" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885650_203318_8019"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Interaction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704887901_869040_8246"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Substitution" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885889_983575_8091"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Feature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885153_836117_7863"/>
+
+
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_0" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_be00301_1108050582343_527400_10847"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Service-extension_Service" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772458_418246_346"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#File" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_248912_50"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Instantiate-extension_Instantiate" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771557_598812_149"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Document-extension_Document" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772198_934397_296"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Document_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772188_578777_295"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Create_base_Usage" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771997_188171_249"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Script-extension_Script" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771447_429238_124"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Utility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771877_452491_221"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Responsibility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_840245_9"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Source" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_477935_31"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Create_base_BehavioralFeature" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771977_450058_244"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Trace" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421246_733231_63"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Call" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772558_497375_370"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Metamodel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_601240_36"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Responsibility_base_Usage" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771567_745680_153"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Type-extension_Type" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772258_731865_311"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Call_base_Usage" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772558_358399_371"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Subsystem" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772067_146901_264"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Implement" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#rimvydas_1048689091049_622839_0"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Destroy_base_BehavioralFeature" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771186_55976_108"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BehavioralFeature_Create" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771977_441965_243"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Focus-extension_Focus" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772368_680762_326"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Implement_base_Component" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771767_513079_200"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Responsibility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771567_444984_152"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Script_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771437_691692_123"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Utility-extension_Utility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771887_795193_223"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Specification" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_be00301_1111679791472_309998_22030"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Library" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_793046_3"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Framework_base_Package" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772538_834504_366"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Refine" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_260147_44"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Refine_base_Abstraction" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771527_844753_143"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Subsystem-extension_Subsystem" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772067_452890_266"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#File_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772728_325120_393"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Create" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771997_210055_248"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Specification_base_Classifier" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771727_509490_190"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#ImplementationClass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_324444_45"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Process" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_787633_26"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Derive_base_Abstraction" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771677_122902_180"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Create" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_236598_27"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Entity-extension_Entity" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772668_25478_378"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#ImplementationClass_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771657_270624_175"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#ModelLibrary_base_Package" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772478_490431_350"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Send-extension_Send" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772348_882340_321"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Focus" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772368_438521_324"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Source-extension_Source" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772418_655517_336"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Model_Metamodel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771136_824883_97"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Type_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772258_860806_310"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Process-extension_Process" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771246_671484_119"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Script" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_be00301_1111676953772_558747_12158"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Refine" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771527_791354_142"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Destroy" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421246_752441_71"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Derive" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771677_131672_179"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Utility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_932627_12"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_BuildComponent" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771787_118215_205"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Classifier_Realization-extension_Realization" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771477_163093_134"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Auxiliary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772037_104360_259"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Derive-extension_Derive" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771687_181777_181"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Derive" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421246_13781_70"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Responsibility-extension_Responsibility" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771577_772869_154"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BehavioralFeature_Destroy-extension_Destroy" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771196_380954_109"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Create-extension_Create" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771997_658302_250"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Metaclass_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_16_8beta_62a020a_1256807897056_676124_387"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Focus" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_373187_24"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Implement" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771767_387104_199"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Refine-extension_Refine" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771527_983314_144"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Package_ModelLibrary-extension_ModelLibrary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772478_585204_351"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Process" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771236_934570_117"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Metaclass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_16_8beta_62a020a_1256807897056_986381_386"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Send" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772338_421996_319"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Auxiliary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_752229_1"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Classifier_Realization" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771477_127131_132"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Focus_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772368_128292_325"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Model_SystemModel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771457_150061_127"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Document" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772188_343660_294"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Package_Framework-extension_Framework" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772538_480651_367"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Send_base_Usage" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772348_819936_320"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#SystemModel_base_Model" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771457_199344_128"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Call-extension_Call" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772558_256392_372"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Metaclass-extension_Metaclass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_16_8beta_62a020a_1256807897056_872244_388"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Framework" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_673724_40"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Utility_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771877_677264_222"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Auxiliary-extension_Auxiliary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772047_990621_261"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Executable" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772168_242224_289"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Send" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_787534_7"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Type" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421246_603748_67"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Package_ModelLibrary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772478_425419_349"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Call" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_143362_35"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BehavioralFeature_Create-extension_Create" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771977_750865_245"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BuildComponent" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_be00301_1111680081329_426992_23336"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Classifier_Specification-extension_Specification" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771727_840822_191"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Trace-extension_Trace" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771216_993068_114"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Instantiate" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_266484_42"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Entity" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772588_260518_376"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Executable" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_256728_41"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Source" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772408_512042_334"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_ImplementationClass-extension_ImplementationClass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771657_285450_176"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Library" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772238_610687_304"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Source_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772408_892911_335"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BuildComponent_base_Component" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771787_976441_206"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Script" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771437_9842_122"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Subsystem" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_91a0295_1111479028825_93211_0"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Document" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_296551_25"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Entity_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772588_812830_377"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#ModelLibrary" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_39100_29"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_File-extension_File" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772728_171914_394"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Metaclass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_16_8beta_62a020a_1256807873793_635443_380"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Service" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_be00301_1111679531449_358052_17505"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Service" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772448_3761_344"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Entity" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421226_813777_19"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Model_SystemModel-extension_SystemModel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771457_229048_129"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_ImplementationClass" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771657_727269_174"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Instantiate_base_Usage" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771547_811523_148"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Executable_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772168_119441_290"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Process_base_Component" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771236_919435_118"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Service_base_Component" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772448_442819_345"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Class_Type" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772258_188169_309"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Classifier_Specification" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771727_939493_189"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#BehavioralFeature_Destroy" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771186_186307_107"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#SystemModel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#magicdraw_1046861421236_81292_30"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Abstraction_Trace" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771206_35231_112"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Executable-extension_Executable" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772178_530461_291"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Model_Metamodel-extension_Metamodel" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771136_580423_99"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Realization" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_2_be00301_1111679412748_910181_17354"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Usage_Instantiate" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771547_124683_147"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Auxiliary_base_Class" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772037_774581_260"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_File" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772728_197060_392"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Trace_base_Abstraction" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771206_491283_113"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Artifact_Library-extension_Library" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772238_364834_306"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Realization_base_Classifier" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771477_483923_133"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Metamodel_base_Model" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771136_271406_98"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Subsystem_base_Component" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772067_923099_265"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Implement-extension_Implement" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771767_77466_201"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_BuildComponent-extension_BuildComponent" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081771817_878468_207"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Library_base_Artifact" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772238_887891_305"/>
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Package_Framework" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772538_879360_365"/>
+
 </catalog>
