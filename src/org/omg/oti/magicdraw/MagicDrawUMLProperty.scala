@@ -22,6 +22,11 @@ trait MagicDrawUMLProperty
   }
   
   override def association = Option.apply( e.getAssociation )
+ 
+  override def owningAssociation: Option[UMLAssociation[Uml]] = association match {
+    case None => None
+    case Some( a ) => if (a.ownedEnd.contains(this)) association else None
+  }
   
   override def associationEnd = Option.apply( e.getAssociationEnd )
   

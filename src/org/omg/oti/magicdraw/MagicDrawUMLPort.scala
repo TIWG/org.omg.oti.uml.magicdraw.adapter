@@ -35,4 +35,10 @@ trait MagicDrawUMLPort
   
   // 16.13
   override def onPort_invocationAction: Set[UMLInvocationAction[Uml]] = ???
+  
+  override def redefinedPort: Set[UMLPort[Uml]] =
+    umlPort( e.getRedefinedPort.toSet )
+    
+  override def redefinedPort_port: Set[UMLPort[Uml]] =
+    umlPort( e.get_portOfRedefinedPort.toSet )
 }

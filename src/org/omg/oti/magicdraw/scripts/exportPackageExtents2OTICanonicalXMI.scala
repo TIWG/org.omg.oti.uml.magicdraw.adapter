@@ -101,8 +101,8 @@ object exportPackageExtents2OTICanonicalXMI {
 
       case ne: UMLNamedElement[Uml] =>
         val neQName = ne.qualifiedName.get
-        DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
-          DynamicScriptsPlugin.wildCardMatch( neQName, "*::OTI::*" ) ||
+          //DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
+          //DynamicScriptsPlugin.wildCardMatch( neQName, "*::OTI::*" ) ||
           DynamicScriptsPlugin.wildCardMatch( neQName, "*OMG*" ) ||
           DynamicScriptsPlugin.wildCardMatch( neQName, "Specifications::SysML.profileAnnotations::*" )
 

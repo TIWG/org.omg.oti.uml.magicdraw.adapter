@@ -32,4 +32,13 @@ trait MagicDrawUMLInterface
   
   override def protocol: Option[UMLProtocolStateMachine[Uml]] =
     Option.apply( e.getProtocol )
+    
+  override def contract_interfaceRealization: Set[UMLInterfaceRealization[Uml]] =
+    umlInterfaceRealization( e.get_interfaceRealizationOfContract.toSet )
+   
+  override def redefinedInterface: Set[UMLInterface[Uml]] =
+    umlInterface( e.getRedefinedInterface.toSet )
+
+  override def redefinedInterface_interface: Set[UMLInterface[Uml]] =
+    umlInterface( e.get_interfaceOfRedefinedInterface.toSet )
 }

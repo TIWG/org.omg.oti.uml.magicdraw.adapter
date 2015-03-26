@@ -16,4 +16,8 @@ trait MagicDrawUMLTransition
   override def source: Option[UMLVertex[Uml]] = ??? 
 
   override def target: Option[UMLVertex[Uml]] = ???
+  
+  override def guard: Option[UMLConstraint[Uml]] =
+    Option.apply(e.getGuard)
+
 }

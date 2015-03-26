@@ -30,4 +30,7 @@ trait MagicDrawUMLExecutableNode
   override def body_clause: Option[UMLClause[Uml]] =
     Option.apply( e.get_clauseOfBody )
 
+  override def executableNode_sequenceNode: Option[UMLSequenceNode[Uml]] =
+    Option.apply(e.get_sequenceNodeOfExecutableNode)
+    
 }

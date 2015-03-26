@@ -20,4 +20,8 @@ trait MagicDrawUMLParameterableElement
   
   override def ownedDefault_templateParameter: Iterable[UMLTemplateParameter[Uml]] =
     e.get_templateParameterOfDefault.toIterable
+        
+  override def owningTemplateParameter: Option[UMLTemplateParameter[Uml]] =
+    Option.apply(e.getOwningTemplateParameter)
+    
 }

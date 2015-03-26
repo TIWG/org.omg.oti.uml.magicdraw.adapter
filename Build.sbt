@@ -2,7 +2,7 @@ import com.banno.license.Plugin.LicenseKeys._
 
 name := "org.omg.oti.magicdraw"
   
-version in ThisBuild := "0.10.0"
+version in ThisBuild := "0.10.5"
 
 organization := "JPL, Caltech"
 

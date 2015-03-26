@@ -31,4 +31,6 @@ trait MagicDrawUMLPackage
   override def packagedElement: Set[UMLPackageableElement[Uml]] =
     e.getPackagedElement.toSet[Uml#PackageableElement]
   
+  override def nestingPackage: Option[UMLPackage[Uml]] =
+    Option.apply(e.getNestingPackage)
 }

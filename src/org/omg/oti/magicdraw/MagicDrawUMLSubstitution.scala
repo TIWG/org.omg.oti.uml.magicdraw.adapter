@@ -10,4 +10,10 @@ trait MagicDrawUMLSubstitution
   override protected def e: Uml#Substitution
   import ops._
 
+  override def contract: Option[UMLClassifier[Uml]] =
+    Option.apply(e.getContract)
+    
+  override def substitutingClassifier: Option[UMLClassifier[Uml]] =
+    Option.apply(e.getSubstitutingClassifier)
+  
 }

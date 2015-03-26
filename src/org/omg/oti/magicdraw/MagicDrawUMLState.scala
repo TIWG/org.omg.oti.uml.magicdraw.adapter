@@ -22,4 +22,8 @@ trait MagicDrawUMLState
   
   // 15.48
   def inState_objectNode: Set[UMLObjectNode[Uml]] = ??? 
+  
+  override def stateInvariant: Option[UMLConstraint[Uml]] =
+    Option.apply(e.getStateInvariant)
+
 }

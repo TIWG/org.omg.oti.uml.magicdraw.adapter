@@ -14,4 +14,7 @@ trait MagicDrawUMLExtensionEnd
   
   override def _type: Option[UMLStereotype[Uml]] = super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
   
+  override def ownedEnd_extension: Option[UMLExtension[Uml]] =
+    Option.apply(e.get_extensionOfOwnedEnd)
+
 }

@@ -9,5 +9,11 @@ trait MagicDrawUMLInterfaceRealization
 
   override protected def e: Uml#InterfaceRealization
   import ops._
+  
+  override def contract: Option[UMLInterface[Uml]] =
+    Option.apply(e.getContract)
+    
+  override def implementingClassifier: Option[UMLBehavioredClassifier[Uml]] =
+    Option.apply(e.getImplementingClassifier)
 
 }

@@ -12,9 +12,7 @@ trait MagicDrawUMLType
   override protected def e: Uml#Type
   import ops._
   
-  override def endType_association = e.get_associationOfEndType.toSet[Uml#Association]
-
-  override def type_operation = ???
+  override def type_operation: Set[UMLOperation[Uml]] = ???
   
   override def type_typedElement = e.get_typedElementOfType.toSet[Uml#TypedElement]
     
