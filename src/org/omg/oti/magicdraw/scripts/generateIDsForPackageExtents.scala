@@ -56,6 +56,13 @@ object generateIDsForPackageExtents {
     p: Project, ev: ActionEvent,
     script: DynamicScriptsTypes.BrowserContextMenuAction,
     tree: Tree, node: Node,
+    pkg: Package, selection: java.util.Collection[Element] ): Try[Option[MagicDrawValidationDataResults]] =
+    doit( p, ev, selection )
+    
+  def doit(
+    p: Project, ev: ActionEvent,
+    script: DynamicScriptsTypes.BrowserContextMenuAction,
+    tree: Tree, node: Node,
     pkg: Profile, selection: java.util.Collection[Element] ): Try[Option[MagicDrawValidationDataResults]] =
     doit( p, ev, selection )
 
@@ -140,8 +147,7 @@ object generateIDsForPackageExtents {
 
       case ne: UMLNamedElement[Uml] =>
         val neQName = ne.qualifiedName.get
-        DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
-          DynamicScriptsPlugin.wildCardMatch( neQName, "*::OTI::*" ) ||
+          DynamicScriptsPlugin.wildCardMatch( neQName, "UML Standard Profile::MagicDraw Profile::*" ) ||
           DynamicScriptsPlugin.wildCardMatch( neQName, "*OMG*" ) ||
           DynamicScriptsPlugin.wildCardMatch( neQName, "Specifications::SysML.profileAnnotations::*" )
 
@@ -279,10 +285,11 @@ object generateIDsForPackageExtents {
           val migrationMM = Metamodel( otiDir )
 
           val old2newMapping = migrationMM.makeOld2NewIDMapping( projectFilename )
+          val old2newDeltaMapping = migrationMM.makeOld2NewIDMapping( projectFilename )
 
           System.out.println( s" element2id map has ${sortedIDs.size} entries" )
           guiLog.log( s" element2id map has ${sortedIDs.size} entries" )
-          val tooLong = sortedIDs.size > 2000
+          val tooLong = sortedIDs.size > 500
           for {
             n <- 0 until sortedIDs.size
             id = sortedIDs( n )
@@ -294,21 +301,35 @@ object generateIDsForPackageExtents {
             old2newEntry.setNewID( id )
             old2newMapping.addEntry( old2newEntry )
 
-            if ( tooLong ) System.out.println( s"${n}: ${id} => ${oldID}" )
-            else guiLog.addHyperlinkedText(
+            if ( id != oldID ) {             
+              val old2newDelta = migrationMM.makeOld2NewIDEntry
+              old2newDelta.setOldID( oldID )
+              old2newDelta.setNewID( id )
+              old2newDeltaMapping.addEntry( old2newDelta )
+            }
+            if ( ! tooLong ) 
+              guiLog.addHyperlinkedText(
               s" ${n}: <A>${id}</A> => ${oldID}",
               Map( id -> e.asInstanceOf[MagicDrawUMLElement].selectInContainmentTreeRunnable ) )
           }
 
           val dir = new File( project.getDirectory )
           require( dir.exists() && dir.isDirectory() )
+                    
+          val options = Map( XMLResource.OPTION_ENCODING -> "UTF-8" )
+
           val migrationF = new File( dir, project.getName + ".migration.xmi" )
           val migrationURI = URI.createFileURI( migrationF.getAbsolutePath )
           val r = migrationMM.rs.createResource( migrationURI )
           r.getContents.add( old2newMapping.eObject )
-          val options = Map( XMLResource.OPTION_ENCODING -> "UTF-8" )
           r.save( options )
-
+          
+          val migrationDeltaF = new File( dir, project.getName + ".migration.delta.xmi" )
+          val migrationDeltaURI = URI.createFileURI( migrationDeltaF.getAbsolutePath )
+          val rd = migrationMM.rs.createResource( migrationDeltaURI )
+          rd.getContents.add( old2newDeltaMapping.eObject )
+          rd.save( options )
+          
           guiLog.log( s" Saved migration model at: ${migrationF} " )
 
           val cpanel = new JPanel()
@@ -338,7 +359,9 @@ object generateIDsForPackageExtents {
           }
 
           val catalogF = new File( dir, project.getName + ".catalog.xml" )
-          guiLog.log( s"generate catalog: ${catalogF}" )
+          guiLog.log( s"generate full catalog: ${catalogF}" )
+          val deltaF = new File( dir, project.getName + ".delta.catalog.xml" )
+          guiLog.log( s"generate delta catalog: ${deltaF}" )
 
           val catalogDir = catalogF.getParentFile
           catalogDir.mkdirs()
@@ -346,20 +369,32 @@ object generateIDsForPackageExtents {
           val pw = new PrintWriter( new FileWriter( catalogF ) )
           pw.println( """<?xml version='1.0' encoding='UTF-8'?>""" )
           pw.println( """<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">""" )
+          
+          val dw = new PrintWriter( new FileWriter( deltaF ) )
+          dw.println( """<?xml version='1.0' encoding='UTF-8'?>""" )
+          dw.println( """<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">""" )
+          
           for {
             n <- 0 until sortedIDs.size
             newID = sortedIDs( n )
             e = id2element( newID )
             oldID = e.id
-          } e.getPackageOwnerWithURI match {
-            case Some( pkg ) => pw.println( s"""<uri uri="${curi}#${newID}" name="${pkg.URI.get}#${oldID}"/>""")
-            case None => System.out.println(s"*** no owner package with URI found for ${e.id} (metaclass=${e.xmiType.head})")
+          } e.getPackageOwnerWithEffectiveURI match {
+            case Some( pkg ) => 
+              pw.println( s"""<uri uri="${curi}#${newID}" name="${pkg.getEffectiveURI.get}#${oldID}"/>""")
+              if (newID != oldID) dw.println( s"""<uri uri="${curi}#${newID}" name="${pkg.getEffectiveURI.get}#${oldID}"/>""")
+            case None => 
+              System.out.println(s"*** no owner package with URI found for ${e.id} (metaclass=${e.xmiType.head})")
           }            
            
           pw.println( """</catalog>""" )
           pw.close()
 
+          dw.println( """</catalog>""" )
+          dw.close()
+
           guiLog.log( s"Catalog generated at: ${catalogF}" )
+          guiLog.log( s"Delta Catalog generated at: ${deltaF}" )
 
           Success( None )
       }

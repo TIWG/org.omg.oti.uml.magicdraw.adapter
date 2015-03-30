@@ -824,17 +824,24 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     val mdStandardProfile = 
       umlProfile( project.getElementByID("_9_0_be00301_1108050582343_527400_10847").asInstanceOf[MagicDrawUML#Profile] )
  
-    val mdStandardProfileClassifiers = mdStandardProfile.ownedType.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
-    val mdStandardProfileFeatures = mdStandardProfileClassifiers flatMap (_.feature)
-    val mdStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
-      Set(mdStandardProfile) ++ mdStandardProfileClassifiers ++ mdStandardProfileFeatures
+    val mdStandardProfileExtensions = mdStandardProfile.ownedType.selectByKindOf { case e: UMLExtension[MagicDrawUML] => e }
+    val mdStandardProfileExtensionFeatures = mdStandardProfileExtensions flatMap (_.ownedEnd)
+    val mdStandardProfileStereotypes = mdStandardProfile.ownedType.selectByKindOf { case s: UMLStereotype[MagicDrawUML] => s }
+    val mdStandardProfileStereotypeFeatures = mdStandardProfileStereotypes flatMap (_.ownedAttribute)
+    val mdStandardProfileExtent: Set[UMLNamedElement[MagicDrawUML]] =
+      Set(mdStandardProfile) ++ 
+      mdStandardProfileExtensions ++ mdStandardProfileExtensionFeatures ++
+      mdStandardProfileStereotypes ++ mdStandardProfileStereotypeFeatures
       
+    System.out.println(s"Refine::base_Abstraction="+mdStandardProfileExtent.find(_.qualifiedName.get == "UML Standard Profile::StandardProfile::Refine::base_Abstraction").get.id)
+    System.out.println(s"extension_refine="+mdStandardProfileExtent.find(_.qualifiedName.get == "UML Standard Profile::StandardProfile::::extension_refine").get.id)
+    System.out.println(s"extension_trace="+mdStandardProfileExtent.find(_.qualifiedName.get == "UML Standard Profile::StandardProfile::::extension_trace").get.id)
     BuiltInDocument(
         uri=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
         nsPrefix="StandardProfile",
         scope=mdStandardProfile,
         documentURL=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
-        builtInExtent=mdStandardProfileExtent )( this )
+        builtInExtent=mdStandardProfileExtent.toSet[UMLElement[MagicDrawUML]] )( this )
   }
   
   lazy val MDBuiltInUML2PrimitiveTypes = DocumentEdge( MDBuiltInUML, MDBuiltInPrimitiveTypes )

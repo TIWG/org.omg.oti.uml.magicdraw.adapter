@@ -35,7 +35,7 @@ case class MagicDrawIDGenerator(
         case Some( nev: UMLNamedElement[Uml] ) =>
           nev.name match {
             case None      => Failure( illegalElementException( "ElementValue must refer to a named NamedElement", ev ) )
-            case Some( n ) => Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.getName ) + "." + n )
+            case Some( n ) => Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.getName + "." + n ) )
           }
         case Some( ev: UMLElement[Uml] ) =>
           Failure( illegalElementException( "ElementValue refers to an Element that is not a NamedElement!", ev ) )
@@ -43,6 +43,6 @@ case class MagicDrawIDGenerator(
   }
 
   protected val elementRules = List( rule0 )
-  protected val containmentRules = List( MD_crule0, crule1, MD_crule1a0, crule1a, crule1b, crule2, crule3, crule4, crule5, crule6 )
+  protected val containmentRules = List( MD_crule0, crule1, MD_crule1a0, crule1a, crule3, crule1b, crule2, crule4, crule5, crule6 )
 
 }

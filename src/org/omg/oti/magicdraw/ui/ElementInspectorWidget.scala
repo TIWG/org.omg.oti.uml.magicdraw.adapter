@@ -64,7 +64,7 @@ object ElementInspectorWidget {
     ek: MagicDrawElementKindDesignation, e: Element ): Try[( java.awt.Component, Seq[ValidationAnnotation] )] = 
       elementOperationWidget[UMLElement[MagicDrawUML], UMLElement[MagicDrawUML]]( 
           derived, e, 
-          (_.getPackageOwnerWithURI), 
+          (_.getPackageOwnerWithEffectiveURI), 
           MagicDrawUMLUtil( project ) )    
           
   def packageOrProfileOwner(

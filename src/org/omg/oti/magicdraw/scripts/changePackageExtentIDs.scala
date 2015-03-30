@@ -34,13 +34,13 @@ import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
  */
 object changePackageExtentIDs {
 
-  def doit( 
-      project: Project, 
-      ev: ActionEvent, 
-      script: DynamicScriptsTypes.MainToolbarMenuAction ): Try[Option[MagicDrawValidationDataResults]] = 
+  def doit(
+    project: Project,
+    ev: ActionEvent,
+    script: DynamicScriptsTypes.MainToolbarMenuAction ): Try[Option[MagicDrawValidationDataResults]] =
     doit( project )
 
-  def doit( project: Project ): Try[Option[MagicDrawValidationDataResults]] = { 
+  def doit( project: Project ): Try[Option[MagicDrawValidationDataResults]] = {
     val a = Application.getInstance()
     val guiLog = a.getGUILog()
     guiLog.clearLog()
@@ -52,40 +52,50 @@ object changePackageExtentIDs {
     val otiDir = new File( mdInstallDir, "dynamicScripts/org.omg.oti" )
     require( otiDir.exists && otiDir.isDirectory )
     val migrationMM = Metamodel( otiDir )
-    
+
     val dir = new File( project.getDirectory )
-    require(dir.exists && dir.isDirectory())
-    val migrationF = new File( dir, project.getName + ".migration.xmi" )
+    require( dir.exists && dir.isDirectory() )
+    val migrationF = new File( dir, project.getName+".migration.xmi" )
     require( migrationF.exists && migrationF.canRead )
     val migrationURI = URI.createFileURI( migrationF.getAbsolutePath )
-    
+
     migrationMM.loadOld2NewIDMappingResource( migrationURI ) match {
       case Failure( t ) => Failure( t )
       case Success( old2newIDmigration ) =>
         val entries = old2newIDmigration.getEntries
-        guiLog.log(s" Loaded ${entries.size} old2new ID migration entries" )
-        
+        guiLog.log( s" Loaded ${entries.size} old2new ID migration entries" )
+
         val resetElements = entries map { entry => project.getElementByID( entry.getOldID.get ) }
         val resetMap = entries flatMap { entry =>
           val oldId = entry.getOldID.get
           val newId = entry.getNewID.get
-          val e = project.getElementByID( oldId ).asInstanceOf[Element]
-          val uuid = UUIDRegistry.getUUID( e )
-          Seq( oldId -> newId, uuid -> uuid )
+          Option.apply( project.getElementByID( oldId ) ) match {
+            case Some( e: Element ) =>
+              val uuid = UUIDRegistry.getUUID( e )
+              if ( oldId == newId )
+                None
+              else
+                Seq( oldId -> newId, uuid -> uuid )
+            case _ =>
+              None
+          }
         } toMap;
+
+        val idMap = new java.util.HashMap[String, String]()
+        for { ( key, value ) <- resetMap } { idMap.put(key, value ) }
         
         val runnable = new RunnableWithProgress() {
-          def run( progressStatus: ProgressStatus ): Unit = {                      
-            ChangeElementID.resetIDS( project, resetElements, resetMap, progressStatus )
+          def run( progressStatus: ProgressStatus ): Unit = {
+            ChangeElementID.resetIDS( project, resetElements, idMap, progressStatus )
           }
         }
-        
+
         MagicDrawProgressStatusRunner.runWithProgressStatus( runnable, s"Change XMI:IDs", true, 0 )
-                
-        if (entries.size > 2000) {
-          entries foreach { entry => System.out.println( s" new=${entry.getNewID.get} => old=${entry.getOldID.get}")}
+
+        if ( entries.size > 2000 ) {
+          entries foreach { entry => System.out.println( s" new=${entry.getNewID.get} => old=${entry.getOldID.get}" ) }
         } else {
-          entries foreach { entry => 
+          entries foreach { entry =>
             val id = entry.getNewID.get
             val e = project.getElementByID( id )
             guiLog.addHyperlinkedText(
@@ -93,8 +103,8 @@ object changePackageExtentIDs {
               Map( id -> new SelectInContainmentTreeRunnable( e ) ) )
           }
         }
-        
-        guiLog.log(s"Done! (${entries.size} old2new ID migrations)" )
+
+        guiLog.log( s"Done! (${entries.size} old2new ID migrations)" )
         Success( None )
     }
   }

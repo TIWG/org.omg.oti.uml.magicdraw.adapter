@@ -14,10 +14,13 @@ trait MagicDrawUMLRedefinableElement
     
   override def isLeaf = e.isLeaf
   
-  override def redefinedElement = e.get_redefinableElementOfRedefinedElement.toSet[Uml#RedefinableElement]
+  override def redefinedElement: Set[UMLRedefinableElement[Uml]] = 
+    e.getRedefinedElement.toSet[Uml#RedefinableElement]
   
-  override def redefinitionContext = e.getRedefinitionContext.toIterable
+  override def redefinitionContext: Iterable[UMLClassifier[Uml]] = 
+    e.getRedefinitionContext.toIterable
   
-  override def redefinedElement_redefinableElement = e.get_redefinableElementOfRedefinedElement.toSet[Uml#RedefinableElement]
+  override def redefinedElement_redefinableElement: Set[UMLRedefinableElement[Uml]] =  
+    e.get_redefinableElementOfRedefinedElement.toSet[Uml#RedefinableElement]
   
 }

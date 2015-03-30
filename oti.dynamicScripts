@@ -51,7 +51,7 @@ dynamicScripts(
               access: r/w
               class: org.omg.oti.magicdraw.scripts.nameAssociationLinkInstancesWithinPackageExtent
               method: doit
-          )
+          )       
           DiagramContextMenuAction(
               name: 'Set names of link instances of selected Associations (r/o)'
               project: org.omg.oti.magicdraw
@@ -118,7 +118,22 @@ dynamicScripts(
 dynamicScripts(
       name='OMG Tool Infrastructure'
       [ m: Package ]
-      scripts {          
+      scripts {    
+          BrowserContextMenuAction(
+              name: 'Set names of ValueTypes within scope of selected package(s) (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              class: org.omg.oti.magicdraw.scripts.nameValueTypesWithinPackageExtent
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'Set names of ValueTypes within selected package(s) scope (r/w)'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.nameValueTypesWithinPackageExtent
+              method: doit
+          )      
           BrowserContextMenuAction(
               name: 'Generate OTI Canonical XMI:IDs for selected Package extents'
               project: org.omg.oti.magicdraw
@@ -433,6 +448,30 @@ characterization(
             class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
             method: packageOrProfileOwner
         )
+		EarlyDerivedWidget(
+			name: 'OTI Element::allForwardReferencesToElements'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: allForwardReferencesToElements
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Element::allForwardReferencesToImportablePackageableElements'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: allForwardReferencesToImportablePackageableElements
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Element::allForwardReferencesFromStereotypeTagProperties'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.ElementInspectorWidget
+            method: allForwardReferencesFromStereotypeTagProperties
+        )
 	})
 characterization(
 	name='NamedElement (OMG Tool Infrastructure)'
@@ -461,6 +500,44 @@ characterization(
             access: r/o
             class: org.omg.oti.magicdraw.ui.NamedElementInspectorWidget
             method: allOwningPackages
+        )
+	})
+	
+characterization(
+	name='Property (OMG Tool Infrastructure)'
+	[ m: Property ]
+	features {	
+		EarlyDerivedWidget(
+			name: 'OTI Property::redefinedProperty'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PropertyInspectorWidget
+            method: redefinedProperty
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Property::redefiningdProperty'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PropertyInspectorWidget
+            method: redefiningdProperty
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Property::subsettedProperty'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PropertyInspectorWidget
+            method: subsettedProperty
+        )
+		EarlyDerivedWidget(
+			name: 'OTI Property::subsettingProperty'
+			project: org.omg.oti.magicdraw
+            dependencies: { org.omg.oti }
+            access: r/o
+            class: org.omg.oti.magicdraw.ui.PropertyInspectorWidget
+            method: subsettingProperty
         )
 	})
 	
