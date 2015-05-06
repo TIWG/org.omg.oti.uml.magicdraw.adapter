@@ -420,6 +420,28 @@ dynamicScripts(
           )   
 })
 
+dynamicScripts(
+      name='OMG Tool Infrastructure'
+      [ m: Class ]
+      scripts {    
+          BrowserContextMenuAction(
+              name: 'OTI CompositeStructure Inspector'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti, org.omg.oti.trees }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.inspectCompositeStructure
+              method: doit
+          )
+          DiagramContextMenuAction(
+              name: 'OTI CompositeStructure Inspector'
+              project: org.omg.oti.magicdraw
+              dependencies: { org.omg.oti, org.omg.oti.trees }
+              access: r/w
+              class: org.omg.oti.magicdraw.scripts.inspectCompositeStructure
+              method: doit
+          )
+})
+
 characterization(
 	name='Element (OMG Tool Infrastructure)'
 	[ m: Element ]
@@ -868,18 +890,18 @@ characterization(
             method: allImportedProfiles
         )
         
-		EarlyDerivedProperty(
-			name: 'OTI Profile::allNestedProfiles'
-			project: org.omg.oti.magicdraw
+	EarlyDerivedProperty(
+	    name: 'OTI Profile::allNestedProfiles'
+	    project: org.omg.oti.magicdraw
             dependencies: { org.omg.oti }
             access: r/o
             class: org.omg.oti.magicdraw.ui.ProfileInspectorWidget
             method: allNestedProfiles
         )
         
-		EarlyDerivedProperty(
-			name: 'OTI Profile::allVisibleProfiles'
-			project: org.omg.oti.magicdraw
+	EarlyDerivedProperty(
+	    name: 'OTI Profile::allVisibleProfiles'
+	    project: org.omg.oti.magicdraw
             dependencies: { org.omg.oti }
             access: r/o
             class: org.omg.oti.magicdraw.ui.ProfileInspectorWidget
@@ -893,7 +915,7 @@ dynamicScripts(
       scripts {      
           DiagramContextMenuAction(
               name: 'Invoke DynamicScript as diagram context-menu action for selection'
-			  project: org.omg.oti.magicdraw
+              project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/o
               class: org.omg.oti.magicdraw.scripts.invokeDiagramContextMenuActionForSelection
@@ -907,7 +929,7 @@ dynamicScripts(
       scripts {      
           DiagramContextMenuAction(
               name: 'Invoke DynamicScript as main toolbar menu action'
-			  project: org.omg.oti.magicdraw
+              project: org.omg.oti.magicdraw
               dependencies: { org.omg.oti }
               access: r/o
               class: org.omg.oti.magicdraw.scripts.invokeMainToolbarMenuAction
