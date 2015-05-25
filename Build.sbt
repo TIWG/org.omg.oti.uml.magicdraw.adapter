@@ -1,8 +1,9 @@
 import com.banno.license.Plugin.LicenseKeys._
+//import gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin._
 
-name := "org.omg.oti.magicdraw"
+name := "oti-magicdraw"
   
-version in ThisBuild := "0.10.7"
+version in ThisBuild := "0.12.0"
 
 organization := "JPL, Caltech"
 
@@ -14,6 +15,9 @@ publishArtifact in (Test, packageDoc) := true
 
 // enable publishing the test sources jar
 publishArtifact in (Test, packageSrc) := true
+
+// https://youtrack.jetbrains.com/issue/SCL-8676
+//enablePlugins(gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin)
 
 license := """|
  | License Terms
