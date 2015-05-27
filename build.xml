@@ -86,8 +86,8 @@
               dir=".">
             <arg value="-java-home"/>
             <arg value="${env.JAVA8_HOME}"/>
-            <arg value="-DOTILOCAL_REPOSITORY=${env.JPL_MBEE_LOCAL_REPOSITORY}"/>
-            <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
+            <arg value="-DOTI_LOCAL_REPOSITORY=\"${env.JPL_MBEE_LOCAL_REPOSITORY}\""/>
+            <arg value="-DMD_INSTALL_DIR=\"${md.install.dir}\""/>
             <arg value="-batch"/>
             <arg value="-no-colors"/>
             <arg value="extractArchives"/>
