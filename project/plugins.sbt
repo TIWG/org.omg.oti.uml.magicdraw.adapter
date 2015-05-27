@@ -14,4 +14,5 @@ resolvers += Classpaths.sbtPluginReleases
 
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.1")
 
-addSbtPlugin("gov.nasa.jpl.sbt" % "magicdraw-eclipse-classpath-plugin" % "1.13")
+// https://github.com/jrudolph/sbt-dependency-graph
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.5")
