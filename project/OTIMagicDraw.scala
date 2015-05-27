@@ -22,6 +22,7 @@ object OTIMagicDraw extends Build {
   // ======================
 
   lazy val otiSettings = Seq(
+    autoScalaLibrary := false,
     scalaVersion := Versions.scala,
     organization := "gov.nasa.jpl.mbee.omg.oti",
     organizationName := "JPL, Caltech",
@@ -68,22 +69,58 @@ object OTIMagicDraw extends Build {
         }
       )
 
+
+  lazy val archivesToExtract = TaskKey[Map[File, (File, File)]]("archives-to-extract", "ZIP files to be extracted at a target directory according to the 'extract' attribute of the corresponding library dependency")
+
+  lazy val extractArchives = TaskKey[Unit]("extract-archives", "Extracts ZIP files")
+
+  lazy val extractSettings = Seq(
+
+    archivesToExtract <<= (libraryDependencies, update, scalaBinaryVersion, baseDirectory, streams) map { (deps, up, ver, base, s) =>
+      val type2folder = Map("jar" -> "lib", "src" -> "lib.srcs", "doc" -> "lib.javadoc")
+
+      val artifact2extract = (for {
+        dep <- deps
+        if !dep.configurations.toSet.contains("provided")
+        tuple = (dep.name + "-" + dep.revision, dep.name)
+      } yield dep.name + "_" + ver -> tuple) toMap
+
+      val artifactArchive2extractFolder = (for {
+        cReport <- up.configurations
+        mReport <- cReport.modules
+        (artifact, archive) <- mReport.artifacts
+        if artifact.extension == "jar"
+        (folder, extract) <- artifact2extract.get(artifact.name)
+        subFolder = new File(folder)
+        extractFolder = new File(base.getAbsolutePath + File.separator + type2folder(artifact.`type`))
+        tuple = (subFolder, extractFolder)
+      } yield archive -> tuple) toMap
+
+      artifactArchive2extractFolder
+    },
+
+    extractArchives <<= (archivesToExtract, streams) map { (a2e, s) =>
+      a2e foreach { case (archive, (subFolder, extractFolder)) =>
+        s.log.info(s"Copy archive $archive\n=> $extractFolder")
+        IO.copyFile(archive, extractFolder / archive.name, preserveLastModified = true)
+      }
+    }
+  )
+
   lazy val oti_magicdraw = Project(
     "oti-magicdraw",
     file(".")).
     settings(otiSettings: _*).
     settings(commonSettings: _*).
     settings(magicDrawEclipseClasspathSettings: _*).
+    settings(extractSettings: _*).
     settings(
       version := Versions.version,
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
-        "org.scala-lang" % "scala-reflect" % Versions.scala % "provided" withSources() withJavadoc(),
-        "org.scala-lang" % "scala-library" % Versions.scala % "provided" withSources() withJavadoc(),
-        "org.scala-lang" % "scala-compiler" % Versions.scala % "provided" withSources() withJavadoc(),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version withSources() withJavadoc(),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version withSources() withJavadoc(),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version withSources() withJavadoc()
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc(),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc(),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc()
       ),
       classDirectory in Compile := baseDirectory.value / "bin",
       shellPrompt := { state => Project.extract(state).currentRef.project + " @ " + Versions.version_suffix + "> " }
