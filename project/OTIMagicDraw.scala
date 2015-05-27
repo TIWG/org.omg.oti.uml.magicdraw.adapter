@@ -74,38 +74,43 @@ object OTIMagicDraw extends Build {
 
   lazy val extractArchives = TaskKey[Unit]("extract-archives", "Extracts ZIP files")
 
-  lazy val extractSettings = Seq(
+  lazy val extractSettings = {
 
-    archivesToExtract <<= (libraryDependencies, update, scalaBinaryVersion, baseDirectory, streams) map { (deps, up, ver, base, s) =>
-      val type2folder = Map("jar" -> "lib", "src" -> "lib.srcs", "doc" -> "lib.javadoc")
+    val type2folder = Map("jar" -> "lib", "src" -> "lib.srcs", "doc" -> "lib.javadoc")
 
-      val artifact2extract = (for {
-        dep <- deps
-        if !dep.configurations.toSet.contains("provided")
-        tuple = (dep.name + "-" + dep.revision, dep.name)
-      } yield dep.name + "_" + ver -> tuple) toMap
+    Seq(
 
-      val artifactArchive2extractFolder = (for {
-        cReport <- up.configurations
-        mReport <- cReport.modules
-        (artifact, archive) <- mReport.artifacts
-        if artifact.extension == "jar"
-        (folder, extract) <- artifact2extract.get(artifact.name)
-        subFolder = new File(folder)
-        extractFolder = new File(base.getAbsolutePath + File.separator + type2folder(artifact.`type`))
-        tuple = (subFolder, extractFolder)
-      } yield archive -> tuple) toMap
+      archivesToExtract <<= (libraryDependencies, update, scalaBinaryVersion, baseDirectory, streams) map { (deps, up, ver, base, s) =>
 
-      artifactArchive2extractFolder
-    },
+        val artifact2extract = (for {
+          dep <- deps
+          if !dep.configurations.toSet.contains("provided")
+          tuple = (dep.name + "-" + dep.revision, dep.name)
+        } yield dep.name + "_" + ver -> tuple) toMap
 
-    extractArchives <<= (archivesToExtract, streams) map { (a2e, s) =>
-      a2e foreach { case (archive, (subFolder, extractFolder)) =>
-        s.log.info(s"Copy archive $archive\n=> $extractFolder")
-        IO.copyFile(archive, extractFolder / archive.name, preserveLastModified = true)
-      }
-    }
-  )
+        val artifactArchive2extractFolder = (for {
+          cReport <- up.configurations
+          mReport <- cReport.modules
+          (artifact, archive) <- mReport.artifacts
+          if artifact.extension == "jar"
+          (folder, extract) <- artifact2extract.get(artifact.name)
+          subFolder = new File(folder)
+          extractFolder = new File(base.getAbsolutePath + File.separator + type2folder(artifact.`type`))
+          tuple = (subFolder, extractFolder)
+        } yield archive -> tuple) toMap
+
+        artifactArchive2extractFolder
+      },
+
+      extractArchives <<= (archivesToExtract, streams) map { (a2e, s) =>
+        a2e foreach { case (archive, (subFolder, extractFolder)) =>
+          s.log.info(s"Copy archive $archive\n=> $extractFolder")
+          IO.copyFile(archive, extractFolder / archive.name, preserveLastModified = true)
+        }
+      },
+      cleanFiles <++= baseDirectory { base => type2folder.values map (base / _) toSeq }
+    )
+  }
 
   lazy val oti_magicdraw = Project(
     "oti-magicdraw",
