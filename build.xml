@@ -77,6 +77,23 @@
 
     </target>
 
+    <target name="publish">
+        <echoproperties prefix="env"/>
+        <exec executable="${env.JENKINS_HOME}/tools/SBT/sbt"
+              failifexecutionfails="true"
+              failonerror="true"
+              logerror="true"
+              dir=".">
+            <arg value="-java-home"/>
+            <arg value="${env.JAVA8_HOME}"/>
+            <arg value="-DOTILOCAL_REPOSITORY=${env.JPL_MBEE_LOCAL_REPOSITORY}"/>
+            <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
+            <arg value="-batch"/>
+            <arg value="-no-colors"/>
+            <arg value="extractArchives"/>
+        </exec>
+    </target>
+
     <target name="install">
         <md.scripts.install.zip
                 scripts.dir="${scripts.dir}"
