@@ -90,7 +90,7 @@
             <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
             <arg value="-batch"/>
             <arg value="-no-colors"/>
-            <arg value="extractArchives"/>uotes
+            <arg value="extractArchives"/>
         </exec>
     </target>
 
