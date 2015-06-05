@@ -25,22 +25,32 @@ object OTIMagicDraw extends Build {
     autoScalaLibrary := false,
     scalaVersion := Versions.scala,
     organization := "gov.nasa.jpl.mbee.omg.oti",
-    organizationName := "JPL, Caltech",
-    organizationHomepage := Some(url("https://mbse.jpl.nasa.gov")),
-    publishMavenStyle := false,
-    publishTo := {
-      Option.apply(System.getProperty("OTI_LOCAL_REPOSITORY")) match {
-        case Some(dir) => Some(Resolver.file("file", new File(dir))(Resolver.ivyStylePatterns))
-        case None => sys.error("Set -DOTI_LOCAL_REPOSITORY=<dir> where <dir> is a local Ivy repository directory")
+    organizationName := "JPL, Caltech & Object Management Group",
+    organizationHomepage := Some(url("http://solitaire.omg.org/browse/TIWG")),
+
+    // include repositories used in module configurations into the POM repositories section
+    pomAllRepositories := true,
+
+    // publish Maven POM metadata (instead of Ivy); this is important for the UpdatesPlugin's ability to find available updates.
+    publishMavenStyle := true) ++
+    ((Option.apply(System.getProperty("OTI_LOCAL_REPOSITORY")), Option.apply(System.getProperty("OTI_REMOTE_REPOSITORY"))) match {
+      case (Some(dir), _) =>
+        if (new File(dir) / "settings.xml" exists) {
+          val cache = new MavenCache("JPL-OMG", new File(dir))
+          Seq(
+            publishTo := Some(cache),
+            resolvers += cache)
+        }
+        else
+          sys.error(s"The OTI_LOCAL_REPOSITORY folder, '$dir', does not have a 'settings.xml' file.")
+      case (None, Some(url)) => {
+        val repo = new MavenRepository("JPL-OMG", url)
+        Seq(
+          publishTo := Some(repo),
+          resolvers += repo)
       }
-    },
-    resolvers += {
-      Option.apply(System.getProperty("OTI_LOCAL_REPOSITORY")) match {
-        case Some(dir) => Resolver.file("file", new File(dir))(Resolver.ivyStylePatterns)
-        case None => sys.error("Set -DOTI_LOCAL_REPOSITORY=<dir> where <dir> is a local Ivy repository directory")
-      }
-    }
-  )
+      case _ => sys.error("Set either -DOTI_LOCAL_REPOSITORY=<dir> or -DOTI_REMOTE_REPOSITORY=<url> where <dir> is a local Maven repository directory or <url> is a remote Maven repository URL")
+    })
 
   lazy val commonSettings =
     Defaults.coreDefaultSettings ++
@@ -48,27 +58,15 @@ object OTIMagicDraw extends Build {
       Defaults.baseTasks ++
       graphSettings ++
       com.banno.license.Plugin.licenseSettings ++
+      aether.AetherPlugin.autoImport.overridePublishSettings ++
       Seq(
-        sourceDirectories in Compile ~= {
-          _.filter(_.exists)
-        },
-        sourceDirectories in Test ~= {
-          _.filter(_.exists)
-        },
-        unmanagedSourceDirectories in Compile ~= {
-          _.filter(_.exists)
-        },
-        unmanagedSourceDirectories in Test ~= {
-          _.filter(_.exists)
-        },
-        unmanagedResourceDirectories in Compile ~= {
-          _.filter(_.exists)
-        },
-        unmanagedResourceDirectories in Test ~= {
-          _.filter(_.exists)
-        }
+        sourceDirectories in Compile ~= { _.filter(_.exists) },
+        sourceDirectories in Test ~= { _.filter(_.exists) },
+        unmanagedSourceDirectories in Compile ~= { _.filter(_.exists) },
+        unmanagedSourceDirectories in Test ~= { _.filter(_.exists) },
+        unmanagedResourceDirectories in Compile ~= { _.filter(_.exists) },
+        unmanagedResourceDirectories in Test ~= { _.filter(_.exists) }
       )
-
 
   lazy val archivesToExtract = TaskKey[Map[File, (File, File)]]("archives-to-extract", "ZIP files to be extracted at a target directory according to the 'extract' attribute of the corresponding library dependency")
 
@@ -115,6 +113,7 @@ object OTIMagicDraw extends Build {
   lazy val oti_magicdraw = Project(
     "oti-magicdraw",
     file(".")).
+    enablePlugins(aether.AetherPlugin, gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin).
     settings(otiSettings: _*).
     settings(commonSettings: _*).
     settings(magicDrawEclipseClasspathSettings: _*).
@@ -129,8 +128,6 @@ object OTIMagicDraw extends Build {
       ),
       classDirectory in Compile := baseDirectory.value / "bin",
       shellPrompt := { state => Project.extract(state).currentRef.project + " @ " + Versions.version_suffix + "> " }
-    ).
-    enablePlugins(gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin)
-    
+    )
 
 }

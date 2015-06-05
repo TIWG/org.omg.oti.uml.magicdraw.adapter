@@ -3,7 +3,7 @@ import com.banno.license.Plugin.LicenseKeys._
 license := """|
  | License Terms
  |
- | Copyright (c) 2015, California Institute of Technology ("Caltech").
+ | Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
  | U.S. Government sponsorship acknowledged.
  |
  | All rights reserved.
