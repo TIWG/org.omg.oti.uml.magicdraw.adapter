@@ -11,7 +11,10 @@ object Versions {
     val svnRevision = svnProc.#|(sedProc).!!.trim
     svnRevision
   }
-  
+
+  /** @see http://mvnrepository.com/artifact/xml-resolver/xml-resolver/ */
+  val xmlResolver = "1.2"
+
   // OTI MagicDraw Binding
 
   val version = version_prefix + "-" + version_suffix

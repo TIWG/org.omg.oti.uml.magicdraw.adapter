@@ -122,6 +122,7 @@ object OTIMagicDraw extends Build {
       version := Versions.version,
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
+        "xml-resolver" % "xml-resolver" % Versions.xmlResolver % "provided",
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc(),
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc(),
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc()
