@@ -789,6 +789,20 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
 
   implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
 
+  // -----------
+
+  override val SLOT_VALUE = com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage.eINSTANCE.getSlot_Value
+
+  override def isMetamodelPropertySlotValue(p: MagicDrawUML#MetamodelProperty): Boolean = p == SLOT_VALUE
+
+  override def isMetamodelPropertyOrdered(p: MagicDrawUML#MetamodelProperty): Boolean = p.isOrdered
+
+  override def getMetamodelPropertyName(p: MagicDrawUML#MetamodelProperty): String = p.getName
+
+  override def getMetamodelPropertyUpperBound(p: MagicDrawUML#MetamodelProperty): Int = p.getUpperBound
+
+  // -----------
+
   override val OTI_SPECIFICATION_ROOT_S = 
     StereotypesHelper.getProfile( project, "OTI" ) match {
       case null => None
@@ -815,8 +829,6 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     case None => None
     case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "uuid"))
   }
-    
-  override val SLOT_VALUE = com.nomagic.uml2.ext.magicdraw.metadata.UMLPackage.eINSTANCE.getSlot_Value
 
   val MD_OTI_ValidationSuite = MagicDrawValidationDataResults.lookupValidationSuite( project, "*::MagicDrawOTIValidation")
   

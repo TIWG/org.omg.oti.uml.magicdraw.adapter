@@ -50,6 +50,10 @@ import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.magicdraw.uml.UUIDRegistry
 
+import scala.util.Failure
+import scala.util.Success
+import scala.util.Try
+
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   type Uml = MagicDrawUML
@@ -101,11 +105,17 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         tv.toMap
     }
 
-  override def getContainedElement_eContainingFeature: EStructuralFeature = e.eContainingFeature
+  override def getContainedElementContainingMetamodelProperty: Option[Uml#MetamodelProperty] =
+    Option.apply(e.eContainingFeature)
 
-  override def getElementContainer_eFeatureValue( f: EStructuralFeature ) = e.eContainer.eGet( f ) match {
-    case values: java.util.Collection[_] => values.toIterable.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
-  }
+  override def getElementMetamodelPropertyValue( f: Uml#MetamodelProperty ): Try[Iterable[UMLElement[Uml]]] =
+    Option.apply(e.eContainer.eGet( f )) match {
+      case None => Failure(new IllegalArgumentException(s"${f.getName} is not a valid MetamodelProperty for ${e.eClass.getName}"))
+      case Some( values: java.util.Collection[_] ) =>
+        val result = values.toIterable.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
+        Success( result )
+      case _ => Failure(new IllegalArgumentException(s"Unrecognized value for ${f.getName} MetamodelProperty on ${e.eClass.getName}"))
+    }
 
   override def id: String = e.getID
 
