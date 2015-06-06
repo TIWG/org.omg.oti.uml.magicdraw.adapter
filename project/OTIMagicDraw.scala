@@ -128,6 +128,7 @@ object OTIMagicDraw extends Build {
       ),
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
+      unmanagedClasspath in Compile <++= unmanagedJars in Compile,
       shellPrompt := { state => Project.extract(state).currentRef.project + " @ " + Versions.version_suffix + "> " }
     )
 

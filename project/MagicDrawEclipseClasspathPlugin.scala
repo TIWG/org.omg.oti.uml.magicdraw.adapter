@@ -28,7 +28,7 @@ object MagicDrawEclipseClasspathPlugin extends sbt.AutoPlugin {
     },
     mdFolders := mdClasspathFolders( baseDirectory.value, mdInstallDir.value ),
     mdJars := mdClasspathJars( mdFolders.value ),
-    unmanagedJars := mdClasspathJars( mdFolders.value )
+    unmanagedJars in Compile <++= mdJars map identity
   )
 
   val MD_CLASSPATH="^gov.nasa.jpl.magicdraw.CLASSPATH_LIB_CONTAINER/(.*)$".r
