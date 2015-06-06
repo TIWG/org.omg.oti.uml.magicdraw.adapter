@@ -26,7 +26,7 @@
         <fail/>
     </target>
 
-    <target name="all.ok" if="all.precondition.scala" depends="publish,extract,zip,install,bundle">
+    <target name="all.ok" if="all.precondition.scala" depends="publish">
         <save.script.properties/>
     </target>
 

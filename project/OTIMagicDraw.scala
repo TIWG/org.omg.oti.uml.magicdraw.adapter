@@ -117,7 +117,7 @@ object OTIMagicDraw extends Build {
     settings(otiSettings: _*).
     settings(commonSettings: _*).
     settings(magicDrawEclipseClasspathSettings: _*).
-    settings(extractSettings: _*).
+    //settings(extractSettings: _*).
     settings(
       version := Versions.version,
       removeExistingHeaderBlock := true,
