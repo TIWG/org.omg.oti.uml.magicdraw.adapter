@@ -97,6 +97,7 @@
             <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
             <arg value="-batch"/>
             <arg value="-no-colors"/>
+            <arg value="compile"/>
             <arg value="publish"/>
             <arg value="extractArchives"/>
         </exec>
