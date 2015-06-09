@@ -67,7 +67,7 @@ case class MagicDrawUMLUtil(project: Project)
 
     var result: Option[File] = None
 
-    SwingUtilities.invokeAndWait(new Runnable {
+    def chooser = new Runnable {
       override def run(): Unit = {
 
         val ff = new FileFilter() {
@@ -100,7 +100,10 @@ case class MagicDrawUMLUtil(project: Project)
             result = None
         }
       }
-    })
+    }
+    if (SwingUtilities.isEventDispatchThread) chooser.run
+    else SwingUtilities.invokeAndWait(chooser)
+
     result
   }
 
