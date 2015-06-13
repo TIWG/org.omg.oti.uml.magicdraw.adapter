@@ -127,7 +127,8 @@ object OTIMagicDraw extends Build {
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc(),
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc()
       ),
-      resourceDirectory in Compile := baseDirectory.value / "resources",
+      mappings in (Compile, packageBin) <++= baseDirectory map { dir => (dir / "resources").*** pair relativeTo(dir) },
+      mappings in (Compile, packageSrc) <++= baseDirectory map { dir => (dir / "resources").*** pair relativeTo(dir) },
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
       unmanagedClasspath in Compile <++= unmanagedJars in Compile,
