@@ -105,18 +105,6 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         tv.toMap
     }
 
-  override def getContainedElementContainingMetamodelProperty: Option[Uml#MetamodelProperty] =
-    Option.apply(e.eContainingFeature)
-
-  override def getElementMetamodelPropertyValue( f: Uml#MetamodelProperty ): Try[Iterable[UMLElement[Uml]]] =
-    Option.apply(e.eContainer.eGet( f )) match {
-      case None => Failure(new IllegalArgumentException(s"${f.getName} is not a valid MetamodelProperty for ${e.eClass.getName}"))
-      case Some( values: java.util.Collection[_] ) =>
-        val result = values.toIterable.selectByKindOf( { case e: Uml#Element => umlElement( e ) } )
-        Success( result )
-      case _ => Failure(new IllegalArgumentException(s"Unrecognized value for ${f.getName} MetamodelProperty on ${e.eClass.getName}"))
-    }
-
   override def id: String = e.getID
 
   override def uuid: Option[String] = Some( UUIDRegistry.getUUID( e ) )
@@ -140,7 +128,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
       if ( metaProperties.isEmpty ) {
         None
       } else
-        Some( ( umlStereotype( s ) -> umlProperty( metaProperties.head ) ) )
+        Some( umlStereotype( s ) -> umlProperty( metaProperties.head ) )
     } toMap
   }
 
@@ -155,7 +143,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         Some( umlStereotype( s ) )
       else
         None
-    } toSet
+    }
   }
 
   override def isAncestorOf( other: UMLElement[Uml] ) =

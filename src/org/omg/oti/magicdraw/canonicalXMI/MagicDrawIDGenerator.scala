@@ -70,8 +70,8 @@ case class MagicDrawIDGenerator(
   
   // -------------
   val MD_crule0: ContainedElement2IDRule = {
-    case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification ) if ( is.isMagicDrawUMLAppliedStereotypeInstance ) =>
-      Success( ownerID + "_" + IDGenerator.xmlSafeID( getMetamodelPropertyName(cf) ) + ".appliedStereotypeInstance" )
+    case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification ) if is.isMagicDrawUMLAppliedStereotypeInstance =>
+      Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" )
   }
 
   val MD_crule1a0: ContainedElement2IDRule = {
@@ -81,7 +81,7 @@ case class MagicDrawIDGenerator(
         case Some( nev: UMLNamedElement[Uml] ) =>
           nev.name match {
             case None      => Failure( illegalElementException( "ElementValue must refer to a named NamedElement", ev ) )
-            case Some( n ) => Success( ownerID + "_" + IDGenerator.xmlSafeID( getMetamodelPropertyName(cf) + "." + n ) )
+            case Some( n ) => Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
           }
         case Some( ev: UMLElement[Uml] ) =>
           Failure( illegalElementException( "ElementValue refers to an Element that is not a NamedElement!", ev ) )
