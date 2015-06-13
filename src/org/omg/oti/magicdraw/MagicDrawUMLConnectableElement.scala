@@ -52,14 +52,19 @@ trait MagicDrawUMLConnectableElement
   override protected def e: Uml#ConnectableElement
   import ops._
 
-  override def end = e.getEnd.toSet[Uml#ConnectorEnd]
+  override def end: Set[UMLConnectorEnd[Uml]] =
+    e.getEnd.toSet[Uml#ConnectorEnd]
   
-  override def templateParameter = Option.apply( e.getTemplateParameter )
+  override def templateParameter: Option[UMLConnectableElementTemplateParameter[Uml]] =
+    Option.apply( e.getTemplateParameter )
   
-  override def collaborationRole_collaboration = e.get_collaborationOfCollaborationRole.toSet[Uml#Collaboration]
+  override def collaborationRole_collaboration: Set[UMLCollaboration[Uml]] =
+    e.get_collaborationOfCollaborationRole.toSet[Uml#Collaboration]
   
-  override def represents_lifeline = e.get_lifelineOfRepresents.toSet[Uml#Lifeline]
+  override def represents_lifeline: Set[UMLLifeline[Uml]] =
+    e.get_lifelineOfRepresents.toSet[Uml#Lifeline]
   
-  override def role_structuredClassifier = e.get_structuredClassifierOfRole.toIterable
+  override def role_structuredClassifier: Set[UMLStructuredClassifier[Uml]] =
+    e.get_structuredClassifierOfRole.toSet[Uml#StructuredClassifier]
   
 }

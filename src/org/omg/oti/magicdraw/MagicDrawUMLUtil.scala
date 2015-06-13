@@ -1411,7 +1411,7 @@ case class MagicDrawUMLUtil(project: Project)
     cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLInputPin]
 
   implicit def umlInstanceSpecification(_e: Uml#InstanceSpecification): UMLInstanceSpecification[Uml] =
-    cacheLookupOrUpdateAs(_e).asInstanceOf[MagicDrawUMLInstanceSpecification]
+    cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLInstanceSpecification]
 
   implicit def umlInstanceValue(_e: Uml#InstanceValue): UMLInstanceValue[Uml] =
     cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLInstanceValue]

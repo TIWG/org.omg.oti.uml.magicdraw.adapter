@@ -51,7 +51,7 @@ trait MagicDrawUMLPackageableElement
 
   override protected def e: Uml#PackageableElement
   import ops._
-  
+
   override def visibility = e.getVisibility match {
     case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => Some( UMLVisibilityKind.public )
     case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => Some( UMLVisibilityKind._private )
