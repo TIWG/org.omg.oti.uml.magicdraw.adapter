@@ -1,15 +1,11 @@
 import java.io.File
-import java.net.URI
-import java.util.Locale
 
 import com.banno.license.Plugin.LicenseKeys._
 import net.virtualvoid.sbt.graph.Plugin.graphSettings
 import gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin._
 import sbt.Keys._
-import sbt.RichURI.fromURI
 import sbt._
-
-import scala.util.matching.Regex
+import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
 
 /**
  * sbt \
@@ -68,70 +64,50 @@ object OTIMagicDraw extends Build {
         unmanagedResourceDirectories in Test ~= { _.filter(_.exists) }
       )
 
-  lazy val archivesToExtract = TaskKey[Map[File, (File, File)]]("archives-to-extract", "ZIP files to be extracted at a target directory according to the 'extract' attribute of the corresponding library dependency")
-
-  lazy val extractArchives = TaskKey[Unit]("extract-archives", "Extracts ZIP files")
-
-  lazy val extractSettings = {
-
-    val type2folder = Map("jar" -> "lib", "src" -> "lib.srcs", "doc" -> "lib.javadoc")
-
-    Seq(
-
-      archivesToExtract <<= (libraryDependencies, update, scalaBinaryVersion, baseDirectory, streams) map { (deps, up, ver, base, s) =>
-
-        val artifact2extract = (for {
-          dep <- deps
-          if !dep.configurations.toSet.contains("provided")
-          tuple = (dep.name + "-" + dep.revision, dep.name)
-        } yield dep.name + "_" + ver -> tuple) toMap
-
-        val artifactArchive2extractFolder = (for {
-          cReport <- up.configurations
-          mReport <- cReport.modules
-          (artifact, archive) <- mReport.artifacts
-          if artifact.extension == "jar"
-          (folder, extract) <- artifact2extract.get(artifact.name)
-          subFolder = new File(folder)
-          extractFolder = new File(base.getAbsolutePath + File.separator + type2folder(artifact.`type`))
-          tuple = (subFolder, extractFolder)
-        } yield archive -> tuple) toMap
-
-        artifactArchive2extractFolder
-      },
-
-      extractArchives <<= (archivesToExtract, streams) map { (a2e, s) =>
-        a2e foreach { case (archive, (subFolder, extractFolder)) =>
-          s.log.info(s"Copy archive $archive\n=> $extractFolder")
-          IO.copyFile(archive, extractFolder / archive.name, preserveLastModified = true)
-        }
-      },
-      cleanFiles <++= baseDirectory { base => type2folder.values map (base / _) toSeq }
-    )
-  }
-
   lazy val oti_magicdraw = Project(
     "oti-magicdraw",
     file(".")).
-    enablePlugins(aether.AetherPlugin, gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin).
+    enablePlugins(aether.AetherPlugin).
+    enablePlugins(com.typesafe.sbt.packager.universal.UniversalPlugin).
+    enablePlugins(com.timushev.sbt.updates.UpdatesPlugin).
+    enablePlugins(gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin).
     settings(otiSettings: _*).
     settings(commonSettings: _*).
     settings(magicDrawEclipseClasspathSettings: _*).
-    //settings(extractSettings: _*).
     settings(
       version := Versions.version,
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
         "xml-resolver" % "xml-resolver" % Versions.xmlResolver % "provided",
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc(),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc(),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc()
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-core", "resources"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-change-migration", "resources"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-trees", "resources")
       ),
-      mappings in (Compile, packageBin) <++= baseDirectory map { dir => (dir / "resources").*** pair relativeTo(dir) },
-      mappings in (Compile, packageSrc) <++= baseDirectory map { dir => (dir / "resources").*** pair relativeTo(dir) },
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
       unmanagedClasspath in Compile <++= unmanagedJars in Compile,
+
+      com.typesafe.sbt.packager.Keys.topLevelDirectory in Universal := Some("dynamicScripts/org.omg.oti.magicdraw"),
+      mappings in Universal <++= (baseDirectory, packageBin in Compile, packageSrc in Compile, packageDoc in Compile) map {
+        (dir, bin, src, doc) =>
+          (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
+            com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
+            Seq(bin, src, doc).map( jar => (jar, "lib/" + jar.name) )
+      },
+      artifacts <+= (name in Universal) { n => Artifact(n, "jar", "jar", Some("resources"), Seq(), None, Map()) },
+      packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p,n) =>
+        Artifact(n, "jar", "jar", Some("resources"), Seq(), None, Map()) -> p
+      },
+
+      aether.AetherKeys.aetherArtifact <<=
+        (aether.AetherKeys.aetherCoordinates,
+          aether.AetherKeys.aetherPackageMain,
+          makePom in Compile,
+          packagedArtifacts in Compile) map {
+          (coords: aether.MavenCoordinates, mainArtifact: File, pom: File, artifacts: Map[Artifact, File]) =>
+            aether.AetherPlugin.createArtifact(artifacts, pom, coords, mainArtifact)
+        },
+
       shellPrompt := { state => Project.extract(state).currentRef.project + " @ " + Versions.version_suffix + "> " }
     )
 

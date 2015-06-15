@@ -30,60 +30,6 @@
         <save.script.properties/>
     </target>
 
-    <fileset id="scripts.profiles" dir="${scripts.dir}/profiles">
-        <include name="**/*.mdzip"/>
-    </fileset>
-
-    <fileset id="scripts.modelLibraries" dir="${scripts.dir}/modelLibraries">
-        <include name="**/*.mdzip"/>
-    </fileset>
-
-    <fileset id="scripts.templates" dir="${scripts.dir}/templates">
-        <include name="**/*.*"/>
-    </fileset>
-
-    <fileset id="scripts.tests" dir="${scripts.dir}/testResources">
-        <include name="**/*.mdzip"/>
-        <include name="**/*.properties"/>
-    </fileset>
-
-    <fileset id="scripts.samples" dir="${scripts.dir}/samples">
-        <include name="**/*.mdzip"/>
-    </fileset>
-
-    <target name="zip">
-        <copy todir="${scripts.dir}/root" verbose="true" failonerror="false">
-            <fileset dir="${scripts.dir}">
-                <include name="data/**/*" />
-            </fileset>
-        </copy>
-
-        <md.scripts.clean.root
-                scripts.dir="${scripts.dir}"
-                scripts.name="${scripts.name}"/>
-
-        <md.scripts.copyTo.root
-                scripts.dir="${scripts.dir}"
-                scripts.name="${scripts.name}">
-            <source-includes>
-                <include name=".classpath"/>
-                <include name="*.sbt"/>
-                <include name="oti.dynamicScripts"/>
-                <include name="project/build.properties"/>
-                <include name="project/*.scala"/>
-                <include name="project/*.sbt"/>
-                <include name="src/**/*.scala"/>
-                <include name="md18Catalog/*"/>
-            </source-includes>
-        </md.scripts.copyTo.root>
-
-        <md.scripts.zip.root
-                scripts.dir="${scripts.dir}"
-                scripts.archive="${scripts.archive}"
-                scripts.version="${scripts.version}"/>
-
-    </target>
-
     <target name="publish">
         <echoproperties prefix="env"/>
         <exec executable="${env.JENKINS_HOME}/tools/SBT/sbt"
@@ -99,58 +45,6 @@
             <arg value="-no-colors"/>
             <arg value="publish"/>
         </exec>
-    </target>
-
-    <target name="extract">
-        <echoproperties prefix="env"/>
-        <exec executable="${env.JENKINS_HOME}/tools/SBT/sbt"
-              failifexecutionfails="true"
-              failonerror="true"
-              logerror="true"
-              dir=".">
-            <arg value="-java-home"/>
-            <arg value="${env.JAVA8_HOME}"/>
-            <arg value="-DOTI_LOCAL_REPOSITORY=${env.JPL_MBEE_LOCAL_REPOSITORY}"/>
-            <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
-            <arg value="-batch"/>
-            <arg value="-no-colors"/>
-            <arg value="extractArchives"/>
-        </exec>
-        <mkdir dir="${scripts.dir}/lib"/>
-        <copy todir="${scripts.dir}/lib" verbose="true" failonerror="false">
-            <fileset dir="${scripts.dir}/target/scala-2.11">
-                <exclude name="*-javadoc.jar" />
-                <exclude name="*-sources.jar" />
-                <include name="*.jar" />
-            </fileset>
-        </copy>
-        <mkdir dir="${scripts.dir}/lib.srcs"/>
-        <copy todir="${scripts.dir}/lib.srcs" verbose="true" failonerror="false">
-            <fileset dir="${scripts.dir}/target/scala-2.11">
-                <include name="*-sources.jar" />
-            </fileset>
-        </copy>
-        <mkdir dir="${scripts.dir}/lib.javadoc"/>
-        <copy todir="${scripts.dir}/lib.javadoc" verbose="true" failonerror="false">
-            <fileset dir="${scripts.dir}/target/scala-2.11">
-                <include name="*-javadoc.jar" />
-            </fileset>
-        </copy>
-    </target>
-
-    <target name="install">
-        <md.scripts.install.zip
-                scripts.dir="${scripts.dir}"
-                scripts.archive="${scripts.archive}"
-                scripts.version="${scripts.version}"
-                install.dir="${md.install.dir}"/>
-    </target>
-
-    <target name="bundle">
-        <md.zip.all
-                bundle.dest.dir="${scripts.dir}/artifacts"
-                bundle.name="${bundle.name}"
-                bundle.source.dir="${md.install.dir}"/>
     </target>
 
 </project>
