@@ -79,9 +79,9 @@ object OTIMagicDraw extends Build {
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
         "xml-resolver" % "xml-resolver" % Versions.xmlResolver % "provided",
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-core", "resources"),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-change-migration", "resources"),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-trees", "resources")
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-core", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-change-migration", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-trees", "resource")
       ),
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
@@ -91,6 +91,7 @@ object OTIMagicDraw extends Build {
       mappings in Universal <++= (baseDirectory, packageBin in Compile, packageSrc in Compile, packageDoc in Compile) map {
         (dir, bin, src, doc) =>
           (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
+            (dir ** "*.md").pair(relativeTo(dir)) ++
             com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
             Seq(
               (bin, "lib/" + bin.name),
@@ -98,9 +99,9 @@ object OTIMagicDraw extends Build {
               (doc, "lib.javadoc/" + doc.name)
             )
       },
-      artifacts <+= (name in Universal) { n => Artifact(n, "jar", "jar", Some("resources"), Seq(), None, Map()) },
+      artifacts <+= (name in Universal) { n => Artifact(n, "jar", "jar", Some("resource"), Seq(), None, Map()) },
       packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p,n) =>
-        Artifact(n, "jar", "jar", Some("resources"), Seq(), None, Map()) -> p
+        Artifact(n, "jar", "jar", Some("resource"), Seq(), None, Map()) -> p
       },
 
       aether.AetherKeys.aetherArtifact <<=
