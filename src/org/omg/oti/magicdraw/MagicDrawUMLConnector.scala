@@ -51,17 +51,19 @@ trait MagicDrawUMLConnector
   override protected def e: Uml#Connector
   import ops._
   
-  override def end = e.getEnd.toSeq
+  override def end: Seq[UMLConnectorEnd[Uml]] =
+    e.getEnd.toSeq
   
-  override def _type = Option.apply( e.getType )
+  override def _type: Option[UMLAssociation[Uml]] =
+    Option.apply( e.getType )
   
-  override def connector_message =
+  override def connector_message: Set[UMLMessage[Uml]] =
     e.get_messageOfConnector.toSet[Uml#Message]
   
-  override def contract =
+  override def contract: Set[UMLBehavior[Uml]] =
     e.getContract.toSet[Uml#Behavior]
   
-  override def realizingConnector_informationFlow =
+  override def realizingConnector_informationFlow: Set[UMLInformationFlow[Uml]] =
     e.get_informationFlowOfRealizingConnector.toSet[Uml#InformationFlow]
   
 }

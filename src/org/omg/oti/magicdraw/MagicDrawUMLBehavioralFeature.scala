@@ -52,18 +52,23 @@ trait MagicDrawUMLBehavioralFeature
   override protected def e: Uml#BehavioralFeature
   import ops._
   
-  override def concurrency = e.getConcurrency match {
+  override def concurrency: UMLCallConcurrencyKind.Value =
+    e.getConcurrency match {
     case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT => UMLCallConcurrencyKind.concurrent
     case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.GUARDED => UMLCallConcurrencyKind.guarded
     case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.SEQUENTIAL => UMLCallConcurrencyKind.sequential
   }
   
-  override def isAbstract = e.isAbstract
+  override def isAbstract: Boolean =
+    e.isAbstract
   
-  override def method = e.getMethod.toSet[Uml#Behavior]
+  override def method: Set[UMLBehavior[Uml]] =
+    e.getMethod.toSet[Uml#Behavior]
   
-  override def ownedParameter = e.getOwnedParameter.toSeq
+  override def ownedParameter: Seq[UMLParameter[Uml]] =
+    e.getOwnedParameter.toSeq
   
-  override def raisedException = e.getRaisedException.toSet[Uml#Type]
+  override def raisedException: Set[UMLType[Uml]] =
+    e.getRaisedException.toSet[Uml#Type]
   
 }

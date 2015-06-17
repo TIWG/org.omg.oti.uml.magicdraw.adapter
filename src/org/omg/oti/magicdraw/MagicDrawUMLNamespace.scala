@@ -51,7 +51,8 @@ trait MagicDrawUMLNamespace
   import ops._
   override protected def e: Uml#Namespace
   
-  override def member = e.getMember.toSet[Uml#NamedElement]
+  override def member: Set[UMLNamedElement[Uml]] =
+    e.getMember.toSet[Uml#NamedElement]
 
   override def ownedMember: Set[UMLNamedElement[Uml]] =
     e.getOwnedMember.toSet[Uml#NamedElement]

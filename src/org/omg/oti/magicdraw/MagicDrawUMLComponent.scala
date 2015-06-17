@@ -58,6 +58,7 @@ trait MagicDrawUMLComponent
   
   override def required = e.getRequired.toSet[Uml#Interface]
   
-  override def packagedElement: Set[UMLPackageableElement[Uml]] = ???
+  override def packagedElement: Set[UMLPackageableElement[Uml]] =
+    e.getPackagedElement.toSet[Uml#PackageableElement]
   
 }

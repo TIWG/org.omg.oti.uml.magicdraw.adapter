@@ -49,7 +49,7 @@ trait MagicDrawUMLAcceptCallAction
   override protected def e: Uml#AcceptCallAction
   import ops._
 
-  override def returnInformation = 
+  override def returnInformation: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getReturnInformation )
     
 }

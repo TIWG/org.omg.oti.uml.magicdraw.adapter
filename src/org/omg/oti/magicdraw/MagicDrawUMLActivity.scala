@@ -51,12 +51,16 @@ trait MagicDrawUMLActivity
   override protected def e: Uml#Activity
   import ops._
 
-  override def isReadOnly = e.isReadOnly
+  override def isReadOnly: Boolean =
+    e.isReadOnly
   
-  override def isSingleExecution = e.isSingleExecution
+  override def isSingleExecution: Boolean =
+    e.isSingleExecution
   
-  override def partition = e.getPartition.toSet[Uml#ActivityPartition]
+  override def partition: Set[UMLActivityPartition[Uml]] =
+    e.getPartition.toSet[Uml#ActivityPartition]
   
-  override def structuredNode = e.getStructuredNode.toSet[Uml#StructuredActivityNode]
+  override def structuredNode: Set[UMLStructuredActivityNode[Uml]] =
+    e.getStructuredNode.toSet[Uml#StructuredActivityNode]
   
 }

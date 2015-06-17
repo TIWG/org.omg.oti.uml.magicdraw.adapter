@@ -47,10 +47,19 @@ trait MagicDrawUMLPackageImport
   with MagicDrawUMLDirectedRelationship {
 
   import ops._
+
   override protected def e: Uml#PackageImport
 
   // 12.12
-  override def metamodelReference_profile: Option[UMLProfile[Uml]] = ???
+  override def metamodelReference_profile: Option[UMLProfile[Uml]] =
+    Option.apply(e.get_profileOfMetamodelReference())
   
-  override def visibility: UMLVisibilityKind.Value = ???
+  override def visibility: UMLVisibilityKind.Value =
+    e.getVisibility match {
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => UMLVisibilityKind.public
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => UMLVisibilityKind._private
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => UMLVisibilityKind._protected
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => UMLVisibilityKind._package
+    }
+
 }

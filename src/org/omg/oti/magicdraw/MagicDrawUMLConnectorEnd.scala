@@ -49,10 +49,13 @@ trait MagicDrawUMLConnectorEnd
   override protected def e: Uml#ConnectorEnd
   import ops._
   
-  override def definingEnd = Option.apply(e.getDefiningEnd)
+  override def definingEnd: Option[UMLProperty[Uml]] =
+    Option.apply(e.getDefiningEnd)
   
-  override def partWithPort = Option.apply(e.getPartWithPort)
+  override def partWithPort: Option[UMLProperty[Uml]] =
+    Option.apply(e.getPartWithPort)
   
-  override def role = Option.apply(e.getRole)
+  override def role: Option[UMLConnectableElement[Uml]] =
+    Option.apply(e.getRole)
   
 }

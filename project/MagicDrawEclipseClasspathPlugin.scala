@@ -13,7 +13,8 @@ object MagicDrawEclipseClasspathPlugin extends sbt.AutoPlugin {
   lazy val showMDclasspath = taskKey[Unit]("Shows MagicDraw Eclipse Classpath")
 
   lazy val mdInstallDir = settingKey[Path]("MagicDraw's installation directory")
-  lazy val mdFolders = settingKey[List[Path]]("List of folders paths resolved to MagicDraw's installation directory")
+  lazy val mdBinFolders = settingKey[List[Path]]("List of bin folder paths resolved to MagicDraw's installation directory")
+  lazy val mdLibFolders = settingKey[List[Path]]("List of lib folder paths resolved to MagicDraw's installation directory")
   lazy val mdJars = settingKey[List[Attributed[File]]]("List of jar libraries resolved to MagicDraw's installation folder")
 
   lazy val magicDrawEclipseClasspathSettings = Seq[Def.Setting[_]](
@@ -26,32 +27,65 @@ object MagicDrawEclipseClasspathPlugin extends sbt.AutoPlugin {
         }
       }
     },
-    mdFolders := mdClasspathFolders( baseDirectory.value, mdInstallDir.value ),
-    mdJars := mdClasspathJars( mdFolders.value ),
+    mdBinFolders := mdClasspathBinFolders(baseDirectory.value, mdInstallDir.value),
+    mdLibFolders := mdClasspathLibFolders(baseDirectory.value, mdInstallDir.value),
+    mdJars := mdClasspathJars(mdBinFolders.value, mdLibFolders.value),
     unmanagedJars in Compile <++= mdJars map identity
   )
 
   val MD_CLASSPATH="^gov.nasa.jpl.magicdraw.CLASSPATH_LIB_CONTAINER/(.*)$".r
 
-  def mdClasspathFolders( eclipseProjectDir: File, mdInstallRoot: Path ): List[Path] = {
-    println(s"dir=$eclipseProjectDir")
-    val top = scala.xml.XML.loadFile( IO.resolve( eclipseProjectDir, file(".classpath")) )
+  def mdClasspathBinFolders(eclipseProjectDir: File, mdInstallRoot: Path): List[Path] = {
+    val top = scala.xml.XML.loadFile(IO.resolve(eclipseProjectDir, file(".classpath")))
+    val projects = for {
+      cp <- top \ "classpathentry"
+      entry = cp \ "@path"
+      if entry.nonEmpty
+      projectName = entry.text
+      if projectName.startsWith("/")
+      projectPath = mdInstallRoot.resolve("dynamicScripts"+projectName)
+      projectBinPath <- (projectPath.toFile ** "bin*").get
+    } yield projectBinPath.toPath
+
+    projects.toList
+  }
+
+  def mdClasspathLibFolders(eclipseProjectDir: File, mdInstallRoot: Path): List[Path] = {
+    val top = scala.xml.XML.loadFile(IO.resolve(eclipseProjectDir, file(".classpath")))
     val folders = for {
       cp <- top \ "classpathentry"
       entry = cp \ "@path"
       if entry.nonEmpty
       variables: List[String] <- MD_CLASSPATH.unapplySeq(entry.text)
       if 1 == variables.size
-    } yield for { path <- MD_PATH.findAllIn(variables.head) } yield mdInstallRoot.resolve(path.drop(1))
-    folders.flatten.toList
+    } yield for {path <- MD_PATH.findAllIn(variables.head)} yield mdInstallRoot.resolve(path.drop(1))
+
+    val projects = for {
+      cp <- top \ "classpathentry"
+      entry = cp \ "@path"
+      if entry.nonEmpty
+      projectName = entry.text
+      if projectName.startsWith("/")
+      projectPath = mdInstallRoot.resolve("dynamicScripts"+projectName)
+      projectLibPath = projectPath.resolve("lib")
+    } yield projectLibPath
+
+    folders.flatten.toList ++ projects.toList
   }
 
-  val MD_PATH=",([^,]*)".r
+  val MD_PATH = ",([^,]*)".r
 
-  def mdClasspathJars( mdFolders: List[Path] ): List[Attributed[File]] =
-    for {
-      folder <- mdFolders
+  def mdClasspathJars(mdBinFolders: List[Path], mdLibFolders: List[Path]): List[Attributed[File]] = {
+    val jars = for {
+      folder <- mdLibFolders
+      if folder.toFile.exists
       jar <- Files.walk(folder).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
     } yield Attributed.blank(jar)
 
+    val bins = for {
+      folder <- mdBinFolders
+    } yield Attributed.blank(folder.toFile)
+
+    jars ++ bins
+  }
 }

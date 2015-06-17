@@ -51,55 +51,55 @@ trait MagicDrawUMLConstraint
   override protected def e: Uml#Constraint
   import ops._
   
-  override def constrainedElement = 
+  override def constrainedElement: Seq[UMLElement[Uml]] =
     for { c <- e.getConstrainedElement } yield umlElement( c )
   
-  override def bodyCondition_bodyContext =
+  override def bodyCondition_bodyContext: Option[UMLOperation[Uml]] =
     Option.apply( e.getBodyContext )
     
-  override def condition_extend =
+  override def condition_extend: Option[UMLExtend[Uml]] =
     Option.apply( e.get_extendOfCondition )
     
-  override def condition_parameterSet =
+  override def condition_parameterSet: Option[UMLParameterSet[Uml]] =
     Option.apply( e.get_parameterSetOfCondition )
     
-  override def context =
+  override def context: Option[UMLNamespace[Uml]] =
     Option.apply( e.getContext )
     
-  override def guard_transition =
+  override def guard_transition: Option[UMLTransition[Uml]] =
     Option.apply( e.get_transitionOfGuard )
     
-  override def invariant_stateInvariant =
+  override def invariant_stateInvariant: Option[UMLStateInvariant[Uml]] =
     Option.apply( e.get_stateInvariantOfInvariant )
     
-  override def localPostcondition_action =
+  override def localPostcondition_action: Option[UMLAction[Uml]] =
     Option.apply( e.get_actionOfLocalPostcondition )
 
-  override def localPrecondition_action =
+  override def localPrecondition_action: Option[UMLAction[Uml]] =
     Option.apply( e.get_actionOfLocalPrecondition )
     
-  override def postCondition_owningTransition =
+  override def postCondition_owningTransition: Option[UMLProtocolTransition[Uml]] =
     Option.apply( e.getOwningTransition )
     
-  override def postcondition_behavior =
+  override def postcondition_behavior: Option[UMLBehavior[Uml]] =
     Option.apply( e.get_behaviorOfPrecondition )
     
-  override def postcondition_postContext =
+  override def postcondition_postContext: Option[UMLOperation[Uml]] =
     Option.apply( e.getPostContext )
     
-  override def preCondition_protocolTransition =
+  override def preCondition_protocolTransition: Option[UMLProtocolTransition[Uml]] =
     Option.apply( e.get_protocolTransitionOfPreCondition )
     
-  override def precondition_behavior =
+  override def precondition_behavior: Option[UMLBehavior[Uml]] =
     Option.apply( e.get_behaviorOfPrecondition )
     
-  override def precondition_preContext =
+  override def precondition_preContext: Option[UMLOperation[Uml]] =
     Option.apply( e.getPreContext )
     
   override def specification: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getSpecification )
     
-  override def stateInvariant_owningState =
+  override def stateInvariant_owningState: Option[UMLState[Uml]] =
     Option.apply( e.getOwningState )
     
 }

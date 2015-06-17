@@ -51,8 +51,10 @@ trait MagicDrawUMLDataType
   override protected def e: Uml#DataType
   import ops._
   
-  override def ownedAttribute = e.getOwnedAttribute.toSeq
+  override def ownedAttribute: Seq[UMLProperty[Uml]] =
+    e.getOwnedAttribute.toSeq
   
-  override def ownedOperation = e.getOwnedOperation.toSeq
+  override def ownedOperation: Seq[UMLOperation[Uml]] =
+    e.getOwnedOperation.toSeq
   
 }

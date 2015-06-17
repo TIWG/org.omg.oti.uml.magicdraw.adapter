@@ -51,10 +51,13 @@ trait MagicDrawUMLBehavioredClassifier
   override protected def e: Uml#BehavioredClassifier
   import ops._
 
-  override def classifierBehavior = Option.apply( e.getClassifierBehavior )
+  override def classifierBehavior(): Option[UMLBehavior[Uml]] =
+    Option.apply( e.getClassifierBehavior )
   
-  override def interfaceRealization = e.getInterfaceRealization.toSet[Uml#InterfaceRealization]
+  override def interfaceRealization(): Set[UMLInterfaceRealization[Uml]] =
+    e.getInterfaceRealization.toSet[Uml#InterfaceRealization]
   
-  override def context_behavior = ???
+  override def context_behavior: Set[UMLBehavior[Uml]] =
+    ???
   
 }

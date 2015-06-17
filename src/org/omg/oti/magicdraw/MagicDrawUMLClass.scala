@@ -52,16 +52,22 @@ trait MagicDrawUMLClass
   override protected def e: Uml#Class
   import ops._
   
-  override def extension = e.getExtension.toSet[Uml#Extension]
+  override def extension: Set[UMLExtension[Uml]] =
+    e.getExtension.toSet[Uml#Extension]
   
-  override def isAbstract = e.isAbstract
+  override def isAbstract: Boolean =
+    e.isAbstract
   
-  override def isActive = e.isActive
+  override def isActive: Boolean =
+    e.isActive
   
-  override def nestedClassifier = e.getNestedClassifier.toSeq
+  override def nestedClassifier: Seq[UMLClassifier[Uml]] =
+    e.getNestedClassifier.toSeq
   
-  override def ownedAttribute = e.getOwnedAttribute.toSeq
+  override def ownedAttribute: Seq[UMLProperty[Uml]] =
+    e.getOwnedAttribute.toSeq
   
-  override def ownedOperation = e.getOwnedOperation.toSeq
+  override def ownedOperation: Seq[UMLOperation[Uml]] =
+    e.getOwnedOperation.toSeq
   
 }

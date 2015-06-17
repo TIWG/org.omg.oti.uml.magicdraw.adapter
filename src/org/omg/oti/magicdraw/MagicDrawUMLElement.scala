@@ -67,31 +67,40 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   // Element
 
-  override def ownedComment = e.getOwnedComment.toSet[Uml#Comment]
-
   override def ownedElement: Set[UMLElement[Uml]] =
     e.getOwnedElement.toSet[Uml#Element] - umlElement( e.getAppliedStereotypeInstance )
 
-  override def owner = Option.apply( e.getOwner )
+  override def owner: Option[UMLElement[Uml]] =
+    Option.apply( e.getOwner )
 
-  override def constrainedElement_constraint = e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
+  override def constrainedElement_constraint: Set[UMLConstraint[Uml]] =
+    e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
 
-  override def annotatedElement_comment = e.get_commentOfAnnotatedElement.toSet[Uml#Comment]
+  override def annotatedElement_comment: Set[UMLComment[Uml]] =
+    e.get_commentOfAnnotatedElement.toSet[Uml#Comment]
 
-  override def represents_activityPartition = e.get_activityPartitionOfRepresents.toSet[Uml#ActivityPartition]
+  override def represents_activityPartition: Set[UMLActivityPartition[Uml]] =
+    e.get_activityPartitionOfRepresents.toSet[Uml#ActivityPartition]
 
-  override def relatedElement_relationship = e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
+  override def relatedElement_relationship: Set[UMLRelationship[Uml]] =
+    e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
 
-  override def target_directedRelationship = e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
+  override def target_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
+    e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
 
-  override def source_directedRelationship = e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
+  override def source_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
+    e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
 
   // ElementOps
 
-  override def allOwnedElements =
-    e.eAllContents.toSet.selectByKindOf { case e: Uml#Element => umlElement( e ) }
+  /**
+   * @return The transitive closure of `ownedElement` without MagicDraw's AppliedStereotypeInstances.
+   */
+  override def allOwnedElements: Set[UMLElement[Uml]] =
+    closure[UMLElement[Uml], UMLElement[Uml]](this, _.ownedElement)
 
-  override def mofMetaclassName = StereotypesHelper.getBaseClass( e ).getName
+  override def mofMetaclassName: String =
+    StereotypesHelper.getBaseClass( e ).getName
 
   override def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
     Option.apply( e.getAppliedStereotypeInstance ) match {
@@ -105,11 +114,14 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         tv.toMap
     }
 
-  override def id: String = e.getID
+  override def id: String =
+    e.getID
 
-  override def uuid: Option[String] = Some( UUIDRegistry.getUUID( e ) )
+  override def uuid: Option[String] =
+    Some( UUIDRegistry.getUUID( e ) )
 
-  override def hasStereotype( s: UMLStereotype[Uml] ) = s.isStereotypeApplied( e )
+  override def hasStereotype( s: UMLStereotype[Uml] ): Boolean =
+    umlMagicDrawUMLStereotype(s).isStereotypeApplied( e )
 
   /**
    * MagicDraw's representation of applied stereotypes on an element E involves a special InstanceSpecification IS owned by E.
@@ -146,8 +158,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     }
   }
 
-  override def isAncestorOf( other: UMLElement[Uml] ) =
-    ( e == other.e ) ||
+  override def isAncestorOf( other: UMLElement[Uml] ): Boolean =
+    ( e == umlMagicDrawUMLElement(other).getMagicDrawElement ) ||
       ( other.owner match {
         case None           => false
         case Some( parent ) => isAncestorOf( parent )

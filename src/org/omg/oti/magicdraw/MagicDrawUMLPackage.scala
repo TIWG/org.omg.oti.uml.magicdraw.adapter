@@ -55,11 +55,12 @@ trait MagicDrawUMLPackage
 
   def getMagicDrawPackage = e
   
-  def URI = e.getURI match {
-    case null => None
-    case ""   => None
-    case uri  => Some( uri )
-  }
+  def URI: Option[String] =
+    e.getURI match {
+      case null => None
+      case ""   => None
+      case uri  => Some( uri )
+    }
   
   override def importedPackage_packageImport: Set[UMLPackageImport[Uml]] = 
     e.get_packageImportOfImportedPackage.toSet[Uml#PackageImport]

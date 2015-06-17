@@ -54,33 +54,48 @@ trait MagicDrawUMLOperation
   override protected def e: Uml#Operation
   import ops._
   
-  override def bodyCondition = Option.apply( e.getBodyCondition )
+  override def bodyCondition: Option[UMLConstraint[Uml]] =
+    Option.apply( e.getBodyCondition )
   
-  override def isOrdered = e.isOrdered
+  override def isOrdered: Boolean =
+    e.isOrdered
   
-  override def isQuery = e.isQuery
+  override def isQuery: Boolean =
+    e.isQuery
   
-  override def isUnique = e.isQuery
+  override def isUnique: Boolean =
+    e.isQuery
   
-  override def lower = Some( e.getLower )
+  override def lower: Option[Integer] =
+    Some( e.getLower )
     
-  override def ownedParameter = e.getOwnedParameter.toSeq
+  override def ownedParameter: Seq[UMLParameter[Uml]] =
+    e.getOwnedParameter.toSeq
   
-  override def postcondition = e.getPostcondition.toSet[Uml#Constraint]
+  override def postcondition: Set[UMLConstraint[Uml]] =
+    e.getPostcondition.toSet[Uml#Constraint]
 
-  override def precondition = e.getPrecondition.toSet[Uml#Constraint]
+  override def precondition: Set[UMLConstraint[Uml]] =
+    e.getPrecondition.toSet[Uml#Constraint]
   
-  override def raisedException = e.getRaisedException.toSet[Uml#Type]
+  override def raisedException: Set[UMLType[Uml]] =
+    e.getRaisedException.toSet[Uml#Type]
   
-  override def templateParameter = Option.apply( e.getTemplateParameter )
+  override def templateParameter: Option[UMLOperationTemplateParameter[Uml]] =
+    Option.apply( e.getTemplateParameter )
   
-  override def _type = Option.apply( e.getType )
+  override def _type: Option[UMLType[Uml]] =
+    Option.apply( e.getType )
   
-  override def upper = Some( e.getUpper )
+  override def upper: Option[Integer] =
+    Some( e.getUpper )
   
-  override def operation_callOperationAction = e.get_callOperationActionOfOperation.toSet[Uml#CallOperationAction]
+  override def operation_callOperationAction: Set[UMLCallOperationAction[Uml]] =
+    e.get_callOperationActionOfOperation.toSet[Uml#CallOperationAction]
   
-  override def referred_protocolTransition = ???
+  override def referred_protocolTransition: Set[UMLProtocolTransition[Uml]] =
+    ???
   
-  override def operation_callEvent = e.get_callEventOfOperation.toSet[Uml#CallEvent]
+  override def operation_callEvent: Set[UMLCallEvent[Uml]] =
+    e.get_callEventOfOperation.toSet[Uml#CallEvent]
 }

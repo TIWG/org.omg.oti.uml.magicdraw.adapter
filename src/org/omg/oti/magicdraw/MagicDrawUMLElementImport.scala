@@ -49,22 +49,22 @@ trait MagicDrawUMLElementImport
   override protected def e: Uml#ElementImport
   import ops._
 
-  override def alias = 
+  override def alias: Option[String] =
     e.getAlias match {
     case null => None
     case "" => None
     case s => Some( s )
   }
-    
-  override def importedElement =
-    Option.apply( e.getImportedElement )
-    
-  override def importingNamespace =
-    Option.apply( e.getImportingNamespace )
-    
-  override def metaclassReference_profile =
+
+  override def metaclassReference_profile: Option[UMLProfile[Uml]] =
     Option.apply( e.get_profileOfMetaclassReference )
     
-  override def visibility: UMLVisibilityKind.Value = ???
+  override def visibility: UMLVisibilityKind.Value =
+    e.getVisibility match {
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => UMLVisibilityKind.public
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => UMLVisibilityKind._private
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => UMLVisibilityKind._protected
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => UMLVisibilityKind._package
+    }
   
 }

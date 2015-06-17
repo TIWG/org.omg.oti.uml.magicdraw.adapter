@@ -56,25 +56,35 @@ trait MagicDrawUMLClassifier
     
   override def templateParameter: Option[UMLClassifierTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )
     
-  override def attribute = e.getAttribute.toSeq
+  override def attribute: Seq[UMLProperty[Uml]] =
+    e.getAttribute.toSeq
   
-  override def inheritedMember = e.getInheritedMember.toSet[Uml#NamedElement]
+  override def inheritedMember: Set[UMLNamedElement[Uml]] =
+    e.getInheritedMember.toSet[Uml#NamedElement]
   
-  override def isAbstract = e.isAbstract
+  override def isAbstract: Boolean =
+    e.isAbstract
   
-  override def isFinalSpecialization = e.isFinalSpecialization
+  override def isFinalSpecialization: Boolean =
+    e.isFinalSpecialization
   
-  override def ownedTemplateSignature = Option.apply( e.getOwnedTemplateSignature )
+  override def ownedTemplateSignature: Option[UMLRedefinableTemplateSignature[Uml]] =
+    Option.apply( e.getOwnedTemplateSignature )
   
-  override def powertypeExtent = e.getPowertypeExtent.toSet[Uml#GeneralizationSet]
+  override def powertypeExtent: Set[UMLGeneralizationSet[Uml]] =
+    e.getPowertypeExtent.toSet[Uml#GeneralizationSet]
   
-  override def representation = Option.apply(e.getRepresentation)
+  override def representation: Option[UMLCollaborationUse[Uml]] =
+    Option.apply(e.getRepresentation)
   
-  override def useCase = e.getUseCase.toSet[Uml#UseCase]
+  override def useCase: Set[UMLUseCase[Uml]] =
+    e.getUseCase.toSet[Uml#UseCase]
   
-  override def classifier_readIsClassifiedObjectAction = e.get_readIsClassifiedObjectActionOfClassifier.toSet[Uml#ReadIsClassifiedObjectAction]
+  override def classifier_readIsClassifiedObjectAction: Set[UMLReadIsClassifiedObjectAction[Uml]] =
+    e.get_readIsClassifiedObjectActionOfClassifier.toSet[Uml#ReadIsClassifiedObjectAction]
   
-  override def realizingClassifier_componentRealization = e.get_componentRealizationOfRealizingClassifier.toSet[Uml#ComponentRealization]
+  override def realizingClassifier_componentRealization: Set[UMLComponentRealization[Uml]] =
+    e.get_componentRealizationOfRealizingClassifier.toSet[Uml#ComponentRealization]
   
   override def classifier_readExtentAction: Option[UMLReadExtentAction[Uml]] = {
     val actions = e.get_readExtentActionOfClassifier
@@ -83,30 +93,43 @@ trait MagicDrawUMLClassifier
     else Some(actions.iterator.next)
   }
   
-  override def unmarshallType_unmarshallAction = e.get_unmarshallActionOfUnmarshallType.toSet[Uml#UnmarshallAction]
+  override def unmarshallType_unmarshallAction: Set[UMLUnmarshallAction[Uml]] =
+    e.get_unmarshallActionOfUnmarshallType.toSet[Uml#UnmarshallAction]
   
-  override def represented_representation = e.get_informationItemOfRepresented.toSet[Uml#InformationItem]
+  override def represented_representation: Set[UMLInformationItem[Uml]] =
+    e.get_informationItemOfRepresented.toSet[Uml#InformationItem]
   
-  override def newClassifier_reclassifyObjectAction = e.get_reclassifyObjectActionOfNewClassifier.toSet[Uml#ReclassifyObjectAction]
+  override def newClassifier_reclassifyObjectAction: Set[UMLReclassifyObjectAction[Uml]] =
+    e.get_reclassifyObjectActionOfNewClassifier.toSet[Uml#ReclassifyObjectAction]
   
-  override def oldClassifier_reclassifyObjectAction = e.get_reclassifyObjectActionOfOldClassifier.toSet[Uml#ReclassifyObjectAction]
+  override def oldClassifier_reclassifyObjectAction: Set[UMLReclassifyObjectAction[Uml]] =
+    e.get_reclassifyObjectActionOfOldClassifier.toSet[Uml#ReclassifyObjectAction]
   
-  override def contract_substitution = e.get_substitutionOfContract.toSet[Uml#Substitution]
+  override def contract_substitution: Set[UMLSubstitution[Uml]] =
+    e.get_substitutionOfContract.toSet[Uml#Substitution]
   
-  override def redefinitionContext_redefinableElement = e.get_redefinableElementOfRedefinitionContext.toSet[Uml#RedefinableElement]
+  override def redefinitionContext_redefinableElement: Set[UMLRedefinableElement[Uml]] =
+    e.get_redefinableElementOfRedefinitionContext.toSet[Uml#RedefinableElement]
   
-  override def classifier_instanceSpecification = e.get_instanceSpecificationOfClassifier.toSet[Uml#InstanceSpecification]
+  override def classifier_instanceSpecification: Set[UMLInstanceSpecification[Uml]] =
+    e.get_instanceSpecificationOfClassifier.toSet[Uml#InstanceSpecification]
   
-  override def exceptionType_exceptionHandler = e.get_exceptionHandlerOfExceptionType.toSet[Uml#ExceptionHandler]
+  override def exceptionType_exceptionHandler: Set[UMLExceptionHandler[Uml]] =
+    e.get_exceptionHandlerOfExceptionType.toSet[Uml#ExceptionHandler]
   
-  override def constrainingClassifier_classifierTemplateParameter = e.get_classifierTemplateParameterOfConstrainingClassifier.toSet[Uml#ClassifierTemplateParameter]
+  override def constrainingClassifier_classifierTemplateParameter: Set[UMLClassifierTemplateParameter[Uml]] =
+    e.get_classifierTemplateParameterOfConstrainingClassifier.toSet[Uml#ClassifierTemplateParameter]
   
-  override def conveyed_conveyingFlow = e.get_informationFlowOfConveyed.toSet[Uml#InformationFlow]
+  override def conveyed_conveyingFlow: Set[UMLInformationFlow[Uml]] =
+    e.get_informationFlowOfConveyed.toSet[Uml#InformationFlow]
   
-  override def context_action = ???
+  override def context_action: Set[UMLAction[Uml]] =
+    ???
   
-  override def classifier_createObjectAction = e.get_createObjectActionOfClassifier.toSet[Uml#CreateObjectAction]
+  override def classifier_createObjectAction: Set[UMLCreateObjectAction[Uml]] =
+    e.get_createObjectActionOfClassifier.toSet[Uml#CreateObjectAction]
   
-  override def general_generalization = e.get_generalizationOfGeneral.toSet[Uml#Generalization]
+  override def general_generalization: Set[UMLGeneralization[Uml]] =
+    e.get_generalizationOfGeneral.toSet[Uml#Generalization]
 
 }

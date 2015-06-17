@@ -49,7 +49,5 @@ trait MagicDrawUMLDependency
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#Dependency
-  import ops._
 
-  override def roleBinding_collaborationUse = Option.apply( e.get_collaborationUseOfRoleBinding )
 }

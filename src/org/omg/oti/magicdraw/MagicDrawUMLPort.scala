@@ -51,29 +51,36 @@ trait MagicDrawUMLPort
   override protected def e: Uml#Port
 
   // 11.10
-	override def isBehavior: Boolean = ???
+	override def isBehavior: Boolean =
+    e.isBehavior
   
   // 11.10
-  override def isConjugated: Boolean = ???
+  override def isConjugated: Boolean =
+    e.isConjugated
   
   // 11.10
-  override def isService: Boolean = ???
+  override def isService: Boolean =
+    e.isService
   
   // 11.10
   override def protocol: Option[UMLProtocolStateMachine[Uml]] = 
     Option.apply( e.getProtocol )
   
   // 11.10
-  override def provided: Set[UMLInterface[Uml]] = ???
+  override def provided: Set[UMLInterface[Uml]] =
+    e.getProvided.toSet[Uml#Interface]
   
   // 11.10
-  override def required: Set[UMLInterface[Uml]] = ???
+  override def required: Set[UMLInterface[Uml]] =
+    e.getRequired.toSet[Uml#Interface]
   
   // 13.2
-	override def port_trigger: Set[UMLTrigger[Uml]] = ???
+	override def port_trigger: Set[UMLTrigger[Uml]] =
+    e.get_triggerOfPort.toSet[Uml#Trigger]
   
   // 16.13
-  override def onPort_invocationAction: Set[UMLInvocationAction[Uml]] = ???
+  override def onPort_invocationAction: Set[UMLInvocationAction[Uml]] =
+    e.get_invocationActionOfOnPort.toSet[Uml#InvocationAction]
   
   override def redefinedPort: Set[UMLPort[Uml]] =
     umlPort( e.getRedefinedPort.toSet )
