@@ -49,5 +49,10 @@ trait MagicDrawUMLFeature
   override protected def e: Uml#Feature
   import ops._
 
-  override def isStatic = e.isStatic
+  override def isStatic: Boolean =
+    e.isStatic
+
+  override def featuringClassifier: Option[UMLClassifier[Uml]] =
+    Option.apply(e.getFeaturingClassifier)
+
 }

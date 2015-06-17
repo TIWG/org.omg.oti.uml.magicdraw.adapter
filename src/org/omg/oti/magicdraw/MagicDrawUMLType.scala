@@ -50,7 +50,10 @@ trait MagicDrawUMLType
 
   override protected def e: Uml#Type
   import ops._
-  
+
+  override def _package: Option[UMLPackage[Uml]] =
+    Option.apply(e.getOwningPackage)
+
   override def type_operation: Set[UMLOperation[Uml]] = ???
   
   override def type_typedElement = e.get_typedElementOfType.toSet[Uml#TypedElement]

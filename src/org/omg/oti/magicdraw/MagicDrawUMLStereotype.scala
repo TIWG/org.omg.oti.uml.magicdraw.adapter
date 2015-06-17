@@ -59,5 +59,8 @@ trait MagicDrawUMLStereotype
   
   override def type_extensionEnd: Set[UMLExtensionEnd[Uml]] =
     umlExtensionEnd( e.get_extensionEndOfType.toSet )
+
+  override def ownedStereotype_owningPackage: Option[UMLPackage[Uml]] =
+    Option.apply(e.getOwningPackage)
     
 }

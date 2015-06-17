@@ -67,7 +67,10 @@ trait MagicDrawUMLClassifier
   
   override def isFinalSpecialization: Boolean =
     e.isFinalSpecialization
-  
+
+  override def general_classifier: Set[UMLClassifier[Uml]] =
+    ???
+
   override def ownedTemplateSignature: Option[UMLRedefinableTemplateSignature[Uml]] =
     Option.apply( e.getOwnedTemplateSignature )
   

@@ -62,7 +62,10 @@ trait MagicDrawUMLPackageableElement
 
   override def importedMember_namespace: Set[UMLNamespace[Uml]] =
     ???
-  
+
+  override def deployedElement_deploymentTarget: Set[UMLDeploymentTarget[Uml]] =
+    ???
+
   override def utilizedElement_manifestation: Set[UMLManifestation[Uml]] =
     e.get_manifestationOfUtilizedElement.toSet[Uml#Manifestation]
   

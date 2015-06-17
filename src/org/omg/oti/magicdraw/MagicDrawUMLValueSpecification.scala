@@ -213,14 +213,7 @@ trait MagicDrawUMLValueSpecification
 	 */
 	override def specification_owningInstanceSpec: Option[UMLInstanceSpecification[Uml]] = ???
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.api.UMLObjectNode.upperValue
-	 */
-	override def upperValue_objectNode: Option[UMLObjectNode[Uml]] = ???
+	override def upperBound_objectNode: Option[UMLObjectNode[Uml]] = ???
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -230,15 +223,6 @@ trait MagicDrawUMLValueSpecification
 	 * @opposite org.omg.oti.api.UMLMultiplicityElement.upperValue
 	 */
 	override def upperValue_owningUpper: Option[UMLMultiplicityElement[Uml]] = ???
-
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.api.UMLPin.upperValue
-	 */
-	override def upperValue_pin: Option[UMLPin[Uml]] = ???
 
 	/**
 	 * <!-- begin-model-doc -->

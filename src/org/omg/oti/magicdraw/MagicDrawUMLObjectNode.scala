@@ -61,9 +61,6 @@ trait MagicDrawUMLObjectNode
   override def exceptionInput_exceptionHandler: Set[UMLExceptionHandler[Uml]] =
     e.get_exceptionHandlerOfExceptionInput.toSet[Uml#ExceptionHandler]
 
-  override def upperValue: Option[UMLValueSpecification[Uml]] =
-    Option.apply( e.getUpperBound )
-
   override def selection: Option[UMLBehavior[Uml]] =
     Option.apply( e.getSelection )
 
@@ -74,4 +71,8 @@ trait MagicDrawUMLObjectNode
       case ObjectNodeOrderingKindEnum.ORDERED   => UMLObjectNodeOrderingKind.ordered
       case ObjectNodeOrderingKindEnum.UNORDERED => UMLObjectNodeOrderingKind.unordered
     }
+
+  override def upperBound: Option[UMLValueSpecification[Uml]] =
+    Option.apply(e.getUpperBound)
+
 }

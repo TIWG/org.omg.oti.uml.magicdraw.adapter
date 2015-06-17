@@ -42,7 +42,6 @@ package org.omg.oti.magicdraw
 import scala.collection.JavaConversions._
 
 import org.omg.oti.api._
-import org.omg.oti.operations._
 
 trait MagicDrawUMLInstanceSpecification 
   extends UMLInstanceSpecification[MagicDrawUML]
@@ -57,16 +56,16 @@ trait MagicDrawUMLInstanceSpecification
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean = e == e.getOwner.getAppliedStereotypeInstance
   
-  override def specification = 
+  override def specification: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getSpecification )
     
-  override def slot = 
+  override def slot: Set[UMLSlot[Uml]] =
     e.getSlot.toSet[Uml#Slot]
   
-  override def classifier = 
-    e.getClassifier.toSet[Uml#Classifier]
+  override def classifier: Iterable[UMLClassifier[Uml]] =
+    e.getClassifier().toSeq
   
-  override def instance_instanceValue =
+  override def instance_instanceValue: Set[UMLInstanceValue[Uml]] =
     e.get_instanceValueOfInstance.toSet[Uml#InstanceValue]
   
 }

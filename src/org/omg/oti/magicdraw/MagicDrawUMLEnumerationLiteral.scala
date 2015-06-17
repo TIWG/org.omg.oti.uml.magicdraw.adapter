@@ -48,8 +48,8 @@ trait MagicDrawUMLEnumerationLiteral
 
   override protected def e: Uml#EnumerationLiteral
   import ops._
-    
-  override def classifier = 
-    Set[Uml#Classifier](e.getEnumeration)
+
+  override def classifier: Iterable[UMLEnumeration[Uml]] =
+    Iterable(e.getEnumeration)
 
 }

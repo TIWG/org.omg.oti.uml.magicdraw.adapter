@@ -61,7 +61,10 @@ trait MagicDrawUMLPort
   // 11.10
   override def isService: Boolean =
     e.isService
-  
+
+  override def ownedPort_encapsulatedClassifier: Option[UMLEncapsulatedClassifier[Uml]] =
+    Option.apply(e.getClassifier).selectByKindOf { case x: UMLEncapsulatedClassifier[Uml] => x }
+
   // 11.10
   override def protocol: Option[UMLProtocolStateMachine[Uml]] = 
     Option.apply( e.getProtocol )
