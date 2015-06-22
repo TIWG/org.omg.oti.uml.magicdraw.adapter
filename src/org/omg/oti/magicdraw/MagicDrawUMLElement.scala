@@ -165,6 +165,28 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         case Some( parent ) => isAncestorOf( parent )
       } )
 
+  override def toWrappedObjectString : String = {
+
+    @annotation.tailrec def describe(context: Option[UMLElement[Uml]], path: Seq[String]): String =
+      context match {
+        case None =>
+
+          def prefixStream(prefix: String): Stream[String] = prefix #:: prefixStream( prefix+"  " )
+          val prefixes: List[String] = prefixStream("").take(path.length).toList
+
+          val pair = ((new StringBuffer(""), prefixes) /: path.reverse) {
+            case ((result: StringBuffer, ps: List[String]), segment: String) =>
+              (result.append("\n" + ps.head + segment), ps.tail)
+          }
+          pair._1.toString
+
+        case Some(e) =>
+          describe(e.owner, path :+ (e.xmiType.head + " {id=" + e.id + "}"))
+      }
+
+    describe(Some(this), Seq())
+  }
+
   // MagicDraw-specific
 
   def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable( e )

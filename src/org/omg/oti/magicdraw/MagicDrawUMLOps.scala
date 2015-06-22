@@ -789,33 +789,6 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
 
   implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
 
-  override val OTI_SPECIFICATION_ROOT_S = 
-    StereotypesHelper.getProfile( project, "OTI" ) match {
-      case null => None
-      case pf => Option.apply(StereotypesHelper.getStereotype( project, "SpecificationRoot", pf ))
-    }
-   
-  override val OTI_SPECIFICATION_ROOT_packageURI = OTI_SPECIFICATION_ROOT_S match {
-    case None => None
-    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "packageURI"))
-  }
-
-  override val OTI_SPECIFICATION_ROOT_documentURL = OTI_SPECIFICATION_ROOT_S match {
-    case None => None
-    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "documentURL"))
-  }
-
-  override val OTI_ID_S =    
-    StereotypesHelper.getProfile( project, "OTI" ) match {
-      case null => None
-      case pf => Option.apply(StereotypesHelper.getStereotype( project, "OTI", pf ))
-    }
-  
-  override val OTI_ID_uuid = OTI_ID_S match {
-    case None => None
-    case Some( s ) => Option.apply(StereotypesHelper.getPropertyByName(s, "uuid"))
-  }
-
   val MD_OTI_ValidationSuite = MagicDrawValidationDataResults.lookupValidationSuite( project, "*::MagicDrawOTIValidation")
   
   val MD_OTI_ValidationConstraint_NotOTISpecificationRoot = MD_OTI_ValidationSuite match {

@@ -40,14 +40,15 @@
 package org.omg.oti.magicdraw
 
 import java.io.File
-import javax.swing.{JFileChooser, SwingUtilities}
 import javax.swing.filechooser.FileFilter
+import javax.swing.{JFileChooser, SwingUtilities}
 
 import com.nomagic.actions.NMAction
 import com.nomagic.magicdraw.annotation.Annotation
 import com.nomagic.magicdraw.core.{Application, ApplicationEnvironment, Project}
 import com.nomagic.magicdraw.validation.{RuleViolationResult, ValidationRunData}
 import com.nomagic.task.RunnableWithProgress
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults.ValidationAnnotationAction
@@ -1818,1222 +1819,1355 @@ case class MagicDrawUMLUtil(project: Project)
 
   def umlMagicDrawUMLAbstraction(_e: UMLAbstraction[Uml]): MagicDrawUMLAbstraction =
     _e match {
-    case mdE: MagicDrawUMLAbstraction => mdE
-  }
+      case mdE: MagicDrawUMLAbstraction => mdE
+    }
 
   def umlMagicDrawUMLAcceptCallAction(_e: UMLAcceptCallAction[Uml]): MagicDrawUMLAcceptCallAction =
     _e match {
-    case mdE: MagicDrawUMLAcceptCallAction => mdE
-  }
+      case mdE: MagicDrawUMLAcceptCallAction => mdE
+    }
 
   def umlMagicDrawUMLAcceptEventAction(_e: UMLAcceptEventAction[Uml]): MagicDrawUMLAcceptEventAction =
     _e match {
-    case mdE: MagicDrawUMLAcceptEventAction => mdE
-  }
-  
+      case mdE: MagicDrawUMLAcceptEventAction => mdE
+    }
+
   def umlMagicDrawUMLAction(_e: UMLAction[Uml]): MagicDrawUMLAction =
     _e match {
-    case mdE: MagicDrawUMLAction => mdE
-  }
+      case mdE: MagicDrawUMLAction => mdE
+    }
 
   def umlMagicDrawUMLActionExecutionSpecification(_e: UMLActionExecutionSpecification[Uml]): MagicDrawUMLActionExecutionSpecification =
     _e match {
-    case mdE: MagicDrawUMLActionExecutionSpecification => mdE
-  }
+      case mdE: MagicDrawUMLActionExecutionSpecification => mdE
+    }
 
   def umlMagicDrawUMLActionInputPin(_e: UMLActionInputPin[Uml]): MagicDrawUMLActionInputPin =
     _e match {
-    case mdE: MagicDrawUMLActionInputPin => mdE
-  }
+      case mdE: MagicDrawUMLActionInputPin => mdE
+    }
 
   def umlMagicDrawUMLActivity(_e: UMLActivity[Uml]): MagicDrawUMLActivity =
     _e match {
-    case mdE: MagicDrawUMLActivity => mdE
-  }
+      case mdE: MagicDrawUMLActivity => mdE
+    }
 
   def umlMagicDrawUMLActivityEdge(_e: UMLActivityEdge[Uml]): MagicDrawUMLActivityEdge =
     _e match {
-    case mdE: MagicDrawUMLActivityEdge => mdE
-  }
+      case mdE: MagicDrawUMLActivityEdge => mdE
+    }
 
   def umlMagicDrawUMLActivityFinalNode(_e: UMLActivityFinalNode[Uml]): MagicDrawUMLActivityFinalNode =
     _e match {
-    case mdE: MagicDrawUMLActivityFinalNode => mdE
-  }
+      case mdE: MagicDrawUMLActivityFinalNode => mdE
+    }
 
   def umlMagicDrawUMLActivityGroup(_e: UMLActivityGroup[Uml]): MagicDrawUMLActivityGroup =
     _e match {
-    case mdE: MagicDrawUMLActivityGroup => mdE
-  }
+      case mdE: MagicDrawUMLActivityGroup => mdE
+    }
 
   def umlMagicDrawUMLActivityNode(_e: UMLActivityNode[Uml]): MagicDrawUMLActivityNode =
     _e match {
-    case mdE: MagicDrawUMLActivityNode => mdE
-  }
+      case mdE: MagicDrawUMLActivityNode => mdE
+    }
 
   def umlMagicDrawUMLActivityParameterNode(_e: UMLActivityParameterNode[Uml]): MagicDrawUMLActivityParameterNode =
     _e match {
-    case mdE: MagicDrawUMLActivityParameterNode => mdE
-  }
+      case mdE: MagicDrawUMLActivityParameterNode => mdE
+    }
 
   def umlMagicDrawUMLActivityPartition(_e: UMLActivityPartition[Uml]): MagicDrawUMLActivityPartition =
     _e match {
-    case mdE: MagicDrawUMLActivityPartition => mdE
-  }
+      case mdE: MagicDrawUMLActivityPartition => mdE
+    }
 
   def umlMagicDrawUMLActor(_e: UMLActor[Uml]): MagicDrawUMLActor =
     _e match {
-    case mdE: MagicDrawUMLActor => mdE
-  }
+      case mdE: MagicDrawUMLActor => mdE
+    }
 
   def umlMagicDrawUMLAddStructuralFeatureValueAction(_e: UMLAddStructuralFeatureValueAction[Uml]): MagicDrawUMLAddStructuralFeatureValueAction =
     _e match {
-    case mdE: MagicDrawUMLAddStructuralFeatureValueAction => mdE
-  }
+      case mdE: MagicDrawUMLAddStructuralFeatureValueAction => mdE
+    }
 
   def umlMagicDrawUMLAddVariableValueAction(_e: UMLAddVariableValueAction[Uml]): MagicDrawUMLAddVariableValueAction =
     _e match {
-    case mdE: MagicDrawUMLAddVariableValueAction => mdE
-  }
+      case mdE: MagicDrawUMLAddVariableValueAction => mdE
+    }
 
   def umlMagicDrawUMLAnyReceiveEvent(_e: UMLAnyReceiveEvent[Uml]): MagicDrawUMLAnyReceiveEvent =
     _e match {
-    case mdE: MagicDrawUMLAnyReceiveEvent => mdE
-  }
+      case mdE: MagicDrawUMLAnyReceiveEvent => mdE
+    }
 
   def umlMagicDrawUMLArtifact(_e: UMLArtifact[Uml]): MagicDrawUMLArtifact =
     _e match {
-    case mdE: MagicDrawUMLArtifact => mdE
-  }
+      case mdE: MagicDrawUMLArtifact => mdE
+    }
 
   def umlMagicDrawUMLAssociation(_e: UMLAssociation[Uml]): MagicDrawUMLAssociation =
     _e match {
-    case mdE: MagicDrawUMLAssociation => mdE
-  }
+      case mdE: MagicDrawUMLAssociation => mdE
+    }
 
   def umlMagicDrawUMLAssociationClass(_e: UMLAssociationClass[Uml]): MagicDrawUMLAssociationClass =
     _e match {
-    case mdE: MagicDrawUMLAssociationClass => mdE
-  }
+      case mdE: MagicDrawUMLAssociationClass => mdE
+    }
 
   def umlMagicDrawUMLBehavior(_e: UMLBehavior[Uml]): MagicDrawUMLBehavior =
     _e match {
-    case mdE: MagicDrawUMLBehavior => mdE
-  }
+      case mdE: MagicDrawUMLBehavior => mdE
+    }
 
   def umlMagicDrawUMLBehaviorExecutionSpecification(_e: UMLBehaviorExecutionSpecification[Uml]): MagicDrawUMLBehaviorExecutionSpecification =
     _e match {
-    case mdE: MagicDrawUMLBehaviorExecutionSpecification => mdE
-  }
+      case mdE: MagicDrawUMLBehaviorExecutionSpecification => mdE
+    }
 
   def umlMagicDrawUMLBehavioralFeature(_e: UMLBehavioralFeature[Uml]): MagicDrawUMLBehavioralFeature =
     _e match {
-    case mdE: MagicDrawUMLBehavioralFeature => mdE
-  }
+      case mdE: MagicDrawUMLBehavioralFeature => mdE
+    }
 
   def umlMagicDrawUMLBehavioredClassifier(_e: UMLBehavioredClassifier[Uml]): MagicDrawUMLBehavioredClassifier =
     _e match {
-    case mdE: MagicDrawUMLBehavioredClassifier => mdE
-  }
+      case mdE: MagicDrawUMLBehavioredClassifier => mdE
+    }
 
   def umlMagicDrawUMLBroadcastSignalAction(_e: UMLBroadcastSignalAction[Uml]): MagicDrawUMLBroadcastSignalAction =
     _e match {
-    case mdE: MagicDrawUMLBroadcastSignalAction => mdE
-  }
+      case mdE: MagicDrawUMLBroadcastSignalAction => mdE
+    }
 
   def umlMagicDrawUMLCallAction(_e: UMLCallAction[Uml]): MagicDrawUMLCallAction =
     _e match {
-    case mdE: MagicDrawUMLCallAction => mdE
-  }
+      case mdE: MagicDrawUMLCallAction => mdE
+    }
 
   def umlMagicDrawUMLCallBehaviorAction(_e: UMLCallBehaviorAction[Uml]): MagicDrawUMLCallBehaviorAction =
     _e match {
-    case mdE: MagicDrawUMLCallBehaviorAction => mdE
-  }
+      case mdE: MagicDrawUMLCallBehaviorAction => mdE
+    }
 
   def umlMagicDrawUMLCallEvent(_e: UMLCallEvent[Uml]): MagicDrawUMLCallEvent =
     _e match {
-    case mdE: MagicDrawUMLCallEvent => mdE
-  }
+      case mdE: MagicDrawUMLCallEvent => mdE
+    }
 
   def umlMagicDrawUMLCallOperationAction(_e: UMLCallOperationAction[Uml]): MagicDrawUMLCallOperationAction =
     _e match {
-    case mdE: MagicDrawUMLCallOperationAction => mdE
-  }
+      case mdE: MagicDrawUMLCallOperationAction => mdE
+    }
 
   def umlMagicDrawUMLCentralBufferNode(_e: UMLCentralBufferNode[Uml]): MagicDrawUMLCentralBufferNode =
     _e match {
-    case mdE: MagicDrawUMLCentralBufferNode => mdE
-  }
+      case mdE: MagicDrawUMLCentralBufferNode => mdE
+    }
 
   def umlMagicDrawUMLChangeEvent(_e: UMLChangeEvent[Uml]): MagicDrawUMLChangeEvent =
     _e match {
-    case mdE: MagicDrawUMLChangeEvent => mdE
-  }
+      case mdE: MagicDrawUMLChangeEvent => mdE
+    }
 
   def umlMagicDrawUMLClass(_e: UMLClass[Uml]): MagicDrawUMLClass =
     _e match {
-    case mdE: MagicDrawUMLClass => mdE
-  }
+      case mdE: MagicDrawUMLClass => mdE
+    }
 
   def umlMagicDrawUMLClassifier(_e: UMLClassifier[Uml]): MagicDrawUMLClassifier =
     _e match {
-    case mdE: MagicDrawUMLClassifier => mdE
-  }
+      case mdE: MagicDrawUMLClassifier => mdE
+    }
 
   def umlMagicDrawUMLClassifierTemplateParameter(_e: UMLClassifierTemplateParameter[Uml]): MagicDrawUMLClassifierTemplateParameter =
     _e match {
-    case mdE: MagicDrawUMLClassifierTemplateParameter => mdE
-  }
+      case mdE: MagicDrawUMLClassifierTemplateParameter => mdE
+    }
 
   def umlMagicDrawUMLClause(_e: UMLClause[Uml]): MagicDrawUMLClause =
     _e match {
-    case mdE: MagicDrawUMLClause => mdE
-  }
+      case mdE: MagicDrawUMLClause => mdE
+    }
 
   def umlMagicDrawUMLClearAssociationAction(_e: UMLClearAssociationAction[Uml]): MagicDrawUMLClearAssociationAction =
     _e match {
-    case mdE: MagicDrawUMLClearAssociationAction => mdE
-  }
+      case mdE: MagicDrawUMLClearAssociationAction => mdE
+    }
 
   def umlMagicDrawUMLClearStructuralFeatureAction(_e: UMLClearStructuralFeatureAction[Uml]): MagicDrawUMLClearStructuralFeatureAction =
     _e match {
-    case mdE: MagicDrawUMLClearStructuralFeatureAction => mdE
-  }
+      case mdE: MagicDrawUMLClearStructuralFeatureAction => mdE
+    }
 
   def umlMagicDrawUMLClearVariableAction(_e: UMLClearVariableAction[Uml]): MagicDrawUMLClearVariableAction =
     _e match {
-    case mdE: MagicDrawUMLClearVariableAction => mdE
-  }
+      case mdE: MagicDrawUMLClearVariableAction => mdE
+    }
 
   def umlMagicDrawUMLCollaboration(_e: UMLCollaboration[Uml]): MagicDrawUMLCollaboration =
     _e match {
-    case mdE: MagicDrawUMLCollaboration => mdE
-  }
+      case mdE: MagicDrawUMLCollaboration => mdE
+    }
 
   def umlMagicDrawUMLCollaborationUse(_e: UMLCollaborationUse[Uml]): MagicDrawUMLCollaborationUse =
     _e match {
-    case mdE: MagicDrawUMLCollaborationUse => mdE
-  }
+      case mdE: MagicDrawUMLCollaborationUse => mdE
+    }
 
   def umlMagicDrawUMLCombinedFragment(_e: UMLCombinedFragment[Uml]): MagicDrawUMLCombinedFragment =
     _e match {
-    case mdE: MagicDrawUMLCombinedFragment => mdE
-  }
+      case mdE: MagicDrawUMLCombinedFragment => mdE
+    }
 
   def umlMagicDrawUMLComment(_e: UMLComment[Uml]): MagicDrawUMLComment =
     _e match {
-    case mdE: MagicDrawUMLComment => mdE
-  }
+      case mdE: MagicDrawUMLComment => mdE
+    }
 
   def umlMagicDrawUMLCommunicationPath(_e: UMLCommunicationPath[Uml]): MagicDrawUMLCommunicationPath =
     _e match {
-    case mdE: MagicDrawUMLCommunicationPath => mdE
-  }
+      case mdE: MagicDrawUMLCommunicationPath => mdE
+    }
 
   def umlMagicDrawUMLComponent(_e: UMLComponent[Uml]): MagicDrawUMLComponent =
     _e match {
-    case mdE: MagicDrawUMLComponent => mdE
-  }
+      case mdE: MagicDrawUMLComponent => mdE
+    }
 
   def umlMagicDrawUMLComponentRealization(_e: UMLComponentRealization[Uml]): MagicDrawUMLComponentRealization =
     _e match {
-    case mdE: MagicDrawUMLComponentRealization => mdE
-  }
+      case mdE: MagicDrawUMLComponentRealization => mdE
+    }
 
   def umlMagicDrawUMLConditionalNode(_e: UMLConditionalNode[Uml]): MagicDrawUMLConditionalNode =
     _e match {
-    case mdE: MagicDrawUMLConditionalNode => mdE
-  }
+      case mdE: MagicDrawUMLConditionalNode => mdE
+    }
 
   def umlMagicDrawUMLConnectableElement(_e: UMLConnectableElement[Uml]): MagicDrawUMLConnectableElement =
     _e match {
-    case mdE: MagicDrawUMLConnectableElement => mdE
-  }
+      case mdE: MagicDrawUMLConnectableElement => mdE
+    }
 
   def umlMagicDrawUMLConnectableElementTemplateParameter(_e: UMLConnectableElementTemplateParameter[Uml]): MagicDrawUMLConnectableElementTemplateParameter =
     _e match {
-    case mdE: MagicDrawUMLConnectableElementTemplateParameter => mdE
-  }
+      case mdE: MagicDrawUMLConnectableElementTemplateParameter => mdE
+    }
 
   def umlMagicDrawUMLConnectionPointReference(_e: UMLConnectionPointReference[Uml]): MagicDrawUMLConnectionPointReference =
     _e match {
-    case mdE: MagicDrawUMLConnectionPointReference => mdE
-  }
+      case mdE: MagicDrawUMLConnectionPointReference => mdE
+    }
 
   def umlMagicDrawUMLConnector(_e: UMLConnector[Uml]): MagicDrawUMLConnector =
     _e match {
-    case mdE: MagicDrawUMLConnector => mdE
-  }
+      case mdE: MagicDrawUMLConnector => mdE
+    }
 
   def umlMagicDrawUMLConnectorEnd(_e: UMLConnectorEnd[Uml]): MagicDrawUMLConnectorEnd =
     _e match {
-    case mdE: MagicDrawUMLConnectorEnd => mdE
-  }
+      case mdE: MagicDrawUMLConnectorEnd => mdE
+    }
 
   def umlMagicDrawUMLConsiderIgnoreFragment(_e: UMLConsiderIgnoreFragment[Uml]): MagicDrawUMLConsiderIgnoreFragment =
     _e match {
-    case mdE: MagicDrawUMLConsiderIgnoreFragment => mdE
-  }
+      case mdE: MagicDrawUMLConsiderIgnoreFragment => mdE
+    }
 
   def umlMagicDrawUMLConstraint(_e: UMLConstraint[Uml]): MagicDrawUMLConstraint =
     _e match {
-    case mdE: MagicDrawUMLConstraint => mdE
-  }
+      case mdE: MagicDrawUMLConstraint => mdE
+    }
 
   def umlMagicDrawUMLContinuation(_e: UMLContinuation[Uml]): MagicDrawUMLContinuation =
     _e match {
-    case mdE: MagicDrawUMLContinuation => mdE
-  }
+      case mdE: MagicDrawUMLContinuation => mdE
+    }
 
   def umlMagicDrawUMLControlFlow(_e: UMLControlFlow[Uml]): MagicDrawUMLControlFlow =
     _e match {
-    case mdE: MagicDrawUMLControlFlow => mdE
-  }
+      case mdE: MagicDrawUMLControlFlow => mdE
+    }
 
   def umlMagicDrawUMLControlNode(_e: UMLControlNode[Uml]): MagicDrawUMLControlNode =
     _e match {
-    case mdE: MagicDrawUMLControlNode => mdE
-  }
+      case mdE: MagicDrawUMLControlNode => mdE
+    }
 
   def umlMagicDrawUMLCreateLinkAction(_e: UMLCreateLinkAction[Uml]): MagicDrawUMLCreateLinkAction =
     _e match {
-    case mdE: MagicDrawUMLCreateLinkAction => mdE
-  }
+      case mdE: MagicDrawUMLCreateLinkAction => mdE
+    }
 
   def umlMagicDrawUMLCreateLinkObjectAction(_e: UMLCreateLinkObjectAction[Uml]): MagicDrawUMLCreateLinkObjectAction =
     _e match {
-    case mdE: MagicDrawUMLCreateLinkObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLCreateLinkObjectAction => mdE
+    }
 
   def umlMagicDrawUMLCreateObjectAction(_e: UMLCreateObjectAction[Uml]): MagicDrawUMLCreateObjectAction =
     _e match {
-    case mdE: MagicDrawUMLCreateObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLCreateObjectAction => mdE
+    }
 
   def umlMagicDrawUMLDataStoreNode(_e: UMLDataStoreNode[Uml]): MagicDrawUMLDataStoreNode =
     _e match {
-    case mdE: MagicDrawUMLDataStoreNode => mdE
-  }
+      case mdE: MagicDrawUMLDataStoreNode => mdE
+    }
 
   def umlMagicDrawUMLDataType(_e: UMLDataType[Uml]): MagicDrawUMLDataType =
     _e match {
-    case mdE: MagicDrawUMLDataType => mdE
-  }
+      case mdE: MagicDrawUMLDataType => mdE
+    }
 
   def umlMagicDrawUMLDecisionNode(_e: UMLDecisionNode[Uml]): MagicDrawUMLDecisionNode =
     _e match {
-    case mdE: MagicDrawUMLDecisionNode => mdE
-  }
+      case mdE: MagicDrawUMLDecisionNode => mdE
+    }
 
   def umlMagicDrawUMLDependency(_e: UMLDependency[Uml]): MagicDrawUMLDependency =
     _e match {
-    case mdE: MagicDrawUMLDependency => mdE
-  }
+      case mdE: MagicDrawUMLDependency => mdE
+    }
 
   def umlMagicDrawUMLDeployedArtifact(_e: UMLDeployedArtifact[Uml]): MagicDrawUMLDeployedArtifact =
     _e match {
-    case mdE: MagicDrawUMLDeployedArtifact => mdE
-  }
+      case mdE: MagicDrawUMLDeployedArtifact => mdE
+    }
 
   def umlMagicDrawUMLDeployment(_e: UMLDeployment[Uml]): MagicDrawUMLDeployment =
     _e match {
-    case mdE: MagicDrawUMLDeployment => mdE
-  }
+      case mdE: MagicDrawUMLDeployment => mdE
+    }
 
   def umlMagicDrawUMLDeploymentSpecification(_e: UMLDeploymentSpecification[Uml]): MagicDrawUMLDeploymentSpecification =
     _e match {
-    case mdE: MagicDrawUMLDeploymentSpecification => mdE
-  }
+      case mdE: MagicDrawUMLDeploymentSpecification => mdE
+    }
 
   def umlMagicDrawUMLDeploymentTarget(_e: UMLDeploymentTarget[Uml]): MagicDrawUMLDeploymentTarget =
     _e match {
-    case mdE: MagicDrawUMLDeploymentTarget => mdE
-  }
+      case mdE: MagicDrawUMLDeploymentTarget => mdE
+    }
 
   def umlMagicDrawUMLDestroyLinkAction(_e: UMLDestroyLinkAction[Uml]): MagicDrawUMLDestroyLinkAction =
     _e match {
-    case mdE: MagicDrawUMLDestroyLinkAction => mdE
-  }
+      case mdE: MagicDrawUMLDestroyLinkAction => mdE
+    }
 
   def umlMagicDrawUMLDestroyObjectAction(_e: UMLDestroyObjectAction[Uml]): MagicDrawUMLDestroyObjectAction =
     _e match {
-    case mdE: MagicDrawUMLDestroyObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLDestroyObjectAction => mdE
+    }
 
   def umlMagicDrawUMLDestructionOccurrenceSpecification(_e: UMLDestructionOccurrenceSpecification[Uml]): MagicDrawUMLDestructionOccurrenceSpecification =
     _e match {
-    case mdE: MagicDrawUMLDestructionOccurrenceSpecification => mdE
-  }
+      case mdE: MagicDrawUMLDestructionOccurrenceSpecification => mdE
+    }
 
   def umlMagicDrawUMLDevice(_e: UMLDevice[Uml]): MagicDrawUMLDevice =
     _e match {
-    case mdE: MagicDrawUMLDevice => mdE
-  }
+      case mdE: MagicDrawUMLDevice => mdE
+    }
 
   def umlMagicDrawUMLDirectedRelationship(_e: UMLDirectedRelationship[Uml]): MagicDrawUMLDirectedRelationship =
     _e match {
-    case mdE: MagicDrawUMLDirectedRelationship => mdE
-  }
+      case mdE: MagicDrawUMLDirectedRelationship => mdE
+    }
 
   def umlMagicDrawUMLDuration(_e: UMLDuration[Uml]): MagicDrawUMLDuration =
     _e match {
-    case mdE: MagicDrawUMLDuration => mdE
-  }
+      case mdE: MagicDrawUMLDuration => mdE
+    }
 
   def umlMagicDrawUMLDurationConstraint(_e: UMLDurationConstraint[Uml]): MagicDrawUMLDurationConstraint =
     _e match {
-    case mdE: MagicDrawUMLDurationConstraint => mdE
-  }
+      case mdE: MagicDrawUMLDurationConstraint => mdE
+    }
 
   def umlMagicDrawUMLDurationInterval(_e: UMLDurationInterval[Uml]): MagicDrawUMLDurationInterval =
     _e match {
-    case mdE: MagicDrawUMLDurationInterval => mdE
-  }
+      case mdE: MagicDrawUMLDurationInterval => mdE
+    }
 
   def umlMagicDrawUMLDurationObservation(_e: UMLDurationObservation[Uml]): MagicDrawUMLDurationObservation =
     _e match {
-    case mdE: MagicDrawUMLDurationObservation => mdE
-  }
+      case mdE: MagicDrawUMLDurationObservation => mdE
+    }
 
   def umlMagicDrawUMLElement(_e: UMLElement[Uml]): MagicDrawUMLElement =
     _e match {
-    case mdE: MagicDrawUMLElement => mdE
-  }
+      case mdE: MagicDrawUMLElement => mdE
+    }
 
   def umlMagicDrawUMLElementImport(_e: UMLElementImport[Uml]): MagicDrawUMLElementImport =
     _e match {
-    case mdE: MagicDrawUMLElementImport => mdE
-  }
+      case mdE: MagicDrawUMLElementImport => mdE
+    }
 
   def umlMagicDrawUMLEncapsulatedClassifier(_e: UMLEncapsulatedClassifier[Uml]): MagicDrawUMLEncapsulatedClassifier =
     _e match {
-    case mdE: MagicDrawUMLEncapsulatedClassifier => mdE
-  }
+      case mdE: MagicDrawUMLEncapsulatedClassifier => mdE
+    }
 
   def umlMagicDrawUMLEnumeration(_e: UMLEnumeration[Uml]): MagicDrawUMLEnumeration =
     _e match {
-    case mdE: MagicDrawUMLEnumeration => mdE
-  }
+      case mdE: MagicDrawUMLEnumeration => mdE
+    }
 
   def umlMagicDrawUMLEnumerationLiteral(_e: UMLEnumerationLiteral[Uml]): MagicDrawUMLEnumerationLiteral =
     _e match {
-    case mdE: MagicDrawUMLEnumerationLiteral => mdE
-  }
+      case mdE: MagicDrawUMLEnumerationLiteral => mdE
+    }
 
   def umlMagicDrawUMLEvent(_e: UMLEvent[Uml]): MagicDrawUMLEvent =
     _e match {
-    case mdE: MagicDrawUMLEvent => mdE
-  }
+      case mdE: MagicDrawUMLEvent => mdE
+    }
 
   def umlMagicDrawUMLExceptionHandler(_e: UMLExceptionHandler[Uml]): MagicDrawUMLExceptionHandler =
     _e match {
-    case mdE: MagicDrawUMLExceptionHandler => mdE
-  }
+      case mdE: MagicDrawUMLExceptionHandler => mdE
+    }
 
   def umlMagicDrawUMLExecutableNode(_e: UMLExecutableNode[Uml]): MagicDrawUMLExecutableNode =
     _e match {
-    case mdE: MagicDrawUMLExecutableNode => mdE
-  }
+      case mdE: MagicDrawUMLExecutableNode => mdE
+    }
 
   def umlMagicDrawUMLExecutionEnvironment(_e: UMLExecutionEnvironment[Uml]): MagicDrawUMLExecutionEnvironment =
     _e match {
-    case mdE: MagicDrawUMLExecutionEnvironment => mdE
-  }
+      case mdE: MagicDrawUMLExecutionEnvironment => mdE
+    }
 
   def umlMagicDrawUMLExecutionOccurrenceSpecification(_e: UMLExecutionOccurrenceSpecification[Uml]): MagicDrawUMLExecutionOccurrenceSpecification =
     _e match {
-    case mdE: MagicDrawUMLExecutionOccurrenceSpecification => mdE
-  }
+      case mdE: MagicDrawUMLExecutionOccurrenceSpecification => mdE
+    }
 
   def umlMagicDrawUMLExecutionSpecification(_e: UMLExecutionSpecification[Uml]): MagicDrawUMLExecutionSpecification =
     _e match {
-    case mdE: MagicDrawUMLExecutionSpecification => mdE
-  }
+      case mdE: MagicDrawUMLExecutionSpecification => mdE
+    }
 
   def umlMagicDrawUMLExpansionNode(_e: UMLExpansionNode[Uml]): MagicDrawUMLExpansionNode =
     _e match {
-    case mdE: MagicDrawUMLExpansionNode => mdE
-  }
+      case mdE: MagicDrawUMLExpansionNode => mdE
+    }
 
   def umlMagicDrawUMLExpansionRegion(_e: UMLExpansionRegion[Uml]): MagicDrawUMLExpansionRegion =
     _e match {
-    case mdE: MagicDrawUMLExpansionRegion => mdE
-  }
+      case mdE: MagicDrawUMLExpansionRegion => mdE
+    }
 
   def umlMagicDrawUMLExpression(_e: UMLExpression[Uml]): MagicDrawUMLExpression =
     _e match {
-    case mdE: MagicDrawUMLExpression => mdE
-  }
+      case mdE: MagicDrawUMLExpression => mdE
+    }
 
   def umlMagicDrawUMLExtend(_e: UMLExtend[Uml]): MagicDrawUMLExtend =
     _e match {
-    case mdE: MagicDrawUMLExtend => mdE
-  }
+      case mdE: MagicDrawUMLExtend => mdE
+    }
 
   def umlMagicDrawUMLExtension(_e: UMLExtension[Uml]): MagicDrawUMLExtension =
     _e match {
-    case mdE: MagicDrawUMLExtension => mdE
-  }
+      case mdE: MagicDrawUMLExtension => mdE
+    }
 
   def umlMagicDrawUMLExtensionEnd(_e: UMLExtensionEnd[Uml]): MagicDrawUMLExtensionEnd =
     _e match {
-    case mdE: MagicDrawUMLExtensionEnd => mdE
-  }
+      case mdE: MagicDrawUMLExtensionEnd => mdE
+    }
 
   def umlMagicDrawUMLExtensionPoint(_e: UMLExtensionPoint[Uml]): MagicDrawUMLExtensionPoint =
     _e match {
-    case mdE: MagicDrawUMLExtensionPoint => mdE
-  }
+      case mdE: MagicDrawUMLExtensionPoint => mdE
+    }
 
   def umlMagicDrawUMLFeature(_e: UMLFeature[Uml]): MagicDrawUMLFeature =
     _e match {
-    case mdE: MagicDrawUMLFeature => mdE
-  }
+      case mdE: MagicDrawUMLFeature => mdE
+    }
 
   def umlMagicDrawUMLFinalNode(_e: UMLFinalNode[Uml]): MagicDrawUMLFinalNode =
     _e match {
-    case mdE: MagicDrawUMLFinalNode => mdE
-  }
+      case mdE: MagicDrawUMLFinalNode => mdE
+    }
 
   def umlMagicDrawUMLFinalState(_e: UMLFinalState[Uml]): MagicDrawUMLFinalState =
     _e match {
-    case mdE: MagicDrawUMLFinalState => mdE
-  }
+      case mdE: MagicDrawUMLFinalState => mdE
+    }
 
   def umlMagicDrawUMLFlowFinalNode(_e: UMLFlowFinalNode[Uml]): MagicDrawUMLFlowFinalNode =
     _e match {
-    case mdE: MagicDrawUMLFlowFinalNode => mdE
-  }
+      case mdE: MagicDrawUMLFlowFinalNode => mdE
+    }
 
   def umlMagicDrawUMLForkNode(_e: UMLForkNode[Uml]): MagicDrawUMLForkNode =
     _e match {
-    case mdE: MagicDrawUMLForkNode => mdE
-  }
+      case mdE: MagicDrawUMLForkNode => mdE
+    }
 
   def umlMagicDrawUMLFunctionBehavior(_e: UMLFunctionBehavior[Uml]): MagicDrawUMLFunctionBehavior =
     _e match {
-    case mdE: MagicDrawUMLFunctionBehavior => mdE
-  }
+      case mdE: MagicDrawUMLFunctionBehavior => mdE
+    }
 
   def umlMagicDrawUMLGate(_e: UMLGate[Uml]): MagicDrawUMLGate =
     _e match {
-    case mdE: MagicDrawUMLGate => mdE
-  }
+      case mdE: MagicDrawUMLGate => mdE
+    }
 
   def umlMagicDrawUMLGeneralOrdering(_e: UMLGeneralOrdering[Uml]): MagicDrawUMLGeneralOrdering =
     _e match {
-    case mdE: MagicDrawUMLGeneralOrdering => mdE
-  }
+      case mdE: MagicDrawUMLGeneralOrdering => mdE
+    }
 
   def umlMagicDrawUMLGeneralization(_e: UMLGeneralization[Uml]): MagicDrawUMLGeneralization =
     _e match {
-    case mdE: MagicDrawUMLGeneralization => mdE
-  }
+      case mdE: MagicDrawUMLGeneralization => mdE
+    }
 
   def umlMagicDrawUMLGeneralizationSet(_e: UMLGeneralizationSet[Uml]): MagicDrawUMLGeneralizationSet =
     _e match {
-    case mdE: MagicDrawUMLGeneralizationSet => mdE
-  }
+      case mdE: MagicDrawUMLGeneralizationSet => mdE
+    }
 
   def umlMagicDrawUMLImage(_e: UMLImage[Uml]): MagicDrawUMLImage =
     _e match {
-    case mdE: MagicDrawUMLImage => mdE
-  }
+      case mdE: MagicDrawUMLImage => mdE
+    }
 
   def umlMagicDrawUMLInclude(_e: UMLInclude[Uml]): MagicDrawUMLInclude =
     _e match {
-    case mdE: MagicDrawUMLInclude => mdE
-  }
+      case mdE: MagicDrawUMLInclude => mdE
+    }
 
   def umlMagicDrawUMLInformationFlow(_e: UMLInformationFlow[Uml]): MagicDrawUMLInformationFlow =
     _e match {
-    case mdE: MagicDrawUMLInformationFlow => mdE
-  }
+      case mdE: MagicDrawUMLInformationFlow => mdE
+    }
 
   def umlMagicDrawUMLInformationItem(_e: UMLInformationItem[Uml]): MagicDrawUMLInformationItem =
     _e match {
-    case mdE: MagicDrawUMLInformationItem => mdE
-  }
+      case mdE: MagicDrawUMLInformationItem => mdE
+    }
 
   def umlMagicDrawUMLInitialNode(_e: UMLInitialNode[Uml]): MagicDrawUMLInitialNode =
     _e match {
-    case mdE: MagicDrawUMLInitialNode => mdE
-  }
+      case mdE: MagicDrawUMLInitialNode => mdE
+    }
 
   def umlMagicDrawUMLInputPin(_e: UMLInputPin[Uml]): MagicDrawUMLInputPin =
     _e match {
-    case mdE: MagicDrawUMLInputPin => mdE
-  }
+      case mdE: MagicDrawUMLInputPin => mdE
+    }
 
   def umlMagicDrawUMLInstanceSpecification(_e: UMLInstanceSpecification[Uml]): MagicDrawUMLInstanceSpecification =
     _e match {
-    case mdE: MagicDrawUMLInstanceSpecification => mdE
-  }
+      case mdE: MagicDrawUMLInstanceSpecification => mdE
+    }
 
   def umlMagicDrawUMLInstanceValue(_e: UMLInstanceValue[Uml]): MagicDrawUMLInstanceValue =
     _e match {
-    case mdE: MagicDrawUMLInstanceValue => mdE
-  }
+      case mdE: MagicDrawUMLInstanceValue => mdE
+    }
 
   def umlMagicDrawUMLInteraction(_e: UMLInteraction[Uml]): MagicDrawUMLInteraction =
     _e match {
-    case mdE: MagicDrawUMLInteraction => mdE
-  }
+      case mdE: MagicDrawUMLInteraction => mdE
+    }
 
   def umlMagicDrawUMLInteractionConstraint(_e: UMLInteractionConstraint[Uml]): MagicDrawUMLInteractionConstraint =
     _e match {
-    case mdE: MagicDrawUMLInteractionConstraint => mdE
-  }
+      case mdE: MagicDrawUMLInteractionConstraint => mdE
+    }
 
   def umlMagicDrawUMLInteractionFragment(_e: UMLInteractionFragment[Uml]): MagicDrawUMLInteractionFragment =
     _e match {
-    case mdE: MagicDrawUMLInteractionFragment => mdE
-  }
+      case mdE: MagicDrawUMLInteractionFragment => mdE
+    }
 
   def umlMagicDrawUMLInteractionOperand(_e: UMLInteractionOperand[Uml]): MagicDrawUMLInteractionOperand =
     _e match {
-    case mdE: MagicDrawUMLInteractionOperand => mdE
-  }
+      case mdE: MagicDrawUMLInteractionOperand => mdE
+    }
 
   def umlMagicDrawUMLInteractionUse(_e: UMLInteractionUse[Uml]): MagicDrawUMLInteractionUse =
     _e match {
-    case mdE: MagicDrawUMLInteractionUse => mdE
-  }
+      case mdE: MagicDrawUMLInteractionUse => mdE
+    }
 
   def umlMagicDrawUMLInterface(_e: UMLInterface[Uml]): MagicDrawUMLInterface =
     _e match {
-    case mdE: MagicDrawUMLInterface => mdE
-  }
+      case mdE: MagicDrawUMLInterface => mdE
+    }
 
   def umlMagicDrawUMLInterfaceRealization(_e: UMLInterfaceRealization[Uml]): MagicDrawUMLInterfaceRealization =
     _e match {
-    case mdE: MagicDrawUMLInterfaceRealization => mdE
-  }
+      case mdE: MagicDrawUMLInterfaceRealization => mdE
+    }
 
   def umlMagicDrawUMLInterruptibleActivityRegion(_e: UMLInterruptibleActivityRegion[Uml]): MagicDrawUMLInterruptibleActivityRegion =
     _e match {
-    case mdE: MagicDrawUMLInterruptibleActivityRegion => mdE
-  }
+      case mdE: MagicDrawUMLInterruptibleActivityRegion => mdE
+    }
 
   def umlMagicDrawUMLInterval(_e: UMLInterval[Uml]): MagicDrawUMLInterval =
     _e match {
-    case mdE: MagicDrawUMLInterval => mdE
-  }
+      case mdE: MagicDrawUMLInterval => mdE
+    }
 
   def umlMagicDrawUMLIntervalConstraint(_e: UMLIntervalConstraint[Uml]): MagicDrawUMLIntervalConstraint =
     _e match {
-    case mdE: MagicDrawUMLIntervalConstraint => mdE
-  }
+      case mdE: MagicDrawUMLIntervalConstraint => mdE
+    }
 
   def umlMagicDrawUMLInvocationAction(_e: UMLInvocationAction[Uml]): MagicDrawUMLInvocationAction =
     _e match {
-    case mdE: MagicDrawUMLInvocationAction => mdE
-  }
+      case mdE: MagicDrawUMLInvocationAction => mdE
+    }
 
   def umlMagicDrawUMLJoinNode(_e: UMLJoinNode[Uml]): MagicDrawUMLJoinNode =
     _e match {
-    case mdE: MagicDrawUMLJoinNode => mdE
-  }
+      case mdE: MagicDrawUMLJoinNode => mdE
+    }
 
   def umlMagicDrawUMLLifeline(_e: UMLLifeline[Uml]): MagicDrawUMLLifeline =
     _e match {
-    case mdE: MagicDrawUMLLifeline => mdE
-  }
+      case mdE: MagicDrawUMLLifeline => mdE
+    }
 
   def umlMagicDrawUMLLinkAction(_e: UMLLinkAction[Uml]): MagicDrawUMLLinkAction =
     _e match {
-    case mdE: MagicDrawUMLLinkAction => mdE
-  }
+      case mdE: MagicDrawUMLLinkAction => mdE
+    }
 
   def umlMagicDrawUMLLinkEndCreationData(_e: UMLLinkEndCreationData[Uml]): MagicDrawUMLLinkEndCreationData =
     _e match {
-    case mdE: MagicDrawUMLLinkEndCreationData => mdE
-  }
+      case mdE: MagicDrawUMLLinkEndCreationData => mdE
+    }
 
   def umlMagicDrawUMLLinkEndData(_e: UMLLinkEndData[Uml]): MagicDrawUMLLinkEndData =
     _e match {
-    case mdE: MagicDrawUMLLinkEndData => mdE
-  }
+      case mdE: MagicDrawUMLLinkEndData => mdE
+    }
 
   def umlMagicDrawUMLLinkEndDestructionData(_e: UMLLinkEndDestructionData[Uml]): MagicDrawUMLLinkEndDestructionData =
     _e match {
-    case mdE: MagicDrawUMLLinkEndDestructionData => mdE
-  }
+      case mdE: MagicDrawUMLLinkEndDestructionData => mdE
+    }
 
   def umlMagicDrawUMLLiteralBoolean(_e: UMLLiteralBoolean[Uml]): MagicDrawUMLLiteralBoolean =
     _e match {
-    case mdE: MagicDrawUMLLiteralBoolean => mdE
-  }
+      case mdE: MagicDrawUMLLiteralBoolean => mdE
+    }
 
   def umlMagicDrawUMLLiteralInteger(_e: UMLLiteralInteger[Uml]): MagicDrawUMLLiteralInteger =
     _e match {
-    case mdE: MagicDrawUMLLiteralInteger => mdE
-  }
+      case mdE: MagicDrawUMLLiteralInteger => mdE
+    }
 
   def umlMagicDrawUMLLiteralNull(_e: UMLLiteralNull[Uml]): MagicDrawUMLLiteralNull =
     _e match {
-    case mdE: MagicDrawUMLLiteralNull => mdE
-  }
+      case mdE: MagicDrawUMLLiteralNull => mdE
+    }
 
   def umlMagicDrawUMLLiteralReal(_e: UMLLiteralReal[Uml]): MagicDrawUMLLiteralReal =
     _e match {
-    case mdE: MagicDrawUMLLiteralReal => mdE
-  }
+      case mdE: MagicDrawUMLLiteralReal => mdE
+    }
 
   def umlMagicDrawUMLLiteralSpecification(_e: UMLLiteralSpecification[Uml]): MagicDrawUMLLiteralSpecification =
     _e match {
-    case mdE: MagicDrawUMLLiteralSpecification => mdE
-  }
+      case mdE: MagicDrawUMLLiteralSpecification => mdE
+    }
 
   def umlMagicDrawUMLLiteralString(_e: UMLLiteralString[Uml]): MagicDrawUMLLiteralString =
     _e match {
-    case mdE: MagicDrawUMLLiteralString => mdE
-  }
+      case mdE: MagicDrawUMLLiteralString => mdE
+    }
 
   def umlMagicDrawUMLLiteralUnlimitedNatural(_e: UMLLiteralUnlimitedNatural[Uml]): MagicDrawUMLLiteralUnlimitedNatural =
     _e match {
-    case mdE: MagicDrawUMLLiteralUnlimitedNatural => mdE
-  }
+      case mdE: MagicDrawUMLLiteralUnlimitedNatural => mdE
+    }
 
   def umlMagicDrawUMLLoopNode(_e: UMLLoopNode[Uml]): MagicDrawUMLLoopNode =
     _e match {
-    case mdE: MagicDrawUMLLoopNode => mdE
-  }
+      case mdE: MagicDrawUMLLoopNode => mdE
+    }
 
   def umlMagicDrawUMLManifestation(_e: UMLManifestation[Uml]): MagicDrawUMLManifestation =
     _e match {
-    case mdE: MagicDrawUMLManifestation => mdE
-  }
+      case mdE: MagicDrawUMLManifestation => mdE
+    }
 
   def umlMagicDrawUMLMergeNode(_e: UMLMergeNode[Uml]): MagicDrawUMLMergeNode =
     _e match {
-    case mdE: MagicDrawUMLMergeNode => mdE
-  }
+      case mdE: MagicDrawUMLMergeNode => mdE
+    }
 
   def umlMagicDrawUMLMessage(_e: UMLMessage[Uml]): MagicDrawUMLMessage =
     _e match {
-    case mdE: MagicDrawUMLMessage => mdE
-  }
+      case mdE: MagicDrawUMLMessage => mdE
+    }
 
   def umlMagicDrawUMLMessageEnd(_e: UMLMessageEnd[Uml]): MagicDrawUMLMessageEnd =
     _e match {
-    case mdE: MagicDrawUMLMessageEnd => mdE
-  }
+      case mdE: MagicDrawUMLMessageEnd => mdE
+    }
 
   def umlMagicDrawUMLMessageEvent(_e: UMLMessageEvent[Uml]): MagicDrawUMLMessageEvent =
     _e match {
-    case mdE: MagicDrawUMLMessageEvent => mdE
-  }
+      case mdE: MagicDrawUMLMessageEvent => mdE
+    }
 
   def umlMagicDrawUMLMessageOccurrenceSpecification(_e: UMLMessageOccurrenceSpecification[Uml]): MagicDrawUMLMessageOccurrenceSpecification =
     _e match {
-    case mdE: MagicDrawUMLMessageOccurrenceSpecification => mdE
-  }
+      case mdE: MagicDrawUMLMessageOccurrenceSpecification => mdE
+    }
 
   def umlMagicDrawUMLModel(_e: UMLModel[Uml]): MagicDrawUMLModel =
     _e match {
-    case mdE: MagicDrawUMLModel => mdE
-  }
+      case mdE: MagicDrawUMLModel => mdE
+    }
 
   def umlMagicDrawUMLMultiplicityElement(_e: UMLMultiplicityElement[Uml]): MagicDrawUMLMultiplicityElement =
     _e match {
-    case mdE: MagicDrawUMLMultiplicityElement => mdE
-  }
+      case mdE: MagicDrawUMLMultiplicityElement => mdE
+    }
 
   def umlMagicDrawUMLNamedElement(_e: UMLNamedElement[Uml]): MagicDrawUMLNamedElement =
     _e match {
-    case mdE: MagicDrawUMLNamedElement => mdE
-  }
+      case mdE: MagicDrawUMLNamedElement => mdE
+    }
 
   def umlMagicDrawUMLNamespace(_e: UMLNamespace[Uml]): MagicDrawUMLNamespace =
     _e match {
-    case mdE: MagicDrawUMLNamespace => mdE
-  }
+      case mdE: MagicDrawUMLNamespace => mdE
+    }
 
   def umlMagicDrawUMLNode(_e: UMLNode[Uml]): MagicDrawUMLNode =
     _e match {
-    case mdE: MagicDrawUMLNode => mdE
-  }
+      case mdE: MagicDrawUMLNode => mdE
+    }
 
   def umlMagicDrawUMLObjectFlow(_e: UMLObjectFlow[Uml]): MagicDrawUMLObjectFlow =
     _e match {
-    case mdE: MagicDrawUMLObjectFlow => mdE
-  }
+      case mdE: MagicDrawUMLObjectFlow => mdE
+    }
 
   def umlMagicDrawUMLObjectNode(_e: UMLObjectNode[Uml]): MagicDrawUMLObjectNode =
     _e match {
-    case mdE: MagicDrawUMLObjectNode => mdE
-  }
+      case mdE: MagicDrawUMLObjectNode => mdE
+    }
 
   def umlMagicDrawUMLObservation(_e: UMLObservation[Uml]): MagicDrawUMLObservation =
     _e match {
-    case mdE: MagicDrawUMLObservation => mdE
-  }
+      case mdE: MagicDrawUMLObservation => mdE
+    }
 
   def umlMagicDrawUMLOccurrenceSpecification(_e: UMLOccurrenceSpecification[Uml]): MagicDrawUMLOccurrenceSpecification =
     _e match {
-    case mdE: MagicDrawUMLOccurrenceSpecification => mdE
-  }
+      case mdE: MagicDrawUMLOccurrenceSpecification => mdE
+    }
 
   def umlMagicDrawUMLOpaqueAction(_e: UMLOpaqueAction[Uml]): MagicDrawUMLOpaqueAction =
     _e match {
-    case mdE: MagicDrawUMLOpaqueAction => mdE
-  }
+      case mdE: MagicDrawUMLOpaqueAction => mdE
+    }
 
   def umlMagicDrawUMLOpaqueBehavior(_e: UMLOpaqueBehavior[Uml]): MagicDrawUMLOpaqueBehavior =
     _e match {
-    case mdE: MagicDrawUMLOpaqueBehavior => mdE
-  }
+      case mdE: MagicDrawUMLOpaqueBehavior => mdE
+    }
 
   def umlMagicDrawUMLOpaqueExpression(_e: UMLOpaqueExpression[Uml]): MagicDrawUMLOpaqueExpression =
     _e match {
-    case mdE: MagicDrawUMLOpaqueExpression => mdE
-  }
+      case mdE: MagicDrawUMLOpaqueExpression => mdE
+    }
 
   def umlMagicDrawUMLOperation(_e: UMLOperation[Uml]): MagicDrawUMLOperation =
     _e match {
-    case mdE: MagicDrawUMLOperation => mdE
-  }
+      case mdE: MagicDrawUMLOperation => mdE
+    }
 
   def umlMagicDrawUMLOperationTemplateParameter(_e: UMLOperationTemplateParameter[Uml]): MagicDrawUMLOperationTemplateParameter =
     _e match {
-    case mdE: MagicDrawUMLOperationTemplateParameter => mdE
-  }
+      case mdE: MagicDrawUMLOperationTemplateParameter => mdE
+    }
 
   def umlMagicDrawUMLOutputPin(_e: UMLOutputPin[Uml]): MagicDrawUMLOutputPin =
     _e match {
-    case mdE: MagicDrawUMLOutputPin => mdE
-  }
+      case mdE: MagicDrawUMLOutputPin => mdE
+    }
 
   def umlMagicDrawUMLPackage(_e: UMLPackage[Uml]): MagicDrawUMLPackage =
     _e match {
-    case mdE: MagicDrawUMLPackage => mdE
-  }
+      case mdE: MagicDrawUMLPackage => mdE
+    }
 
   def umlMagicDrawUMLPackageImport(_e: UMLPackageImport[Uml]): MagicDrawUMLPackageImport =
     _e match {
-    case mdE: MagicDrawUMLPackageImport => mdE
-  }
+      case mdE: MagicDrawUMLPackageImport => mdE
+    }
 
   def umlMagicDrawUMLPackageMerge(_e: UMLPackageMerge[Uml]): MagicDrawUMLPackageMerge =
     _e match {
-    case mdE: MagicDrawUMLPackageMerge => mdE
-  }
+      case mdE: MagicDrawUMLPackageMerge => mdE
+    }
 
   def umlMagicDrawUMLPackageableElement(_e: UMLPackageableElement[Uml]): MagicDrawUMLPackageableElement =
     _e match {
-    case mdE: MagicDrawUMLPackageableElement => mdE
-  }
+      case mdE: MagicDrawUMLPackageableElement => mdE
+    }
 
   def umlMagicDrawUMLParameter(_e: UMLParameter[Uml]): MagicDrawUMLParameter =
     _e match {
-    case mdE: MagicDrawUMLParameter => mdE
-  }
+      case mdE: MagicDrawUMLParameter => mdE
+    }
 
   def umlMagicDrawUMLParameterSet(_e: UMLParameterSet[Uml]): MagicDrawUMLParameterSet =
     _e match {
-    case mdE: MagicDrawUMLParameterSet => mdE
-  }
+      case mdE: MagicDrawUMLParameterSet => mdE
+    }
 
   def umlMagicDrawUMLParameterableElement(_e: UMLParameterableElement[Uml]): MagicDrawUMLParameterableElement =
     _e match {
-    case mdE: MagicDrawUMLParameterableElement => mdE
-  }
+      case mdE: MagicDrawUMLParameterableElement => mdE
+    }
 
   def umlMagicDrawUMLPartDecomposition(_e: UMLPartDecomposition[Uml]): MagicDrawUMLPartDecomposition =
     _e match {
-    case mdE: MagicDrawUMLPartDecomposition => mdE
-  }
+      case mdE: MagicDrawUMLPartDecomposition => mdE
+    }
 
   def umlMagicDrawUMLPin(_e: UMLPin[Uml]): MagicDrawUMLPin =
     _e match {
-    case mdE: MagicDrawUMLPin => mdE
-  }
+      case mdE: MagicDrawUMLPin => mdE
+    }
 
   def umlMagicDrawUMLPort(_e: UMLPort[Uml]): MagicDrawUMLPort =
     _e match {
-    case mdE: MagicDrawUMLPort => mdE
-  }
+      case mdE: MagicDrawUMLPort => mdE
+    }
 
   def umlMagicDrawUMLPrimitiveType(_e: UMLPrimitiveType[Uml]): MagicDrawUMLPrimitiveType =
     _e match {
-    case mdE: MagicDrawUMLPrimitiveType => mdE
-  }
+      case mdE: MagicDrawUMLPrimitiveType => mdE
+    }
 
   def umlMagicDrawUMLProfile(_e: UMLProfile[Uml]): MagicDrawUMLProfile =
     _e match {
-    case mdE: MagicDrawUMLProfile => mdE
-  }
+      case mdE: MagicDrawUMLProfile => mdE
+    }
 
   def umlMagicDrawUMLProfileApplication(_e: UMLProfileApplication[Uml]): MagicDrawUMLProfileApplication =
     _e match {
-    case mdE: MagicDrawUMLProfileApplication => mdE
-  }
+      case mdE: MagicDrawUMLProfileApplication => mdE
+    }
 
   def umlMagicDrawUMLProperty(_e: UMLProperty[Uml]): MagicDrawUMLProperty =
     _e match {
-    case mdE: MagicDrawUMLProperty => mdE
-  }
+      case mdE: MagicDrawUMLProperty => mdE
+    }
 
   def umlMagicDrawUMLProtocolConformance(_e: UMLProtocolConformance[Uml]): MagicDrawUMLProtocolConformance =
     _e match {
-    case mdE: MagicDrawUMLProtocolConformance => mdE
-  }
+      case mdE: MagicDrawUMLProtocolConformance => mdE
+    }
 
   def umlMagicDrawUMLProtocolStateMachine(_e: UMLProtocolStateMachine[Uml]): MagicDrawUMLProtocolStateMachine =
     _e match {
-    case mdE: MagicDrawUMLProtocolStateMachine => mdE
-  }
+      case mdE: MagicDrawUMLProtocolStateMachine => mdE
+    }
 
   def umlMagicDrawUMLProtocolTransition(_e: UMLProtocolTransition[Uml]): MagicDrawUMLProtocolTransition =
     _e match {
-    case mdE: MagicDrawUMLProtocolTransition => mdE
-  }
+      case mdE: MagicDrawUMLProtocolTransition => mdE
+    }
 
   def umlMagicDrawUMLPseudostate(_e: UMLPseudostate[Uml]): MagicDrawUMLPseudostate =
     _e match {
-    case mdE: MagicDrawUMLPseudostate => mdE
-  }
+      case mdE: MagicDrawUMLPseudostate => mdE
+    }
 
   def umlMagicDrawUMLQualifierValue(_e: UMLQualifierValue[Uml]): MagicDrawUMLQualifierValue =
     _e match {
-    case mdE: MagicDrawUMLQualifierValue => mdE
-  }
+      case mdE: MagicDrawUMLQualifierValue => mdE
+    }
 
   def umlMagicDrawUMLRaiseExceptionAction(_e: UMLRaiseExceptionAction[Uml]): MagicDrawUMLRaiseExceptionAction =
     _e match {
-    case mdE: MagicDrawUMLRaiseExceptionAction => mdE
-  }
+      case mdE: MagicDrawUMLRaiseExceptionAction => mdE
+    }
 
   def umlMagicDrawUMLReadExtentAction(_e: UMLReadExtentAction[Uml]): MagicDrawUMLReadExtentAction =
     _e match {
-    case mdE: MagicDrawUMLReadExtentAction => mdE
-  }
+      case mdE: MagicDrawUMLReadExtentAction => mdE
+    }
 
   def umlMagicDrawUMLReadIsClassifiedObjectAction(_e: UMLReadIsClassifiedObjectAction[Uml]): MagicDrawUMLReadIsClassifiedObjectAction =
     _e match {
-    case mdE: MagicDrawUMLReadIsClassifiedObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLReadIsClassifiedObjectAction => mdE
+    }
 
   def umlMagicDrawUMLReadLinkAction(_e: UMLReadLinkAction[Uml]): MagicDrawUMLReadLinkAction =
     _e match {
-    case mdE: MagicDrawUMLReadLinkAction => mdE
-  }
+      case mdE: MagicDrawUMLReadLinkAction => mdE
+    }
 
   def umlMagicDrawUMLReadLinkObjectEndAction(_e: UMLReadLinkObjectEndAction[Uml]): MagicDrawUMLReadLinkObjectEndAction =
     _e match {
-    case mdE: MagicDrawUMLReadLinkObjectEndAction => mdE
-  }
+      case mdE: MagicDrawUMLReadLinkObjectEndAction => mdE
+    }
 
   def umlMagicDrawUMLReadLinkObjectEndQualifierAction(_e: UMLReadLinkObjectEndQualifierAction[Uml]): MagicDrawUMLReadLinkObjectEndQualifierAction =
     _e match {
-    case mdE: MagicDrawUMLReadLinkObjectEndQualifierAction => mdE
-  }
+      case mdE: MagicDrawUMLReadLinkObjectEndQualifierAction => mdE
+    }
 
   def umlMagicDrawUMLReadSelfAction(_e: UMLReadSelfAction[Uml]): MagicDrawUMLReadSelfAction =
     _e match {
-    case mdE: MagicDrawUMLReadSelfAction => mdE
-  }
+      case mdE: MagicDrawUMLReadSelfAction => mdE
+    }
 
   def umlMagicDrawUMLReadStructuralFeatureAction(_e: UMLReadStructuralFeatureAction[Uml]): MagicDrawUMLReadStructuralFeatureAction =
     _e match {
-    case mdE: MagicDrawUMLReadStructuralFeatureAction => mdE
-  }
+      case mdE: MagicDrawUMLReadStructuralFeatureAction => mdE
+    }
 
   def umlMagicDrawUMLReadVariableAction(_e: UMLReadVariableAction[Uml]): MagicDrawUMLReadVariableAction =
     _e match {
-    case mdE: MagicDrawUMLReadVariableAction => mdE
-  }
+      case mdE: MagicDrawUMLReadVariableAction => mdE
+    }
 
   def umlMagicDrawUMLRealization(_e: UMLRealization[Uml]): MagicDrawUMLRealization =
     _e match {
-    case mdE: MagicDrawUMLRealization => mdE
-  }
+      case mdE: MagicDrawUMLRealization => mdE
+    }
 
   def umlMagicDrawUMLReception(_e: UMLReception[Uml]): MagicDrawUMLReception =
     _e match {
-    case mdE: MagicDrawUMLReception => mdE
-  }
+      case mdE: MagicDrawUMLReception => mdE
+    }
 
   def umlMagicDrawUMLReclassifyObjectAction(_e: UMLReclassifyObjectAction[Uml]): MagicDrawUMLReclassifyObjectAction =
     _e match {
-    case mdE: MagicDrawUMLReclassifyObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLReclassifyObjectAction => mdE
+    }
 
   def umlMagicDrawUMLRedefinableElement(_e: UMLRedefinableElement[Uml]): MagicDrawUMLRedefinableElement =
     _e match {
-    case mdE: MagicDrawUMLRedefinableElement => mdE
-  }
+      case mdE: MagicDrawUMLRedefinableElement => mdE
+    }
 
   def umlMagicDrawUMLRedefinableTemplateSignature(_e: UMLRedefinableTemplateSignature[Uml]): MagicDrawUMLRedefinableTemplateSignature =
     _e match {
-    case mdE: MagicDrawUMLRedefinableTemplateSignature => mdE
-  }
+      case mdE: MagicDrawUMLRedefinableTemplateSignature => mdE
+    }
 
   def umlMagicDrawUMLReduceAction(_e: UMLReduceAction[Uml]): MagicDrawUMLReduceAction =
     _e match {
-    case mdE: MagicDrawUMLReduceAction => mdE
-  }
+      case mdE: MagicDrawUMLReduceAction => mdE
+    }
 
   def umlMagicDrawUMLRegion(_e: UMLRegion[Uml]): MagicDrawUMLRegion =
     _e match {
-    case mdE: MagicDrawUMLRegion => mdE
-  }
+      case mdE: MagicDrawUMLRegion => mdE
+    }
 
   def umlMagicDrawUMLRelationship(_e: UMLRelationship[Uml]): MagicDrawUMLRelationship =
     _e match {
-    case mdE: MagicDrawUMLRelationship => mdE
-  }
+      case mdE: MagicDrawUMLRelationship => mdE
+    }
 
   def umlMagicDrawUMLRemoveStructuralFeatureValueAction(_e: UMLRemoveStructuralFeatureValueAction[Uml]): MagicDrawUMLRemoveStructuralFeatureValueAction =
     _e match {
-    case mdE: MagicDrawUMLRemoveStructuralFeatureValueAction => mdE
-  }
+      case mdE: MagicDrawUMLRemoveStructuralFeatureValueAction => mdE
+    }
 
   def umlMagicDrawUMLRemoveVariableValueAction(_e: UMLRemoveVariableValueAction[Uml]): MagicDrawUMLRemoveVariableValueAction =
     _e match {
-    case mdE: MagicDrawUMLRemoveVariableValueAction => mdE
-  }
+      case mdE: MagicDrawUMLRemoveVariableValueAction => mdE
+    }
 
   def umlMagicDrawUMLReplyAction(_e: UMLReplyAction[Uml]): MagicDrawUMLReplyAction =
     _e match {
-    case mdE: MagicDrawUMLReplyAction => mdE
-  }
+      case mdE: MagicDrawUMLReplyAction => mdE
+    }
 
   def umlMagicDrawUMLSendObjectAction(_e: UMLSendObjectAction[Uml]): MagicDrawUMLSendObjectAction =
     _e match {
-    case mdE: MagicDrawUMLSendObjectAction => mdE
-  }
+      case mdE: MagicDrawUMLSendObjectAction => mdE
+    }
 
   def umlMagicDrawUMLSendSignalAction(_e: UMLSendSignalAction[Uml]): MagicDrawUMLSendSignalAction =
     _e match {
-    case mdE: MagicDrawUMLSendSignalAction => mdE
-  }
+      case mdE: MagicDrawUMLSendSignalAction => mdE
+    }
 
   def umlMagicDrawUMLSequenceNode(_e: UMLSequenceNode[Uml]): MagicDrawUMLSequenceNode =
     _e match {
-    case mdE: MagicDrawUMLSequenceNode => mdE
-  }
+      case mdE: MagicDrawUMLSequenceNode => mdE
+    }
 
   def umlMagicDrawUMLSignal(_e: UMLSignal[Uml]): MagicDrawUMLSignal =
     _e match {
-    case mdE: MagicDrawUMLSignal => mdE
-  }
+      case mdE: MagicDrawUMLSignal => mdE
+    }
 
   def umlMagicDrawUMLSignalEvent(_e: UMLSignalEvent[Uml]): MagicDrawUMLSignalEvent =
     _e match {
-    case mdE: MagicDrawUMLSignalEvent => mdE
-  }
+      case mdE: MagicDrawUMLSignalEvent => mdE
+    }
 
   def umlMagicDrawUMLSlot(_e: UMLSlot[Uml]): MagicDrawUMLSlot =
     _e match {
-    case mdE: MagicDrawUMLSlot => mdE
-  }
+      case mdE: MagicDrawUMLSlot => mdE
+    }
 
   def umlMagicDrawUMLStartClassifierBehaviorAction(_e: UMLStartClassifierBehaviorAction[Uml]): MagicDrawUMLStartClassifierBehaviorAction =
     _e match {
-    case mdE: MagicDrawUMLStartClassifierBehaviorAction => mdE
-  }
+      case mdE: MagicDrawUMLStartClassifierBehaviorAction => mdE
+    }
 
   def umlMagicDrawUMLStartObjectBehaviorAction(_e: UMLStartObjectBehaviorAction[Uml]): MagicDrawUMLStartObjectBehaviorAction =
     _e match {
-    case mdE: MagicDrawUMLStartObjectBehaviorAction => mdE
-  }
+      case mdE: MagicDrawUMLStartObjectBehaviorAction => mdE
+    }
 
   def umlMagicDrawUMLState(_e: UMLState[Uml]): MagicDrawUMLState =
     _e match {
-    case mdE: MagicDrawUMLState => mdE
-  }
+      case mdE: MagicDrawUMLState => mdE
+    }
 
   def umlMagicDrawUMLStateInvariant(_e: UMLStateInvariant[Uml]): MagicDrawUMLStateInvariant =
     _e match {
-    case mdE: MagicDrawUMLStateInvariant => mdE
-  }
+      case mdE: MagicDrawUMLStateInvariant => mdE
+    }
 
   def umlMagicDrawUMLStateMachine(_e: UMLStateMachine[Uml]): MagicDrawUMLStateMachine =
     _e match {
-    case mdE: MagicDrawUMLStateMachine => mdE
-  }
+      case mdE: MagicDrawUMLStateMachine => mdE
+    }
 
   def umlMagicDrawUMLStereotype(_e: UMLStereotype[Uml]): MagicDrawUMLStereotype =
     _e match {
-    case mdE: MagicDrawUMLStereotype => mdE
-  }
+      case mdE: MagicDrawUMLStereotype => mdE
+    }
 
   def umlMagicDrawUMLStringExpression(_e: UMLStringExpression[Uml]): MagicDrawUMLStringExpression =
     _e match {
-    case mdE: MagicDrawUMLStringExpression => mdE
-  }
+      case mdE: MagicDrawUMLStringExpression => mdE
+    }
 
   def umlMagicDrawUMLStructuralFeature(_e: UMLStructuralFeature[Uml]): MagicDrawUMLStructuralFeature =
     _e match {
-    case mdE: MagicDrawUMLStructuralFeature => mdE
-  }
+      case mdE: MagicDrawUMLStructuralFeature => mdE
+    }
 
   def umlMagicDrawUMLStructuralFeatureAction(_e: UMLStructuralFeatureAction[Uml]): MagicDrawUMLStructuralFeatureAction =
     _e match {
-    case mdE: MagicDrawUMLStructuralFeatureAction => mdE
-  }
+      case mdE: MagicDrawUMLStructuralFeatureAction => mdE
+    }
 
   def umlMagicDrawUMLStructuredActivityNode(_e: UMLStructuredActivityNode[Uml]): MagicDrawUMLStructuredActivityNode =
     _e match {
-    case mdE: MagicDrawUMLStructuredActivityNode => mdE
-  }
+      case mdE: MagicDrawUMLStructuredActivityNode => mdE
+    }
 
   def umlMagicDrawUMLStructuredClassifier(_e: UMLStructuredClassifier[Uml]): MagicDrawUMLStructuredClassifier =
     _e match {
-    case mdE: MagicDrawUMLStructuredClassifier => mdE
-  }
+      case mdE: MagicDrawUMLStructuredClassifier => mdE
+    }
 
   def umlMagicDrawUMLSubstitution(_e: UMLSubstitution[Uml]): MagicDrawUMLSubstitution =
     _e match {
-    case mdE: MagicDrawUMLSubstitution => mdE
-  }
+      case mdE: MagicDrawUMLSubstitution => mdE
+    }
 
   def umlMagicDrawUMLTemplateBinding(_e: UMLTemplateBinding[Uml]): MagicDrawUMLTemplateBinding =
     _e match {
-    case mdE: MagicDrawUMLTemplateBinding => mdE
-  }
+      case mdE: MagicDrawUMLTemplateBinding => mdE
+    }
 
   def umlMagicDrawUMLTemplateParameter(_e: UMLTemplateParameter[Uml]): MagicDrawUMLTemplateParameter =
     _e match {
-    case mdE: MagicDrawUMLTemplateParameter => mdE
-  }
+      case mdE: MagicDrawUMLTemplateParameter => mdE
+    }
 
   def umlMagicDrawUMLTemplateParameterSubstitution(_e: UMLTemplateParameterSubstitution[Uml]): MagicDrawUMLTemplateParameterSubstitution =
     _e match {
-    case mdE: MagicDrawUMLTemplateParameterSubstitution => mdE
-  }
+      case mdE: MagicDrawUMLTemplateParameterSubstitution => mdE
+    }
 
   def umlMagicDrawUMLTemplateSignature(_e: UMLTemplateSignature[Uml]): MagicDrawUMLTemplateSignature =
     _e match {
-    case mdE: MagicDrawUMLTemplateSignature => mdE
-  }
+      case mdE: MagicDrawUMLTemplateSignature => mdE
+    }
 
   def umlMagicDrawUMLTemplateableElement(_e: UMLTemplateableElement[Uml]): MagicDrawUMLTemplateableElement =
     _e match {
-    case mdE: MagicDrawUMLTemplateableElement => mdE
-  }
+      case mdE: MagicDrawUMLTemplateableElement => mdE
+    }
 
   def umlMagicDrawUMLTestIdentityAction(_e: UMLTestIdentityAction[Uml]): MagicDrawUMLTestIdentityAction =
     _e match {
-    case mdE: MagicDrawUMLTestIdentityAction => mdE
-  }
+      case mdE: MagicDrawUMLTestIdentityAction => mdE
+    }
 
   def umlMagicDrawUMLTimeConstraint(_e: UMLTimeConstraint[Uml]): MagicDrawUMLTimeConstraint =
     _e match {
-    case mdE: MagicDrawUMLTimeConstraint => mdE
-  }
+      case mdE: MagicDrawUMLTimeConstraint => mdE
+    }
 
   def umlMagicDrawUMLTimeEvent(_e: UMLTimeEvent[Uml]): MagicDrawUMLTimeEvent =
     _e match {
-    case mdE: MagicDrawUMLTimeEvent => mdE
-  }
+      case mdE: MagicDrawUMLTimeEvent => mdE
+    }
 
   def umlMagicDrawUMLTimeExpression(_e: UMLTimeExpression[Uml]): MagicDrawUMLTimeExpression =
     _e match {
-    case mdE: MagicDrawUMLTimeExpression => mdE
-  }
+      case mdE: MagicDrawUMLTimeExpression => mdE
+    }
 
   def umlMagicDrawUMLTimeInterval(_e: UMLTimeInterval[Uml]): MagicDrawUMLTimeInterval =
     _e match {
-    case mdE: MagicDrawUMLTimeInterval => mdE
-  }
+      case mdE: MagicDrawUMLTimeInterval => mdE
+    }
 
   def umlMagicDrawUMLTimeObservation(_e: UMLTimeObservation[Uml]): MagicDrawUMLTimeObservation =
     _e match {
-    case mdE: MagicDrawUMLTimeObservation => mdE
-  }
+      case mdE: MagicDrawUMLTimeObservation => mdE
+    }
 
   def umlMagicDrawUMLTransition(_e: UMLTransition[Uml]): MagicDrawUMLTransition =
     _e match {
-    case mdE: MagicDrawUMLTransition => mdE
-  }
+      case mdE: MagicDrawUMLTransition => mdE
+    }
 
   def umlMagicDrawUMLTrigger(_e: UMLTrigger[Uml]): MagicDrawUMLTrigger =
     _e match {
-    case mdE: MagicDrawUMLTrigger => mdE
-  }
+      case mdE: MagicDrawUMLTrigger => mdE
+    }
 
   def umlMagicDrawUMLType(_e: UMLType[Uml]): MagicDrawUMLType =
     _e match {
-    case mdE: MagicDrawUMLType => mdE
-  }
+      case mdE: MagicDrawUMLType => mdE
+    }
 
   def umlMagicDrawUMLTypedElement(_e: UMLTypedElement[Uml]): MagicDrawUMLTypedElement =
     _e match {
-    case mdE: MagicDrawUMLTypedElement => mdE
-  }
+      case mdE: MagicDrawUMLTypedElement => mdE
+    }
 
   def umlMagicDrawUMLUnmarshallAction(_e: UMLUnmarshallAction[Uml]): MagicDrawUMLUnmarshallAction =
     _e match {
-    case mdE: MagicDrawUMLUnmarshallAction => mdE
-  }
+      case mdE: MagicDrawUMLUnmarshallAction => mdE
+    }
 
   def umlMagicDrawUMLUsage(_e: UMLUsage[Uml]): MagicDrawUMLUsage =
     _e match {
-    case mdE: MagicDrawUMLUsage => mdE
-  }
+      case mdE: MagicDrawUMLUsage => mdE
+    }
 
   def umlMagicDrawUMLUseCase(_e: UMLUseCase[Uml]): MagicDrawUMLUseCase =
     _e match {
-    case mdE: MagicDrawUMLUseCase => mdE
-  }
+      case mdE: MagicDrawUMLUseCase => mdE
+    }
 
   def umlMagicDrawUMLValuePin(_e: UMLValuePin[Uml]): MagicDrawUMLValuePin =
     _e match {
-    case mdE: MagicDrawUMLValuePin => mdE
-  }
+      case mdE: MagicDrawUMLValuePin => mdE
+    }
 
   def umlMagicDrawUMLValueSpecification(_e: UMLValueSpecification[Uml]): MagicDrawUMLValueSpecification =
     _e match {
-    case mdE: MagicDrawUMLValueSpecification => mdE
-  }
+      case mdE: MagicDrawUMLValueSpecification => mdE
+    }
 
   def umlMagicDrawUMLValueSpecificationAction(_e: UMLValueSpecificationAction[Uml]): MagicDrawUMLValueSpecificationAction =
     _e match {
-    case mdE: MagicDrawUMLValueSpecificationAction => mdE
-  }
+      case mdE: MagicDrawUMLValueSpecificationAction => mdE
+    }
 
   def umlMagicDrawUMLVariable(_e: UMLVariable[Uml]): MagicDrawUMLVariable =
     _e match {
-    case mdE: MagicDrawUMLVariable => mdE
-  }
+      case mdE: MagicDrawUMLVariable => mdE
+    }
 
   def umlMagicDrawUMLVariableAction(_e: UMLVariableAction[Uml]): MagicDrawUMLVariableAction =
     _e match {
-    case mdE: MagicDrawUMLVariableAction => mdE
-  }
+      case mdE: MagicDrawUMLVariableAction => mdE
+    }
 
   def umlMagicDrawUMLVertex(_e: UMLVertex[Uml]): MagicDrawUMLVertex =
     _e match {
-    case mdE: MagicDrawUMLVertex => mdE
-  }
+      case mdE: MagicDrawUMLVertex => mdE
+    }
 
   def umlMagicDrawUMLWriteLinkAction(_e: UMLWriteLinkAction[Uml]): MagicDrawUMLWriteLinkAction =
     _e match {
-    case mdE: MagicDrawUMLWriteLinkAction => mdE
-  }
+      case mdE: MagicDrawUMLWriteLinkAction => mdE
+    }
 
   def umlMagicDrawUMLWriteStructuralFeatureAction(_e: UMLWriteStructuralFeatureAction[Uml]): MagicDrawUMLWriteStructuralFeatureAction =
     _e match {
-    case mdE: MagicDrawUMLWriteStructuralFeatureAction => mdE
-  }
+      case mdE: MagicDrawUMLWriteStructuralFeatureAction => mdE
+    }
 
   def umlMagicDrawUMLWriteVariableAction(_e: UMLWriteVariableAction[Uml]): MagicDrawUMLWriteVariableAction =
     _e match {
-    case mdE: MagicDrawUMLWriteVariableAction => mdE
-  }
+      case mdE: MagicDrawUMLWriteVariableAction => mdE
+    }
 
 
   // -------------
 
-  def makeMDIllegalArgumentExceptionValidation(
-                                                p: Project,
-                                                validationMessage: String,
-                                                elementMessages: Map[Element, (String, List[NMAction])],
-                                                validationSuiteQName: String, validationConstraintQName: String): Try[Option[MagicDrawValidationDataResults]] =
+  override val OTI_SPECIFICATION_ROOT_S: Option[UMLStereotype[MagicDrawUML]] =
+    StereotypesHelper.getProfile(project, "OTI") match {
+      case null =>
+        None
+      case pf =>
+        Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_packageURI: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_documentURL: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_uuidPrefix: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_artifactKind: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
+    }
+
+  override val OTI_ARTIFACT_KIND: Option[UMLEnumeration[MagicDrawUML]] =
+    StereotypesHelper.getProfile(project, "OTI") match {
+      case null =>
+        None
+      case pf =>
+        val enums = umlProfile(pf).ownedType.selectByKindOf { case e: UMLEnumeration[MagicDrawUML] => e }
+        enums.find { e => e.name.get == "ArtifactKind" }
+    }
+
+  override val OTI_ARTIFACT_KIND_SPECIFIED_METAMODEL: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "SPECIFIED_METAMODEL"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_ARTIFACT_KIND_SPECIFIED_PROFILE: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "SPECIFIED_PROFILE"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_ARTIFACT_KIND_SPECIFIED_MODEL_LIBRARY: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "SPECIFIED_MODEL_LIBRARY"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_ARTIFACT_KIND_IMPLEMENTED_METAMODEL: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "IMPLEMENTED_METAMODEL"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_ARTIFACT_KIND_IMPLEMENTED_PROFILE: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "IMPLEMENTED_PROFILE"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_ARTIFACT_KIND_IMPLEMENTED_MODEL_LIBRARY: Option[UMLEnumerationLiteral[MagicDrawUML]] =
+    OTI_ARTIFACT_KIND match {
+      case Some(k) =>
+        k.ownedLiteral.find {
+          _.name.get == "IMPLEMENTED_MODEL_LIBRARY"
+        }
+      case _ =>
+        None
+    }
+
+  override val OTI_IDENTITY_S: Option[UMLStereotype[MagicDrawUML]] =
+    StereotypesHelper.getProfile(project, "OTI") match {
+      case null =>
+        None
+      case pf =>
+        Option.apply(StereotypesHelper.getStereotype(project, "Identity", pf))
+    }
+
+  override val OTI_IDENTITY_xmiID: Option[UMLProperty[MagicDrawUML]] =
+    OTI_IDENTITY_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiID"))
+    }
+
+  override val OTI_IDENTITY_xmiUUID: Option[UMLProperty[MagicDrawUML]] =
+    OTI_IDENTITY_S match {
+      case None =>
+        None
+      case Some(s) =>
+        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
+    }
+
+  def makeMDIllegalArgumentExceptionValidation
+  (p: Project,
+   validationMessage: String,
+   elementMessages: Map[Element, (String, List[NMAction])],
+   validationSuiteQName: String, validationConstraintQName: String): Try[Option[MagicDrawValidationDataResults]] =
     MagicDrawValidationDataResults.getMDValidationProfileAndConstraint(p, validationSuiteQName, validationConstraintQName) match {
       case None => Failure(new IllegalArgumentException(s"Failed to find MD's Validation Profile '$validationSuiteQName' & Constraint '$validationConstraintQName'"))
       case Some((vSuite, c)) =>

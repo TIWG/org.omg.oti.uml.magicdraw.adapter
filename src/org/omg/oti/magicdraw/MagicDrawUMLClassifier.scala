@@ -69,7 +69,10 @@ trait MagicDrawUMLClassifier
     e.isFinalSpecialization
 
   override def general_classifier: Set[UMLClassifier[Uml]] =
-    ???
+    for {
+      g <- e.get_generalizationOfGeneral.toSet[Uml#Generalization]
+      s <- g.specific
+    } yield s
 
   override def ownedTemplateSignature: Option[UMLRedefinableTemplateSignature[Uml]] =
     Option.apply( e.getOwnedTemplateSignature )
