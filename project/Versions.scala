@@ -28,13 +28,13 @@ object Versions {
   // OTI Change Migration version
     
   val oti_changeMigration_prefix = "0.14.0"
-  val oti_changeMigration_suffix = "929"
+  val oti_changeMigration_suffix = "936"
   val oti_changeMigration_version = oti_changeMigration_prefix+"-"+oti_changeMigration_suffix
 
   // OTI Trees version
     
   val oti_trees_prefix = "0.14.0"
-  val oti_trees_suffix = "930"
+  val oti_trees_suffix = "937"
   val oti_trees_version = oti_trees_prefix+"-"+oti_trees_suffix
 
 }
