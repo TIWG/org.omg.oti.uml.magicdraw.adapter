@@ -40,7 +40,6 @@
 package org.omg.oti.uml.magicdraw
 
 import com.nomagic.magicdraw.core.Project
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
@@ -50,15 +49,10 @@ import org.omg.oti.uml.read.operations._
 import org.omg.oti.uml.canonicalXMI.BuiltInDocument
 import org.omg.oti.uml.canonicalXMI.DocumentEdge
 import java.net.URI
-import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
-
-import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
 
 trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
 
   val project: Project
-
-  import scala.reflect._
 
   val MD_ABSTRACTION: TypeTag[MagicDrawUML#Abstraction] = typeTag[MagicDrawUML#Abstraction]
   override implicit val ABSTRACTION = MD_ABSTRACTION
@@ -792,13 +786,6 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
 
   implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
 
-  val MD_OTI_ValidationSuite = MagicDrawValidationDataResults.lookupValidationSuite( project, "*::MagicDrawOTIValidation")
-  
-  val MD_OTI_ValidationConstraint_NotOTISpecificationRoot = MD_OTI_ValidationSuite match {
-    case None => None
-    case Some( vInfo ) => MagicDrawValidationDataResults.lookupValidationConstraint( vInfo, "*::NotOTISpecificationRoot" )
-  }
-  
   // val stdProfile = ModelHelper.getUMLStandardProfile(project)
   lazy val MDBuiltInPrimitiveTypes = {
     
