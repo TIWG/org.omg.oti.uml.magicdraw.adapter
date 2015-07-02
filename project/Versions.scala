@@ -3,7 +3,7 @@ import sbt.Process
 object Versions {
   val scala = "2.11.6"
   
-  val version_prefix = "0.14.0"
+  val version_prefix = "0.15.0"
   val version_suffix = {
     val svnProc = Process(command = "svn", arguments = Seq("info"))
     val sedCommand = "s/^.*Last Changed Rev: \\([[:digit:]]\\{1,\\}\\).*$/\\1/p"
@@ -21,20 +21,20 @@ object Versions {
   
   // OTI Core version
     
-  val oti_core_prefix = "0.14.0"
-  val oti_core_suffix = "928"
+  val oti_core_prefix = "0.15.0"
+  val oti_core_suffix = "941"
   val oti_core_version = oti_core_prefix+"-"+oti_core_suffix
 
   // OTI Change Migration version
     
-  val oti_changeMigration_prefix = "0.14.0"
-  val oti_changeMigration_suffix = "936"
+  val oti_changeMigration_prefix = "0.15.0"
+  val oti_changeMigration_suffix = "942"
   val oti_changeMigration_version = oti_changeMigration_prefix+"-"+oti_changeMigration_suffix
 
   // OTI Trees version
     
-  val oti_trees_prefix = "0.14.0"
-  val oti_trees_suffix = "937"
+  val oti_trees_prefix = "0.15.0"
+  val oti_trees_suffix = "944"
   val oti_trees_version = oti_trees_prefix+"-"+oti_trees_suffix
 
 }
