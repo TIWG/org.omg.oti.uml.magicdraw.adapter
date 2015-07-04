@@ -48,6 +48,7 @@ trait MagicDrawUMLAbstraction
 
   import ops._
   override protected def e: Uml#Abstraction
+  def getMagicDrawAbstraction = e
 
   override def mapping = Option.apply(e.getMapping)
 }

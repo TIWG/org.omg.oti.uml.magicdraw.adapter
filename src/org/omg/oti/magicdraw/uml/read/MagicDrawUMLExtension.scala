@@ -47,6 +47,7 @@ trait MagicDrawUMLExtension
   with MagicDrawUMLAssociation {
 
   override protected def e: Uml#Extension
+  def getMagicDrawExtension = e
   import ops._
   
   override def ownedEnd = {

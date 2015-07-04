@@ -47,6 +47,7 @@ trait MagicDrawUMLProtocolStateMachine
   with MagicDrawUMLStateMachine {
 
   override protected def e: Uml#ProtocolStateMachine
+  def getMagicDrawProtocolStateMachine = e
   import ops._
 
   // 14.41

@@ -50,6 +50,7 @@ trait MagicDrawUMLArtifact
   with MagicDrawUMLDeployedArtifact {
 
   override protected def e: Uml#Artifact
+  def getMagicDrawArtifact = e
   import ops._
 
 	override def fileName: Option[String] =

@@ -49,6 +49,7 @@ trait MagicDrawUMLConstraint
   with MagicDrawUMLPackageableElement {
 
   override protected def e: Uml#Constraint
+  def getMagicDrawConstraint = e
   import ops._
   
   override def constrainedElement: Seq[UMLElement[Uml]] =

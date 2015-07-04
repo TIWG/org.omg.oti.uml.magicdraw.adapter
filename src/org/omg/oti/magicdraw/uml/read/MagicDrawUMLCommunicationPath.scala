@@ -47,6 +47,7 @@ trait MagicDrawUMLCommunicationPath
   with MagicDrawUMLAssociation {
 
   override protected def e: Uml#CommunicationPath
+  def getMagicDrawCommunicationPath = e
   import ops._
 
 }

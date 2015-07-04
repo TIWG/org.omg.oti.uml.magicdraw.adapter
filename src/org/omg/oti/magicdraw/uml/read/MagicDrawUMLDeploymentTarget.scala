@@ -49,6 +49,7 @@ trait MagicDrawUMLDeploymentTarget
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#DeploymentTarget
+  def getMagicDrawDeploymentTarget = e
   import ops._
 
   override def deployment =

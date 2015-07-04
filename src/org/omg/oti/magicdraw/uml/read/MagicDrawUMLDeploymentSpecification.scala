@@ -47,6 +47,7 @@ trait MagicDrawUMLDeploymentSpecification
   with MagicDrawUMLArtifact {
 
   override protected def e: Uml#DeploymentSpecification
+  def getMagicDrawDeploymentSpecification = e
   import ops._
 
   override def deploymentLocation: Option[String] = ???

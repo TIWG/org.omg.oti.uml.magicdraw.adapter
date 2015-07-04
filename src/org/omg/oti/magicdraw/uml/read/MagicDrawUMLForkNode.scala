@@ -47,6 +47,7 @@ trait MagicDrawUMLForkNode
   with MagicDrawUMLControlNode {
 
   override protected def e: Uml#ForkNode
+  def getMagicDrawForkNode = e
   import ops._
 
 }

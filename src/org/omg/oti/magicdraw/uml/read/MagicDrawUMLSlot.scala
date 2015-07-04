@@ -49,6 +49,7 @@ trait MagicDrawUMLSlot
   with MagicDrawUMLElement {
 
   override protected def e: Uml#Slot
+  def getMagicDrawSlot = e
   import ops._
     
   // 9.27

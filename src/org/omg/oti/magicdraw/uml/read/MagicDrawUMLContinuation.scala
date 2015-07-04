@@ -47,6 +47,7 @@ trait MagicDrawUMLContinuation
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#Continuation
+  def getMagicDrawContinuation = e
   import ops._
 
   override def setting: Boolean =

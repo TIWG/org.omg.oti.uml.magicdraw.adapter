@@ -47,6 +47,7 @@ trait MagicDrawUMLProtocolTransition
   with MagicDrawUMLTransition {
 
   override protected def e: Uml#ProtocolTransition
+  def getMagicDrawProtocolTransition = e
   import ops._
 
   // 14.41

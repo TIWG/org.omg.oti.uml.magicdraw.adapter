@@ -49,6 +49,7 @@ trait MagicDrawUMLElementValue
   extends MagicDrawUMLValueSpecification {
   
   override protected def e: Uml#ElementValue
+  def getMagicDrawElementValue = e
   import ops._
   
   def element: Option[UMLElement[Uml]] = Option.apply( e.getElement )

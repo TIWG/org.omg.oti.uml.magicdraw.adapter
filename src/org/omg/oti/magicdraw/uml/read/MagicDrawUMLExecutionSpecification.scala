@@ -49,6 +49,7 @@ trait MagicDrawUMLExecutionSpecification
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#ExecutionSpecification
+  def getMagicDrawExecutionSpecification = e
   import ops._
 
   override def finish: Option[UMLOccurrenceSpecification[Uml]] =

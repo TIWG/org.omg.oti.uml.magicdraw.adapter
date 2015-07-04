@@ -47,6 +47,7 @@ trait MagicDrawUMLCreateObjectAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#CreateObjectAction
+  def getMagicDrawCreateObjectAction = e
   import ops._
 
 	override def classifier: Option[UMLClassifier[Uml]] = ???

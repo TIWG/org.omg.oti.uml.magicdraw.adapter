@@ -47,6 +47,7 @@ trait MagicDrawUMLDecisionNode
   with MagicDrawUMLControlNode {
 
   override protected def e: Uml#DecisionNode
+  def getMagicDrawDecisionNode = e
   import ops._
 
   override def decisionInput: Option[UMLBehavior[Uml]] = ???

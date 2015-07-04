@@ -51,6 +51,7 @@ trait MagicDrawUMLProperty
   with MagicDrawUMLDeploymentTarget {
 
   override protected def e: Uml#Property
+  def getMagicDrawProperty = e
   import ops._
   
   override def aggregation: UMLAggregationKind.Value = 

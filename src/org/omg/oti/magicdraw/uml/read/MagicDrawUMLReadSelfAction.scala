@@ -47,6 +47,7 @@ trait MagicDrawUMLReadSelfAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReadSelfAction
+  def getMagicDrawReadSelfAction = e
   import ops._
 
   // 16.30

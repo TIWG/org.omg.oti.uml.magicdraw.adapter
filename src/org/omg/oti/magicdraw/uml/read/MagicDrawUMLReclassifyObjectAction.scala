@@ -47,6 +47,7 @@ trait MagicDrawUMLReclassifyObjectAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReclassifyObjectAction
+  def getMagicDrawReclassifyObjectAction = e
   import ops._
 
   // 16.30

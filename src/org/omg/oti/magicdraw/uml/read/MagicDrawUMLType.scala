@@ -49,6 +49,7 @@ trait MagicDrawUMLType
   with MagicDrawUMLPackageableElement {
 
   override protected def e: Uml#Type
+  def getMagicDrawType = e
   import ops._
 
   override def _package: Option[UMLPackage[Uml]] =

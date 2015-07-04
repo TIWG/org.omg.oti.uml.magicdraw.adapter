@@ -50,6 +50,7 @@ trait MagicDrawUMLValueSpecification
   with MagicDrawUMLTypedElement {
 
   override protected def e: Uml#ValueSpecification
+  def getMagicDrawValueSpecification = e
   import ops._
 
   override def min_interval =

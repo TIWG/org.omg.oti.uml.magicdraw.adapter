@@ -49,6 +49,7 @@ trait MagicDrawUMLExpression
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#Expression
+  def getMagicDrawExpression = e
   import ops._
   
   def symbol = Option.apply( e.getSymbol )

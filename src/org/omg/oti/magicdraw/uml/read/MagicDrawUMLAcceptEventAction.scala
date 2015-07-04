@@ -49,6 +49,7 @@ trait MagicDrawUMLAcceptEventAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#AcceptEventAction
+  def getMagicDrawAcceptEventAction = e
   import ops._
 
   override def isUnmarshall: Boolean =

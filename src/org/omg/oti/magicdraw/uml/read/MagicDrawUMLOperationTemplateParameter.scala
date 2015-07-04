@@ -47,6 +47,7 @@ trait MagicDrawUMLOperationTemplateParameter
   with MagicDrawUMLTemplateParameter {
 
   override protected def e: Uml#OperationTemplateParameter
+  def getMagicDrawOperationTemplateParameter = e
   import ops._
 
   override def parameteredElement: Option[UMLOperation[Uml]] =

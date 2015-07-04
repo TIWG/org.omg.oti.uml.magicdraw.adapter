@@ -47,6 +47,7 @@ trait MagicDrawUMLReadLinkAction
   with MagicDrawUMLLinkAction {
 
   override protected def e: Uml#ReadLinkAction
+  def getMagicDrawReadLinkAction = e
   import ops._
 
   // 16.34

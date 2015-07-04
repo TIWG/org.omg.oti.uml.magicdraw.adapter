@@ -47,6 +47,7 @@ trait MagicDrawUMLStartObjectBehaviorAction
   with MagicDrawUMLCallAction {
 
   override protected def e: Uml#StartObjectBehaviorAction
+  def getMagicDrawStartObjectBehaviorAction = e
   import ops._
 
   // 16.13

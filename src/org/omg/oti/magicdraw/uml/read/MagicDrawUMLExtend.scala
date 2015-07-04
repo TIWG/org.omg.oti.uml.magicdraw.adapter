@@ -49,6 +49,7 @@ trait MagicDrawUMLExtend
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#Extend
+  def getMagicDrawExtend = e
   import ops._
  
   // 18.1

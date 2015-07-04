@@ -48,5 +48,6 @@ trait MagicDrawUMLPrimitiveType
 
   import ops._
   override protected def e: Uml#PrimitiveType
+  def getMagicDrawPrimitiveType = e
   
 }

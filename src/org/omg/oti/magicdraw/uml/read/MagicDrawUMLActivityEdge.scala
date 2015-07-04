@@ -49,6 +49,7 @@ trait MagicDrawUMLActivityEdge
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#ActivityEdge
+  def getMagicDrawActivityEdge = e
   import ops._
 
   override def guard =

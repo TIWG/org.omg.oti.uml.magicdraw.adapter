@@ -49,6 +49,7 @@ trait MagicDrawUMLEnumeration
   with MagicDrawUMLDataType {
 
   override protected def e: Uml#Enumeration
+  def getMagicDrawEnumeration = e
   import ops._
   
   override def ownedLiteral = e.getOwnedLiteral.toSeq

@@ -49,6 +49,7 @@ trait MagicDrawUMLConnector
   with MagicDrawUMLFeature {
 
   override protected def e: Uml#Connector
+  def getMagicDrawConnector = e
   import ops._
   
   override def end: Seq[UMLConnectorEnd[Uml]] =

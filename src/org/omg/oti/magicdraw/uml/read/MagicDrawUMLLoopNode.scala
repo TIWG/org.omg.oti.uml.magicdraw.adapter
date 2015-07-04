@@ -48,6 +48,7 @@ trait MagicDrawUMLLoopNode
   with MagicDrawUMLStructuredActivityNode {
 
   override protected def e: Uml#LoopNode
+  def getMagicDrawLoopNode = e
   import ops._
 
   // 16.45

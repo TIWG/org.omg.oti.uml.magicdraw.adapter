@@ -52,9 +52,8 @@ trait MagicDrawUMLPackage
 
   import ops._
   override protected def e: Uml#Package
-
   def getMagicDrawPackage = e
-  
+
   def URI: Option[String] =
     e.getURI match {
       case null => None

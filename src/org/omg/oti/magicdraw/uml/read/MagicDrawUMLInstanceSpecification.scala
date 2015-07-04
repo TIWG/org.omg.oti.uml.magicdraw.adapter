@@ -50,9 +50,8 @@ trait MagicDrawUMLInstanceSpecification
   with MagicDrawUMLDeployedArtifact {
 
   override protected def e: Uml#InstanceSpecification
-  import ops._
-  
   def getMagicDrawInstanceSpecification = e
+  import ops._
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean = e == e.getOwner.getAppliedStereotypeInstance
   

@@ -47,6 +47,7 @@ trait MagicDrawUMLInterval
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#Interval
+  def getMagicDrawInterval = e
   import ops._
   
   override def max = 

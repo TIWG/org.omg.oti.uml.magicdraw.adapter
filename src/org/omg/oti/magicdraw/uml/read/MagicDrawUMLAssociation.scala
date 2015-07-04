@@ -50,6 +50,7 @@ trait MagicDrawUMLAssociation
   with MagicDrawUMLRelationship {
   
   override protected def e: Uml#Association
+  def getMagicDrawAssociation = e
   import ops._
   
   override def isDerived = e.isDerived

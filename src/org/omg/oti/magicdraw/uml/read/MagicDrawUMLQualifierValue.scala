@@ -47,6 +47,7 @@ trait MagicDrawUMLQualifierValue
   with MagicDrawUMLElement {
 
   override protected def e: Uml#QualifierValue
+  def getMagicDrawQualifierValue = e
   import ops._
 
   // 16.33

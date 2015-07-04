@@ -49,6 +49,7 @@ trait MagicDrawUMLActivityGroup
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#ActivityGroup
+  def getMagicDrawActivityGroup = e
   import ops._
 
   override def containedEdge: Set[UMLActivityEdge[Uml]] =

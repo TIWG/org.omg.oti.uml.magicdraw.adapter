@@ -47,6 +47,7 @@ trait MagicDrawUMLTrigger
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#Trigger
+  def getMagicDrawTrigger = e
   import ops._
 
   // 13.2

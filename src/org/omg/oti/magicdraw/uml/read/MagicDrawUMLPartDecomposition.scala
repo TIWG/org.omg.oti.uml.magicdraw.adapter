@@ -47,6 +47,7 @@ trait MagicDrawUMLPartDecomposition
   with MagicDrawUMLInteractionUse {
 
   override protected def e: Uml#PartDecomposition
+  def getMagicDrawPartDecomposition = e
   import ops._
 
   // 17.18

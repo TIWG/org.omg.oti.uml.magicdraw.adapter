@@ -50,6 +50,7 @@ trait MagicDrawUMLStringExpression
   with MagicDrawUMLTemplateableElement {
 
   override protected def e: Uml#StringExpression
+  def getMagicDrawStringExpression = e
   import ops._
   
   // 8.2

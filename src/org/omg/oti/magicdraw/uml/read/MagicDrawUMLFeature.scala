@@ -47,6 +47,7 @@ trait MagicDrawUMLFeature
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#Feature
+  def getMagicDrawFeature = e
   import ops._
 
   override def isStatic: Boolean =

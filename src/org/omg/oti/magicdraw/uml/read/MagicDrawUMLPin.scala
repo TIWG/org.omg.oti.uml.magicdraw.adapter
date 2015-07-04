@@ -48,6 +48,7 @@ trait MagicDrawUMLPin
   with MagicDrawUMLMultiplicityElement {
 
   override protected def e: Uml#Pin
+  def getMagicDrawPin = e
   import ops._
 
   override def isControl: Boolean =

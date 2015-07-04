@@ -47,6 +47,7 @@ trait MagicDrawUMLStateInvariant
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#StateInvariant
+  def getMagicDrawStateInvariant = e
   import ops._
 
   // 17.6

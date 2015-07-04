@@ -47,6 +47,7 @@ trait MagicDrawUMLInteractionConstraint
   with MagicDrawUMLConstraint {
 
   override protected def e: Uml#InteractionConstraint
+  def getMagicDrawInteractionConstraint = e
   import ops._
 
   // 17.11

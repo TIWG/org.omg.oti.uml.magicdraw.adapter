@@ -48,6 +48,7 @@ trait MagicDrawUMLDeployment
   with MagicDrawUMLDependency {
 
   override protected def e: Uml#Deployment
+  def getMagicDrawDeployment = e
   import ops._
 
   override def deployedArtifact: Set[UMLDeployedArtifact[Uml]] =

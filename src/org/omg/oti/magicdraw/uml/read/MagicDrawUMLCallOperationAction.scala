@@ -47,6 +47,7 @@ trait MagicDrawUMLCallOperationAction
   with MagicDrawUMLCallAction {
 
   override protected def e: Uml#CallOperationAction
+  def getMagicDrawCallOperationAction = e
   import ops._
   
 	override def operation: Option[UMLOperation[Uml]] =

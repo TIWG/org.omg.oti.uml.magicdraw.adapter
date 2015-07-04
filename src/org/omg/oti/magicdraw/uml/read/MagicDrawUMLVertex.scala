@@ -47,6 +47,7 @@ trait MagicDrawUMLVertex
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#Vertex
+  def getMagicDrawVertex = e
   import ops._
 
 }

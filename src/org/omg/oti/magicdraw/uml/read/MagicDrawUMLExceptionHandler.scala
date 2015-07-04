@@ -49,6 +49,7 @@ trait MagicDrawUMLExceptionHandler
   with MagicDrawUMLElement {
 
   override protected def e: Uml#ExceptionHandler
+  def getMagicDrawExceptionHandler = e
   import ops._
 
   override def exceptionInput: Option[UMLObjectNode[Uml]] = ???

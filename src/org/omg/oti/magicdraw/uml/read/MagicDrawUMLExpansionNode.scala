@@ -47,6 +47,7 @@ trait MagicDrawUMLExpansionNode
   with MagicDrawUMLObjectNode {
 
   override protected def e: Uml#ExpansionNode
+  def getMagicDrawExpansionNode = e
   import ops._
 
   override def regionAsInput: Option[UMLExpansionRegion[Uml]] = ???

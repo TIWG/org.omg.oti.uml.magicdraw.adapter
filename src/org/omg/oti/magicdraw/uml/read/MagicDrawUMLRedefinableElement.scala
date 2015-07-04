@@ -50,6 +50,7 @@ trait MagicDrawUMLRedefinableElement
 
   import ops._
   override protected def e: Uml#RedefinableElement
+  def getMagicDrawRedefinableElement = e
     
   override def isLeaf = e.isLeaf
   

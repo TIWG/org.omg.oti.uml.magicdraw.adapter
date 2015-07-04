@@ -47,6 +47,7 @@ trait MagicDrawUMLWriteStructuralFeatureAction
   with MagicDrawUMLStructuralFeatureAction {
 
   override protected def e: Uml#WriteStructuralFeatureAction
+  def getMagicDrawWriteStructuralFeatureAction = e
   import ops._
 
   override def result: Option[UMLOutputPin[Uml]] =

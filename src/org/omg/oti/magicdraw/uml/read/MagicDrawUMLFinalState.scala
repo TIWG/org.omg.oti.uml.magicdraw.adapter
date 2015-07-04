@@ -47,6 +47,7 @@ trait MagicDrawUMLFinalState
   with MagicDrawUMLState {
 
   override protected def e: Uml#FinalState
+  def getMagicDrawFinalState = e
   import ops._
 
 }

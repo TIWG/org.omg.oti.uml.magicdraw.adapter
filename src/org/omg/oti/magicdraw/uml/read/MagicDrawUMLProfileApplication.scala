@@ -48,6 +48,7 @@ trait MagicDrawUMLProfileApplication
 
   import ops._
   override protected def e: Uml#ProfileApplication
+  def getMagicDrawProfileApplication = e
   
   override def isStrict = e.isStrict()
 }

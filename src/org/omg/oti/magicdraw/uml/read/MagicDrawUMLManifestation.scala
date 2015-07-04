@@ -47,6 +47,7 @@ trait MagicDrawUMLManifestation
   with MagicDrawUMLAbstraction {
 
   override protected def e: Uml#Manifestation
+  def getMagicDrawManifestation = e
   import ops._
 
   override def utilizedElement: Option[UMLPackageableElement[Uml]] = ???

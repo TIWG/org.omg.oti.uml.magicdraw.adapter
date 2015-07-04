@@ -47,6 +47,7 @@ trait MagicDrawUMLLiteralString
   with MagicDrawUMLLiteralSpecification {
 
   override protected def e: Uml#LiteralString
+  def getMagicDrawLiteralString = e
   import ops._
   
   override def value = Option.apply(e.getValue)

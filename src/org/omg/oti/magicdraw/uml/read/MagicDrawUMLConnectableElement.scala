@@ -50,6 +50,7 @@ trait MagicDrawUMLConnectableElement
   with MagicDrawUMLParameterableElement {
 
   override protected def e: Uml#ConnectableElement
+  def getMagicDrawConnectableElement = e
   import ops._
 
   override def end: Set[UMLConnectorEnd[Uml]] =

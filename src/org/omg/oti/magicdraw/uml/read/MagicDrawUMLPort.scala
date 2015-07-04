@@ -44,12 +44,16 @@ import org.omg.oti.uml._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 
+import scala.reflect.runtime.universe._
+import scala.reflect._
+
 trait MagicDrawUMLPort 
   extends UMLPort[MagicDrawUML]
   with MagicDrawUMLProperty {
 
-  import ops._
   override protected def e: Uml#Port
+  def getMagicDrawPort = e
+  import ops._
 
   // 11.10
 	override def isBehavior: Boolean =

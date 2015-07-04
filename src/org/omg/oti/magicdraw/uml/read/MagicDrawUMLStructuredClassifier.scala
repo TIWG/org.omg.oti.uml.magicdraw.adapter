@@ -49,6 +49,7 @@ trait MagicDrawUMLStructuredClassifier
   with MagicDrawUMLClassifier {
 
   override protected def e: Uml#StructuredClassifier
+  def getMagicDrawStructuredClassifier = e
   import ops._
 
   override def ownedAttribute = e.getOwnedAttribute.toSeq

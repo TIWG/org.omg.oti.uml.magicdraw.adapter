@@ -47,6 +47,7 @@ trait MagicDrawUMLRemoveStructuralFeatureValueAction
   with MagicDrawUMLWriteStructuralFeatureAction {
 
   override protected def e: Uml#RemoveStructuralFeatureValueAction
+  def getMagicDrawRemoveStructuralFeatureValueAction = e
   import ops._
 
   // 16.36

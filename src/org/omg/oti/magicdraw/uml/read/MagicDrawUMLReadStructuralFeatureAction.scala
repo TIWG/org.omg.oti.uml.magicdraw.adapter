@@ -47,6 +47,7 @@ trait MagicDrawUMLReadStructuralFeatureAction
   with MagicDrawUMLStructuralFeatureAction {
 
   override protected def e: Uml#ReadStructuralFeatureAction
+  def getMagicDrawReadStructuralFeatureAction = e
   import ops._
 
   // 16.36  

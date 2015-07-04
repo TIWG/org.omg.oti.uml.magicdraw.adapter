@@ -48,6 +48,7 @@ trait MagicDrawUMLClause
   with MagicDrawUMLElement {
 
   override protected def e: Uml#Clause
+  def getMagicDrawClause = e
   import ops._
 
 	override def body: Set[UMLExecutableNode[Uml]] = ???

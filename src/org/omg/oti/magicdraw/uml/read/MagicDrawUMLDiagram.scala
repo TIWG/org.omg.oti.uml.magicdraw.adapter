@@ -48,6 +48,7 @@ trait MagicDrawUMLDiagram
   extends MagicDrawUMLNamedElement {
   
   override protected def e: Uml#Diagram
+  def getMagicDrawDiagram = e
   import ops._
     
   override def metaAttributes: MetaAttributeFunctions =

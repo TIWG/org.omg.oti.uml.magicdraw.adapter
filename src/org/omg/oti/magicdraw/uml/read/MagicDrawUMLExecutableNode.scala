@@ -49,6 +49,7 @@ trait MagicDrawUMLExecutableNode
   with MagicDrawUMLActivityNode {
 
   override protected def e: Uml#ExecutableNode
+  def getMagicDrawExecutableNode = e
   import ops._
 
 	override def test_loopNode: Option[UMLLoopNode[Uml]] =

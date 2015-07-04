@@ -47,6 +47,7 @@ trait MagicDrawUMLGate
   with MagicDrawUMLMessageEnd {
 
   override protected def e: Uml#Gate
+  def getMagicDrawGate = e
   import ops._
 
 }

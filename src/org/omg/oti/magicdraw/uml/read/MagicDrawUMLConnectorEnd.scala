@@ -47,6 +47,7 @@ trait MagicDrawUMLConnectorEnd
   with MagicDrawUMLMultiplicityElement {
 
   override protected def e: Uml#ConnectorEnd
+  def getMagicDrawConnectorEnd = e
   import ops._
   
   override def definingEnd: Option[UMLProperty[Uml]] =

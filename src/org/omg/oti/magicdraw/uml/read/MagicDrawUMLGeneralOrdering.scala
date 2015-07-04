@@ -47,6 +47,7 @@ trait MagicDrawUMLGeneralOrdering
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#GeneralOrdering
+  def getMagicDrawGeneralOrdering = e
   import ops._
   
 	override def after: Option[UMLOccurrenceSpecification[Uml]] = ???

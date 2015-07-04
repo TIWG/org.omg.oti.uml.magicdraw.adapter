@@ -49,6 +49,7 @@ trait MagicDrawUMLInteraction
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#Interaction
+  def getMagicDrawInteraction = e
   import ops._
 
   // 17.1

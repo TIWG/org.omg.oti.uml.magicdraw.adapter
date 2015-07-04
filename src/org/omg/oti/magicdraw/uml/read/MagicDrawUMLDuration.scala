@@ -49,6 +49,7 @@ trait MagicDrawUMLDuration
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#Duration
+  def getMagicDrawDuration = e
   import ops._
 
   override def expr =

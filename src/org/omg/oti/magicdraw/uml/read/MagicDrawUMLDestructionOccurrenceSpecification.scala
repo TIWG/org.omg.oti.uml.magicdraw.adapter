@@ -47,6 +47,7 @@ trait MagicDrawUMLDestructionOccurrenceSpecification
   with MagicDrawUMLMessageOccurrenceSpecification {
 
   override protected def e: Uml#DestructionOccurrenceSpecification
+  def getMagicDrawDestructionOccurrenceSpecification = e
   import ops._
   
 }

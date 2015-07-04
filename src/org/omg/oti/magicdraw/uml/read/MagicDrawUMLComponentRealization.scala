@@ -48,6 +48,7 @@ trait MagicDrawUMLComponentRealization
   with MagicDrawUMLRealization {
 
   override protected def e: Uml#ComponentRealization
+  def getMagicDrawComponentRealization = e
   import ops._
 
 	override def abstraction: Option[UMLComponent[Uml]] =

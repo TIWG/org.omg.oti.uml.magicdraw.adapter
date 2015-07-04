@@ -47,6 +47,7 @@ trait MagicDrawUMLPseudostate
   with MagicDrawUMLVertex {
 
   override protected def e: Uml#Pseudostate
+  def getMagicDrawPseudostate = e
   import ops._
 
   // 14.1

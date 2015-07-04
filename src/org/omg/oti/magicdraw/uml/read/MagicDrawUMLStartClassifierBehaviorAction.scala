@@ -47,6 +47,7 @@ trait MagicDrawUMLStartClassifierBehaviorAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#StartClassifierBehaviorAction
+  def getMagicDrawStartClassifierBehaviorAction = e
   import ops._
 
   // 16.30

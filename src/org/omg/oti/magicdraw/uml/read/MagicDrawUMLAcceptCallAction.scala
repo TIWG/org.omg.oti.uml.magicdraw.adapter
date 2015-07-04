@@ -47,6 +47,7 @@ trait MagicDrawUMLAcceptCallAction
   with MagicDrawUMLAcceptEventAction {
 
   override protected def e: Uml#AcceptCallAction
+  def getMagicDrawAcceptCallAction = e
   import ops._
 
   override def returnInformation: Option[UMLOutputPin[Uml]] =

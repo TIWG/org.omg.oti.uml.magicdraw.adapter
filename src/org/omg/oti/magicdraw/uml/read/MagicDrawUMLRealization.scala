@@ -47,6 +47,7 @@ trait MagicDrawUMLRealization
   with MagicDrawUMLAbstraction {
 
   override protected def e: Uml#Realization
+  def getMagicDrawRealization = e
   import ops._
 
 }

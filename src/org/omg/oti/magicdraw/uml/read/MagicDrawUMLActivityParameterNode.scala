@@ -47,6 +47,7 @@ trait MagicDrawUMLActivityParameterNode
   with MagicDrawUMLObjectNode {
 
   override protected def e: Uml#ActivityParameterNode
+  def getMagicDrawActivityParameterNode = e
   import ops._
 
   override def parameter: Option[UMLParameter[Uml]] = 

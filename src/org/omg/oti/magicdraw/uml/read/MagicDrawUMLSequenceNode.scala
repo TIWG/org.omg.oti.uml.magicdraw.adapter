@@ -48,6 +48,7 @@ trait MagicDrawUMLSequenceNode
   with MagicDrawUMLStructuredActivityNode {
 
   override protected def e: Uml#SequenceNode
+  def getMagicDrawSequenceNode = e
   import ops._
 
   // 16.45

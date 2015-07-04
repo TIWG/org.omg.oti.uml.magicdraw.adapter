@@ -47,6 +47,7 @@ trait MagicDrawUMLClearVariableAction
   with MagicDrawUMLVariableAction {
 
   override protected def e: Uml#ClearVariableAction
+  def getMagicDrawClearVariableAction = e
   import ops._
 
 }

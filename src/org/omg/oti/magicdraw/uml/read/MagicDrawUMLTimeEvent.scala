@@ -47,6 +47,7 @@ trait MagicDrawUMLTimeEvent
   with MagicDrawUMLEvent {
 
   override protected def e: Uml#TimeEvent
+  def getMagicDrawTimeEvent = e
   import ops._
 
   override def when = Option.apply( e.getWhen )

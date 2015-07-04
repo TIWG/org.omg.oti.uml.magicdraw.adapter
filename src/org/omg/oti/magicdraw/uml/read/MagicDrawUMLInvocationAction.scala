@@ -49,6 +49,7 @@ trait MagicDrawUMLInvocationAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#InvocationAction
+  def getMagicDrawInvocationAction = e
   import ops._
 
   override def argument: Seq[UMLInputPin[Uml]] =

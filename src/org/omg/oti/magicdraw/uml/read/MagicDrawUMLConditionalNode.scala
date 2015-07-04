@@ -49,6 +49,7 @@ trait MagicDrawUMLConditionalNode
   with MagicDrawUMLStructuredActivityNode {
 
   override protected def e: Uml#ConditionalNode
+  def getMagicDrawConditionalNode = e
   import ops._
 
   override def clause: Set[UMLClause[Uml]] =

@@ -49,6 +49,7 @@ trait MagicDrawUMLEvent
   with MagicDrawUMLPackageableElement {
 
   override protected def e: Uml#Event
+  def getMagicDrawEvent = e
   import ops._
 
   override def event_trigger = e.get_triggerOfEvent.toSet[Uml#Trigger]

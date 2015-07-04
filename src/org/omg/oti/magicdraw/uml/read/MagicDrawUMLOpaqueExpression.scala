@@ -49,6 +49,7 @@ trait MagicDrawUMLOpaqueExpression
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#OpaqueExpression
+  def getMagicDrawOpaqueExpression = e
   import ops._
 
   // 8.2

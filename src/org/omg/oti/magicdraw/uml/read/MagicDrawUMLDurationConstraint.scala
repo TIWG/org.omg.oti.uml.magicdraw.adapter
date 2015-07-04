@@ -50,6 +50,7 @@ trait MagicDrawUMLDurationConstraint
   with MagicDrawUMLIntervalConstraint {
 
   override protected def e: Uml#DurationConstraint
+  def getMagicDrawDurationConstraint = e
   import ops._
 
   override def specification: Option[UMLDurationInterval[Uml]] =

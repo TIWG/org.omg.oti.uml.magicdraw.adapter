@@ -50,9 +50,7 @@ trait MagicDrawUMLStereotype
   with MagicDrawUMLClass {
 
   override protected def e: Uml#Stereotype
-
   def getMagicDrawStereotype = e
-
   import ops._
   
   def isStereotypeApplied( element: Uml#Element ): Boolean = StereotypesHelper.hasStereotype( element, e )

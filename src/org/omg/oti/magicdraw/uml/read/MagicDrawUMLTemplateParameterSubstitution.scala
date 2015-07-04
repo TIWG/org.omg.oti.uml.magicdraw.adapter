@@ -47,6 +47,7 @@ trait MagicDrawUMLTemplateParameterSubstitution
   with MagicDrawUMLElement {
 
   override protected def e: Uml#TemplateParameterSubstitution
+  def getMagicDrawTemplateParameterSubstitution = e
   import ops._
 
   // 7.4  

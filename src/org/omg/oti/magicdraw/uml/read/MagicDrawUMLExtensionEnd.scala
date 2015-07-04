@@ -47,6 +47,7 @@ trait MagicDrawUMLExtensionEnd
   with MagicDrawUMLProperty {
 
   override protected def e: Uml#ExtensionEnd
+  def getMagicDrawExtensionEnd = e
   import ops._
   
   override def lower: Integer = ???

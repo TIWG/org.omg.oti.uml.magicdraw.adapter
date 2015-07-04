@@ -49,6 +49,7 @@ trait MagicDrawUMLTemplateSignature
   with MagicDrawUMLElement {
 
   override protected def e: Uml#TemplateSignature
+  def getMagicDrawTemplateSignature = e
   import ops._
 
   override def ownedParameter: Seq[UMLTemplateParameter[Uml]] =

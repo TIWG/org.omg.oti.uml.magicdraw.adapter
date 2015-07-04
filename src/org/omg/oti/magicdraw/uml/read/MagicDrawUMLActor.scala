@@ -47,6 +47,7 @@ trait MagicDrawUMLActor
   with MagicDrawUMLBehavioredClassifier {
 
   override protected def e: Uml#Actor
+  def getMagicDrawActor = e
   import ops._
 
 }

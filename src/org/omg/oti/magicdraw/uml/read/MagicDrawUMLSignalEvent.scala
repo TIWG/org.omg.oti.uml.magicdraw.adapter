@@ -47,6 +47,7 @@ trait MagicDrawUMLSignalEvent
   with MagicDrawUMLMessageEvent {
 
   override protected def e: Uml#SignalEvent
+  def getMagicDrawSignalEvent = e
   import ops._
 
   override def signal = Option.apply( e.getSignal )

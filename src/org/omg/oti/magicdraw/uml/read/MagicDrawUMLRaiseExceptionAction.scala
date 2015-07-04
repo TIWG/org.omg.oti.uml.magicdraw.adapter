@@ -47,6 +47,7 @@ trait MagicDrawUMLRaiseExceptionAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#RaiseExceptionAction
+  def getMagicDrawRaiseExceptionAction = e
   import ops._
 
   // 16.56

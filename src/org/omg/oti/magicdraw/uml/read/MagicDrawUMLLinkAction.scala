@@ -49,6 +49,7 @@ trait MagicDrawUMLLinkAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#LinkAction
+  def getMagicDrawLinkAction = e
   import ops._
 
   override def endData: Iterable[UMLLinkEndData[Uml]] =

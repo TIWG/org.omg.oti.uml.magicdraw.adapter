@@ -47,6 +47,7 @@ trait MagicDrawUMLActionInputPin
   with MagicDrawUMLInputPin {
 
   override protected def e: Uml#ActionInputPin
+  def getMagicDrawActionInputPin = e
   import ops._
 
   override def fromAction = Option.apply( e.getFromAction )

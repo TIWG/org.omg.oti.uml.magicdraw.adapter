@@ -48,6 +48,7 @@ trait MagicDrawUMLVariable
   with MagicDrawUMLMultiplicityElement {
 
   override protected def e: Uml#Variable
+  def getMagicDrawVariable = e
   import ops._
 
   // 16.37

@@ -47,6 +47,7 @@ trait MagicDrawUMLDataStoreNode
   with MagicDrawUMLCentralBufferNode {
 
   override protected def e: Uml#DataStoreNode
+  def getMagicDrawDataStoreNode = e
   import ops._
 
 }

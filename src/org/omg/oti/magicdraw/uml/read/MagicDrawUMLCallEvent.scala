@@ -47,6 +47,7 @@ trait MagicDrawUMLCallEvent
   with MagicDrawUMLMessageEvent {
 
   override protected def e: Uml#CallEvent
+  def getMagicDrawCallEvent = e
   import ops._
 
   override def operation = 

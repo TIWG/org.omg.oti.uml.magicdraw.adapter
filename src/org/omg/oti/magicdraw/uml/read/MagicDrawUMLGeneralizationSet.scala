@@ -48,6 +48,7 @@ trait MagicDrawUMLGeneralizationSet
   with MagicDrawUMLPackageableElement {
 
   override protected def e: Uml#GeneralizationSet
+  def getMagicDrawGeneralizationSet = e
   import ops._
 
   // 9.14

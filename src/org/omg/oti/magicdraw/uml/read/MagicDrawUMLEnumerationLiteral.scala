@@ -47,6 +47,7 @@ trait MagicDrawUMLEnumerationLiteral
   with MagicDrawUMLInstanceSpecification {
 
   override protected def e: Uml#EnumerationLiteral
+  def getMagicDrawEnumerationLiteral = e
   import ops._
 
   override def classifier: Iterable[UMLEnumeration[Uml]] =

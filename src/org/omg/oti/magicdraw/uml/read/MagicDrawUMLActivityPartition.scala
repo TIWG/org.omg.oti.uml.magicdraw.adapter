@@ -49,6 +49,7 @@ trait MagicDrawUMLActivityPartition
   with MagicDrawUMLActivityGroup {
 
   override protected def e: Uml#ActivityPartition
+  def getMagicDrawActivityPartition = e
   import ops._
 
   override def edge: Set[UMLActivityEdge[Uml]] =

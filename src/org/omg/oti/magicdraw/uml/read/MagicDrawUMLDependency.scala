@@ -49,5 +49,6 @@ trait MagicDrawUMLDependency
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#Dependency
+  def getMagicDrawDependency = e
 
 }

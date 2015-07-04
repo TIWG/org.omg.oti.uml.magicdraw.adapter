@@ -51,6 +51,7 @@ trait MagicDrawUMLStructuralFeature
   with MagicDrawUMLMultiplicityElement {
 
   override protected def e: Uml#StructuralFeature
+  def getMagicDrawStructuralFeature = e
   import ops._
  
   override def isReadOnly = e.isReadOnly

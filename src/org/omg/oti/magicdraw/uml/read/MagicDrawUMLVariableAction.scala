@@ -47,6 +47,7 @@ trait MagicDrawUMLVariableAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#VariableAction
+  def getMagicDrawVariableAction = e
   import ops._
 
   override def variable: Option[UMLVariable[Uml]] =

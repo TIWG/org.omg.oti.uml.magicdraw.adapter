@@ -47,6 +47,7 @@ trait MagicDrawUMLAnyReceiveEvent
   with MagicDrawUMLMessageEvent {
 
   override protected def e: Uml#AnyReceiveEvent
+  def getMagicDrawAnyReceiveEvent = e
   import ops._
 
 }

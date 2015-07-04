@@ -49,6 +49,7 @@ trait MagicDrawUMLOutputPin
   with MagicDrawUMLPin {
 
   override protected def e: Uml#OutputPin
+  def getMagicDrawOutputPin = e
   import ops._
 
 	override def bodyOutput_clause: Set[UMLClause[Uml]] =

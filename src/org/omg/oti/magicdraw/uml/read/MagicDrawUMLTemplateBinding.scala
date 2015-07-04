@@ -47,6 +47,7 @@ trait MagicDrawUMLTemplateBinding
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#TemplateBinding
+  def getMagicDrawTemplateBinding = e
   import ops._
 
 }

@@ -47,5 +47,6 @@ trait MagicDrawUMLLiteralNull
   with MagicDrawUMLLiteralSpecification {
 
   override protected def e: Uml#LiteralNull
+  def getMagicDrawLiteralNull = e
   import ops._
 }

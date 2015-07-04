@@ -47,6 +47,7 @@ trait MagicDrawUMLDestroyObjectAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#DestroyObjectAction
+  def getMagicDrawDestroyObjectAction = e
   import ops._
 
   override def isDestroyLinks: Boolean = ???

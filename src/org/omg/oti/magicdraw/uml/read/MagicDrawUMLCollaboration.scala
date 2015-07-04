@@ -50,6 +50,7 @@ trait MagicDrawUMLCollaboration
   with MagicDrawUMLStructuredClassifier {
 
   override protected def e: Uml#Collaboration
+  def getMagicDrawCollaboration = e
   import ops._
 
   override def collaborationRole = e.getCollaborationRole.toSet[Uml#ConnectableElement]

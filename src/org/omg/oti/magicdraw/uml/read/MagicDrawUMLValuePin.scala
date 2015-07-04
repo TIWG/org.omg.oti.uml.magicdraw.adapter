@@ -47,6 +47,7 @@ trait MagicDrawUMLValuePin
   with MagicDrawUMLInputPin {
 
   override protected def e: Uml#ValuePin
+  def getMagicDrawValuePin = e
   import ops._
 
   override def value: Option[UMLValueSpecification[Uml]] =

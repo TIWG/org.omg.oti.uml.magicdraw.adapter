@@ -48,6 +48,7 @@ trait MagicDrawUMLSignal
   with MagicDrawUMLClassifier {
 
   override protected def e: Uml#Signal
+  def getMagicDrawSignal = e
   import ops._
 
   // 10.5

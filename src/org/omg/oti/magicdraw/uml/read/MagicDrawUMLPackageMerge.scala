@@ -48,6 +48,7 @@ trait MagicDrawUMLPackageMerge
 
   import ops._
   override protected def e: Uml#PackageMerge
+  def getMagicDrawPackageMerge = e
 
   
 }

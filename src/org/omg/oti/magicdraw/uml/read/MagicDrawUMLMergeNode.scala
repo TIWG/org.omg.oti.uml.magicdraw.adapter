@@ -47,6 +47,7 @@ trait MagicDrawUMLMergeNode
   with MagicDrawUMLControlNode {
 
   override protected def e: Uml#MergeNode
+  def getMagicDrawMergeNode = e
   import ops._
 
 }

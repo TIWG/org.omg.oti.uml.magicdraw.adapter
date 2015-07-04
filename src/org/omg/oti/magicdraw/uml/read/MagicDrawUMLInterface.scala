@@ -49,6 +49,7 @@ trait MagicDrawUMLInterface
   with MagicDrawUMLClassifier {
 
   override protected def e: Uml#Interface
+  def getMagicDrawInterface = e
   import ops._
 
 	override def nestedClassifier: Seq[UMLClassifier[Uml]] =

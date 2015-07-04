@@ -47,6 +47,7 @@ trait MagicDrawUMLBroadcastSignalAction
   with MagicDrawUMLInvocationAction {
 
   override protected def e: Uml#BroadcastSignalAction
+  def getMagicDrawBroadcastSignalAction = e
   import ops._
 
   override def signal: Option[UMLSignal[Uml]] =

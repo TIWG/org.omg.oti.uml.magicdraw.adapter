@@ -49,6 +49,7 @@ trait MagicDrawUMLLinkEndData
   with MagicDrawUMLElement {
 
   override protected def e: Uml#LinkEndData
+  def getMagicDrawLinkEndData = e
   import ops._
 
   override def end: Option[UMLProperty[Uml]] =

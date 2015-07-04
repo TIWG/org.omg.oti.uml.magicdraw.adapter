@@ -49,6 +49,7 @@ trait MagicDrawUMLActivityNode
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#ActivityNode
+  def getMagicDrawActivityNode = e
   import ops._
 
   override def inGroup =

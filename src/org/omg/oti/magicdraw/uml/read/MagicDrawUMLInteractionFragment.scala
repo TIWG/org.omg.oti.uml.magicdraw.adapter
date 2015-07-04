@@ -49,6 +49,7 @@ trait MagicDrawUMLInteractionFragment
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#InteractionFragment
+  def getMagicDrawInteractionFragment = e
   import ops._
 
   override def covered: Iterable[UMLLifeline[Uml]] =

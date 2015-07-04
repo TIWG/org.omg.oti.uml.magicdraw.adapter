@@ -47,6 +47,7 @@ trait MagicDrawUMLImage
   with MagicDrawUMLElement {
 
   override protected def e: Uml#Image
+  def getMagicDrawImage = e
   import ops._
   
   def content: Option[String] = e.getContent  match {

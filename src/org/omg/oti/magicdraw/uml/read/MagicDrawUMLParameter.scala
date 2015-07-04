@@ -50,6 +50,7 @@ trait MagicDrawUMLParameter
 
   import ops._
   override protected def e: Uml#Parameter
+  def getMagicDrawParameter = e
   
 	override def default: Option[String] = 
     e.getDefault match {

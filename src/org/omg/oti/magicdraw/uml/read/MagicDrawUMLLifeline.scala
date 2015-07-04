@@ -48,6 +48,7 @@ trait MagicDrawUMLLifeline
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#Lifeline
+  def getMagicDrawLifeline = e
   import ops._
 
   // 17.6

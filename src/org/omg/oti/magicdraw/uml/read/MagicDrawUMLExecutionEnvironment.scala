@@ -47,6 +47,7 @@ trait MagicDrawUMLExecutionEnvironment
   with MagicDrawUMLNode {
 
   override protected def e: Uml#ExecutionEnvironment
+  def getMagicDrawExecutionEnvironment = e
   import ops._
 
 }

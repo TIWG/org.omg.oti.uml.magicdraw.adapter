@@ -49,6 +49,7 @@ trait MagicDrawUMLNamedElement
   with MagicDrawUMLElement {
 
   override protected def e: Uml#NamedElement
+  def getMagicDrawNamedElement = e
   import ops._
   
   override def clientDependency: Set[UMLDependency[Uml]] =

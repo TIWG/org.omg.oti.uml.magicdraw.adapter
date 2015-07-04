@@ -47,6 +47,7 @@ trait MagicDrawUMLUsage
   with MagicDrawUMLDependency {
 
   override protected def e: Uml#Usage
+  def getMagicDrawUsage = e
   import ops._
 
 }

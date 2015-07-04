@@ -47,6 +47,7 @@ trait MagicDrawUMLMessageEnd
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#MessageEnd
+  def getMagicDrawMessageEnd = e
   import ops._
 
   // 17.7

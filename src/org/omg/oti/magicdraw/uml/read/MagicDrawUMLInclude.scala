@@ -48,6 +48,7 @@ trait MagicDrawUMLInclude
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#Include
+  def getMagicDrawInclude = e
   import ops._
 
 }

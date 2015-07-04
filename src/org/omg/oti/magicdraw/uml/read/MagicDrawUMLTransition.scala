@@ -48,6 +48,7 @@ trait MagicDrawUMLTransition
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#Transition
+  def getMagicDrawTransition = e
   import ops._
 
   override def kind: UMLTransitionKind.Value = ???

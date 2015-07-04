@@ -47,6 +47,7 @@ trait MagicDrawUMLInterfaceRealization
   with MagicDrawUMLRealization {
 
   override protected def e: Uml#InterfaceRealization
+  def getMagicDrawInterfaceRealization = e
   import ops._
   
   override def contract: Option[UMLInterface[Uml]] =

@@ -49,6 +49,7 @@ trait MagicDrawUMLLinkEndDestructionData
   with MagicDrawUMLLinkEndData {
 
   override protected def e: Uml#LinkEndDestructionData
+  def getMagicDrawLinkEndDestructionData = e
   import ops._
 
   override def destroyAt: Option[UMLInputPin[Uml]] =

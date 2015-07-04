@@ -47,6 +47,7 @@ trait MagicDrawUMLClearAssociationAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ClearAssociationAction
+  def getMagicDrawClearAssociationAction = e
   import ops._
 
   override def association: Option[UMLAssociation[Uml]] =

@@ -50,6 +50,7 @@ trait MagicDrawUMLObjectNode
   with MagicDrawUMLTypedElement {
 
   override protected def e: Uml#ObjectNode
+  def getMagicDrawObjectNode = e
   import ops._
 
   override def inState: Set[UMLState[Uml]] =

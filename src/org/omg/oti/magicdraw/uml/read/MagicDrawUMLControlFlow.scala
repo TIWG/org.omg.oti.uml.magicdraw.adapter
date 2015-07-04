@@ -47,6 +47,7 @@ trait MagicDrawUMLControlFlow
   with MagicDrawUMLActivityEdge {
 
   override protected def e: Uml#ControlFlow
+  def getMagicDrawControlFlow = e
   import ops._
 
 }

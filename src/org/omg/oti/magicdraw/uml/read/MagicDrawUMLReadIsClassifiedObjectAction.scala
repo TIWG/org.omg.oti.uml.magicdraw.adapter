@@ -47,6 +47,7 @@ trait MagicDrawUMLReadIsClassifiedObjectAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReadIsClassifiedObjectAction
+  def getMagicDrawReadIsClassifiedObjectAction = e
   import ops._
 
   // 16.30

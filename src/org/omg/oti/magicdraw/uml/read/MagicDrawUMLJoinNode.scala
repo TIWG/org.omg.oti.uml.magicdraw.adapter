@@ -47,6 +47,7 @@ trait MagicDrawUMLJoinNode
   with MagicDrawUMLControlNode {
 
   override protected def e: Uml#JoinNode
+  def getMagicDrawJoinNode = e
   import ops._
 
   override def isCombineDuplicate: Boolean =

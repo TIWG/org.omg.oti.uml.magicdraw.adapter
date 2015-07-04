@@ -49,6 +49,7 @@ trait MagicDrawUMLTestIdentityAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#TestIdentityAction
+  def getMagicDrawTestIdentityAction = e
   import ops._
 
   override def first: Option[UMLInputPin[Uml]] =

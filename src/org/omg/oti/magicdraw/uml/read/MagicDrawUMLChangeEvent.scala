@@ -47,6 +47,7 @@ trait MagicDrawUMLChangeEvent
   with MagicDrawUMLEvent {
 
   override protected def e: Uml#ChangeEvent
+  def getMagicDrawChangeEvent = e
   import ops._
 
   override def changeExpression = 

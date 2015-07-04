@@ -47,6 +47,7 @@ trait MagicDrawUMLLinkEndCreationData
   with MagicDrawUMLLinkEndData {
 
   override protected def e: Uml#LinkEndCreationData
+  def getMagicDrawLinkEndCreationData = e
   import ops._
 
   override def insertAt: Option[UMLInputPin[Uml]] =

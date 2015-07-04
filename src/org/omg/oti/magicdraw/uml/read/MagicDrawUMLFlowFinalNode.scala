@@ -47,6 +47,7 @@ trait MagicDrawUMLFlowFinalNode
   with MagicDrawUMLFinalNode {
 
   override protected def e: Uml#FlowFinalNode
+  def getMagicDrawFlowFinalNode = e
   import ops._
 
 }

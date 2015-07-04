@@ -48,6 +48,7 @@ trait MagicDrawUMLRegion
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#Region
+  def getMagicDrawRegion = e
   import ops._
 
   // 14.37

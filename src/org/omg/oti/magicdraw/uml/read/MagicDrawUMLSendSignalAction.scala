@@ -47,6 +47,7 @@ trait MagicDrawUMLSendSignalAction
   with MagicDrawUMLInvocationAction {
 
   override protected def e: Uml#SendSignalAction
+  def getMagicDrawSendSignalAction = e
   import ops._
 
   // 16.13

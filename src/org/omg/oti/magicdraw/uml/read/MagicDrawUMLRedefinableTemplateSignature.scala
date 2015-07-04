@@ -48,6 +48,7 @@ trait MagicDrawUMLRedefinableTemplateSignature
   with MagicDrawUMLTemplateSignature {
 
   override protected def e: Uml#RedefinableTemplateSignature
+  def getMagicDrawRedefinableTemplateSignature = e
   import ops._
 
   // BUG: NO FIGURE

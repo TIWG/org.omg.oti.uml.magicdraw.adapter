@@ -47,6 +47,7 @@ trait MagicDrawUMLModel
   with MagicDrawUMLPackage {
 
   override protected def e: Uml#Model
+  def getMagicDrawModel = e
   import ops._
   
   // 12.1  

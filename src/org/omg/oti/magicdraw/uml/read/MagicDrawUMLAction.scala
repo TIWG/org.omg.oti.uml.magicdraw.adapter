@@ -49,6 +49,7 @@ trait MagicDrawUMLAction
   with MagicDrawUMLExecutableNode {
 
   override protected def e: Uml#Action
+  def getMagicDrawAction = e
   import ops._
 
   override def context = Option.apply( e.getContext )

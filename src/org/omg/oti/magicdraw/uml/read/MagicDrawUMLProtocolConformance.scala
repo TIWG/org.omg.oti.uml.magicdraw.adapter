@@ -47,6 +47,7 @@ trait MagicDrawUMLProtocolConformance
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#ProtocolConformance
+  def getMagicDrawProtocolConformance = e
   import ops._
 
 }

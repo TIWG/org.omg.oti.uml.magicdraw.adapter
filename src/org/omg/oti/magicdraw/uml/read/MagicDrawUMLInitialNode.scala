@@ -47,6 +47,7 @@ trait MagicDrawUMLInitialNode
   with MagicDrawUMLControlNode {
 
   override protected def e: Uml#InitialNode
+  def getMagicDrawInitialNode = e
   import ops._
 
 }

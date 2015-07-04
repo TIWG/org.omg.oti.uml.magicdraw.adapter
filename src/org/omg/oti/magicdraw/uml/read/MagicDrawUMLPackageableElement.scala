@@ -50,6 +50,7 @@ trait MagicDrawUMLPackageableElement
   with MagicDrawUMLParameterableElement {
 
   override protected def e: Uml#PackageableElement
+  def getMagicDrawPackageableElement = e
   import ops._
 
   override def visibility: Option[UMLVisibilityKind.Value] =

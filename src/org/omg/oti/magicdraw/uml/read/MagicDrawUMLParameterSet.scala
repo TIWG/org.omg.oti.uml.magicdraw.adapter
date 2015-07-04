@@ -49,6 +49,7 @@ trait MagicDrawUMLParameterSet
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#ParameterSet
+  def getMagicDrawParameterSet = e
   import ops._
 
   override def condition: Set[UMLConstraint[Uml]] =

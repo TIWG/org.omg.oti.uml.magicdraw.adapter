@@ -49,6 +49,7 @@ trait MagicDrawUMLUnmarshallAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#UnmarshallAction
+  def getMagicDrawUnmarshallAction = e
   import ops._
 
   override def _object: Option[UMLInputPin[Uml]] =

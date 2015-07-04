@@ -49,6 +49,7 @@ trait MagicDrawUMLClassifierTemplateParameter
   with MagicDrawUMLTemplateParameter {
 
   override protected def e: Uml#ClassifierTemplateParameter
+  def getMagicDrawClassifierTemplateParameter = e
   import ops._
 
   override def allowSubstitutable: Boolean =

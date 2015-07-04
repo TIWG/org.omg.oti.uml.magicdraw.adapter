@@ -47,9 +47,7 @@ trait MagicDrawUMLMultiplicityElement
   with MagicDrawUMLElement {
 
   override protected def e: Uml#MultiplicityElement
-
   def getMagicDrawMultiplicityElement = e
-
   import ops._
   
   override def isOrdered = e.isOrdered

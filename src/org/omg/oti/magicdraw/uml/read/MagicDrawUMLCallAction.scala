@@ -49,6 +49,7 @@ trait MagicDrawUMLCallAction
   with MagicDrawUMLInvocationAction {
 
   override protected def e: Uml#CallAction
+  def getMagicDrawCallAction = e
   import ops._
 
   override def isSynchronous: Boolean =

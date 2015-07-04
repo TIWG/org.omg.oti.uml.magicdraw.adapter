@@ -49,6 +49,7 @@ trait MagicDrawUMLDataType
   with MagicDrawUMLClassifier {
 
   override protected def e: Uml#DataType
+  def getMagicDrawDataType = e
   import ops._
   
   override def ownedAttribute: Seq[UMLProperty[Uml]] =

@@ -47,6 +47,7 @@ trait MagicDrawUMLReadExtentAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReadExtentAction
+  def getMagicDrawReadExtentAction = e
   import ops._
 
   // 16.30

@@ -49,6 +49,7 @@ trait MagicDrawUMLDestroyLinkAction
   with MagicDrawUMLWriteLinkAction {
 
   override protected def e: Uml#DestroyLinkAction
+  def getMagicDrawDestroyLinkAction = e
   import ops._
 
   override def endData: Iterable[UMLLinkEndDestructionData[Uml]] =

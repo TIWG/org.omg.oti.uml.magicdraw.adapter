@@ -47,6 +47,7 @@ trait MagicDrawUMLTimeConstraint
   with MagicDrawUMLIntervalConstraint {
 
   override protected def e: Uml#TimeConstraint
+  def getMagicDrawTimeConstraint = e
   import ops._
 
   override def firstEvent =

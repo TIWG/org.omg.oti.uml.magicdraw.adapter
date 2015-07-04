@@ -47,6 +47,7 @@ trait MagicDrawUMLSubstitution
   with MagicDrawUMLRealization {
 
   override protected def e: Uml#Substitution
+  def getMagicDrawSubstitution = e
   import ops._
 
   override def contract: Option[UMLClassifier[Uml]] =

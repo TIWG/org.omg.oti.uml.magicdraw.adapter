@@ -47,6 +47,7 @@ trait MagicDrawUMLSendObjectAction
   with MagicDrawUMLInvocationAction {
 
   override protected def e: Uml#SendObjectAction
+  def getMagicDrawSendObjectAction = e
   import ops._
 
   // 16.13

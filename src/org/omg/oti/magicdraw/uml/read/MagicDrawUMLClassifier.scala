@@ -52,6 +52,7 @@ trait MagicDrawUMLClassifier
   with MagicDrawUMLTemplateableElement {
 
   override protected def e: Uml#Classifier
+  def getMagicDrawClassifier = e
   import ops._
     
   override def templateParameter: Option[UMLClassifierTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )

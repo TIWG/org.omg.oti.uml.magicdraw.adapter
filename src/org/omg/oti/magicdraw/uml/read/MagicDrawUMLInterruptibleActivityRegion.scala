@@ -49,6 +49,7 @@ trait MagicDrawUMLInterruptibleActivityRegion
   with MagicDrawUMLActivityGroup {
 
   override protected def e: Uml#InterruptibleActivityRegion
+  def getMagicDrawInterruptibleActivityRegion = e
   import ops._
 
   override def interruptingEdge: Set[UMLActivityEdge[Uml]] =

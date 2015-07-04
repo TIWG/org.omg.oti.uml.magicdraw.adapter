@@ -48,6 +48,7 @@ trait MagicDrawUMLMessage
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#Message
+  def getMagicDrawMessage = e
   import ops._
 
   // 17.7

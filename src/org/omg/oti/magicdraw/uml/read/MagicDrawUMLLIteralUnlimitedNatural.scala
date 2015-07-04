@@ -47,6 +47,7 @@ trait MagicDrawUMLLiteralUnlimitedNatural
   with MagicDrawUMLLiteralSpecification {
 
   override protected def e: Uml#LiteralUnlimitedNatural
+  def getMagicDrawLiteralUnlimitedNatural = e
   import ops._
   
   override def value = e.getValue

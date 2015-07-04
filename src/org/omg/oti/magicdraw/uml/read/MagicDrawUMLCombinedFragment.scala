@@ -47,6 +47,7 @@ trait MagicDrawUMLCombinedFragment
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#CombinedFragment
+  def getMagicDrawCombinedFragment = e
   import ops._
 
   override def cfragmentGate: Set[UMLGate[Uml]] = ???

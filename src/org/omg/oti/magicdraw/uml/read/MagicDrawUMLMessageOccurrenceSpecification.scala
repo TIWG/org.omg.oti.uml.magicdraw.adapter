@@ -48,6 +48,7 @@ trait MagicDrawUMLMessageOccurrenceSpecification
   with MagicDrawUMLMessageEnd {
 
   override protected def e: Uml#MessageOccurrenceSpecification
+  def getMagicDrawMessageOccurrenceSpecification = e
   import ops._
 
 }

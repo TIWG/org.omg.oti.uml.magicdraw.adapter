@@ -48,6 +48,7 @@ trait MagicDrawUMLGeneralization
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#Generalization
+  def getMagicDrawGeneralization = e
   import ops._
   
   /**

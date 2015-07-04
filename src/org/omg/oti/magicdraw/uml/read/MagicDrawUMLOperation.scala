@@ -52,6 +52,7 @@ trait MagicDrawUMLOperation
   with MagicDrawUMLTemplateableElement {
 
   override protected def e: Uml#Operation
+  def getMagicDrawOperation = e
   import ops._
   
   override def bodyCondition: Option[UMLConstraint[Uml]] =

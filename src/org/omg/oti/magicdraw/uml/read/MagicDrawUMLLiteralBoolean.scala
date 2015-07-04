@@ -47,6 +47,7 @@ trait MagicDrawUMLLiteralBoolean
   with MagicDrawUMLLiteralSpecification {
 
   override protected def e: Uml#LiteralBoolean
+  def getMagicDrawLiteralBoolean = e
   import ops._
   
   override def value = e.isValue

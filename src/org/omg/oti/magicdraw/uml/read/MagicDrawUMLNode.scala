@@ -48,6 +48,7 @@ trait MagicDrawUMLNode
   with MagicDrawUMLDeploymentTarget {
 
   override protected def e: Uml#Node
+  def getMagicDrawNode = e
   import ops._
 
 }

@@ -47,6 +47,7 @@ trait MagicDrawUMLConnectableElementTemplateParameter
   with MagicDrawUMLTemplateParameter {
 
   override protected def e: Uml#ConnectableElementTemplateParameter
+  def getMagicDrawConnectableElementTemplateParameter = e
   import ops._
 
   override def parameteredElement: Option[UMLConnectableElement[Uml]] =

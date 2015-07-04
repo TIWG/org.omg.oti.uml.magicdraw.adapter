@@ -47,6 +47,7 @@ trait MagicDrawUMLFunctionBehavior
   with MagicDrawUMLOpaqueBehavior {
 
   override protected def e: Uml#FunctionBehavior
+  def getMagicDrawFunctionBehavior = e
   import ops._
 
 }

@@ -47,6 +47,7 @@ trait MagicDrawUMLEncapsulatedClassifier
   with MagicDrawUMLStructuredClassifier {
 
   override protected def e: Uml#EncapsulatedClassifier
+  def getMagicDrawEncapsulatedClassifier = e
   import ops._
 
 }

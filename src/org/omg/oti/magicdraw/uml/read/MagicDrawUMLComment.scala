@@ -49,6 +49,7 @@ trait MagicDrawUMLComment
   with MagicDrawUMLElement {
 
   override protected def e: Uml#Comment
+  def getMagicDrawComment = e
   import ops._
 
   

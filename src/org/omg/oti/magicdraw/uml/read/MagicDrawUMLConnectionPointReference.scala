@@ -48,6 +48,7 @@ trait MagicDrawUMLConnectionPointReference
   with MagicDrawUMLVertex {
 
   override protected def e: Uml#ConnectionPointReference
+  def getMagicDrawConnectionPointReference = e
   import ops._
 
   // 14.1

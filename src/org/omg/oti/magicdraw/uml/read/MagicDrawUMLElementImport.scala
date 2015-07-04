@@ -47,6 +47,7 @@ trait MagicDrawUMLElementImport
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#ElementImport
+  def getMagicDrawElementImport = e
   import ops._
 
   override def alias: Option[String] =

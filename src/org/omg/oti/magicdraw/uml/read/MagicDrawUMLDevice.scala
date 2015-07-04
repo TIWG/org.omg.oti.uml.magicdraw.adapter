@@ -47,6 +47,7 @@ trait MagicDrawUMLDevice
   with MagicDrawUMLNode {
 
   override protected def e: Uml#Device
+  def getMagicDrawDevice = e
   import ops._
 
 }

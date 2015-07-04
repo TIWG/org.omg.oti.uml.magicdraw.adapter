@@ -47,6 +47,7 @@ trait MagicDrawUMLReplyAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReplyAction
+  def getMagicDrawReplyAction = e
   import ops._
 
   // 16.39

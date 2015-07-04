@@ -48,6 +48,7 @@ trait MagicDrawUMLAssociationClass
   with MagicDrawUMLAssociation {
 
   override protected def e: Uml#AssociationClass
+  def getMagicDrawAssociationClass = e
   import ops._
 
 }

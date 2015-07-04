@@ -47,6 +47,7 @@ trait MagicDrawUMLCreateLinkObjectAction
   with MagicDrawUMLCreateLinkAction {
 
   override protected def e: Uml#CreateLinkObjectAction
+  def getMagicDrawCreateLinkObjectAction = e
   import ops._
 
   override def result: Option[UMLOutputPin[Uml]] = ???

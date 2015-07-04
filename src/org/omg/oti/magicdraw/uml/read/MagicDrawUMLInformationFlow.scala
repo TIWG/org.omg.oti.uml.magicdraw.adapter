@@ -49,6 +49,7 @@ trait MagicDrawUMLInformationFlow
   with MagicDrawUMLDirectedRelationship {
 
   override protected def e: Uml#InformationFlow
+  def getMagicDrawInformationFlow = e
   import ops._
   
   // 20.1  

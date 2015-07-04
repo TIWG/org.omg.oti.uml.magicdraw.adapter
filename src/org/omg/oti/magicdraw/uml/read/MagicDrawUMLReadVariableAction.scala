@@ -47,6 +47,7 @@ trait MagicDrawUMLReadVariableAction
   with MagicDrawUMLVariableAction {
 
   override protected def e: Uml#ReadVariableAction
+  def getMagicDrawReadVariableAction = e
   import ops._
 
   override def result: Option[UMLOutputPin[Uml]] =

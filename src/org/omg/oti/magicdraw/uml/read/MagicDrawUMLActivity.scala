@@ -49,6 +49,7 @@ trait MagicDrawUMLActivity
   with MagicDrawUMLBehavior {
 
   override protected def e: Uml#Activity
+  def getMagicDrawActivity = e
   import ops._
 
   override def isReadOnly: Boolean =

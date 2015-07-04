@@ -47,6 +47,7 @@ trait MagicDrawUMLExecutionOccurrenceSpecification
   with MagicDrawUMLOccurrenceSpecification {
 
   override protected def e: Uml#ExecutionOccurrenceSpecification
+  def getMagicDrawExecutionOccurrenceSpecification = e
   import ops._
 
   override def execution: Option[UMLExecutionSpecification[Uml]] = ???

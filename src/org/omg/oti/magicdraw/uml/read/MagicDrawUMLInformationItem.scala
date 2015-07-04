@@ -48,6 +48,7 @@ trait MagicDrawUMLInformationItem
   with MagicDrawUMLClassifier {
 
   override protected def e: Uml#InformationItem
+  def getMagicDrawInformationItem = e
   import ops._
 
   // 20.1

@@ -48,6 +48,7 @@ trait MagicDrawUMLStateMachine
   with MagicDrawUMLBehavior {
 
   override protected def e: Uml#StateMachine
+  def getMagicDrawStateMachine = e
   import ops._
 
   // 14.1

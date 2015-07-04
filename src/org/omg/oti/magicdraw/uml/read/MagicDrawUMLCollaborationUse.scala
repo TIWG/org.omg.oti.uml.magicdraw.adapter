@@ -49,6 +49,7 @@ trait MagicDrawUMLCollaborationUse
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#CollaborationUse
+  def getMagicDrawCollaborationUse = e
   import ops._
 
   override def roleBinding = e.getRoleBinding.toSet[Uml#Dependency]

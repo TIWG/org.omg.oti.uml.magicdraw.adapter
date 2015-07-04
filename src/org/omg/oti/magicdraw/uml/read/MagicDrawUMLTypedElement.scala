@@ -49,6 +49,7 @@ trait MagicDrawUMLTypedElement
   with MagicDrawUMLNamedElement {
 
   override protected def e: Uml#TypedElement
+  def getMagicDrawTypedElement = e
   import ops._
 
   def _type: Option[UMLType[Uml]] = Option.apply( e.getType )

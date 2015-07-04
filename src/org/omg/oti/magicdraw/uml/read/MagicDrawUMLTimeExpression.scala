@@ -48,6 +48,7 @@ trait MagicDrawUMLTimeExpression
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#TimeExpression
+  def getMagicDrawTimeExpression = e
   import ops._
 
   // 8.3  

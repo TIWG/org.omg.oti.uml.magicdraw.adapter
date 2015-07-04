@@ -47,6 +47,7 @@ trait MagicDrawUMLCentralBufferNode
   with MagicDrawUMLObjectNode {
 
   override protected def e: Uml#CentralBufferNode
+  def getMagicDrawCentralBufferNode = e
   import ops._
 
 }

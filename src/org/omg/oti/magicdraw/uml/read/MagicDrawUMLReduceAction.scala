@@ -47,6 +47,7 @@ trait MagicDrawUMLReduceAction
   with MagicDrawUMLAction {
 
   override protected def e: Uml#ReduceAction
+  def getMagicDrawReduceAction = e
   import ops._
 
   // 16.56

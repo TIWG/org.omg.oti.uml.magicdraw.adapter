@@ -47,6 +47,7 @@ trait MagicDrawUMLRemoveVariableValueAction
   with MagicDrawUMLWriteVariableAction {
 
   override protected def e: Uml#RemoveVariableValueAction
+  def getMagicDrawRemoveVariableValueAction = e
   import ops._
 
   // 16.37

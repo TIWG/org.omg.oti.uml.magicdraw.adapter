@@ -49,6 +49,7 @@ trait MagicDrawUMLBehavior
   with MagicDrawUMLClass {
 
   override protected def e: Uml#Behavior
+  def getMagicDrawBehavior = e
   import ops._
 
   override def context =

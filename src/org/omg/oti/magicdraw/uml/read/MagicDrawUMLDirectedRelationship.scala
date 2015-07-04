@@ -49,6 +49,7 @@ trait MagicDrawUMLDirectedRelationship
   with MagicDrawUMLRelationship {
 
   override protected def e: Uml#DirectedRelationship
+  def getMagicDrawDirectedRelationship = e
   import ops._
   
   def source = e.getSource.toSet[Uml#Element]

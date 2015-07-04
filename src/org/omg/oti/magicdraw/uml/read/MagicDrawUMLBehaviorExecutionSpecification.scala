@@ -47,6 +47,7 @@ trait MagicDrawUMLBehaviorExecutionSpecification
   with MagicDrawUMLExecutionSpecification {
 
   override protected def e: Uml#BehaviorExecutionSpecification
+  def getMagicDrawBehaviorExecutionSpecification = e
   import ops._
 
   override def behavior: Option[UMLBehavior[Uml]] =

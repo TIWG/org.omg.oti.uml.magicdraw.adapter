@@ -50,6 +50,7 @@ trait MagicDrawUMLBehavioralFeature
   with MagicDrawUMLFeature {
 
   override protected def e: Uml#BehavioralFeature
+  def getMagicDrawBehavioralFeature = e
   import ops._
   
   override def concurrency: UMLCallConcurrencyKind.Value =

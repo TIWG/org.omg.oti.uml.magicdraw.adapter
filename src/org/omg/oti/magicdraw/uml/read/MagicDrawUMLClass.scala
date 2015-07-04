@@ -50,6 +50,7 @@ trait MagicDrawUMLClass
   with MagicDrawUMLBehavioredClassifier {
 
   override protected def e: Uml#Class
+  def getMagicDrawClass = e
   import ops._
   
   override def extension: Set[UMLExtension[Uml]] =

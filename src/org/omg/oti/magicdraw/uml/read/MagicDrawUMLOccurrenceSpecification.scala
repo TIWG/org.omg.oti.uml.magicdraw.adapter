@@ -48,6 +48,7 @@ trait MagicDrawUMLOccurrenceSpecification
   with MagicDrawUMLInteractionFragment {
 
   override protected def e: Uml#OccurrenceSpecification
+  def getMagicDrawOccurrenceSpecification = e
   import ops._
 
 	override def covered: Iterable[UMLLifeline[Uml]] = ???

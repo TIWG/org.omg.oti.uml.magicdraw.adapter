@@ -48,6 +48,7 @@ trait MagicDrawUMLTemplateParameter
   with MagicDrawUMLElement {
 
   override protected def e: Uml#TemplateParameter
+  def getMagicDrawTemplateParameter = e
   import ops._
 
   override def default: Option[UMLParameterableElement[Uml]] = ???

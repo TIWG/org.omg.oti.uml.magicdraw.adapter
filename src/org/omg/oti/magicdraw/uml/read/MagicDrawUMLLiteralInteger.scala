@@ -47,6 +47,7 @@ trait MagicDrawUMLLiteralInteger
   with MagicDrawUMLLiteralSpecification {
 
   override protected def e: Uml#LiteralInteger
+  def getMagicDrawLiteralInteger = e
   import ops._
   
   override def value = e.getValue

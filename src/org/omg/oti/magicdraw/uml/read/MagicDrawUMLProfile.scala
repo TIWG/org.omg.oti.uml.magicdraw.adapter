@@ -51,6 +51,7 @@ trait MagicDrawUMLProfile
 
   import ops._
   override protected def e: Uml#Profile
+  def getMagicDrawProfile = e
   
   // 12.12
   override def metamodelReference = 

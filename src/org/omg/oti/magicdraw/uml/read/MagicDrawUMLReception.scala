@@ -47,6 +47,7 @@ trait MagicDrawUMLReception
   with MagicDrawUMLBehavioralFeature {
 
   override protected def e: Uml#Reception
+  def getMagicDrawReception = e
   import ops._
 
   // 10.5

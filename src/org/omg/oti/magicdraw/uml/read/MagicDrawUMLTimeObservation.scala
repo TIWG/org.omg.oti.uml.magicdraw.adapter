@@ -47,6 +47,7 @@ trait MagicDrawUMLTimeObservation
   with MagicDrawUMLObservation {
 
   override protected def e: Uml#TimeObservation
+  def getMagicDrawTimeObservation = e
   import ops._
 
   override def event = 

@@ -47,6 +47,7 @@ trait MagicDrawUMLInstanceValue
   with MagicDrawUMLValueSpecification {
 
   override protected def e: Uml#InstanceValue
+  def getMagicDrawInstanceValue = e
   import ops._
   
   def instance = Option.apply( e.getInstance )

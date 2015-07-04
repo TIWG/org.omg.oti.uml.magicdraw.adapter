@@ -49,6 +49,7 @@ trait MagicDrawUMLUseCase
   with MagicDrawUMLBehavioredClassifier {
 
   override protected def e: Uml#UseCase
+  def getMagicDrawUseCase = e
   import ops._
 
   override def subject: Set[UMLClassifier[Uml]] =

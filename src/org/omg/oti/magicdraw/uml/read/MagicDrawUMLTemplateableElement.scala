@@ -49,6 +49,7 @@ trait MagicDrawUMLTemplateableElement
   with MagicDrawUMLElement {
 
   override protected def e: Uml#TemplateableElement
+  def getMagicDrawTemplateableElement = e
   import ops._
 
   override def templateBinding = e.getTemplateBinding.toSet[Uml#TemplateBinding]

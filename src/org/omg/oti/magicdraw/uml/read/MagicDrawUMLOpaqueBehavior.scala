@@ -49,6 +49,7 @@ trait MagicDrawUMLOpaqueBehavior
   with MagicDrawUMLBehavior {
 
   override protected def e: Uml#OpaqueBehavior
+  def getMagicDrawOpaqueBehavior = e
   import ops._
 
   override def body: Seq[String] =

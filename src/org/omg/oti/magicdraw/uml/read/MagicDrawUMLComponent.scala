@@ -48,6 +48,7 @@ trait MagicDrawUMLComponent
   with MagicDrawUMLClass {
 
   override protected def e: Uml#Component
+  def getMagicDrawComponent = e
   import ops._
 
   override def isIndirectlyInstantiated = e.isIndirectlyInstantiated

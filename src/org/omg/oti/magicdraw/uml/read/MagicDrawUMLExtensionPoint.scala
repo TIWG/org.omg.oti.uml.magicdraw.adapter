@@ -48,6 +48,7 @@ trait MagicDrawUMLExtensionPoint
   with MagicDrawUMLRedefinableElement {
 
   override protected def e: Uml#ExtensionPoint
+  def getMagicDrawExtensionPoint = e
   import ops._
 
   override def extensionLocation_extension: Set[UMLExtend[Uml]] = ???

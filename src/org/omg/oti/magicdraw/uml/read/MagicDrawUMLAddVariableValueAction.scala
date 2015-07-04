@@ -47,6 +47,7 @@ trait MagicDrawUMLAddVariableValueAction
   with MagicDrawUMLWriteVariableAction {
 
   override protected def e: Uml#AddVariableValueAction
+  def getMagicDrawAddVariableValueAction = e
   import ops._
 
   override def insertAt: Option[UMLInputPin[Uml]] =
