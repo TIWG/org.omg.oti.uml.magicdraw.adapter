@@ -44,7 +44,7 @@ import org.omg.oti.uml._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 
-import scala.reflect.runtime.universe._
+import scala.reflect.runtime.universe
 import scala.reflect._
 
 trait MagicDrawUMLPort 
@@ -68,7 +68,15 @@ trait MagicDrawUMLPort
     e.isService
 
   override def ownedPort_encapsulatedClassifier: Option[UMLEncapsulatedClassifier[Uml]] =
-    Option.apply(e.getClassifier).selectByKindOf { case x: UMLEncapsulatedClassifier[Uml] => x }
+    Option.apply(e.getClassifier) match {
+      case Some(c) => umlClassifier(c) match {
+        case ec: UMLEncapsulatedClassifier[Uml] =>
+          Some(ec)
+        case _ =>
+          None
+      }
+      case _ => None
+    }
 
   // 11.10
   override def protocol: Option[UMLProtocolStateMachine[Uml]] = 

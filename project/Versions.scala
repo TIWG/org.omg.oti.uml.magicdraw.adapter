@@ -22,19 +22,19 @@ object Versions {
   // OTI Core version
     
   val oti_core_prefix = "0.15.0"
-  val oti_core_suffix = "987"
+  val oti_core_suffix = "1016"
   val oti_core_version = oti_core_prefix+"-"+oti_core_suffix
 
   // OTI Change Migration version
     
   val oti_changeMigration_prefix = "0.15.0"
-  val oti_changeMigration_suffix = "988"
+  val oti_changeMigration_suffix = "1017"
   val oti_changeMigration_version = oti_changeMigration_prefix+"-"+oti_changeMigration_suffix
 
   // OTI Trees version
     
   val oti_trees_prefix = "0.15.0"
-  val oti_trees_suffix = "989"
+  val oti_trees_suffix = "1018"
   val oti_trees_version = oti_trees_prefix+"-"+oti_trees_suffix
 
 }

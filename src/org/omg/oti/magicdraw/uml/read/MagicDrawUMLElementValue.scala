@@ -71,6 +71,4 @@ trait MagicDrawUMLElementValue
   override def asForwardReferencesToImportableOuterPackageableElements: Set[UMLPackageableElement[Uml]] = 
     element.fold(Set[UMLPackageableElement[Uml]]())(_.asForwardReferencesToImportableOuterPackageableElements)
 
-  override def forwardReferencesFromStereotypeTagValue: Set[UMLElement[Uml]] = 
-    element.toSet
 }

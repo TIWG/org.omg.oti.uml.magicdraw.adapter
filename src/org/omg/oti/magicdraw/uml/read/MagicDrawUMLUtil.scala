@@ -43,20 +43,11 @@ import java.io.File
 import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
-import com.nomagic.actions.NMAction
-import com.nomagic.magicdraw.annotation.Annotation
 import com.nomagic.magicdraw.core.{Application, ApplicationEnvironment, Project}
-import com.nomagic.magicdraw.validation.{RuleViolationResult, ValidationRunData}
-import com.nomagic.task.RunnableWithProgress
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
-import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults
-import gov.nasa.jpl.dynamicScripts.magicdraw.MagicDrawValidationDataResults.ValidationAnnotationAction
 import org.omg.oti.uml.read.api._
 
-import scala.collection.JavaConversions._
 import scala.language.implicitConversions
-import scala.util.{Failure, Success, Try}
 
 case class MagicDrawUMLUtil(project: Project)
     extends MagicDrawUMLOps {
@@ -1075,10 +1066,6 @@ case class MagicDrawUMLUtil(project: Project)
       override val e = _e
       override val ops = self
     })
-
-
-    case _e => throw new MatchError(s" No case for ${_e.getHumanType}: ${_e.getID}")
-
   }
 
   implicit def umlAbstraction(_e: Uml#Abstraction): UMLAbstraction[Uml] =
@@ -3163,26 +3150,18 @@ case class MagicDrawUMLUtil(project: Project)
         Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
     }
 
-  def makeMDIllegalArgumentExceptionValidation
-  (p: Project,
-   validationMessage: String,
-   elementMessages: Map[Element, (String, List[NMAction])],
-   validationSuiteQName: String, validationConstraintQName: String): Try[Option[MagicDrawValidationDataResults]] =
-    MagicDrawValidationDataResults.getMDValidationProfileAndConstraint(p, validationSuiteQName, validationConstraintQName) match {
-      case None => Failure(new IllegalArgumentException(s"Failed to find MD's Validation Profile '$validationSuiteQName' & Constraint '$validationConstraintQName'"))
-      case Some((vSuite, c)) =>
-        val runData = new ValidationRunData(vSuite.suite, false, elementMessages.keys, vSuite.vsh.getRuleSeverityLevel(c))
-        val results = elementMessages map {
-          case (element, (message, actions)) =>
-            val annotation = new Annotation(element, c, message, actions)
-            actions foreach {
-              case vaa: ValidationAnnotationAction => vaa.annotation = Some(annotation)
-              case _ => ()
-            }
-            new RuleViolationResult(annotation, c)
-        }
+  override val UML_PRIMITIVE_TYPES_BOOLEAN: UMLPrimitiveType[Uml] =
+    StereotypesHelper.getPrimitiveByName(project, "Boolean")
 
-        Success(Some(MagicDrawValidationDataResults(validationMessage, runData, results, List[RunnableWithProgress]())))
-    }
+  override val UML_PRIMITIVE_TYPES_INTEGER: UMLPrimitiveType[Uml] =
+    StereotypesHelper.getPrimitiveByName(project, "Integer")
 
+  override val UML_PRIMITIVE_TYPES_UNLIMITED_NATURAL: UMLPrimitiveType[Uml] =
+    StereotypesHelper.getPrimitiveByName(project, "UnlimitedNatural")
+
+  override val UML_PRIMITIVE_TYPES_REAL: UMLPrimitiveType[Uml] =
+    StereotypesHelper.getPrimitiveByName(project, "Real")
+
+  override val UML_PRIMITIVE_TYPES_STRING: UMLPrimitiveType[Uml] =
+    StereotypesHelper.getPrimitiveByName(project, "String")
 }

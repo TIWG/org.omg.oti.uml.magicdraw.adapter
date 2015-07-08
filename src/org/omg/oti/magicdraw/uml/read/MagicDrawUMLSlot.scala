@@ -53,10 +53,10 @@ trait MagicDrawUMLSlot
   import ops._
     
   // 9.27
-  def definingFeature = 
+  def definingFeature: Option[UMLStructuralFeature[Uml]] =
     Option.apply( e.getDefiningFeature )
 
   // 9.27
-  override def value = 
+  override def value: Seq[UMLValueSpecification[Uml]] =
     e.getValue.toSeq
 }

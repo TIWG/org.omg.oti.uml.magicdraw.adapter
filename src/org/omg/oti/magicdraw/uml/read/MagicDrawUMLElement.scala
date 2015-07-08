@@ -39,26 +39,20 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-import scala.language.implicitConversions
-import scala.language.postfixOps
-import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
-import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import com.nomagic.magicdraw.uml.UUIDRegistry
+import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+import org.omg.oti.uml.read.api._
 
-import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
+import scala.collection.JavaConversions._
+import scala.language.{implicitConversions, postfixOps}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   type Uml = MagicDrawUML
 
   implicit val ops: MagicDrawUMLUtil
+
   import ops._
 
   protected def e: Uml#Element
@@ -68,10 +62,10 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   // Element
 
   override def ownedElement: Set[UMLElement[Uml]] =
-    e.getOwnedElement.toSet[Uml#Element] - umlElement( e.getAppliedStereotypeInstance )
+    e.getOwnedElement.toSet[Uml#Element] - umlElement(e.getAppliedStereotypeInstance)
 
   override def owner: Option[UMLElement[Uml]] =
-    Option.apply( e.getOwner )
+    Option.apply(e.getOwner)
 
   override def constrainedElement_constraint: Set[UMLConstraint[Uml]] =
     e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
@@ -100,78 +94,48 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     closure[UMLElement[Uml], UMLElement[Uml]](this, _.ownedElement)
 
   override def mofMetaclassName: String =
-    StereotypesHelper.getBaseClass( e ).getName
+    StereotypesHelper.getBaseClass(e).getName
 
-  override def tagValues: Map[UMLProperty[Uml], Seq[UMLValueSpecification[Uml]]] =
-    Option.apply( e.getAppliedStereotypeInstance ) match {
-      case None => Map()
-      case Some( is ) =>
-        val tv = for {
-          s <- is.getSlot
-          p = s.getDefiningFeature match { case p: Uml#Property => umlProperty( p ) }
-          v = umlValueSpecification( s.getValue )
-        } yield p -> v
-        tv.toMap
-    }
+  override def tagValues: Seq[MagicDrawUMLStereotypeTagValue] =
+    MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
   override def id: String =
     e.getID
 
   override def uuid: Option[String] =
-    Some( UUIDRegistry.getUUID( e ) )
+    Some(UUIDRegistry.getUUID(e))
 
-  override def hasStereotype( s: UMLStereotype[Uml] ): Boolean =
-    umlMagicDrawUMLStereotype(s).isStereotypeApplied( e )
-
-  /**
-   * MagicDraw's representation of applied stereotypes on an element E involves a special InstanceSpecification IS owned by E.
-   * The applied stereotypes are the classifiers of IS.
-   * Values of stereotype properties other than ends of the stereotype's extension are represented in slots of IS.
-   * There is no slot corresponding to the "base_<metaclass>" properties of the stereotype's extensions.
-   * This means that we have to calculate what these "base_<metaclass>" properties are for each applied stereotype (i.e., classifier of E's IS).
-   */
-  override def getAppliedStereotypes: Map[UMLStereotype[Uml], UMLProperty[Uml]] = {
-    val eMetaclass = e.getClassType
-    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] flatMap { s =>
-      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
-        val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
-        eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
-      }
-      if ( metaProperties.isEmpty ) {
-        None
-      } else
-        Some( umlStereotype( s ) -> umlProperty( metaProperties.head ) )
-    } toMap
-  }
+  override def hasStereotype(s: UMLStereotype[Uml]): Boolean =
+    umlMagicDrawUMLStereotype(s).isStereotypeApplied(e)
 
   override def getAppliedStereotypesWithoutMetaclassProperties: Set[UMLStereotype[Uml]] = {
     val eMetaclass = e.getClassType
-    StereotypesHelper.getStereotypes( e ).toSet[Uml#Stereotype] flatMap { s =>
-      val metaProperties = StereotypesHelper.getExtensionMetaProperty( s, true ) filter { p =>
-        val pMetaclass = StereotypesHelper.getClassOfMetaClass( p.getType.asInstanceOf[Uml#Class] )
-        eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf( pMetaclass, eMetaclass )
+    StereotypesHelper.getStereotypes(e).toSet[Uml#Stereotype] flatMap { s =>
+      val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
+        val pMetaclass = StereotypesHelper.getClassOfMetaClass(p.getType.asInstanceOf[Uml#Class])
+        eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf(pMetaclass, eMetaclass)
       }
-      if ( metaProperties.isEmpty )
-        Some( umlStereotype( s ) )
+      if (metaProperties.isEmpty)
+        Some(umlStereotype(s))
       else
         None
     }
   }
 
-  override def isAncestorOf( other: UMLElement[Uml] ): Boolean =
-    ( e == umlMagicDrawUMLElement(other).getMagicDrawElement ) ||
-      ( other.owner match {
-        case None           => false
-        case Some( parent ) => isAncestorOf( parent )
-      } )
+  override def isAncestorOf(other: UMLElement[Uml]): Boolean =
+    (e == umlMagicDrawUMLElement(other).getMagicDrawElement) ||
+      (other.owner match {
+        case None => false
+        case Some(parent) => isAncestorOf(parent)
+      })
 
-  override def toWrappedObjectString : String = {
+  override def toWrappedObjectString: String = {
 
     @annotation.tailrec def describe(context: Option[UMLElement[Uml]], path: Seq[String]): String =
       context match {
         case None =>
 
-          def prefixStream(prefix: String): Stream[String] = prefix #:: prefixStream( prefix+"  " )
+          def prefixStream(prefix: String): Stream[String] = prefix #:: prefixStream(prefix + "  ")
           val prefixes: List[String] = prefixStream("").take(path.length).toList
 
           val pair = ((new StringBuffer(""), prefixes) /: path.reverse) {
@@ -189,5 +153,5 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   // MagicDraw-specific
 
-  def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable( e )
+  def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable(e)
 }

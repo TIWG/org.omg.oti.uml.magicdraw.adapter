@@ -66,11 +66,19 @@ trait MagicDrawUMLNamedElement
     Option.apply( e.getQualifiedName )
   
   override def visibility: Option[UMLVisibilityKind.Value] =
-    e.getVisibility match {
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => Some(UMLVisibilityKind.public)
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => Some(UMLVisibilityKind._private)
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => Some(UMLVisibilityKind._protected)
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => Some(UMLVisibilityKind._package)
+    Option.apply(e.getVisibility) match {
+      case None =>
+        None
+      case Some(v) => v match {
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
+          Some(UMLVisibilityKind.public)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE =>
+          Some(UMLVisibilityKind._private)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED =>
+          Some(UMLVisibilityKind._protected)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE =>
+          Some(UMLVisibilityKind._package)
+      }
     }
   
   override def event_durationObservation: Set[UMLDurationObservation[Uml]] =

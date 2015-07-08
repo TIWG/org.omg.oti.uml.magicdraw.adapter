@@ -54,11 +54,19 @@ trait MagicDrawUMLPackageableElement
   import ops._
 
   override def visibility: Option[UMLVisibilityKind.Value] =
-    e.getVisibility match {
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => Some( UMLVisibilityKind.public )
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => Some( UMLVisibilityKind._private )
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => Some( UMLVisibilityKind._protected )
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => Some( UMLVisibilityKind._package )
+    Option.apply(e.getVisibility) match {
+      case None =>
+        Some(UMLVisibilityKind.public)
+      case Some(v) => v match {
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
+          Some(UMLVisibilityKind.public)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE =>
+          Some(UMLVisibilityKind._private)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED =>
+          Some(UMLVisibilityKind._protected)
+        case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE =>
+          Some(UMLVisibilityKind._package)
+      }
     }
 
   override def importedMember_namespace: Set[UMLNamespace[Uml]] =
