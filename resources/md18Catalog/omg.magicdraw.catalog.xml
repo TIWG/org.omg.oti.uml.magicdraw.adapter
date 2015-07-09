@@ -11,6 +11,8 @@
 <uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#String" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_9_0_2_91a0295_1110274713995_297054_0"/>
 <uri uri="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#Boolean" name="http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi#_12_0EAPbeta_be00301_1157529792739_987548_11"/>
 
+<uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#_0" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_UML_"/>
+
 <uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#_0" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_be00301_1108053761194_467635_11463"/>
 <uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Transition" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704932761_361072_9592"/>
 <uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#OpaqueAction" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704886256_729983_8101"/>
@@ -257,6 +259,7 @@
 <uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Substitution" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885889_983575_8091"/>
 <uri uri="http://www.omg.org/spec/UML/20131001/UML.xmi#Feature" name="http://www.omg.org/spec/UML/20131001/UML.xmi#_9_0_62a020a_1105704885153_836117_7863"/>
 
+<uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_0" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_StandardProfile_"/>
 
 <uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_0" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_9_0_be00301_1108050582343_527400_10847"/>
 <uri uri="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#Component_Service-extension_Service" name="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi#_10_0EAPbeta_be00301_1123081772458_418246_346"/>

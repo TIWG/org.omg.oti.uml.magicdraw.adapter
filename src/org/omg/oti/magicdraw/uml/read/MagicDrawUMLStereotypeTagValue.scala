@@ -360,10 +360,20 @@ object MagicDrawUMLStereotypeTagValue {
                   values = for {
                     v <- s.getValue
                     e <- v match {
-                      case elit: Uml#EnumerationLiteral =>
-                        Some(MagicDrawTagPropertyEnumerationLiteralValue(
-                          property=f,
-                          value=ops.umlMagicDrawUMLEnumerationLiteral(elit)))
+                      case iv: Uml#InstanceValue =>
+                        Option.apply(iv.getInstance) match {
+                          case Some(is) =>
+                            is match {
+                              case elit: Uml#EnumerationLiteral =>
+                                Some(MagicDrawTagPropertyEnumerationLiteralValue(
+                                  property=f,
+                                  value=ops.umlMagicDrawUMLEnumerationLiteral(elit)))
+                              case _ =>
+                                None
+                            }
+                          case None =>
+                            None
+                        }
                       case _ =>
                         None
                     }
@@ -443,7 +453,7 @@ object MagicDrawUMLStereotypeTagValue {
                       v <- s.getValue
                       e <- v match {
                         case iv: Uml#InstanceValue =>
-                          iv.instance match {
+                          Option.apply(iv.getInstance) match {
                             case Some(is) =>
                               Some(MagicDrawTagPropertyInstanceSpecificationValue(
                                 property=f,
@@ -470,8 +480,8 @@ object MagicDrawUMLStereotypeTagValue {
                     v <- s.getValue
                     e <- v match {
                       case iv: Uml#InstanceValue =>
-                        iv.instance match {
-                          case Some(ref) =>
+                        Option.apply(iv.getInstance) match {
+                          case Some(is) =>
                             Some(MagicDrawTagPropertyInstanceSpecificationValue(
                               property=f,
                               value=ops.umlMagicDrawUMLInstanceSpecification(is)))
