@@ -51,4 +51,8 @@ trait MagicDrawUMLLiteralString
   import ops._
   
   override def value = Option.apply(e.getValue)
+
 }
+
+case class MagicDrawUMLLiteralStringImpl(val e: MagicDrawUML#LiteralString, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLiteralString

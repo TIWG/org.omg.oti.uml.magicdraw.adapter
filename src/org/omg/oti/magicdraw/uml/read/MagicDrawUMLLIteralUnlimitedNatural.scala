@@ -51,4 +51,8 @@ trait MagicDrawUMLLiteralUnlimitedNatural
   import ops._
   
   override def value = e.getValue
+
 }
+
+case class MagicDrawUMLLiteralUnlimitedNaturalImpl(val e: MagicDrawUML#LiteralUnlimitedNatural, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLiteralUnlimitedNatural

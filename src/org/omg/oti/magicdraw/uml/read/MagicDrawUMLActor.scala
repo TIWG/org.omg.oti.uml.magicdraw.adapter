@@ -50,4 +50,8 @@ trait MagicDrawUMLActor
   def getMagicDrawActor = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLActorImpl(val e: MagicDrawUML#Actor, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActor

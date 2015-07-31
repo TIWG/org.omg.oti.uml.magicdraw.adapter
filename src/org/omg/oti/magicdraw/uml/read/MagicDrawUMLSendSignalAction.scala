@@ -56,4 +56,8 @@ trait MagicDrawUMLSendSignalAction
   // 16.13
 	override def target: Option[UMLInputPin[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLSendSignalActionImpl(val e: MagicDrawUML#SendSignalAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSendSignalAction

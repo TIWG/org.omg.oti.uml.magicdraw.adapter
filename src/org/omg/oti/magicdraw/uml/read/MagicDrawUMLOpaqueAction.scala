@@ -64,4 +64,8 @@ trait MagicDrawUMLOpaqueAction
   override def outputValue: Set[UMLOutputPin[Uml]] =
     e.getOutputValue.toSet[Uml#OutputPin]
   
+
 }
+
+case class MagicDrawUMLOpaqueActionImpl(val e: MagicDrawUML#OpaqueAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOpaqueAction

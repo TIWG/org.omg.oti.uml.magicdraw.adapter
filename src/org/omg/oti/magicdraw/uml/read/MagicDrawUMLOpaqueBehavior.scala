@@ -58,4 +58,8 @@ trait MagicDrawUMLOpaqueBehavior
   override def language: Seq[String] =
     e.getLanguage.toSeq
     
+
 }
+
+case class MagicDrawUMLOpaqueBehaviorImpl(val e: MagicDrawUML#OpaqueBehavior, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOpaqueBehavior

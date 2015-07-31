@@ -71,4 +71,20 @@ trait MagicDrawUMLClass
   override def ownedOperation: Seq[UMLOperation[Uml]] =
     e.getOwnedOperation.toSeq
   
+
+}
+
+case class MagicDrawUMLClassImpl(val e: MagicDrawUML#Class, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClass
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

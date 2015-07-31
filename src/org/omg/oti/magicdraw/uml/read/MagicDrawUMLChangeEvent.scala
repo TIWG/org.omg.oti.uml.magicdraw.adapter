@@ -53,4 +53,8 @@ trait MagicDrawUMLChangeEvent
   override def changeExpression = 
     Option.apply( e.getChangeExpression )
   
+
 }
+
+case class MagicDrawUMLChangeEventImpl(val e: MagicDrawUML#ChangeEvent, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLChangeEvent

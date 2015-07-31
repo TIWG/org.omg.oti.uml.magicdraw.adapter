@@ -58,4 +58,8 @@ trait MagicDrawUMLCollaborationUse
   
   override def representation_classifier = Option.apply( e.get_classifierOfRepresentation )
 
+
 }
+
+case class MagicDrawUMLCollaborationUseImpl(val e: MagicDrawUML#CollaborationUse, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCollaborationUse

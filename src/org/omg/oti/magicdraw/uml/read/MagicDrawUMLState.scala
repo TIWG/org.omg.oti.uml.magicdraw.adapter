@@ -42,6 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 
+import scala.collection.JavaConversions._
+
 trait MagicDrawUMLState 
   extends UMLState[MagicDrawUML]
   with MagicDrawUMLNamespace
@@ -53,17 +55,39 @@ trait MagicDrawUMLState
   import ops._
 
   // 14.1
-  def doActivity: Option[UMLBehavior[Uml]] = ??? 
-  def entry: Option[UMLBehavior[Uml]] = ??? 
-  def exit: Option[UMLBehavior[Uml]] = ???
+  def doActivity: Option[UMLBehavior[Uml]] =
+    Option.apply(e.getDoActivity)
+
+  def entry: Option[UMLBehavior[Uml]] =
+    Option.apply(e.getEntry)
+
+  def exit: Option[UMLBehavior[Uml]] =
+    Option.apply(e.getExit)
   
   // 14.1
-  def submachine: Option[UMLStateMachine[Uml]] = ??? 
+  def submachine: Option[UMLStateMachine[Uml]] =
+    Option.apply(e.getSubmachine)
   
   // 15.48
-  def inState_objectNode: Set[UMLObjectNode[Uml]] = ??? 
+  def inState_objectNode: Set[UMLObjectNode[Uml]] =
+   umlObjectNode( e.get_objectNodeOfInState.toSet )
   
   override def stateInvariant: Option[UMLConstraint[Uml]] =
     Option.apply(e.getStateInvariant)
 
+}
+
+case class MagicDrawUMLStateImpl(val e: MagicDrawUML#State, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLState
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLState(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

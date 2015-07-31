@@ -72,4 +72,20 @@ trait MagicDrawUMLPackage
   
   override def nestingPackage: Option[UMLPackage[Uml]] =
     Option.apply(e.getNestingPackage)
+
+}
+
+case class MagicDrawUMLPackageImpl(val e: MagicDrawUML#Package, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLPackage
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLPackage(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

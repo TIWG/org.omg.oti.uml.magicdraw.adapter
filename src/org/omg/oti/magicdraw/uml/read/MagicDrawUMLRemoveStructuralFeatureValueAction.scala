@@ -55,4 +55,8 @@ trait MagicDrawUMLRemoveStructuralFeatureValueAction
   
   // 16.36
 	override def removeAt: Option[UMLInputPin[Uml]] = ???
+
 }
+
+case class MagicDrawUMLRemoveStructuralFeatureValueActionImpl(val e: MagicDrawUML#RemoveStructuralFeatureValueAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLRemoveStructuralFeatureValueAction

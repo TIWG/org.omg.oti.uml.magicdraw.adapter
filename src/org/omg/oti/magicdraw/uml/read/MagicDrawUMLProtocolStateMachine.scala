@@ -61,4 +61,8 @@ trait MagicDrawUMLProtocolStateMachine
   
   // 10.7
   override def protocol_interface: Option[UMLInterface[Uml]] = ???
+
 }
+
+case class MagicDrawUMLProtocolStateMachineImpl(val e: MagicDrawUML#ProtocolStateMachine, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLProtocolStateMachine

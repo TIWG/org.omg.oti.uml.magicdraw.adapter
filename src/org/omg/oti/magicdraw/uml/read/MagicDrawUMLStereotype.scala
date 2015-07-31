@@ -61,4 +61,8 @@ trait MagicDrawUMLStereotype
   override def ownedStereotype_owningPackage: Option[UMLPackage[Uml]] =
     Option.apply(e.getOwningPackage)
     
+
 }
+
+case class MagicDrawUMLStereotypeImpl(val e: MagicDrawUML#Stereotype, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStereotype

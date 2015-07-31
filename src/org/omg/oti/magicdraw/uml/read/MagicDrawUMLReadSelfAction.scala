@@ -52,4 +52,8 @@ trait MagicDrawUMLReadSelfAction
 
   // 16.30
 	override def result: Option[UMLOutputPin[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLReadSelfActionImpl(val e: MagicDrawUML#ReadSelfAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReadSelfAction

@@ -50,4 +50,8 @@ trait MagicDrawUMLControlFlow
   def getMagicDrawControlFlow = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLControlFlowImpl(val e: MagicDrawUML#ControlFlow, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLControlFlow

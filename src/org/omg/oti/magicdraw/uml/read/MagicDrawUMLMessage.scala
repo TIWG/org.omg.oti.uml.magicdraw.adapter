@@ -77,4 +77,8 @@ trait MagicDrawUMLMessage
   
   // 20.1
   override def realizingMessage_informationFlow: Set[UMLInformationFlow[Uml]] = ???
+
 }
+
+case class MagicDrawUMLMessageImpl(val e: MagicDrawUML#Message, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLMessage

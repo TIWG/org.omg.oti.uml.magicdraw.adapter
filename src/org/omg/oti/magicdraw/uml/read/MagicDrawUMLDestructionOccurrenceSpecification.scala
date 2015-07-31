@@ -50,4 +50,8 @@ trait MagicDrawUMLDestructionOccurrenceSpecification
   def getMagicDrawDestructionOccurrenceSpecification = e
   import ops._
   
+
 }
+
+case class MagicDrawUMLDestructionOccurrenceSpecificationImpl(val e: MagicDrawUML#DestructionOccurrenceSpecification, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDestructionOccurrenceSpecification

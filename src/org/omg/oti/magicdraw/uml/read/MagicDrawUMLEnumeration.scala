@@ -54,4 +54,20 @@ trait MagicDrawUMLEnumeration
   
   override def ownedLiteral = e.getOwnedLiteral.toSeq
   
+
+}
+
+case class MagicDrawUMLEnumerationImpl(val e: MagicDrawUML#Enumeration, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLEnumeration
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLEnumeration(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

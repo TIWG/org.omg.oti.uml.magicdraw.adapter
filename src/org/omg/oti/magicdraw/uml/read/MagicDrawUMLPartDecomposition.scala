@@ -53,4 +53,8 @@ trait MagicDrawUMLPartDecomposition
   // 17.18
 	override def decomposedAs_lifeline: Option[UMLLifeline[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLPartDecompositionImpl(val e: MagicDrawUML#PartDecomposition, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLPartDecomposition

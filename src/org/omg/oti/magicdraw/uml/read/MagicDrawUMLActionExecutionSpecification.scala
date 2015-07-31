@@ -52,4 +52,8 @@ trait MagicDrawUMLActionExecutionSpecification
 
   override def action = 
     Option.apply( e.getAction )
+
 }
+
+case class MagicDrawUMLActionExecutionSpecificationImpl(val e: MagicDrawUML#ActionExecutionSpecification, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActionExecutionSpecification

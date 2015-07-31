@@ -55,4 +55,8 @@ trait MagicDrawUMLRemoveVariableValueAction
   
   // 16.37  
 	override def removeAt: Option[UMLInputPin[Uml]] = ???
+
 }
+
+case class MagicDrawUMLRemoveVariableValueActionImpl(val e: MagicDrawUML#RemoveVariableValueAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLRemoveVariableValueAction

@@ -67,4 +67,8 @@ trait MagicDrawUMLImage
     case "" => None
     case s => Some( s )
   }
+
 }
+
+case class MagicDrawUMLImageImpl(val e: MagicDrawUML#Image, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLImage

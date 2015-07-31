@@ -63,4 +63,8 @@ trait MagicDrawUMLGeneralizationSet
   // 9.14
   override def powertype: Option[UMLClassifier[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLGeneralizationSetImpl(val e: MagicDrawUML#GeneralizationSet, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLGeneralizationSet

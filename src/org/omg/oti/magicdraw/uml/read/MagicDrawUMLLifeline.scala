@@ -68,4 +68,8 @@ trait MagicDrawUMLLifeline
   
   // 17.6
 	override def covered_stateInvariant: Set[UMLStateInvariant[Uml]] = ???
+
 }
+
+case class MagicDrawUMLLifelineImpl(val e: MagicDrawUML#Lifeline, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLifeline

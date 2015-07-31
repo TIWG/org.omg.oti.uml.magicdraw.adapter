@@ -62,4 +62,8 @@ trait MagicDrawUMLReduceAction
   // 16.56
 	override def result: Option[UMLOutputPin[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLReduceActionImpl(val e: MagicDrawUML#ReduceAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReduceAction

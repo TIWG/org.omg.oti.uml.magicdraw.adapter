@@ -81,4 +81,20 @@ trait MagicDrawUMLInterface
 
   override def redefinedInterface_interface: Set[UMLInterface[Uml]] =
     umlInterface( e.get_interfaceOfRedefinedInterface.toSet )
+
+}
+
+case class MagicDrawUMLInterfaceImpl(val e: MagicDrawUML#Interface, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInterface
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLInterface(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

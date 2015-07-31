@@ -53,4 +53,8 @@ trait MagicDrawUMLCallBehaviorAction
   override def behavior: Option[UMLBehavior[Uml]] =
     Option.apply( e.getBehavior )
     
+
 }
+
+case class MagicDrawUMLCallBehaviorActionImpl(val e: MagicDrawUML#CallBehaviorAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCallBehaviorAction

@@ -50,4 +50,8 @@ trait MagicDrawUMLDataStoreNode
   def getMagicDrawDataStoreNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLDataStoreNodeImpl(val e: MagicDrawUML#DataStoreNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDataStoreNode

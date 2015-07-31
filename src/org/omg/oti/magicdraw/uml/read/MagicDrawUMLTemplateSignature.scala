@@ -58,4 +58,8 @@ trait MagicDrawUMLTemplateSignature
   override def parameter: Seq[UMLTemplateParameter[Uml]] =
     e.getParameter.toSeq
 
+
 }
+
+case class MagicDrawUMLTemplateSignatureImpl(val e: MagicDrawUML#TemplateSignature, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTemplateSignature

@@ -51,4 +51,8 @@ trait MagicDrawUMLInstanceValue
   import ops._
   
   def instance = Option.apply( e.getInstance )
+
 }
+
+case class MagicDrawUMLInstanceValueImpl(val e: MagicDrawUML#InstanceValue, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInstanceValue

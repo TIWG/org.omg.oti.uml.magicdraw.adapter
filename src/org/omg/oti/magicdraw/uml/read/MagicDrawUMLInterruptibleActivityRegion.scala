@@ -58,4 +58,8 @@ trait MagicDrawUMLInterruptibleActivityRegion
   override def node: Set[UMLActivityNode[Uml]] =
     e.getNode.toSet[Uml#ActivityNode]
   
+
 }
+
+case class MagicDrawUMLInterruptibleActivityRegionImpl(val e: MagicDrawUML#InterruptibleActivityRegion, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInterruptibleActivityRegion

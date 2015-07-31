@@ -53,4 +53,8 @@ trait MagicDrawUMLConnectableElementTemplateParameter
   override def parameteredElement: Option[UMLConnectableElement[Uml]] =
     Option.apply( e.getParameteredElement )
     
+
 }
+
+case class MagicDrawUMLConnectableElementTemplateParameterImpl(val e: MagicDrawUML#ConnectableElementTemplateParameter, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConnectableElementTemplateParameter

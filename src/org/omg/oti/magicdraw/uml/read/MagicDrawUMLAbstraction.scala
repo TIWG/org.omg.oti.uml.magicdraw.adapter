@@ -51,4 +51,8 @@ trait MagicDrawUMLAbstraction
   def getMagicDrawAbstraction = e
 
   override def mapping = Option.apply(e.getMapping)
+
 }
+
+case class MagicDrawUMLAbstractionImpl(val e: MagicDrawUML#Abstraction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAbstraction

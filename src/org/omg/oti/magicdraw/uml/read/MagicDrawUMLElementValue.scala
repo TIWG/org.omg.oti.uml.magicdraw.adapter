@@ -71,4 +71,8 @@ trait MagicDrawUMLElementValue
   override def asForwardReferencesToImportableOuterPackageableElements: Set[UMLPackageableElement[Uml]] = 
     element.fold(Set[UMLPackageableElement[Uml]]())(_.asForwardReferencesToImportableOuterPackageableElements)
 
+
 }
+
+case class MagicDrawUMLElementValueImpl(val e: MagicDrawUML#ElementValue, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLElementValue

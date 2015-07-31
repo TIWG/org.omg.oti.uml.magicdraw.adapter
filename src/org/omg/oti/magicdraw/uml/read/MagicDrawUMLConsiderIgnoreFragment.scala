@@ -52,4 +52,8 @@ trait MagicDrawUMLConsiderIgnoreFragment
 
   override def message: Set[UMLNamedElement[Uml]] = ??? 
 
+
 }
+
+case class MagicDrawUMLConsiderIgnoreFragmentImpl(val e: MagicDrawUML#ConsiderIgnoreFragment, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConsiderIgnoreFragment

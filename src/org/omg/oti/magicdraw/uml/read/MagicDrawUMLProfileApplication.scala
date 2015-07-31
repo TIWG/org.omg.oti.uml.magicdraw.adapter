@@ -51,4 +51,8 @@ trait MagicDrawUMLProfileApplication
   def getMagicDrawProfileApplication = e
   
   override def isStrict = e.isStrict()
+
 }
+
+case class MagicDrawUMLProfileApplicationImpl(val e: MagicDrawUML#ProfileApplication, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLProfileApplication

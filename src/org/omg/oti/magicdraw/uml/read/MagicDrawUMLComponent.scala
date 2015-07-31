@@ -63,3 +63,18 @@ trait MagicDrawUMLComponent
     e.getPackagedElement.toSet[Uml#PackageableElement]
   
 }
+
+case class MagicDrawUMLComponentImpl( val e: MagicDrawUML#Component, ops: MagicDrawUMLUtil )
+extends MagicDrawUMLComponent
+with sext.TreeString
+with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLComponent(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

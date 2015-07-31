@@ -54,4 +54,8 @@ trait MagicDrawUMLVariableAction
     Option.apply( e.getVariable )
     
   
+
 }
+
+case class MagicDrawUMLVariableActionImpl(val e: MagicDrawUML#VariableAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLVariableAction

@@ -57,4 +57,20 @@ trait MagicDrawUMLTimeConstraint
   override def specification: Option[UMLTimeInterval[Uml]] =
     Option.apply( e.getSpecification )
     
+
+}
+
+case class MagicDrawUMLTimeConstraintImpl(val e: MagicDrawUML#TimeConstraint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTimeConstraint
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLTimeConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

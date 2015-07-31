@@ -56,4 +56,8 @@ trait MagicDrawUMLQualifierValue
   // 16.33
   override def value: Option[UMLInputPin[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLQualifierValueImpl(val e: MagicDrawUML#QualifierValue, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLQualifierValue

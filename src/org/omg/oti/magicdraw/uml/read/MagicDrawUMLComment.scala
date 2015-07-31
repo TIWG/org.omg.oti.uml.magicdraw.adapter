@@ -56,4 +56,8 @@ trait MagicDrawUMLComment
   def annotatedElement = e.getAnnotatedElement.toSet[com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element]
   def getCommentOwnerIndex = e.getOwner.getOwnedComment.toList.indexOf( e )  
   def body = Option.apply(e.getBody)
+
 }
+
+case class MagicDrawUMLCommentImpl(val e: MagicDrawUML#Comment, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLComment

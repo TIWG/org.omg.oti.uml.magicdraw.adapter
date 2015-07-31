@@ -55,4 +55,8 @@ trait MagicDrawUMLStateInvariant
   
   // 17.1
 	override def invariant: Option[UMLConstraint[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLStateInvariantImpl(val e: MagicDrawUML#StateInvariant, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStateInvariant

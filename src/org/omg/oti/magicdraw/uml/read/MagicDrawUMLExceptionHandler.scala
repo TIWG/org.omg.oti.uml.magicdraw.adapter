@@ -60,4 +60,8 @@ trait MagicDrawUMLExceptionHandler
   
 	override def protectedNode: Option[UMLExecutableNode[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLExceptionHandlerImpl(val e: MagicDrawUML#ExceptionHandler, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExceptionHandler

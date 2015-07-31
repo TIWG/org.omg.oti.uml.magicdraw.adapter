@@ -60,4 +60,20 @@ trait MagicDrawUMLInteraction
   
   // 17.18
   override def refersTo_interactionUse: Set[UMLInteractionUse[Uml]] = ???
+
+}
+
+case class MagicDrawUMLInteractionImpl(val e: MagicDrawUML#Interaction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInteraction
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLInteraction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

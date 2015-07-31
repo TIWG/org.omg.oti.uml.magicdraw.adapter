@@ -58,4 +58,8 @@ trait MagicDrawUMLReadLinkObjectEndQualifierAction
   
   // 16.35
 	override def result: Option[UMLOutputPin[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLReadLinkObjectEndQualifierActionImpl(val e: MagicDrawUML#ReadLinkObjectEndQualifierAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReadLinkObjectEndQualifierAction

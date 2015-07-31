@@ -62,4 +62,20 @@ trait MagicDrawUMLTimeExpression
   
   // 8.4
 	override def min_timeInterval: Set[UMLTimeInterval[Uml]] = ???
+
+}
+
+case class MagicDrawUMLTimeExpressionImpl(val e: MagicDrawUML#TimeExpression, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTimeExpression
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLTimeExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

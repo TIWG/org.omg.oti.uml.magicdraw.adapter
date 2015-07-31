@@ -51,4 +51,8 @@ trait MagicDrawUMLLiteralInteger
   import ops._
   
   override def value = e.getValue
+
 }
+
+case class MagicDrawUMLLiteralIntegerImpl(val e: MagicDrawUML#LiteralInteger, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLiteralInteger

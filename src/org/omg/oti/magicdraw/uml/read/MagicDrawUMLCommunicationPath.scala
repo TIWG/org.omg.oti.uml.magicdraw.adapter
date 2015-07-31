@@ -50,4 +50,8 @@ trait MagicDrawUMLCommunicationPath
   def getMagicDrawCommunicationPath = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLCommunicationPathImpl(val e: MagicDrawUML#CommunicationPath, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCommunicationPath

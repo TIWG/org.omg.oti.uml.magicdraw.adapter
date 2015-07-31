@@ -109,4 +109,20 @@ trait MagicDrawUMLParameter
   // 9.9
 	override def result_opaqueExpression: Set[UMLOpaqueExpression[Uml]] = ???
 
+
+}
+
+case class MagicDrawUMLParameterImpl(val e: MagicDrawUML#Parameter, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLParameter
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLParameter(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

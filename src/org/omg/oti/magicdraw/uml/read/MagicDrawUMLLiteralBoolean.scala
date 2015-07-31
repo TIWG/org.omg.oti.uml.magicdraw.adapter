@@ -52,4 +52,8 @@ trait MagicDrawUMLLiteralBoolean
   
   override def value = e.isValue
   
+
 }
+
+case class MagicDrawUMLLiteralBooleanImpl(val e: MagicDrawUML#LiteralBoolean, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLiteralBoolean

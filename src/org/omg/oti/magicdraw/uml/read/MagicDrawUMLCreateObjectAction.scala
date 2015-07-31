@@ -54,4 +54,8 @@ trait MagicDrawUMLCreateObjectAction
   
   override def result: Option[UMLOutputPin[Uml]] = ??? 
   
+
 }
+
+case class MagicDrawUMLCreateObjectActionImpl(val e: MagicDrawUML#CreateObjectAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCreateObjectAction

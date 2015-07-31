@@ -55,4 +55,8 @@ trait MagicDrawUMLTemplateParameterSubstitution
   
   // 7.4
   override def formal: Option[UMLTemplateParameter[Uml]] = ???
+
 }
+
+case class MagicDrawUMLTemplateParameterSubstitutionImpl(val e: MagicDrawUML#TemplateParameterSubstitution, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTemplateParameterSubstitution

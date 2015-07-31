@@ -42,6 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 
+import scala.collection.JavaConversions._
+
 trait MagicDrawUMLRegion 
   extends UMLRegion[MagicDrawUML]
   with MagicDrawUMLNamespace
@@ -52,6 +54,22 @@ trait MagicDrawUMLRegion
   import ops._
 
   // 14.37
-  	override def redefinitionContext: Iterable[UMLClassifier[Uml]] = ???
-    
+  override def redefinitionContext: Iterable[UMLClassifier[Uml]] =
+    umlClassifier( e.getRedefinitionContext )
+
+}
+
+case class MagicDrawUMLRegionImpl(val e: MagicDrawUML#Region, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLRegion
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLRegion(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

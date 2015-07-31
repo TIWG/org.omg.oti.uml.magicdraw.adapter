@@ -51,4 +51,8 @@ trait MagicDrawUMLPackageMerge
   def getMagicDrawPackageMerge = e
 
   
+
 }
+
+case class MagicDrawUMLPackageMergeImpl(val e: MagicDrawUML#PackageMerge, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLPackageMerge

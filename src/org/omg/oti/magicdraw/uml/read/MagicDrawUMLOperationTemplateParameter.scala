@@ -53,4 +53,8 @@ trait MagicDrawUMLOperationTemplateParameter
   override def parameteredElement: Option[UMLOperation[Uml]] =
     Option.apply( e.getParameteredElement )
     
+
 }
+
+case class MagicDrawUMLOperationTemplateParameterImpl(val e: MagicDrawUML#OperationTemplateParameter, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOperationTemplateParameter

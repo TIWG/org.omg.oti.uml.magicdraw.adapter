@@ -52,4 +52,8 @@ trait MagicDrawUMLSignalEvent
 
   override def signal = Option.apply( e.getSignal )
   
+
 }
+
+case class MagicDrawUMLSignalEventImpl(val e: MagicDrawUML#SignalEvent, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSignalEvent

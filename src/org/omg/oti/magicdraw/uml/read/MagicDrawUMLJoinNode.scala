@@ -56,4 +56,8 @@ trait MagicDrawUMLJoinNode
   override def joinSpec: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getJoinSpec )  
     
+
 }
+
+case class MagicDrawUMLJoinNodeImpl(val e: MagicDrawUML#JoinNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLJoinNode

@@ -50,4 +50,8 @@ trait MagicDrawUMLCentralBufferNode
   def getMagicDrawCentralBufferNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLCentralBufferNodeImpl(val e: MagicDrawUML#CentralBufferNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCentralBufferNode

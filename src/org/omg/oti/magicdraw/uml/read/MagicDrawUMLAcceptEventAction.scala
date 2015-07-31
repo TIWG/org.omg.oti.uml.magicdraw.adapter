@@ -61,4 +61,8 @@ trait MagicDrawUMLAcceptEventAction
   override def trigger: Set[UMLTrigger[Uml]] =
     e.getTrigger.toSet[Uml#Trigger]
   
+
 }
+
+case class MagicDrawUMLAcceptEventActionImpl(val e: MagicDrawUML#AcceptEventAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAcceptEventAction

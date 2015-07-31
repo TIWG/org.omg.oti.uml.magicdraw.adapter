@@ -56,4 +56,8 @@ trait MagicDrawUMLAddStructuralFeatureValueAction
   override def isReplaceAll: Boolean =
     e.isReplaceAll
   
+
 }
+
+case class MagicDrawUMLAddStructuralFeatureValueActionImpl(val e: MagicDrawUML#AddStructuralFeatureValueAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAddStructuralFeatureValueAction

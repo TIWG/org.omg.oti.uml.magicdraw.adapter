@@ -59,4 +59,8 @@ trait MagicDrawUMLSlot
   // 9.27
   override def value: Seq[UMLValueSpecification[Uml]] =
     e.getValue.toSeq
+
 }
+
+case class MagicDrawUMLSlotImpl(val e: MagicDrawUML#Slot, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSlot

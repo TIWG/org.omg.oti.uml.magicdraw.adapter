@@ -57,4 +57,8 @@ trait MagicDrawUMLExpansionRegion
   
   override def outputElement: Set[UMLExpansionNode[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLExpansionRegionImpl(val e: MagicDrawUML#ExpansionRegion, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExpansionRegion

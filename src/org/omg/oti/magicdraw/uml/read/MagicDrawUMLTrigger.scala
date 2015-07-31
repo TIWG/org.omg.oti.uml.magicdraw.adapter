@@ -59,4 +59,8 @@ trait MagicDrawUMLTrigger
   // 16.39
   override def replyToCall_replyAction: Option[UMLReplyAction[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLTriggerImpl(val e: MagicDrawUML#Trigger, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTrigger

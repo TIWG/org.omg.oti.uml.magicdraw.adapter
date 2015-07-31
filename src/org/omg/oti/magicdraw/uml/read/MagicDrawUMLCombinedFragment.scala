@@ -56,4 +56,8 @@ trait MagicDrawUMLCombinedFragment
   
   override def operand: Seq[UMLInteractionOperand[Uml]] = ??? 
 
+
 }
+
+case class MagicDrawUMLCombinedFragmentImpl(val e: MagicDrawUML#CombinedFragment, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCombinedFragment

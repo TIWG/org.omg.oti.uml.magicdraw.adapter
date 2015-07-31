@@ -54,4 +54,8 @@ trait MagicDrawUMLDeploymentSpecification
   
   override def executionLocation: Option[String] = ??? 
 
+
 }
+
+case class MagicDrawUMLDeploymentSpecificationImpl(val e: MagicDrawUML#DeploymentSpecification, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDeploymentSpecification

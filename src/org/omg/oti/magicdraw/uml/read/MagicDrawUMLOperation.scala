@@ -99,4 +99,20 @@ trait MagicDrawUMLOperation
   
   override def operation_callEvent: Set[UMLCallEvent[Uml]] =
     e.get_callEventOfOperation.toSet[Uml#CallEvent]
+
+}
+
+case class MagicDrawUMLOperationImpl(val e: MagicDrawUML#Operation, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOperation
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLOperation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

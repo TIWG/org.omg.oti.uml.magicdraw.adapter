@@ -55,4 +55,8 @@ trait MagicDrawUMLDestroyLinkAction
   override def endData: Iterable[UMLLinkEndDestructionData[Uml]] =
     umlLinkEndData( e.getEndData.toIterable ) selectByKindOf
     { case d: UMLLinkEndDestructionData[Uml] => d }
+
 }
+
+case class MagicDrawUMLDestroyLinkActionImpl(val e: MagicDrawUML#DestroyLinkAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDestroyLinkAction

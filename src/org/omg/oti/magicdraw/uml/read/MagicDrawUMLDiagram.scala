@@ -64,3 +64,6 @@ trait MagicDrawUMLDiagram
     namedElement_referenceMetaProperties
     
 }
+
+case class MagicDrawUMLDiagramImpl( val e: MagicDrawUML#Diagram, ops: MagicDrawUMLUtil )
+  extends MagicDrawUMLDiagram

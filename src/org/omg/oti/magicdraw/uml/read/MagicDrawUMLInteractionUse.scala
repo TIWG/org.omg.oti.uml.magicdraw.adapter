@@ -62,4 +62,8 @@ trait MagicDrawUMLInteractionUse
   
   // BUG: NO FIGURE!
   override def returnValueRecipient: Option[UMLProperty[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLInteractionUseImpl(val e: MagicDrawUML#InteractionUse, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInteractionUse

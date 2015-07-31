@@ -56,4 +56,20 @@ trait MagicDrawUMLDurationInterval
   override def min =
     Option.apply( e.getMin )
     
+
+}
+
+case class MagicDrawUMLDurationIntervalImpl(val e: MagicDrawUML#DurationInterval, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDurationInterval
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLDurationInterval(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

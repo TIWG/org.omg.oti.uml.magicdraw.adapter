@@ -60,4 +60,8 @@ trait MagicDrawUMLReplyAction
   override def returnInformation: Option[UMLInputPin[Uml]] = ???
   
   
+
 }
+
+case class MagicDrawUMLReplyActionImpl(val e: MagicDrawUML#ReplyAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReplyAction

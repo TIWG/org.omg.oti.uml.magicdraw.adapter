@@ -53,4 +53,8 @@ trait MagicDrawUMLActivityParameterNode
   override def parameter: Option[UMLParameter[Uml]] = 
     Option.apply( e.getParameter )
 
+
 }
+
+case class MagicDrawUMLActivityParameterNodeImpl(val e: MagicDrawUML#ActivityParameterNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActivityParameterNode

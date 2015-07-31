@@ -65,4 +65,8 @@ trait MagicDrawUMLObjectFlow
   // 15.1
   override def decisionInputFlow_decisionNode: Option[UMLDecisionNode[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLObjectFlowImpl(val e: MagicDrawUML#ObjectFlow, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLObjectFlow

@@ -54,4 +54,8 @@ trait MagicDrawUMLRedefinableTemplateSignature
   // BUG: NO FIGURE
   override def inheritedParameter: Set[UMLTemplateParameter[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLRedefinableTemplateSignatureImpl(val e: MagicDrawUML#RedefinableTemplateSignature, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLRedefinableTemplateSignature

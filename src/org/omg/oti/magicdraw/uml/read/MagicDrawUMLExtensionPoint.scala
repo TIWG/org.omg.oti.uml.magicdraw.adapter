@@ -53,4 +53,8 @@ trait MagicDrawUMLExtensionPoint
 
   override def extensionLocation_extension: Set[UMLExtend[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLExtensionPointImpl(val e: MagicDrawUML#ExtensionPoint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExtensionPoint

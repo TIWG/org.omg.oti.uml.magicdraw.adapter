@@ -53,4 +53,20 @@ trait MagicDrawUMLIntervalConstraint
   override def specification: Option[UMLInterval[Uml]] =
     Option.apply( e.getSpecification )
     
+
+}
+
+case class MagicDrawUMLIntervalConstraintImpl(val e: MagicDrawUML#IntervalConstraint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLIntervalConstraint
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLIntervalConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

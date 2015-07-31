@@ -51,4 +51,8 @@ trait MagicDrawUMLNode
   def getMagicDrawNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLNodeImpl(val e: MagicDrawUML#Node, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLNode

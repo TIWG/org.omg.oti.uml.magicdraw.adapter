@@ -52,12 +52,28 @@ trait MagicDrawUMLStateMachine
   import ops._
 
   // 14.1
-  def submachineState: Set[UMLState[Uml]] = ???
+  def submachineState: Set[UMLState[Uml]] =
+    umlState( e.getSubmachineState.toSet )
   
   override def extendedStateMachine: Set[UMLStateMachine[Uml]] =
     umlStateMachine( e.getExtendedStateMachine.toSet )
     
   override def extendedStateMachine_stateMachine: Set[UMLStateMachine[Uml]] =
-    umlStateMachine( e.get_stateMachineOfExtendedStateMachine.toSet )    
+    umlStateMachine( e.get_stateMachineOfExtendedStateMachine.toSet )
 
+}
+
+case class MagicDrawUMLStateMachineImpl(val e: MagicDrawUML#StateMachine, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStateMachine
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLStateMachine(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

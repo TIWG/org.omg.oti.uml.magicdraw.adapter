@@ -52,4 +52,8 @@ trait MagicDrawUMLReception
 
   // 10.5
   override def signal: Option[UMLSignal[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLReceptionImpl(val e: MagicDrawUML#Reception, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReception

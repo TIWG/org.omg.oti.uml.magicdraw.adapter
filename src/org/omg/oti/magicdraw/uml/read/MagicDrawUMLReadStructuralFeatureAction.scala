@@ -52,4 +52,8 @@ trait MagicDrawUMLReadStructuralFeatureAction
 
   // 16.36  
 	override def result: Option[UMLOutputPin[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLReadStructuralFeatureActionImpl(val e: MagicDrawUML#ReadStructuralFeatureAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReadStructuralFeatureAction

@@ -57,4 +57,8 @@ trait MagicDrawUMLCollaboration
   
   override def type_collaborationUse = e.get_collaborationUseOfType.toSet[Uml#CollaborationUse]
   
+
 }
+
+case class MagicDrawUMLCollaborationImpl(val e: MagicDrawUML#Collaboration, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCollaboration

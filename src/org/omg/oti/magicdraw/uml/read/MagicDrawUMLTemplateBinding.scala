@@ -51,3 +51,6 @@ trait MagicDrawUMLTemplateBinding
   import ops._
 
 }
+
+case class MagicDrawUMLTemplateBindingImpl(val e: MagicDrawUML#TemplateBinding, ops: MagicDrawUMLUtil)
+  extends  MagicDrawUMLTemplateBinding

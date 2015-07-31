@@ -122,3 +122,18 @@ trait MagicDrawUMLProperty
     umlProperty( e.get_propertyOfSubsettedProperty.toSet )
   
 }
+
+case class MagicDrawUMLPropertyImpl( val e: MagicDrawUML#Property, ops: MagicDrawUMLUtil )
+extends MagicDrawUMLProperty
+with sext.TreeString
+with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLProperty(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

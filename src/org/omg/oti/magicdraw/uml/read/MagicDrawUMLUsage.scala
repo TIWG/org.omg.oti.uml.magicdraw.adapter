@@ -51,3 +51,6 @@ trait MagicDrawUMLUsage
   import ops._
 
 }
+
+case class MagicDrawUMLUsageImpl(val e: MagicDrawUML#Usage, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLUsage

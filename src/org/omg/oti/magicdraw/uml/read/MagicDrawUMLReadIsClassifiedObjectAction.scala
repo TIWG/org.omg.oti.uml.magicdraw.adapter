@@ -61,4 +61,8 @@ trait MagicDrawUMLReadIsClassifiedObjectAction
   
   // 16.30
   override def result: Option[UMLOutputPin[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLReadIsClassifiedObjectActionImpl(val e: MagicDrawUML#ReadIsClassifiedObjectAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReadIsClassifiedObjectAction

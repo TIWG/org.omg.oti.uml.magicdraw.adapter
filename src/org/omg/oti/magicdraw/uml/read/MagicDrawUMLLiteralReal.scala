@@ -55,4 +55,8 @@ trait MagicDrawUMLLiteralReal
     case Some( d ) => d
   }
   
+
 }
+
+case class MagicDrawUMLLiteralRealImpl(val e: MagicDrawUML#LiteralReal, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLiteralReal

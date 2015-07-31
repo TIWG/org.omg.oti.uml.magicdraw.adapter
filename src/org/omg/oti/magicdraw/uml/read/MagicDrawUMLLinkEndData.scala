@@ -63,4 +63,8 @@ trait MagicDrawUMLLinkEndData
     
   override def endData_linkAction: Option[UMLLinkAction[Uml]] =
     Option.apply( e.get_linkActionOfEndData )
+
 }
+
+case class MagicDrawUMLLinkEndDataImpl(val e: MagicDrawUML#LinkEndData, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLinkEndData

@@ -51,4 +51,8 @@ trait MagicDrawUMLActionInputPin
   import ops._
 
   override def fromAction = Option.apply( e.getFromAction )
+
 }
+
+case class MagicDrawUMLActionInputPinImpl(val e: MagicDrawUML#ActionInputPin, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActionInputPin

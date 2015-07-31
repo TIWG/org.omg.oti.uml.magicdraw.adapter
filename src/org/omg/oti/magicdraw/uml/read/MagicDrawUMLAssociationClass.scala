@@ -52,3 +52,18 @@ trait MagicDrawUMLAssociationClass
   import ops._
 
 }
+
+case class MagicDrawUMLAssociationClassImpl(val e: MagicDrawUML#AssociationClass, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAssociationClass
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLAssociationClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

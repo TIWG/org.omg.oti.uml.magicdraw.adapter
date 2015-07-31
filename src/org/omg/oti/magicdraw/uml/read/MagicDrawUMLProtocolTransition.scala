@@ -57,4 +57,8 @@ trait MagicDrawUMLProtocolTransition
   override def preCondition: Option[UMLConstraint[Uml]] = ???
   
   
+
 }
+
+case class MagicDrawUMLProtocolTransitionImpl(val e: MagicDrawUML#ProtocolTransition, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLProtocolTransition

@@ -63,4 +63,20 @@ trait MagicDrawUMLProfile
   
   // 12.12
   override def profile_stereotype: Set[UMLStereotype[Uml]] = ???
+
+}
+
+case class MagicDrawUMLProfileImpl(val e: MagicDrawUML#Profile, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLProfile
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLProfile(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

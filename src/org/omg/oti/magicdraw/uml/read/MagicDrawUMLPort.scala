@@ -104,3 +104,18 @@ trait MagicDrawUMLPort
   override def redefinedPort_port: Set[UMLPort[Uml]] =
     umlPort( e.get_portOfRedefinedPort.toSet )
 }
+
+case class MagicDrawUMLPortImpl( val e: MagicDrawUML#Port, ops: MagicDrawUMLUtil )
+  extends MagicDrawUMLPort
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLPort(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

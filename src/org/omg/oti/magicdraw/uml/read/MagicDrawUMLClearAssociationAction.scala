@@ -56,4 +56,8 @@ trait MagicDrawUMLClearAssociationAction
   override def _object: Option[UMLInputPin[Uml]] =
     Option.apply( e.getObject )
     
+
 }
+
+case class MagicDrawUMLClearAssociationActionImpl(val e: MagicDrawUML#ClearAssociationAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClearAssociationAction

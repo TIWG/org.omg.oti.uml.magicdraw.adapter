@@ -66,4 +66,8 @@ trait MagicDrawUMLGeneralization
   override def generalizationSet: Set[UMLGeneralizationSet[Uml]] = 
     e.getGeneralizationSet.toSet[Uml#GeneralizationSet]
   
+
 }
+
+case class MagicDrawUMLGeneralizationImpl(val e: MagicDrawUML#Generalization, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLGeneralization

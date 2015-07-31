@@ -57,4 +57,8 @@ trait MagicDrawUMLExtend
     
   // 18.1
 	override def extensionLocation: Seq[UMLExtensionPoint[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLExtendImpl(val e: MagicDrawUML#Extend, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExtend

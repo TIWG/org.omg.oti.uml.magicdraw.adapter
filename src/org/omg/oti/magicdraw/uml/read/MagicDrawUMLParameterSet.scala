@@ -59,4 +59,8 @@ trait MagicDrawUMLParameterSet
     e.getParameter.toSet[Uml#Parameter]
   
   
+
 }
+
+case class MagicDrawUMLParameterSetImpl(val e: MagicDrawUML#ParameterSet, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLParameterSet

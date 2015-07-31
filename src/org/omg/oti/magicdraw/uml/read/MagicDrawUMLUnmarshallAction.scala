@@ -61,4 +61,8 @@ trait MagicDrawUMLUnmarshallAction
   override def unmarshallType: Option[UMLClassifier[Uml]] =
     Option.apply( e.getUnmarshallType )
     
+
 }
+
+case class MagicDrawUMLUnmarshallActionImpl(val e: MagicDrawUML#UnmarshallAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLUnmarshallAction

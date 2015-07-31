@@ -50,4 +50,8 @@ trait MagicDrawUMLGate
   def getMagicDrawGate = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLGateImpl(val e: MagicDrawUML#Gate, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLGate

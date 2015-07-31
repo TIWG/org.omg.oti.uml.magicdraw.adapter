@@ -50,4 +50,8 @@ trait MagicDrawUMLFinalState
   def getMagicDrawFinalState = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLFinalStateImpl(val e: MagicDrawUML#FinalState, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLFinalState

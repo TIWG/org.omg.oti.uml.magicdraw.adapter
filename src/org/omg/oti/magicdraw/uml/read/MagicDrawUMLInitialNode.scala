@@ -50,4 +50,8 @@ trait MagicDrawUMLInitialNode
   def getMagicDrawInitialNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLInitialNodeImpl(val e: MagicDrawUML#InitialNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInitialNode

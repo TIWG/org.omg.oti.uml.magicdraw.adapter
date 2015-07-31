@@ -57,4 +57,8 @@ trait MagicDrawUMLInteractionOperand
   // 17.11
 	override def guard: Option[UMLInteractionConstraint[Uml]] = ???
 
+
 }
+
+case class MagicDrawUMLInteractionOperandImpl(val e: MagicDrawUML#InteractionOperand, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInteractionOperand

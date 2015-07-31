@@ -53,4 +53,8 @@ trait MagicDrawUMLValuePin
   override def value: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getValue )
     
+
 }
+
+case class MagicDrawUMLValuePinImpl(val e: MagicDrawUML#ValuePin, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLValuePin

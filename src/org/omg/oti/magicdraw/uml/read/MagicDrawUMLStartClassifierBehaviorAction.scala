@@ -53,4 +53,8 @@ trait MagicDrawUMLStartClassifierBehaviorAction
   // 16.30
   override def _object: Option[UMLInputPin[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLStartClassifierBehaviorActionImpl(val e: MagicDrawUML#StartClassifierBehaviorAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStartClassifierBehaviorAction

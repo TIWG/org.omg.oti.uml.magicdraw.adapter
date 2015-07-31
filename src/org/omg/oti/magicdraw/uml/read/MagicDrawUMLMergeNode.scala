@@ -50,4 +50,8 @@ trait MagicDrawUMLMergeNode
   def getMagicDrawMergeNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLMergeNodeImpl(val e: MagicDrawUML#MergeNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLMergeNode

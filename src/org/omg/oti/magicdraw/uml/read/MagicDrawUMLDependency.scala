@@ -51,4 +51,20 @@ trait MagicDrawUMLDependency
   override protected def e: Uml#Dependency
   def getMagicDrawDependency = e
 
+
+}
+
+case class MagicDrawUMLDependencyImpl(val e: MagicDrawUML#Dependency, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDependency
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLDependency(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

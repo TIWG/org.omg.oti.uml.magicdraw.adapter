@@ -56,4 +56,8 @@ trait MagicDrawUMLAddVariableValueAction
   override def isReplaceAll: Boolean =
     e.isReplaceAll
   
+
 }
+
+case class MagicDrawUMLAddVariableValueActionImpl(val e: MagicDrawUML#AddVariableValueAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAddVariableValueAction

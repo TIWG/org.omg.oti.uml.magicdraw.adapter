@@ -64,4 +64,20 @@ trait MagicDrawUMLActivity
   override def structuredNode: Set[UMLStructuredActivityNode[Uml]] =
     e.getStructuredNode.toSet[Uml#StructuredActivityNode]
   
+
+}
+
+case class MagicDrawUMLActivityImpl(val e: MagicDrawUML#Activity, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActivity
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLActivity(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

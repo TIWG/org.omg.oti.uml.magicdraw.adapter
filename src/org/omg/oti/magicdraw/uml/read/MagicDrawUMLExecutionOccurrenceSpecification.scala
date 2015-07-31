@@ -52,4 +52,8 @@ trait MagicDrawUMLExecutionOccurrenceSpecification
 
   override def execution: Option[UMLExecutionSpecification[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLExecutionOccurrenceSpecificationImpl(val e: MagicDrawUML#ExecutionOccurrenceSpecification, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExecutionOccurrenceSpecification

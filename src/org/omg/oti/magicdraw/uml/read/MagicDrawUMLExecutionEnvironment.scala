@@ -50,4 +50,8 @@ trait MagicDrawUMLExecutionEnvironment
   def getMagicDrawExecutionEnvironment = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLExecutionEnvironmentImpl(val e: MagicDrawUML#ExecutionEnvironment, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExecutionEnvironment

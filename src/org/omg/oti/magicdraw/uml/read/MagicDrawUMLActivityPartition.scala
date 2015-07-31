@@ -76,4 +76,8 @@ trait MagicDrawUMLActivityPartition
   override def partition_activity: Option[UMLActivity[Uml]] =
     Option.apply( e.get_activityOfPartition )
     
+
 }
+
+case class MagicDrawUMLActivityPartitionImpl(val e: MagicDrawUML#ActivityPartition, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLActivityPartition

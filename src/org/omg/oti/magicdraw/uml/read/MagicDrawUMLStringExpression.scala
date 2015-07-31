@@ -57,4 +57,20 @@ trait MagicDrawUMLStringExpression
   override def subExpression = e.getSubExpression.toSeq
     
 	override def nameExpression_namedElement: Option[UMLNamedElement[Uml]] = ???
+
+}
+
+case class MagicDrawUMLStringExpressionImpl(val e: MagicDrawUML#StringExpression, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStringExpression
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLStringExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

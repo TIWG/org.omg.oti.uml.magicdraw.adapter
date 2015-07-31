@@ -54,4 +54,8 @@ trait MagicDrawUMLGeneralOrdering
   
   override def before: Option[UMLOccurrenceSpecification[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLGeneralOrderingImpl(val e: MagicDrawUML#GeneralOrdering, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLGeneralOrdering

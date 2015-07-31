@@ -56,4 +56,8 @@ trait MagicDrawUMLInterfaceRealization
   override def implementingClassifier: Option[UMLBehavioredClassifier[Uml]] =
     Option.apply(e.getImplementingClassifier)
 
+
 }
+
+case class MagicDrawUMLInterfaceRealizationImpl(val e: MagicDrawUML#InterfaceRealization, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInterfaceRealization

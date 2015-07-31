@@ -62,4 +62,8 @@ trait MagicDrawUMLReclassifyObjectAction
   // 16.30  
 	override def oldClassifier: Set[UMLClassifier[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLReclassifyObjectActionImpl(val e: MagicDrawUML#ReclassifyObjectAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReclassifyObjectAction

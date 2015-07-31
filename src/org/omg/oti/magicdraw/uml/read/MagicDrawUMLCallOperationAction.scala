@@ -56,4 +56,8 @@ trait MagicDrawUMLCallOperationAction
   override def target: Option[UMLInputPin[Uml]] =
     Option.apply( e.getTarget )
     
+
 }
+
+case class MagicDrawUMLCallOperationActionImpl(val e: MagicDrawUML#CallOperationAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCallOperationAction

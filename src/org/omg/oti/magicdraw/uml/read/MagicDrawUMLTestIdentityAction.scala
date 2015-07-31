@@ -61,4 +61,8 @@ trait MagicDrawUMLTestIdentityAction
   override def second: Option[UMLInputPin[Uml]] =
     Option.apply( e.getSecond )
 
+
 }
+
+case class MagicDrawUMLTestIdentityActionImpl(val e: MagicDrawUML#TestIdentityAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTestIdentityAction

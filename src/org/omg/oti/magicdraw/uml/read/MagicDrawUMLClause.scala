@@ -66,4 +66,8 @@ trait MagicDrawUMLClause
   
   
 
+
 }
+
+case class MagicDrawUMLClauseImpl(val e: MagicDrawUML#Clause, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClause

@@ -59,4 +59,22 @@ trait MagicDrawUMLConnectorEnd
   override def role: Option[UMLConnectableElement[Uml]] =
     Option.apply(e.getRole)
   
+
+}
+
+case class MagicDrawUMLConnectorEndImpl(val e: MagicDrawUML#ConnectorEnd, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConnectorEnd
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLConnectorEnd(ID=${e.getID}, " +
+      s"role=${role match { case Some(c) => c.xmiID.head; case None => "<none>"}}, " +
+      s"connector=${end_connector match { case Some(c) => c.xmiID.head; case None => "<none>"}})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

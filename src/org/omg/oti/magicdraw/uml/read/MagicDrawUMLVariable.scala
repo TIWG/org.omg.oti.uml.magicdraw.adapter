@@ -53,4 +53,8 @@ trait MagicDrawUMLVariable
 
   // 16.37
 	override def variable_variableAction: Set[UMLVariableAction[Uml]] = ???
+
 }
+
+case class MagicDrawUMLVariableImpl(val e: MagicDrawUML#Variable, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLVariable

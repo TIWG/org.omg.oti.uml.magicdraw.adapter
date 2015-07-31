@@ -59,4 +59,8 @@ trait MagicDrawUMLCreateLinkAction
   override def inputValue: Set[UMLInputPin[Uml]] =
     e.getInputValue.toSet[Uml#InputPin]
 
+
 }
+
+case class MagicDrawUMLCreateLinkActionImpl(val e: MagicDrawUML#CreateLinkAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCreateLinkAction

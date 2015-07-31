@@ -51,13 +51,38 @@ trait MagicDrawUMLTransition
   def getMagicDrawTransition = e
   import ops._
 
-  override def kind: UMLTransitionKind.Value = ???
+  override def kind: UMLTransitionKind.Value =
+    e.getKind match {
+      case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.EXTERNAL =>
+        UMLTransitionKind.external
+      case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.INTERNAL =>
+        UMLTransitionKind.internal
+      case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.LOCAL =>
+        UMLTransitionKind.local
+    }
 
-  override def source: Option[UMLVertex[Uml]] = ??? 
+  override def source: Option[UMLVertex[Uml]] =
+    Option.apply(e.getSource)
 
-  override def target: Option[UMLVertex[Uml]] = ???
+  override def target: Option[UMLVertex[Uml]] =
+    Option.apply(e.getTarget)
   
   override def guard: Option[UMLConstraint[Uml]] =
     Option.apply(e.getGuard)
 
+}
+
+case class MagicDrawUMLTransitionImpl(val e: MagicDrawUML#Transition, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTransition
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLTransition(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

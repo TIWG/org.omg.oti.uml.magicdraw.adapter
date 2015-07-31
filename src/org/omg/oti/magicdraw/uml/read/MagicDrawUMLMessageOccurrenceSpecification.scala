@@ -51,4 +51,8 @@ trait MagicDrawUMLMessageOccurrenceSpecification
   def getMagicDrawMessageOccurrenceSpecification = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLMessageOccurrenceSpecificationImpl(val e: MagicDrawUML#MessageOccurrenceSpecification, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLMessageOccurrenceSpecification

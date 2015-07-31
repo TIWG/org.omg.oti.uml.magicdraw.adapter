@@ -53,4 +53,20 @@ trait MagicDrawUMLEnumerationLiteral
   override def classifier: Iterable[UMLEnumeration[Uml]] =
     Iterable(e.getEnumeration)
 
+
+}
+
+case class MagicDrawUMLEnumerationLiteralImpl(val e: MagicDrawUML#EnumerationLiteral, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLEnumerationLiteral
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLEnumerationLiteral(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

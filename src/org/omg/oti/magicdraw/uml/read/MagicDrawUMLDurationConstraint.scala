@@ -59,4 +59,20 @@ trait MagicDrawUMLDurationConstraint
   override def firstEvent =
     (e.isFirstEvent map ((b) => if (b) true else false)).toSet[Boolean]
     
+
+}
+
+case class MagicDrawUMLDurationConstraintImpl(val e: MagicDrawUML#DurationConstraint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDurationConstraint
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLDurationConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

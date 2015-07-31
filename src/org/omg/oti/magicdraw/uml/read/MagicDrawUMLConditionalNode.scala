@@ -64,4 +64,8 @@ trait MagicDrawUMLConditionalNode
 	override def result: Seq[UMLOutputPin[Uml]] =
     e.getResult.toSeq
     
+
 }
+
+case class MagicDrawUMLConditionalNodeImpl(val e: MagicDrawUML#ConditionalNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConditionalNode

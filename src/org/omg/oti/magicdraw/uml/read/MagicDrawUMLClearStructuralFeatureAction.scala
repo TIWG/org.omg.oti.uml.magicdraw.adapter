@@ -52,4 +52,8 @@ trait MagicDrawUMLClearStructuralFeatureAction
 
   override def result: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getResult )
+
 }
+
+case class MagicDrawUMLClearStructuralFeatureActionImpl(val e: MagicDrawUML#ClearStructuralFeatureAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClearStructuralFeatureAction

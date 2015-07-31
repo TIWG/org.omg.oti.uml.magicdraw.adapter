@@ -59,3 +59,18 @@ trait MagicDrawUMLDataType
     e.getOwnedOperation.toSeq
   
 }
+
+case class MagicDrawUMLDataTypeImpl( val e: MagicDrawUML#DataType, ops: MagicDrawUMLUtil )
+  extends MagicDrawUMLDataType
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLDataType(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

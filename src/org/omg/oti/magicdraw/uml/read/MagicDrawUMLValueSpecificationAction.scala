@@ -56,4 +56,8 @@ trait MagicDrawUMLValueSpecificationAction
   override def value: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getValue )
     
+
 }
+
+case class MagicDrawUMLValueSpecificationActionImpl(val e: MagicDrawUML#ValueSpecificationAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLValueSpecificationAction

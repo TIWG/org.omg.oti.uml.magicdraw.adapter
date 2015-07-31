@@ -363,4 +363,8 @@ trait MagicDrawUMLInputPin
 	 */
 	override def value_writeVariableAction: Option[UMLWriteVariableAction[Uml]] = ???
 
+
 }
+
+case class MagicDrawUMLInputPinImpl(val e: MagicDrawUML#InputPin, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInputPin

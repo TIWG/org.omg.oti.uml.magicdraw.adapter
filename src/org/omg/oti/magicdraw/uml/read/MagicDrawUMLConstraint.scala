@@ -103,4 +103,20 @@ trait MagicDrawUMLConstraint
   override def stateInvariant_owningState: Option[UMLState[Uml]] =
     Option.apply( e.getOwningState )
     
+
+}
+
+case class MagicDrawUMLConstraintImpl(val e: MagicDrawUML#Constraint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConstraint
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

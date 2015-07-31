@@ -56,4 +56,8 @@ trait MagicDrawUMLInteractionConstraint
   // 17.11  
 	override def minint: Option[UMLValueSpecification[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLInteractionConstraintImpl(val e: MagicDrawUML#InteractionConstraint, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInteractionConstraint

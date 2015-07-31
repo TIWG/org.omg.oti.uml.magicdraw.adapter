@@ -50,4 +50,8 @@ trait MagicDrawUMLFlowFinalNode
   def getMagicDrawFlowFinalNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLFlowFinalNodeImpl(val e: MagicDrawUML#FlowFinalNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLFlowFinalNode

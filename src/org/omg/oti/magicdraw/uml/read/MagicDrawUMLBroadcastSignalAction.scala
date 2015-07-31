@@ -53,4 +53,8 @@ trait MagicDrawUMLBroadcastSignalAction
   override def signal: Option[UMLSignal[Uml]] =
     Option.apply( e.getSignal )
     
+
 }
+
+case class MagicDrawUMLBroadcastSignalActionImpl(val e: MagicDrawUML#BroadcastSignalAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLBroadcastSignalAction

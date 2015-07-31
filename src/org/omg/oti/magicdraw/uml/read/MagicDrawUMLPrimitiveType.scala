@@ -50,4 +50,20 @@ trait MagicDrawUMLPrimitiveType
   override protected def e: Uml#PrimitiveType
   def getMagicDrawPrimitiveType = e
   
+
+}
+
+case class MagicDrawUMLPrimitiveTypeImpl(val e: MagicDrawUML#PrimitiveType, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLPrimitiveType
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLPrimitiveType(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

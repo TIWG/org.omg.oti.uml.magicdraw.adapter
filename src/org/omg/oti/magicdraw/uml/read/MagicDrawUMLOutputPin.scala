@@ -253,4 +253,8 @@ trait MagicDrawUMLOutputPin
 	 * @opposite org.omg.oti.uml.read.api.UMLStructuredActivityNode.structuredNodeOutput
 	 */
 	override def structuredNodeOutput_structuredActivityNode: Option[UMLStructuredActivityNode[Uml]] = ???
+
 }
+
+case class MagicDrawUMLOutputPinImpl(val e: MagicDrawUML#OutputPin, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOutputPin

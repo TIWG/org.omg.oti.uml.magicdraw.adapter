@@ -54,4 +54,8 @@ trait MagicDrawUMLManifestation
   
   override def manifestation_artifact: Option[UMLArtifact[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLManifestationImpl(val e: MagicDrawUML#Manifestation, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLManifestation

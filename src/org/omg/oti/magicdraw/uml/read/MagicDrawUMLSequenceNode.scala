@@ -53,4 +53,8 @@ trait MagicDrawUMLSequenceNode
 
   // 16.45
 	override def executableNode: Seq[UMLExecutableNode[Uml]] = ??? 
+
 }
+
+case class MagicDrawUMLSequenceNodeImpl(val e: MagicDrawUML#SequenceNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSequenceNode

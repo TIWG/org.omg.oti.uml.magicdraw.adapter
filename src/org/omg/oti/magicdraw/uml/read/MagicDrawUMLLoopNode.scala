@@ -78,4 +78,8 @@ trait MagicDrawUMLLoopNode
   // 16.45
   override def test: Set[UMLExecutableNode[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLLoopNodeImpl(val e: MagicDrawUML#LoopNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLoopNode

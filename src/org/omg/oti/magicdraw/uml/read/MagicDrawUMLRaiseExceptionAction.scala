@@ -52,4 +52,8 @@ trait MagicDrawUMLRaiseExceptionAction
 
   // 16.56
   override def exception: Option[UMLInputPin[Uml]] = ???
+
 }
+
+case class MagicDrawUMLRaiseExceptionActionImpl(val e: MagicDrawUML#RaiseExceptionAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLRaiseExceptionAction

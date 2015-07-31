@@ -66,4 +66,20 @@ trait MagicDrawUMLInformationFlow
 	
   // 20.1  
   override def realizingMessage: Set[UMLMessage[Uml]] = e.getRealizingMessage.toSet[Uml#Message]
+
+}
+
+case class MagicDrawUMLInformationFlowImpl(val e: MagicDrawUML#InformationFlow, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInformationFlow
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLInformationFlow(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

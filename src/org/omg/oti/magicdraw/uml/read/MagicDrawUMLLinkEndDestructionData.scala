@@ -61,4 +61,8 @@ trait MagicDrawUMLLinkEndDestructionData
   override def endData_destroyLinkAction: Option[UMLDestroyLinkAction[Uml]] =
     Option.apply( e.get_destroyLinkActionOfEndData )
    
+
 }
+
+case class MagicDrawUMLLinkEndDestructionDataImpl(val e: MagicDrawUML#LinkEndDestructionData, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLLinkEndDestructionData

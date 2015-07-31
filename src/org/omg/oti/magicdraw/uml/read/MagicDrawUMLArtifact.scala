@@ -66,4 +66,8 @@ trait MagicDrawUMLArtifact
   override def ownedOperation: Seq[UMLOperation[Uml]] =
     e.getOwnedOperation.toSeq
 
+
 }
+
+case class MagicDrawUMLArtifactImpl(val e: MagicDrawUML#Artifact, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLArtifact

@@ -50,4 +50,8 @@ trait MagicDrawUMLDevice
   def getMagicDrawDevice = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLDeviceImpl(val e: MagicDrawUML#Device, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDevice

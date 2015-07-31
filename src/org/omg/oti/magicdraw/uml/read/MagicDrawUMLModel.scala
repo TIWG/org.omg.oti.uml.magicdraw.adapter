@@ -52,4 +52,8 @@ trait MagicDrawUMLModel
   
   // 12.1  
 	override def viewpoint: Option[String] = ???
+
 }
+
+case class MagicDrawUMLModelImpl(val e: MagicDrawUML#Model, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLModel

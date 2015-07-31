@@ -56,4 +56,20 @@ trait MagicDrawUMLTimeObservation
   override def firstEvent =
     e.isFirstEvent
   
+
+}
+
+case class MagicDrawUMLTimeObservationImpl(val e: MagicDrawUML#TimeObservation, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTimeObservation
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLTimeObservation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

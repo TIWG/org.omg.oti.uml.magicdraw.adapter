@@ -58,4 +58,8 @@ trait MagicDrawUMLConnectionPointReference
   override def exit: Set[UMLPseudostate[Uml]] = ???
   
   
+
 }
+
+case class MagicDrawUMLConnectionPointReferenceImpl(val e: MagicDrawUML#ConnectionPointReference, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConnectionPointReference

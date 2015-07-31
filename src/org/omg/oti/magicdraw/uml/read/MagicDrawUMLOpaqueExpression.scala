@@ -65,4 +65,20 @@ trait MagicDrawUMLOpaqueExpression
   // 8.2
   override def result: Option[UMLParameter[Uml]] = ???
   
+
+}
+
+case class MagicDrawUMLOpaqueExpressionImpl(val e: MagicDrawUML#OpaqueExpression, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLOpaqueExpression
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLOpaqueExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

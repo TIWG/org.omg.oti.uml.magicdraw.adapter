@@ -50,4 +50,8 @@ trait MagicDrawUMLForkNode
   def getMagicDrawForkNode = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLForkNodeImpl(val e: MagicDrawUML#ForkNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLForkNode

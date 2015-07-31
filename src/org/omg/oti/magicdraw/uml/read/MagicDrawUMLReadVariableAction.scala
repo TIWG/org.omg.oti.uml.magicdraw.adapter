@@ -53,4 +53,8 @@ trait MagicDrawUMLReadVariableAction
   override def result: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getResult )
     
+
 }
+
+case class MagicDrawUMLReadVariableActionImpl(val e: MagicDrawUML#ReadVariableAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLReadVariableAction

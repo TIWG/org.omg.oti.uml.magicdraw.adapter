@@ -50,4 +50,20 @@ trait MagicDrawUMLFunctionBehavior
   def getMagicDrawFunctionBehavior = e
   import ops._
 
+
+}
+
+case class MagicDrawUMLFunctionBehaviorImpl(val e: MagicDrawUML#FunctionBehavior, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLFunctionBehavior
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLFunctionBehavior(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

@@ -57,4 +57,8 @@ trait MagicDrawUMLComponentRealization
   override def realizingClassifier: Set[UMLClassifier[Uml]] =
     umlClassifier( e.getRealizingClassifier.toSet ) 
 
+
 }
+
+case class MagicDrawUMLComponentRealizationImpl(val e: MagicDrawUML#ComponentRealization, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLComponentRealization

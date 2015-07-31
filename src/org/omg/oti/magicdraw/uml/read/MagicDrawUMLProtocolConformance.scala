@@ -50,4 +50,8 @@ trait MagicDrawUMLProtocolConformance
   def getMagicDrawProtocolConformance = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLProtocolConformanceImpl(val e: MagicDrawUML#ProtocolConformance, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLProtocolConformance

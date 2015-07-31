@@ -56,4 +56,8 @@ trait MagicDrawUMLSubstitution
   override def substitutingClassifier: Option[UMLClassifier[Uml]] =
     Option.apply(e.getSubstitutingClassifier)
   
+
 }
+
+case class MagicDrawUMLSubstitutionImpl(val e: MagicDrawUML#Substitution, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSubstitution

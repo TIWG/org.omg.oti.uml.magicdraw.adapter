@@ -61,4 +61,8 @@ trait MagicDrawUMLClassifierTemplateParameter
   override def parameteredElement: Option[UMLClassifier[Uml]] =
     Option.apply( e.getParameteredElement )
     
+
 }
+
+case class MagicDrawUMLClassifierTemplateParameterImpl(val e: MagicDrawUML#ClassifierTemplateParameter, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClassifierTemplateParameter

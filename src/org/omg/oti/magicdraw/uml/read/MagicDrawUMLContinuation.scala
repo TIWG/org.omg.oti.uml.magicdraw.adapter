@@ -53,4 +53,8 @@ trait MagicDrawUMLContinuation
   override def setting: Boolean =
     e.isSetting
     
+
 }
+
+case class MagicDrawUMLContinuationImpl(val e: MagicDrawUML#Continuation, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLContinuation

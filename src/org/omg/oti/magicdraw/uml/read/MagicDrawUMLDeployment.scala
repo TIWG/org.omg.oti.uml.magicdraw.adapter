@@ -53,4 +53,8 @@ trait MagicDrawUMLDeployment
 
   override def deployedArtifact: Set[UMLDeployedArtifact[Uml]] =
     umlDeployedArtifact( e.getDeployedArtifact.toSet )
+
 }
+
+case class MagicDrawUMLDeploymentImpl(val e: MagicDrawUML#Deployment, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDeployment

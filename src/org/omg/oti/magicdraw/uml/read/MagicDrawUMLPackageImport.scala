@@ -63,4 +63,8 @@ trait MagicDrawUMLPackageImport
       case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => UMLVisibilityKind._package
     }
 
+
 }
+
+case class MagicDrawUMLPackageImportImpl(val e: MagicDrawUML#PackageImport, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLPackageImport

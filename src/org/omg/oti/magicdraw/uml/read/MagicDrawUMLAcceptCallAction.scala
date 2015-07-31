@@ -53,4 +53,8 @@ trait MagicDrawUMLAcceptCallAction
   override def returnInformation: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getReturnInformation )
     
+
 }
+
+case class MagicDrawUMLAcceptCallActionImpl(val e: MagicDrawUML#AcceptCallAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAcceptCallAction

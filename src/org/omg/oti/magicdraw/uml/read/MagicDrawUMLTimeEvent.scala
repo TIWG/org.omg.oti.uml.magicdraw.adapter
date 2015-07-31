@@ -55,4 +55,20 @@ trait MagicDrawUMLTimeEvent
 	override def isRelative: Boolean =
     e.isRelative
     
+
+}
+
+case class MagicDrawUMLTimeEventImpl(val e: MagicDrawUML#TimeEvent, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTimeEvent
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLTimeEvent(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

@@ -63,4 +63,8 @@ trait MagicDrawUMLUseCase
     
 	override def ownedUseCase_classifier: Option[UMLClassifier[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLUseCaseImpl(val e: MagicDrawUML#UseCase, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLUseCase

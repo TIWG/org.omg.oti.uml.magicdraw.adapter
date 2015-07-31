@@ -67,4 +67,20 @@ trait MagicDrawUMLConnector
   override def realizingConnector_informationFlow: Set[UMLInformationFlow[Uml]] =
     e.get_informationFlowOfRealizingConnector.toSet[Uml#InformationFlow]
   
+
+}
+
+case class MagicDrawUMLConnectorImpl(val e: MagicDrawUML#Connector, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLConnector
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLConnector(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

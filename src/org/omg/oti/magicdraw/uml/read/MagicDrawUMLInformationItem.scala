@@ -54,4 +54,20 @@ trait MagicDrawUMLInformationItem
   // 20.1
   override def represented: Set[UMLClassifier[Uml]] = ???
   
+
+}
+
+case class MagicDrawUMLInformationItemImpl(val e: MagicDrawUML#InformationItem, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInformationItem
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLInformationItem(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

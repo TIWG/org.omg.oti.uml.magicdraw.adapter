@@ -50,4 +50,8 @@ trait MagicDrawUMLClearVariableAction
   def getMagicDrawClearVariableAction = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLClearVariableActionImpl(val e: MagicDrawUML#ClearVariableAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLClearVariableAction

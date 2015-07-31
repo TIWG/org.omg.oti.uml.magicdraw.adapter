@@ -66,4 +66,20 @@ trait MagicDrawUMLSignal
   // 13.2
   override def signal_signalEvent: Set[UMLSignalEvent[Uml]] = ???
   
+
+}
+
+case class MagicDrawUMLSignalImpl(val e: MagicDrawUML#Signal, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLSignal
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLSignal(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

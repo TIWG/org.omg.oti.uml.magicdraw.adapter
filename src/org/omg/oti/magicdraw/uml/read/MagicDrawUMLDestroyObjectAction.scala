@@ -56,4 +56,8 @@ trait MagicDrawUMLDestroyObjectAction
   
 	override def target: Option[UMLInputPin[Uml]] = ???
   
+
 }
+
+case class MagicDrawUMLDestroyObjectActionImpl(val e: MagicDrawUML#DestroyObjectAction, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLDestroyObjectAction

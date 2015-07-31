@@ -51,4 +51,8 @@ trait MagicDrawUMLInclude
   def getMagicDrawInclude = e
   import ops._
 
+
 }
+
+case class MagicDrawUMLIncludeImpl(val e: MagicDrawUML#Include, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLInclude

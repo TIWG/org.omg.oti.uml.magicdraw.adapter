@@ -57,4 +57,8 @@ trait MagicDrawUMLExtensionEnd
   override def ownedEnd_extension: Option[UMLExtension[Uml]] =
     Option.apply(e.get_extensionOfOwnedEnd)
 
+
 }
+
+case class MagicDrawUMLExtensionEndImpl(val e: MagicDrawUML#ExtensionEnd, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExtensionEnd

@@ -54,4 +54,20 @@ trait MagicDrawUMLExpression
   
   def symbol = Option.apply( e.getSymbol )
   def operand = e.getOperand.toSeq
+
+}
+
+case class MagicDrawUMLExpressionImpl(val e: MagicDrawUML#Expression, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExpression
+  with sext.TreeString
+  with sext.ValueTreeString {
+
+  override def toString: String =
+    s"MagicDrawUMLExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
 }

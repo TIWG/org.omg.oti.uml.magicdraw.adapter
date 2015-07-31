@@ -55,4 +55,8 @@ trait MagicDrawUMLExtension
     require( extensionOwnedEnds.size <= 1 )
     extensionOwnedEnds
   }
+
 }
+
+case class MagicDrawUMLExtensionImpl(val e: MagicDrawUML#Extension, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLExtension

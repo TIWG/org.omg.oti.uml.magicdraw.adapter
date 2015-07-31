@@ -68,4 +68,8 @@ trait MagicDrawUMLTemplateParameter
    
   // 9.4
   override def inheritedParameter_redefinableTemplateSignature: Set[UMLRedefinableTemplateSignature[Uml]] = ???
-} 
+
+}
+
+case class MagicDrawUMLTemplateParameterImpl(val e: MagicDrawUML#TemplateParameter, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLTemplateParameter

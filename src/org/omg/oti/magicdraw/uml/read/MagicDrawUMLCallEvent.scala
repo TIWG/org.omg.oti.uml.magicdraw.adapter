@@ -53,4 +53,8 @@ trait MagicDrawUMLCallEvent
   override def operation = 
     Option.apply( e.getOperation )
   
+
 }
+
+case class MagicDrawUMLCallEventImpl(val e: MagicDrawUML#CallEvent, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLCallEvent

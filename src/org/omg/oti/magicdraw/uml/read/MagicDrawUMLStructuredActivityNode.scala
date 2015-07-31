@@ -56,4 +56,8 @@ trait MagicDrawUMLStructuredActivityNode
     e.isMustIsolate
     
   
+
 }
+
+case class MagicDrawUMLStructuredActivityNodeImpl(val e: MagicDrawUML#StructuredActivityNode, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLStructuredActivityNode
