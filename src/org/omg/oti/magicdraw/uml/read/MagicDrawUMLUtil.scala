@@ -44,13 +44,16 @@ import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
 import com.nomagic.magicdraw.core.{Application, ApplicationEnvironment, Project}
+import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import org.omg.oti.uml.read.api._
 
+import scala.reflect.runtime.universe._
 import scala.language.implicitConversions
+import scala.collection.JavaConversions._
 
 case class MagicDrawUMLUtil(project: Project)
-    extends MagicDrawUMLOps {
+  extends MagicDrawUMLOps {
   self =>
 
   type Uml = MagicDrawUML
@@ -68,7 +71,7 @@ case class MagicDrawUMLUtil(project: Project)
 
           def accept(f: File): Boolean =
             f.isDirectory ||
-              (f.isFile && f.getName.endsWith(".catalog.xml"))
+            (f.isFile && f.getName.endsWith(".catalog.xml"))
 
         }
 
@@ -88,7 +91,7 @@ case class MagicDrawUMLUtil(project: Project)
           case JFileChooser.APPROVE_OPTION =>
             val migrationFile = fc.getSelectedFile
             result = Some(migrationFile)
-          case _ =>
+          case _                           =>
             result = None
         }
       }
@@ -99,557 +102,599 @@ case class MagicDrawUMLUtil(project: Project)
     result
   }
 
+  /**
+   * The MagicDraw-specific equivalent of OCL `T`.allInstances() for an OTI adapter `T` of an OMG UML metaclass
+   *
+   * It is unclear what is the proper way to do the OCL equivalent of `T`.allInstances() with the MagicDraw API.
+   * The logic below is based on what is available in the MagicDraw Open API.
+   * @see https://support.nomagic.com/browse/MDUMLCS-16937
+   *
+   * @param metaclassType A MagicDraw Open API metaclass corresponding to an OMG UML metaclass
+   * @param metaclass2umlOTI The OTI uml<metaclass>() converter method to map a MagicDraw metaclass instance
+   *                         to a corresponding MagicDraw-specific OTI adapter instance
+   * @param umlOTIType A MagicDraw-specific OTI adapter corresponding to an OMG UML metaclasss
+   * @param umlTag Scala type information about the MagicDraw-specific OTI metaclass adaptation trait
+   * @param typ Scala type information about a MagicDraw-specific OTI adapter
+   * @tparam T A MagicDraw-specific OTI adapter for an OMG UML metaclass
+   * @return The MagicDraw-specific OTI adapter instances corresponding to MagicDraw-specific instances of
+   *         a MagicDraw-specific implementation of MagicDraw-specific OTI adapter for an OMG UML metaclass
+   */
+  override def allInstances[T <: UMLElement[Uml]]
+  (metaclassType: scala.reflect.runtime.universe.Type,
+   metaclass2umlOTI: scala.reflect.runtime.universe.MethodSymbol,
+   umlOTIType: scala.reflect.runtime.universe.Type)
+  (implicit umlTag: TypeTag[Uml], typ: TypeTag[T])
+  : Option[Set[T]] = {
+    val mdClass: java.lang.Class[_] = umlTag.mirror.runtimeClass(metaclassType.typeSymbol.asClass)
+    // lookup the uml<metaclass>(e: Uml#<metaclass>):UML<metaclass>[Uml] implicit conversion method in this class
+    Option[java.lang.reflect.Method](this.getClass.getMethod(metaclass2umlOTI.name.toString, mdClass)) match {
+
+      case Some(converter) =>
+
+        val mdTypes: Array[java.lang.Class[_]] = Array(mdClass)
+        val mdInstances = ModelHelper.getElementsOfType(project.getModel, mdTypes, true).toSet[Uml#Element]
+        val otiInstances: Set[T] = for {
+          mdInstance <- mdInstances
+          otiInstance = converter.invoke(this, mdInstance).asInstanceOf[T]
+        } yield otiInstance
+        Some(otiInstances)
+
+      case _ =>
+        None
+    }
+  }
+
   override def cacheLookupOrUpdate(e: Uml#Element): UMLElement[Uml] = e match {
     case null => null
 
     // MagicDraw-specific    
-    case _e: Uml#Diagram =>
+    case _e: Uml#Diagram                             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDiagramImpl(_e, self))
-    case _e: Uml#ElementValue =>
+    case _e: Uml#ElementValue                        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLElementValueImpl(_e, self))
-    case _e: Uml#Comment =>
+    case _e: Uml#Comment                             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCommentImpl(_e, self))
-    case _e: Uml#RedefinableTemplateSignature =>
+    case _e: Uml#RedefinableTemplateSignature        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRedefinableTemplateSignatureImpl(_e, self))
-    case _e: Uml#TemplateSignature =>
+    case _e: Uml#TemplateSignature                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTemplateSignatureImpl(_e, self))
-    case _e: Uml#ElementImport =>
+    case _e: Uml#ElementImport                       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLElementImportImpl(_e, self))
-    case _e: Uml#PackageImport =>
+    case _e: Uml#PackageImport                       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPackageImportImpl(_e, self))
-    case _e: Uml#ProfileApplication =>
+    case _e: Uml#ProfileApplication                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLProfileApplicationImpl(_e, self))
-    case _e: Uml#PackageMerge =>
+    case _e: Uml#PackageMerge                        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPackageMergeImpl(_e, self))
-    case _e: Uml#Model =>
+    case _e: Uml#Model                               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLModelImpl(_e, self))
-    case _e: Uml#Profile =>
+    case _e: Uml#Profile                             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLProfileImpl(_e, self))
-    case _e: Uml#Package =>
+    case _e: Uml#Package                             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPackageImpl(_e, self))
-    case _e: Uml#TimeConstraint =>
+    case _e: Uml#TimeConstraint                      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeConstraintImpl(_e, self))
-    case _e: Uml#DurationConstraint =>
+    case _e: Uml#DurationConstraint                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDurationConstraintImpl(_e, self))
-    case _e: Uml#IntervalConstraint =>
+    case _e: Uml#IntervalConstraint                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLIntervalConstraintImpl(_e, self))
-    case _e: Uml#InteractionConstraint => 
+    case _e: Uml#InteractionConstraint               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInteractionConstraintImpl(_e, self))
-    case _e: Uml#Constraint => 
+    case _e: Uml#Constraint                          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConstraintImpl(_e, self))
-    case _e: Uml#ClassifierTemplateParameter => 
+    case _e: Uml#ClassifierTemplateParameter         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClassifierTemplateParameterImpl(_e, self))
-    case _e: Uml#ConnectableElementTemplateParameter => 
+    case _e: Uml#ConnectableElementTemplateParameter =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConnectableElementTemplateParameterImpl(_e, self))
-    case _e: Uml#OperationTemplateParameter => 
+    case _e: Uml#OperationTemplateParameter          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOperationTemplateParameterImpl(_e, self))
-    case _e: Uml#TemplateParameter => 
+    case _e: Uml#TemplateParameter                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTemplateParameterImpl(_e, self))
-    case _e: Uml#Substitution => 
+    case _e: Uml#Substitution                        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSubstitutionImpl(_e, self))
-    case _e: Uml#ComponentRealization => 
+    case _e: Uml#ComponentRealization                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLComponentRealizationImpl(_e, self))
-    case _e: Uml#InterfaceRealization => 
+    case _e: Uml#InterfaceRealization                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInterfaceRealizationImpl(_e, self))
-    case _e: Uml#Realization => 
+    case _e: Uml#Realization                         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRealizationImpl(_e, self))
-    case _e: Uml#Manifestation => 
+    case _e: Uml#Manifestation                       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLManifestationImpl(_e, self))
-    case _e: Uml#Abstraction => 
+    case _e: Uml#Abstraction                         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAbstractionImpl(_e, self))
-    case _e: Uml#Usage => 
+    case _e: Uml#Usage                               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLUsageImpl(_e, self))
-    case _e: Uml#Deployment => 
+    case _e: Uml#Deployment                          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDeploymentImpl(_e, self))
-    case _e: Uml#Dependency => 
+    case _e: Uml#Dependency                          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDependencyImpl(_e, self))
-    case _e: Uml#AcceptCallAction => 
+    case _e: Uml#AcceptCallAction                    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAcceptCallActionImpl(_e, self))
-    case _e: Uml#AcceptEventAction => 
+    case _e: Uml#AcceptEventAction                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAcceptEventActionImpl(_e, self))
-    case _e: Uml#ValueSpecificationAction => 
+    case _e: Uml#ValueSpecificationAction            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLValueSpecificationActionImpl(_e, self))
-    case _e: Uml#AddVariableValueAction => 
+    case _e: Uml#AddVariableValueAction              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAddVariableValueActionImpl(_e, self))
-    case _e: Uml#RemoveVariableValueAction => 
+    case _e: Uml#RemoveVariableValueAction           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRemoveVariableValueActionImpl(_e, self))
-    case _e: Uml#WriteVariableAction => 
-      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteVariableAction() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#ClearVariableAction => 
+    //    case _e: Uml#WriteVariableAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteVariableAction() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    case _e: Uml#ClearVariableAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClearVariableActionImpl(_e, self))
-    case _e: Uml#ReadVariableAction => 
+    case _e: Uml#ReadVariableAction        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadVariableActionImpl(_e, self))
-    case _e: Uml#VariableAction => 
+    case _e: Uml#VariableAction            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLVariableActionImpl(_e, self))
-    case _e: Uml#ClearAssociationAction => 
+    case _e: Uml#ClearAssociationAction    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClearAssociationActionImpl(_e, self))
-    case _e: Uml#CreateObjectAction =>
+    case _e: Uml#CreateObjectAction        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCreateObjectActionImpl(_e, self))
-    case _e: Uml#DestroyObjectAction => 
+    case _e: Uml#DestroyObjectAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDestroyObjectActionImpl(_e, self))
-    case _e: Uml#BroadcastSignalAction => 
+    case _e: Uml#BroadcastSignalAction     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLBroadcastSignalActionImpl(_e, self))
-    case _e: Uml#CallBehaviorAction =>
+    case _e: Uml#CallBehaviorAction        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCallBehaviorActionImpl(_e, self))
-    case _e: Uml#CallOperationAction => 
+    case _e: Uml#CallOperationAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCallOperationActionImpl(_e, self))
     case _e: Uml#StartObjectBehaviorAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStartObjectBehaviorActionImpl(_e, self))
-    case _e: Uml#CallAction => 
-      cache.getOrElseUpdate(_e, new MagicDrawUMLCallAction() {
-        override val e = _e
-        override val ops = self
-      })
+    //    case _e: Uml#CallAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLCallAction() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
     case _e: Uml#SendObjectAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSendObjectActionImpl(_e, self))
-    case _e: Uml#SendSignalAction => 
+    case _e: Uml#SendSignalAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSendSignalActionImpl(_e, self))
-    case _e: Uml#InvocationAction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLInvocationAction() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#CreateLinkObjectAction => 
+    //    case _e: Uml#InvocationAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLInvocationAction() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    case _e: Uml#CreateLinkObjectAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCreateLinkObjectActionImpl(_e, self))
-    case _e: Uml#CreateLinkAction => 
+    case _e: Uml#CreateLinkAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCreateLinkActionImpl(_e, self))
-    case _e: Uml#DestroyLinkAction =>
+    case _e: Uml#DestroyLinkAction      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDestroyLinkActionImpl(_e, self))
-    case _e: Uml#WriteLinkAction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteLinkAction() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ReadLinkAction =>
+    //    case _e: Uml#WriteLinkAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteLinkAction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#ReadLinkAction                     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadLinkActionImpl(_e, self))
-    case _e: Uml#OpaqueAction =>
+    case _e: Uml#OpaqueAction                       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOpaqueActionImpl(_e, self))
-    case _e: Uml#RaiseExceptionAction =>
+    case _e: Uml#RaiseExceptionAction               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRaiseExceptionActionImpl(_e, self))
-    case _e: Uml#ReadExtentAction =>
+    case _e: Uml#ReadExtentAction                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadExtentActionImpl(_e, self))
-    case _e: Uml#ReadIsClassifiedObjectAction =>
+    case _e: Uml#ReadIsClassifiedObjectAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadIsClassifiedObjectActionImpl(_e, self))
-    case _e: Uml#ReadLinkObjectEndAction =>
+    case _e: Uml#ReadLinkObjectEndAction            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadLinkObjectEndActionImpl(_e, self))
-    case _e: Uml#ReadLinkObjectEndQualifierAction =>
+    case _e: Uml#ReadLinkObjectEndQualifierAction   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadLinkObjectEndQualifierActionImpl(_e, self))
-    case _e: Uml#ReadSelfAction =>
+    case _e: Uml#ReadSelfAction                     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadSelfActionImpl(_e, self))
-    case _e: Uml#AddStructuralFeatureValueAction =>
+    case _e: Uml#AddStructuralFeatureValueAction    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAddStructuralFeatureValueActionImpl(_e, self))
     case _e: Uml#RemoveStructuralFeatureValueAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRemoveStructuralFeatureValueActionImpl(_e, self))
-    case _e: Uml#WriteStructuralFeatureAction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteStructuralFeatureAction() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ReadStructuralFeatureAction =>
+    //    case _e: Uml#WriteStructuralFeatureAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLWriteStructuralFeatureAction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#ReadStructuralFeatureAction  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReadStructuralFeatureActionImpl(_e, self))
     case _e: Uml#ClearStructuralFeatureAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClearStructuralFeatureActionImpl(_e, self))
     case _e: Uml#ActionExecutionSpecification =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActionExecutionSpecificationImpl(_e, self))
-    case _e: Uml#StructuralFeatureAction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLStructuralFeatureAction() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#StructuralFeatureAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLStructuralFeatureAction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#StartClassifierBehaviorAction =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStartClassifierBehaviorActionImpl(_e, self))
-    case _e: Uml#TestIdentityAction =>
+    case _e: Uml#TestIdentityAction            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTestIdentityActionImpl(_e, self))
-    case _e: Uml#ReplyAction =>
+    case _e: Uml#ReplyAction                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReplyActionImpl(_e, self))
-    case _e: Uml#ReduceAction =>
+    case _e: Uml#ReduceAction                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReduceActionImpl(_e, self))
-    case _e: Uml#ReclassifyObjectAction =>
+    case _e: Uml#ReclassifyObjectAction        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReclassifyObjectActionImpl(_e, self))
-    case _e: Uml#LinkAction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLLinkAction() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#UnmarshallAction =>
+    //    case _e: Uml#LinkAction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLLinkAction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#UnmarshallAction       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLUnmarshallActionImpl(_e, self))
-    case _e: Uml#ConditionalNode =>
+    case _e: Uml#ConditionalNode        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConditionalNodeImpl(_e, self))
-    case _e: Uml#ExpansionRegion =>
+    case _e: Uml#ExpansionRegion        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExpansionRegionImpl(_e, self))
-    case _e: Uml#LoopNode =>
+    case _e: Uml#LoopNode               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLoopNodeImpl(_e, self))
-    case _e: Uml#SequenceNode =>
+    case _e: Uml#SequenceNode           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSequenceNodeImpl(_e, self))
     case _e: Uml#StructuredActivityNode =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStructuredActivityNodeImpl(_e, self))
-    case _e: Uml#Action =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLAction() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ExecutableNode =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLExecutableNode() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#Action =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLAction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#ExecutableNode =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLExecutableNode() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#ActionInputPin =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActionInputPinImpl(_e, self))
-    case _e: Uml#ValuePin =>
+    case _e: Uml#ValuePin       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLValuePinImpl(_e, self))
-    case _e: Uml#InputPin =>
+    case _e: Uml#InputPin       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInputPinImpl(_e, self))
-    case _e: Uml#OutputPin =>
+    case _e: Uml#OutputPin      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOutputPinImpl(_e, self))
-    case _e: Uml#Pin =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLPin() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#FinalState =>
+    //    case _e: Uml#Pin =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLPin() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#FinalState               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLFinalStateImpl(_e, self))
-    case _e: Uml#State =>
+    case _e: Uml#State                    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStateImpl(_e, self))
-    case _e: Uml#Pseudostate =>
+    case _e: Uml#Pseudostate              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPseudostateImpl(_e, self))
     case _e: Uml#ConnectionPointReference =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConnectionPointReferenceImpl(_e, self))
-    case _e: Uml#ProtocolTransition =>
+    case _e: Uml#ProtocolTransition       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLProtocolTransitionImpl(_e, self))
-    case _e: Uml#Transition =>
+    case _e: Uml#Transition               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTransitionImpl(_e, self))
-    case _e: Uml#ExtensionPoint =>
+    case _e: Uml#ExtensionPoint           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExtensionPointImpl(_e, self))
-    case _e: Uml#Region =>
+    case _e: Uml#Region                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLRegionImpl(_e, self))
-    case _e: Uml#ControlFlow =>
+    case _e: Uml#ControlFlow              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLControlFlowImpl(_e, self))
-    case _e: Uml#ObjectFlow =>
+    case _e: Uml#ObjectFlow               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLObjectFlowImpl(_e, self))
-    case _e: Uml#ActivityEdge =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityEdge() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#ActivityEdge =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityEdge() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#ActivityParameterNode =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActivityParameterNodeImpl(_e, self))
-    case _e: Uml#ExpansionNode =>
+    case _e: Uml#ExpansionNode         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExpansionNodeImpl(_e, self))
-    case _e: Uml#DataStoreNode =>
+    case _e: Uml#DataStoreNode         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDataStoreNodeImpl(_e, self))
-    case _e: Uml#CentralBufferNode =>
+    case _e: Uml#CentralBufferNode     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCentralBufferNodeImpl(_e, self))
-    case _e: Uml#MergeNode =>
+    case _e: Uml#MergeNode             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLMergeNodeImpl(_e, self))
-    case _e: Uml#JoinNode =>
+    case _e: Uml#JoinNode              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLJoinNodeImpl(_e, self))
-    case _e: Uml#InitialNode =>
+    case _e: Uml#InitialNode           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInitialNodeImpl(_e, self))
-    case _e: Uml#ForkNode =>
+    case _e: Uml#ForkNode              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLForkNodeImpl(_e, self))
-    case _e: Uml#ActivityFinalNode =>
+    case _e: Uml#ActivityFinalNode     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActivityFinalNodeImpl(_e, self))
-    case _e: Uml#FlowFinalNode =>
+    case _e: Uml#FlowFinalNode         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLFlowFinalNodeImpl(_e, self))
-    case _e: Uml#FinalNode =>
+    case _e: Uml#FinalNode             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLFinalNodeImpl(_e, self))
-    case _e: Uml#DecisionNode =>
+    case _e: Uml#DecisionNode          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDecisionNodeImpl(_e, self))
-    case _e: Uml#ControlNode =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLControlNode() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ObjectNode =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLObjectNode() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ActivityNode =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityNode() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#AnyReceiveEvent =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLAnyReceiveEvent() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#CallEvent =>
+    //    case _e: Uml#ControlNode =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLControlNode() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#ObjectNode =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLObjectNode() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#ActivityNode =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityNode() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#AnyReceiveEvent =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLAnyReceiveEvent() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#CallEvent   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCallEventImpl(_e, self))
     case _e: Uml#SignalEvent =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSignalEventImpl(_e, self))
-    case _e: Uml#MessageEvent =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLMessageEvent() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#MessageEvent =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLMessageEvent() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#TimeEvent =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeEventImpl(_e, self))
-    case _e: Uml#ChangeEvent =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLChangeEvent() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Event =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLEvent() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Interaction =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLInteraction() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ExecutionOccurrenceSpecification =>
+    //    case _e: Uml#ChangeEvent =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLChangeEvent() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#Event =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLEvent() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#Interaction =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLInteraction() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#ExecutionOccurrenceSpecification   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExecutionOccurrenceSpecificationImpl(_e, self))
     case _e: Uml#DestructionOccurrenceSpecification =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDestructionOccurrenceSpecificationImpl(_e, self))
-    case _e: Uml#MessageOccurrenceSpecification =>
+    case _e: Uml#MessageOccurrenceSpecification     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLMessageOccurrenceSpecificationImpl(_e, self))
-    case _e: Uml#OccurrenceSpecification =>
+    case _e: Uml#OccurrenceSpecification            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOccurrenceSpecificationImpl(_e, self))
-    case _e: Uml#Gate =>
+    case _e: Uml#Gate                               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLGateImpl(_e, self))
-    case _e: Uml#MessageEnd =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLMessageEnd() {
-        override val e = _e
-        override val ops = self
-      })
+    //    case _e: Uml#MessageEnd =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLMessageEnd() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
     case _e: Uml#BehaviorExecutionSpecification =>
       cache.getOrElseUpdate(_e, MagicDrawUMLBehaviorExecutionSpecificationImpl(_e, self))
-    case _e: Uml#ExecutionSpecification =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLExecutionSpecification() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#StateInvariant =>
+    //    case _e: Uml#ExecutionSpecification =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLExecutionSpecification() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#StateInvariant         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStateInvariantImpl(_e, self))
     case _e: Uml#ConsiderIgnoreFragment =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConsiderIgnoreFragmentImpl(_e, self))
-    case _e: Uml#CombinedFragment =>
+    case _e: Uml#CombinedFragment       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCombinedFragmentImpl(_e, self))
-    case _e: Uml#Continuation =>
+    case _e: Uml#Continuation           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLContinuationImpl(_e, self))
-    case _e: Uml#InteractionOperand =>
+    case _e: Uml#InteractionOperand     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInteractionOperandImpl(_e, self))
-    case _e: Uml#PartDecomposition =>
+    case _e: Uml#PartDecomposition      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPartDecompositionImpl(_e, self))
-    case _e: Uml#InteractionUse =>
+    case _e: Uml#InteractionUse         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInteractionUseImpl(_e, self))
-    case _e: Uml#InteractionFragment =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLInteractionFragment() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#Message =>
+    //    case _e: Uml#InteractionFragment =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLInteractionFragment() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    case _e: Uml#Message                     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLMessageImpl(_e, self))
-    case _e: Uml#Enumeration =>
+    case _e: Uml#Enumeration                 =>
       cache.getOrElseUpdate(_e, MagicDrawUMLEnumerationImpl(_e, self))
-    case _e: Uml#PrimitiveType =>
+    case _e: Uml#PrimitiveType               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPrimitiveTypeImpl(_e, self))
-    case _e: Uml#DataType =>
+    case _e: Uml#DataType                    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDataTypeImpl(_e, self))
-    case _e: Uml#ActivityPartition =>
+    case _e: Uml#ActivityPartition           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActivityPartitionImpl(_e, self))
     case _e: Uml#InterruptibleActivityRegion =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInterruptibleActivityRegionImpl(_e, self))
-    case _e: Uml#ActivityGroup =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityGroup() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#StringExpression =>
+    //    case _e: Uml#ActivityGroup =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLActivityGroup() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    case _e: Uml#StringExpression        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStringExpressionImpl(_e, self))
-    case _e: Uml#Expression =>
+    case _e: Uml#Expression              =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExpressionImpl(_e, self))
-    case _e: Uml#Duration =>
+    case _e: Uml#Duration                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDurationImpl(_e, self))
-    case _e: Uml#DurationInterval =>
+    case _e: Uml#DurationInterval        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDurationIntervalImpl(_e, self))
-    case _e: Uml#TimeInterval =>
+    case _e: Uml#TimeInterval            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeIntervalImpl(_e, self))
-    case _e: Uml#Interval =>
+    case _e: Uml#Interval                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLIntervalImpl(_e, self))
-    case _e: Uml#LiteralBoolean =>
+    case _e: Uml#LiteralBoolean          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralBooleanImpl(_e, self))
-    case _e: Uml#LiteralInteger =>
+    case _e: Uml#LiteralInteger          =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralIntegerImpl(_e, self))
-    case _e: Uml#LiteralNull =>
+    case _e: Uml#LiteralNull             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralNullImpl(_e, self))
-    case _e: Uml#LiteralReal =>
+    case _e: Uml#LiteralReal             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralRealImpl(_e, self))
-    case _e: Uml#LiteralString =>
+    case _e: Uml#LiteralString           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralStringImpl(_e, self))
     case _e: Uml#LiteralUnlimitedNatural =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLiteralUnlimitedNaturalImpl(_e, self))
-    case _e: Uml#LiteralSpecification =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLLiteralSpecification() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#OpaqueExpression =>
+    //    case _e: Uml#LiteralSpecification =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLLiteralSpecification() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#OpaqueExpression   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOpaqueExpressionImpl(_e, self))
-    case _e: Uml#TimeExpression =>
+    case _e: Uml#TimeExpression     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeExpressionImpl(_e, self))
     case _e: Uml#EnumerationLiteral =>
       cache.getOrElseUpdate(_e, MagicDrawUMLEnumerationLiteralImpl(_e, self))
-    case _e: Uml#InstanceValue =>
+    case _e: Uml#InstanceValue      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInstanceValueImpl(_e, self))
-    case _e: Uml#ValueSpecification =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLValueSpecification() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Variable =>
+    //    case _e: Uml#ValueSpecification =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLValueSpecification() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#Variable     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLVariableImpl(_e, self))
-    case _e: Uml#Parameter =>
+    case _e: Uml#Parameter    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLParameterImpl(_e, self))
     case _e: Uml#ExtensionEnd =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExtensionEndImpl(_e, self))
-    case _e: Uml#Port =>
+    case _e: Uml#Port         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPortImpl(_e, self))
-    case _e: Uml#Property =>
+    case _e: Uml#Property     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLPropertyImpl(_e, self))
-    case _e: Uml#Operation =>
+    case _e: Uml#Operation    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOperationImpl(_e, self))
-    case _e: Uml#Reception =>
+    case _e: Uml#Reception    =>
       cache.getOrElseUpdate(_e, MagicDrawUMLReceptionImpl(_e, self))
-    case _e: Uml#BehavioralFeature =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLBehavioralFeature() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#StructuralFeature =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLStructuralFeature() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#BehavioralFeature =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLBehavioralFeature() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#StructuralFeature =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLStructuralFeature() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#Connector =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConnectorImpl(_e, self))
-    case _e: Uml#Feature =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLFeature() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#Feature =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLFeature() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#ExecutionEnvironment =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExecutionEnvironmentImpl(_e, self))
-    case _e: Uml#Device =>
+    case _e: Uml#Device               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDeviceImpl(_e, self))
-    case _e: Uml#AssociationClass =>
+    case _e: Uml#AssociationClass     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAssociationClassImpl(_e, self))
-    case _e: Uml#Node =>
+    case _e: Uml#Node                 =>
       cache.getOrElseUpdate(_e, MagicDrawUMLNodeImpl(_e, self))
-    case _e: Uml#Stereotype =>
+    case _e: Uml#Stereotype           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStereotypeImpl(_e, self))
-    case _e: Uml#FunctionBehavior =>
+    case _e: Uml#FunctionBehavior     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLFunctionBehaviorImpl(_e, self))
-    case _e: Uml#Component =>
-      cache.getOrElseUpdate(_e, MagicDrawUMLComponentImpl( _e, self ))
+    case _e: Uml#Component            =>
+      cache.getOrElseUpdate(_e, MagicDrawUMLComponentImpl(_e, self))
     case _e: Uml#ProtocolStateMachine =>
       cache.getOrElseUpdate(_e, MagicDrawUMLProtocolStateMachineImpl(_e, self))
-    case _e: Uml#StateMachine =>
+    case _e: Uml#StateMachine         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLStateMachineImpl(_e, self))
-    case _e: Uml#Activity =>
+    case _e: Uml#Activity             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActivityImpl(_e, self))
-    case _e: Uml#OpaqueBehavior =>
+    case _e: Uml#OpaqueBehavior       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLOpaqueBehaviorImpl(_e, self))
-    case _e: Uml#Behavior =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLBehavior() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Class =>
+    //    case _e: Uml#Behavior =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLBehavior() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#Class                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClassImpl(_e, self))
-    case _e: Uml#Actor =>
+    case _e: Uml#Actor                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLActorImpl(_e, self))
-    case _e: Uml#UseCase =>
+    case _e: Uml#UseCase                 =>
       cache.getOrElseUpdate(_e, MagicDrawUMLUseCaseImpl(_e, self))
-    case _e: Uml#Collaboration =>
+    case _e: Uml#Collaboration           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCollaborationImpl(_e, self))
     case _e: Uml#DeploymentSpecification =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDeploymentSpecificationImpl(_e, self))
-    case _e: Uml#Artifact =>
+    case _e: Uml#Artifact                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLArtifactImpl(_e, self))
-    case _e: Uml#Signal =>
+    case _e: Uml#Signal                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSignalImpl(_e, self))
-    case _e: Uml#InformationItem =>
+    case _e: Uml#InformationItem         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInformationItemImpl(_e, self))
-    case _e: Uml#Interface =>
+    case _e: Uml#Interface               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInterfaceImpl(_e, self))
-    case _e: Uml#Extension =>
+    case _e: Uml#Extension               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExtensionImpl(_e, self))
-    case _e: Uml#CommunicationPath =>
+    case _e: Uml#CommunicationPath       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCommunicationPathImpl(_e, self))
-    case _e: Uml#Association =>
+    case _e: Uml#Association             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLAssociationImpl(_e, self))
-    case _e: Uml#TimeObservation =>
+    case _e: Uml#TimeObservation         =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeObservationImpl(_e, self))
-    case _e: Uml#DurationObservation =>
+    case _e: Uml#DurationObservation     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLDurationObservationImpl(_e, self))
-    case _e: Uml#Observation =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLObservation() {
-        override val e = _e
-        override val ops = self
-      })
+    //    case _e: Uml#Observation =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLObservation() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
     case _e: Uml#InstanceSpecification =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInstanceSpecificationImpl(_e, self))
-    case _e: Uml#InformationFlow =>
+    case _e: Uml#InformationFlow       =>
       cache.getOrElseUpdate(_e, MagicDrawUMLInformationFlowImpl(_e, self))
-    case _e: Uml#GeneralizationSet =>
+    case _e: Uml#GeneralizationSet     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLGeneralizationSetImpl(_e, self))
-    case _e: Uml#Trigger =>
+    case _e: Uml#Trigger               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTriggerImpl(_e, self))
-    case _e: Uml#Extend =>
+    case _e: Uml#Extend                =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExtendImpl(_e, self))
-    case _e: Uml#Include =>
+    case _e: Uml#Include               =>
       cache.getOrElseUpdate(_e, MagicDrawUMLIncludeImpl(_e, self))
-    case _e: Uml#CollaborationUse =>
+    case _e: Uml#CollaborationUse      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCollaborationUseImpl(_e, self))
-    case _e: Uml#Vertex =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLVertex() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#Vertex =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLVertex() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#GeneralOrdering =>
       cache.getOrElseUpdate(_e, MagicDrawUMLGeneralOrderingImpl(_e, self))
-    case _e: Uml#Lifeline =>
+    case _e: Uml#Lifeline        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLifelineImpl(_e, self))
-    case _e: Uml#DeployedArtifact =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLDeployedArtifact() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#DeploymentTarget =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLDeploymentTarget() {
-        override val e = _e
-        override val ops = self
-      })
-    case _e: Uml#ParameterSet =>
+    //    case _e: Uml#DeployedArtifact =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLDeployedArtifact() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    //    case _e: Uml#DeploymentTarget =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLDeploymentTarget() {
+    //        override val e = _e
+    //        override val ops = self
+    //      })
+    case _e: Uml#ParameterSet                  =>
       cache.getOrElseUpdate(_e, MagicDrawUMLParameterSetImpl(_e, self))
-    case _e: Uml#Clause =>
+    case _e: Uml#Clause                        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLClauseImpl(_e, self))
-    case _e: Uml#LinkEndCreationData =>
+    case _e: Uml#LinkEndCreationData           =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLinkEndCreationDataImpl(_e, self))
-    case _e: Uml#LinkEndDestructionData =>
+    case _e: Uml#LinkEndDestructionData        =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLinkEndDestructionDataImpl(_e, self))
-    case _e: Uml#LinkEndData =>
+    case _e: Uml#LinkEndData                   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLLinkEndDataImpl(_e, self))
     case _e: Uml#TemplateParameterSubstitution =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTemplateParameterSubstitutionImpl(_e, self))
-    case _e: Uml#TemplateableElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLTemplateableElement() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Slot =>
+    //    case _e: Uml#TemplateableElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLTemplateableElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    case _e: Uml#Slot             =>
       cache.getOrElseUpdate(_e, MagicDrawUMLSlotImpl(_e, self))
-    case _e: Uml#Image =>
+    case _e: Uml#Image            =>
       cache.getOrElseUpdate(_e, MagicDrawUMLImageImpl(_e, self))
-    case _e: Uml#QualifierValue =>
+    case _e: Uml#QualifierValue   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLQualifierValueImpl(_e, self))
     case _e: Uml#ExceptionHandler =>
       cache.getOrElseUpdate(_e, MagicDrawUMLExceptionHandlerImpl(_e, self))
@@ -667,74 +712,74 @@ case class MagicDrawUMLUtil(project: Project)
     //case _e: Uml#Classifier =>
     // cache.getOrElseUpdate( _e, new MagicDrawUMLClassifier()
     // { override val e = _e; override val ops = self } )
-    case _e: Uml#RedefinableElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLRedefinableElement() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Type =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLType() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ConnectableElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLConnectableElement() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#ParameterableElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLParameterableElement() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#TypedElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLTypedElement() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#RedefinableElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLRedefinableElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#Type =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLType() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#ConnectableElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLConnectableElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#ParameterableElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLParameterableElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#TypedElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLTypedElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     //case _e: Uml#PackageableElement =>
     // cache.getOrElseUpdate( _e, new MagicDrawUMLPackageableElement()
     // { override val e = _e; override val ops = self } )
 
     case _e: Uml#ConnectorEnd =>
       cache.getOrElseUpdate(_e, MagicDrawUMLConnectorEndImpl(_e, self))
-    case _e: Uml#MultiplicityElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLMultiplicityElement() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#MultiplicityElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLMultiplicityElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
 
-    case _e: Uml#Namespace =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLNamespace() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#NamedElement =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLNamedElement() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#Namespace =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLNamespace() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#NamedElement =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLNamedElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
     case _e: Uml#ProtocolConformance =>
       cache.getOrElseUpdate(_e, MagicDrawUMLProtocolConformanceImpl(_e, self))
-    case _e: Uml#Generalization =>
+    case _e: Uml#Generalization      =>
       cache.getOrElseUpdate(_e, MagicDrawUMLGeneralizationImpl(_e, self))
-    case _e: Uml#TemplateBinding =>
+    case _e: Uml#TemplateBinding     =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTemplateBindingImpl(_e, self))
-    case _e: Uml#DirectedRelationship =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLDirectedRelationship() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Relationship =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLRelationship() {
-      override val e = _e
-      override val ops = self
-    })
-    case _e: Uml#Element =>
-      cache.getOrElseUpdate(_e, new MagicDrawUMLElement() {
-      override val e = _e
-      override val ops = self
-    })
+    //    case _e: Uml#DirectedRelationship =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLDirectedRelationship() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#Relationship =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLRelationship() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
+    //    case _e: Uml#Element =>
+    //      cache.getOrElseUpdate(_e, new MagicDrawUMLElement() {
+    //      override val e = _e
+    //      override val ops = self
+    //    })
   }
 
   implicit def umlAbstraction(_e: Uml#Abstraction): UMLAbstraction[Uml] =
@@ -2690,47 +2735,51 @@ case class MagicDrawUMLUtil(project: Project)
     StereotypesHelper.getProfile(project, "OTI") match {
       case null =>
         None
-      case pf =>
+      case pf   =>
         Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
     }
 
   override val OTI_SPECIFICATION_ROOT_packageURI: Option[UMLProperty[MagicDrawUML]] =
     OTI_SPECIFICATION_ROOT_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
     }
 
   override val OTI_SPECIFICATION_ROOT_documentURL: Option[UMLProperty[MagicDrawUML]] =
     OTI_SPECIFICATION_ROOT_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
     }
 
   override val OTI_SPECIFICATION_ROOT_uuidPrefix: Option[UMLProperty[MagicDrawUML]] =
     OTI_SPECIFICATION_ROOT_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
     }
 
   override val OTI_SPECIFICATION_ROOT_artifactKind: Option[UMLProperty[MagicDrawUML]] =
     OTI_SPECIFICATION_ROOT_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
     }
 
   override val OTI_ARTIFACT_KIND: Option[UMLEnumeration[MagicDrawUML]] =
     StereotypesHelper.getProfile(project, "OTI") match {
       case null =>
         None
-      case pf =>
+      case pf   =>
         val enums = umlProfile(pf).ownedType.selectByKindOf { case e: UMLEnumeration[MagicDrawUML] => e }
         enums.find { e => e.name.get == "ArtifactKind" }
     }
@@ -2739,9 +2788,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "SPECIFIED_METAMODEL"
-        }
-      case _ =>
+                              _.name.get == "SPECIFIED_METAMODEL"
+                            }
+      case _       =>
         None
     }
 
@@ -2749,9 +2798,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "SPECIFIED_PROFILE"
-        }
-      case _ =>
+                              _.name.get == "SPECIFIED_PROFILE"
+                            }
+      case _       =>
         None
     }
 
@@ -2759,9 +2808,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "SPECIFIED_MODEL_LIBRARY"
-        }
-      case _ =>
+                              _.name.get == "SPECIFIED_MODEL_LIBRARY"
+                            }
+      case _       =>
         None
     }
 
@@ -2769,9 +2818,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "IMPLEMENTED_METAMODEL"
-        }
-      case _ =>
+                              _.name.get == "IMPLEMENTED_METAMODEL"
+                            }
+      case _       =>
         None
     }
 
@@ -2779,9 +2828,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "IMPLEMENTED_PROFILE"
-        }
-      case _ =>
+                              _.name.get == "IMPLEMENTED_PROFILE"
+                            }
+      case _       =>
         None
     }
 
@@ -2789,9 +2838,9 @@ case class MagicDrawUMLUtil(project: Project)
     OTI_ARTIFACT_KIND match {
       case Some(k) =>
         k.ownedLiteral.find {
-          _.name.get == "IMPLEMENTED_MODEL_LIBRARY"
-        }
-      case _ =>
+                              _.name.get == "IMPLEMENTED_MODEL_LIBRARY"
+                            }
+      case _       =>
         None
     }
 
@@ -2799,13 +2848,13 @@ case class MagicDrawUMLUtil(project: Project)
     StereotypesHelper.getProfile(project, "OTI") match {
       case null =>
         None
-      case pf =>
+      case pf   =>
         Option.apply(StereotypesHelper.getStereotype(project, "Identity", pf))
     }
 
   override val OTI_IDENTITY_xmiID: Option[UMLProperty[MagicDrawUML]] =
     OTI_IDENTITY_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
         Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiID"))
@@ -2813,10 +2862,11 @@ case class MagicDrawUMLUtil(project: Project)
 
   override val OTI_IDENTITY_xmiUUID: Option[UMLProperty[MagicDrawUML]] =
     OTI_IDENTITY_S match {
-      case None =>
+      case None    =>
         None
       case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
     }
 
   override val UML_PRIMITIVE_TYPES_BOOLEAN: UMLPrimitiveType[Uml] =
