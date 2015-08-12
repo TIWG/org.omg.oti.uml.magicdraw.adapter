@@ -113,6 +113,8 @@ case class MagicDrawUMLUtil(project: Project)
    * @param metaclass2umlOTI The OTI uml<metaclass>() converter method to map a MagicDraw metaclass instance
    *                         to a corresponding MagicDraw-specific OTI adapter instance
    * @param umlOTIType A MagicDraw-specific OTI adapter corresponding to an OMG UML metaclasss
+   * @param scope An OTI UML element scoping the result of the instances of the OTI UML metaclasses to look for,
+   *              or None for a global query
    * @param umlTag Scala type information about the MagicDraw-specific OTI metaclass adaptation trait
    * @param typ Scala type information about a MagicDraw-specific OTI adapter
    * @tparam T A MagicDraw-specific OTI adapter for an OMG UML metaclass
@@ -122,7 +124,8 @@ case class MagicDrawUMLUtil(project: Project)
   override def allInstances[T <: UMLElement[Uml]]
   (metaclassType: scala.reflect.runtime.universe.Type,
    metaclass2umlOTI: scala.reflect.runtime.universe.MethodSymbol,
-   umlOTIType: scala.reflect.runtime.universe.Type)
+   umlOTIType: scala.reflect.runtime.universe.Type,
+   scope: Option[UMLElement[Uml]])
   (implicit umlTag: TypeTag[Uml], typ: TypeTag[T])
   : Option[Set[T]] = {
     val mdClass: java.lang.Class[_] = umlTag.mirror.runtimeClass(metaclassType.typeSymbol.asClass)
@@ -132,7 +135,11 @@ case class MagicDrawUMLUtil(project: Project)
       case Some(converter) =>
 
         val mdTypes: Array[java.lang.Class[_]] = Array(mdClass)
-        val mdInstances = ModelHelper.getElementsOfType(project.getModel, mdTypes, true).toSet[Uml#Element]
+        val mdScope: Uml#Element = scope match {
+            case Some(e) => umlMagicDrawUMLElement(e).getMagicDrawElement
+            case None    => project.getModel
+          }
+        val mdInstances = ModelHelper.getElementsOfType(mdScope, mdTypes, true).toSet[Uml#Element]
         val otiInstances: Set[T] = for {
           mdInstance <- mdInstances
           otiInstance = converter.invoke(this, mdInstance).asInstanceOf[T]
