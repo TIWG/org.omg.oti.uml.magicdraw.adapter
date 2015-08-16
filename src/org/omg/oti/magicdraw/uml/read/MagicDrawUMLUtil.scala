@@ -44,8 +44,10 @@ import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
 import com.nomagic.magicdraw.core.{Application, ApplicationEnvironment, Project}
+import com.nomagic.magicdraw.uml.ClassTypes
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+
 import org.omg.oti.uml.read.api._
 
 import scala.reflect.runtime.universe._
@@ -134,7 +136,7 @@ case class MagicDrawUMLUtil(project: Project)
 
       case Some(converter) =>
 
-        val mdTypes: Array[java.lang.Class[_]] = Array(mdClass)
+        val mdTypes: Array[java.lang.Class[_]] = ClassTypes.getSubtypesArray(mdClass)
         val mdScope: Uml#Element = scope match {
             case Some(e) => umlMagicDrawUMLElement(e).getMagicDrawElement
             case None    => project.getModel
