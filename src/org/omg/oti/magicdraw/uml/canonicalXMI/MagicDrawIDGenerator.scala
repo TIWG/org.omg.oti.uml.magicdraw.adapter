@@ -58,14 +58,12 @@ case class MagicDrawIDGenerator(
   extends IDGenerator[MagicDrawUML] {
 
   import umlOps._
+  implicit val idg = this
 
   val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], Try[String]]()
 
-  override def builtInID( self: UMLElement[Uml] ): Try[String] =
-    Success( umlMagicDrawUMLElement(self).getMagicDrawElement.getID )
-
   override def getMappedOrReferencedElement( ref: UMLElement[Uml] ): UMLElement[Uml] =
-    ref.id match {
+    ref.xmiID() match {
       case "_UML_" => MDBuiltInUML.scope
       case "_StandardProfile_" => MDBuiltInStandardProfile.scope
       case _ => ref
