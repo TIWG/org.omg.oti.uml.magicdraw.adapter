@@ -99,10 +99,10 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def tagValues: Seq[MagicDrawUMLStereotypeTagValue] =
     MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
-  override def id: String =
-    e.getID
+  override def toolSpecific_id: Option[String] =
+    Some(e.getID)
 
-  override def uuid: Option[String] =
+  override def toolSpecific_uuid: Option[String] =
     Some(UUIDRegistry.getUUID(e))
 
   override def hasStereotype(s: UMLStereotype[Uml]): Boolean =
@@ -145,7 +145,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
           pair._1.toString
 
         case Some(e) =>
-          describe(e.owner, path :+ (e.xmiType.head + " {id=" + e.id + "}"))
+          describe(e.owner, path :+ (e.xmiType.head + " {id=" + e.toolSpecific_id + "}"))
       }
 
     describe(Some(this), Seq())

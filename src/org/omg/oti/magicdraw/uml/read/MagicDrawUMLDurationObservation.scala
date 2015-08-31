@@ -40,6 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.language.postfixOps
 
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._

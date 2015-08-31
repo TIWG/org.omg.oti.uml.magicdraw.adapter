@@ -91,6 +91,8 @@ object OTIMagicDraw extends Build {
       ),
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
+      scalacOptions ++= List("-target:jvm-1.7", "-feature"),
+
       unmanagedClasspath in Compile <++= unmanagedJars in Compile,
 
       // the '*-resource.zip' archive will start from: 'dynamicScripts/<dynamicScriptsProjectName>'

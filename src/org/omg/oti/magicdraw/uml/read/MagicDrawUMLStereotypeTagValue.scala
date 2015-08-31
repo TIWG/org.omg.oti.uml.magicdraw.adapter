@@ -60,7 +60,7 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
   with UMLStereotypeTagExtendedMetaclassPropertyElementReference[MagicDrawUML] {
 
   override def serialize
-  (implicit xmiScopes: scala.xml.NamespaceBinding)
+  (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
   : Try[Iterable[scala.xml.Elem]] =
     Success(
       Iterable(
@@ -70,8 +70,8 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
           attributes = new scala.xml.PrefixedAttribute(
             pre = "xmi",
             key = "idref",
-            value = extendedElement.xmiID.head,
-            scala.xml.Null),
+            value = extendedElement.toolSpecific_id.get,
+            next = scala.xml.Null),
           scope = xmiScopes,
           minimizeEmpty = true)))
 
@@ -87,7 +87,7 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
   with UMLStereotypeTagPropertyMetaclassElementReference[MagicDrawUML] {
 
   override def serialize
-  (implicit xmiScopes: scala.xml.NamespaceBinding)
+  (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
   : Try[Iterable[scala.xml.Elem]] =
     Success(
       for {
@@ -98,8 +98,8 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = extendedElement.xmiID.head,
-          scala.xml.Null),
+          value = extendedElement.toolSpecific_id.get,
+          next = scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
 
@@ -126,7 +126,7 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
     tagPropertyValueAppliedStereotypeAndElementReferences.map(_._2)
 
   override def serialize
-  (implicit xmiScopes: scala.xml.NamespaceBinding)
+  (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
   : Try[Iterable[scala.xml.Elem]] =
     Success(
       for {
@@ -137,7 +137,7 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = IDGenerator.computeStereotypeApplicationID(e.xmiID.head, s.xmiID.head),
+          value = IDGenerator.computeStereotypeApplicationID(e.toolSpecific_id.get, s.toolSpecific_id.get),
           scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
@@ -154,7 +154,7 @@ case class MagicDrawUMLStereotypeTagPropertyClassifierValue
   with UMLStereotypeTagPropertyClassifierValue[MagicDrawUML] {
 
   override def serialize
-  (implicit xmiScopes: scala.xml.NamespaceBinding)
+  (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
   : Try[Iterable[scala.xml.Elem]] = {
 
     val s0: Try[Seq[scala.xml.Elem]] = Try(Seq())

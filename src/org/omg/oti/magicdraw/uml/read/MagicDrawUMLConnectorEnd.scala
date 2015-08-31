@@ -69,8 +69,8 @@ case class MagicDrawUMLConnectorEndImpl(val e: MagicDrawUML#ConnectorEnd, ops: M
 
   override def toString: String =
     s"MagicDrawUMLConnectorEnd(ID=${e.getID}, " +
-      s"role=${role match { case Some(c) => c.xmiID.head; case None => "<none>"}}, " +
-      s"connector=${end_connector match { case Some(c) => c.xmiID.head; case None => "<none>"}})"
+      s"role=${role match { case Some(c) => c.toolSpecific_id; case None => "<none>"}}, " +
+      s"connector=${end_connector match { case Some(c) => c.toolSpecific_id; case None => "<none>"}})"
 
   override def treeString: String =
     toString
