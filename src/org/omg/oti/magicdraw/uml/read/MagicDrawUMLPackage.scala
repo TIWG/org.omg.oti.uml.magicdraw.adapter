@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Boolean,Option,None,Some,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLPackage 
   extends UMLPackage[MagicDrawUML]
@@ -50,9 +52,11 @@ trait MagicDrawUMLPackage
   with MagicDrawUMLNamespace
   with MagicDrawUMLTemplateableElement {
 
-  import ops._
   override protected def e: Uml#Package
   def getMagicDrawPackage = e
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   def URI: Option[String] =
     e.getURI match {
@@ -62,13 +66,13 @@ trait MagicDrawUMLPackage
     }
   
   override def importedPackage_packageImport: Set[UMLPackageImport[Uml]] = 
-    e.get_packageImportOfImportedPackage.toSet[Uml#PackageImport]
+    e.get_packageImportOfImportedPackage.to[Set]
   
   override def mergedPackage_packageMerge: Set[UMLPackageMerge[Uml]] = 
-    e.get_packageMergeOfMergedPackage.toSet[Uml#PackageMerge]
+    e.get_packageMergeOfMergedPackage.to[Set]
   
   override def packagedElement: Set[UMLPackageableElement[Uml]] =
-    e.getPackagedElement.toSet[Uml#PackageableElement]
+    e.getPackagedElement.to[Set]
   
   override def nestingPackage: Option[UMLPackage[Uml]] =
     Option.apply(e.getNestingPackage)
@@ -77,8 +81,8 @@ trait MagicDrawUMLPackage
 
 case class MagicDrawUMLPackageImpl(val e: MagicDrawUML#Package, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPackage
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLPackage(ID=${e.getID}, qname=${e.getQualifiedName})"

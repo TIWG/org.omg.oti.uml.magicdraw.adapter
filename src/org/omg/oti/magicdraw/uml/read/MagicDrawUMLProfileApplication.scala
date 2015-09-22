@@ -40,13 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLProfileApplication 
   extends UMLProfileApplication[MagicDrawUML]
   with MagicDrawUMLDirectedRelationship {
 
-  import ops._
   override protected def e: Uml#ProfileApplication
   def getMagicDrawProfileApplication = e
   

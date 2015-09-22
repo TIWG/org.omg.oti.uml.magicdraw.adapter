@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTransition 
   extends UMLTransition[MagicDrawUML]
@@ -49,7 +50,8 @@ trait MagicDrawUMLTransition
 
   override protected def e: Uml#Transition
   def getMagicDrawTransition = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def kind: UMLTransitionKind.Value =
     e.getKind match {
@@ -74,8 +76,8 @@ trait MagicDrawUMLTransition
 
 case class MagicDrawUMLTransitionImpl(val e: MagicDrawUML#Transition, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTransition
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLTransition(ID=${e.getID}, qname=${e.getQualifiedName})"

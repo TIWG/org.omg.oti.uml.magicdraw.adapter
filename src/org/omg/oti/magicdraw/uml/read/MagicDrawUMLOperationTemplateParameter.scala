@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLOperationTemplateParameter 
   extends UMLOperationTemplateParameter[MagicDrawUML]
@@ -48,7 +48,9 @@ trait MagicDrawUMLOperationTemplateParameter
 
   override protected def e: Uml#OperationTemplateParameter
   def getMagicDrawOperationTemplateParameter = e
-  import ops._
+
+  implicit val umlOps = ops
+  import umlOps._
 
   override def parameteredElement: Option[UMLOperation[Uml]] =
     Option.apply( e.getParameteredElement )

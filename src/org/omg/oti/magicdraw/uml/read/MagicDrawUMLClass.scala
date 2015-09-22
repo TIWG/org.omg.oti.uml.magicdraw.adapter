@@ -42,7 +42,12 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Boolean,StringContext}
+import scala.Predef.String
+import scala.collection.immutable._
+import scala.collection.Iterable
+
 
 trait MagicDrawUMLClass 
   extends UMLClass[MagicDrawUML]
@@ -51,7 +56,8 @@ trait MagicDrawUMLClass
 
   override protected def e: Uml#Class
   def getMagicDrawClass = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def extension: Set[UMLExtension[Uml]] =
     e.getExtension.toSet[Uml#Extension]
@@ -63,21 +69,21 @@ trait MagicDrawUMLClass
     e.isActive
   
   override def nestedClassifier: Seq[UMLClassifier[Uml]] =
-    e.getNestedClassifier.toSeq
+    e.getNestedClassifier.to[Seq]
   
   override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.toSeq
+    e.getOwnedAttribute.to[Seq]
   
   override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.toSeq
+    e.getOwnedOperation.to[Seq]
   
 
 }
 
 case class MagicDrawUMLClassImpl(val e: MagicDrawUML#Class, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClass
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLClass(ID=${e.getID}, qname=${e.getQualifiedName})"

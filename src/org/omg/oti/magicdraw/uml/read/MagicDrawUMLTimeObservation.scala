@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTimeObservation 
   extends UMLTimeObservation[MagicDrawUML]
@@ -48,7 +49,8 @@ trait MagicDrawUMLTimeObservation
 
   override protected def e: Uml#TimeObservation
   def getMagicDrawTimeObservation = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def event = 
     Option.apply( e.getEvent )
@@ -61,8 +63,8 @@ trait MagicDrawUMLTimeObservation
 
 case class MagicDrawUMLTimeObservationImpl(val e: MagicDrawUML#TimeObservation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeObservation
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLTimeObservation(ID=${e.getID}, qname=${e.getQualifiedName})"

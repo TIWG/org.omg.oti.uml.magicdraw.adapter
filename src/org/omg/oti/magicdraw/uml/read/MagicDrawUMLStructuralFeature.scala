@@ -40,9 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
-
+import scala.collection.immutable._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLStructuralFeature 
   extends UMLStructuralFeature[MagicDrawUML]
@@ -52,12 +51,15 @@ trait MagicDrawUMLStructuralFeature
 
   override protected def e: Uml#StructuralFeature
   def getMagicDrawStructuralFeature = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
  
   override def isReadOnly = e.isReadOnly
   
-  override def definingFeature_slot = e.get_slotOfDefiningFeature.toSet[Uml#Slot]
+  override def definingFeature_slot: Set[UMLSlot[Uml]] =
+    e.get_slotOfDefiningFeature.to[Set]
   
-  override def structuralFeature_structuralFeatureAction = e.get_structuralFeatureActionOfStructuralFeature.toSet[Uml#StructuralFeatureAction]
+  override def structuralFeature_structuralFeatureAction: Set[UMLStructuralFeatureAction[Uml]] =
+    e.get_structuralFeatureActionOfStructuralFeature.to[Set]
   
 }

@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLSignalEvent 
   extends UMLSignalEvent[MagicDrawUML]
@@ -48,10 +48,12 @@ trait MagicDrawUMLSignalEvent
 
   override protected def e: Uml#SignalEvent
   def getMagicDrawSignalEvent = e
-  import ops._
 
-  override def signal = Option.apply( e.getSignal )
-  
+  override implicit val umlOps = ops
+  import umlOps._
+
+  override def signal: Option[UMLSignal[Uml]] =
+    Option.apply( e.getSignal )
 
 }
 

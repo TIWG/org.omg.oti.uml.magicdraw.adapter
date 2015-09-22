@@ -39,10 +39,7 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLBehavioredClassifier 
   extends UMLBehavioredClassifier[MagicDrawUML]
@@ -50,15 +47,7 @@ trait MagicDrawUMLBehavioredClassifier
 
   override protected def e: Uml#BehavioredClassifier
   def getMagicDrawBehavioredClassifier = e
-  import ops._
+  override implicit val umlOps = ops
+  //import umlOps._
 
-  override def classifierBehavior(): Option[UMLBehavior[Uml]] =
-    Option.apply( e.getClassifierBehavior )
-  
-  override def interfaceRealization(): Set[UMLInterfaceRealization[Uml]] =
-    e.getInterfaceRealization.toSet[Uml#InterfaceRealization]
-  
-  override def context_behavior: Set[UMLBehavior[Uml]] =
-    ???
-  
 }

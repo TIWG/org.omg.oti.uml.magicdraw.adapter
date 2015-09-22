@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLInterfaceRealization 
   extends UMLInterfaceRealization[MagicDrawUML]
@@ -48,14 +48,15 @@ trait MagicDrawUMLInterfaceRealization
 
   override protected def e: Uml#InterfaceRealization
   def getMagicDrawInterfaceRealization = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def contract: Option[UMLInterface[Uml]] =
     Option.apply(e.getContract)
     
   override def implementingClassifier: Option[UMLBehavioredClassifier[Uml]] =
     Option.apply(e.getImplementingClassifier)
-
 
 }
 

@@ -40,8 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
+import scala.Boolean
+
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.collection.JavaConversions._
 
 trait MagicDrawUMLBehavioralFeature 
@@ -51,7 +54,8 @@ trait MagicDrawUMLBehavioralFeature
 
   override protected def e: Uml#BehavioralFeature
   def getMagicDrawBehavioralFeature = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def concurrency: UMLCallConcurrencyKind.Value =
     e.getConcurrency match {
@@ -67,7 +71,7 @@ trait MagicDrawUMLBehavioralFeature
     e.getMethod.toSet[Uml#Behavior]
   
   override def ownedParameter: Seq[UMLParameter[Uml]] =
-    e.getOwnedParameter.toSeq
+    e.getOwnedParameter.to[Seq]
   
   override def raisedException: Set[UMLType[Uml]] =
     e.getRaisedException.toSet[Uml#Type]

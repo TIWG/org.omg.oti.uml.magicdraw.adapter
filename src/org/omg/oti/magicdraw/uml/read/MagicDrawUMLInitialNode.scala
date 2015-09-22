@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLInitialNode 
   extends UMLInitialNode[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLInitialNode
 
   override protected def e: Uml#InitialNode
   def getMagicDrawInitialNode = e
-  import ops._
-
 
 }
 

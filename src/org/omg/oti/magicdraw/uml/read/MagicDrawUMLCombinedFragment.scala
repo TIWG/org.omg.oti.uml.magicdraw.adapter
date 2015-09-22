@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Predef.???
+import scala.collection.immutable._
 
 trait MagicDrawUMLCombinedFragment 
   extends UMLCombinedFragment[MagicDrawUML]
@@ -48,7 +50,6 @@ trait MagicDrawUMLCombinedFragment
 
   override protected def e: Uml#CombinedFragment
   def getMagicDrawCombinedFragment = e
-  import ops._
 
   override def cfragmentGate: Set[UMLGate[Uml]] = ???
   

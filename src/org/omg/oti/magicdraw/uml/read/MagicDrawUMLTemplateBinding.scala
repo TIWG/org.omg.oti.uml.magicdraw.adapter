@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLTemplateBinding 
   extends UMLTemplateBinding[MagicDrawUML]
@@ -48,7 +47,6 @@ trait MagicDrawUMLTemplateBinding
 
   override protected def e: Uml#TemplateBinding
   def getMagicDrawTemplateBinding = e
-  import ops._
 
 }
 

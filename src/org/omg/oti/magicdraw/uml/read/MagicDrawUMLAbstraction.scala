@@ -40,13 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLAbstraction 
   extends UMLAbstraction[MagicDrawUML]
   with MagicDrawUMLDependency {
 
-  import ops._
   override protected def e: Uml#Abstraction
   def getMagicDrawAbstraction = e
 

@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLIntervalConstraint 
   extends UMLIntervalConstraint[MagicDrawUML]
@@ -48,18 +50,19 @@ trait MagicDrawUMLIntervalConstraint
 
   override protected def e: Uml#IntervalConstraint
   def getMagicDrawIntervalConstraint = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def specification: Option[UMLInterval[Uml]] =
     Option.apply( e.getSpecification )
-    
 
 }
 
 case class MagicDrawUMLIntervalConstraintImpl(val e: MagicDrawUML#IntervalConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLIntervalConstraint
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLIntervalConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"

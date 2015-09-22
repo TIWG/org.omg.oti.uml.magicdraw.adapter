@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLMergeNode 
   extends UMLMergeNode[MagicDrawUML]
@@ -48,7 +47,6 @@ trait MagicDrawUMLMergeNode
 
   override protected def e: Uml#MergeNode
   def getMagicDrawMergeNode = e
-  import ops._
 
 
 }

@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option,None,Some}
+import scala.Predef.require
 
 trait MagicDrawUMLPin 
   extends UMLPin[MagicDrawUML]
@@ -49,7 +50,9 @@ trait MagicDrawUMLPin
 
   override protected def e: Uml#Pin
   def getMagicDrawPin = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def isControl: Boolean =
     e.isControl

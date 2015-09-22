@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLTemplateParameterSubstitution 
   extends UMLTemplateParameterSubstitution[MagicDrawUML]
@@ -48,13 +48,16 @@ trait MagicDrawUMLTemplateParameterSubstitution
 
   override protected def e: Uml#TemplateParameterSubstitution
   def getMagicDrawTemplateParameterSubstitution = e
-  import ops._
+  implicit val umlOps = ops
+  import umlOps._
 
   // 7.4  
-	override def actual: Option[UMLParameterableElement[Uml]] = ???
+	override def actual: Option[UMLParameterableElement[Uml]] =
+    Option.apply(e.getActual)
   
   // 7.4
-  override def formal: Option[UMLTemplateParameter[Uml]] = ???
+  override def formal: Option[UMLTemplateParameter[Uml]] =
+    Option.apply(e.getFormal)
 
 }
 

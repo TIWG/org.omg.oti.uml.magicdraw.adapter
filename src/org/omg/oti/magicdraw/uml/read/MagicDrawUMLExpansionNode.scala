@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLExpansionNode 
   extends UMLExpansionNode[MagicDrawUML]
@@ -48,12 +49,10 @@ trait MagicDrawUMLExpansionNode
 
   override protected def e: Uml#ExpansionNode
   def getMagicDrawExpansionNode = e
-  import ops._
 
   override def regionAsInput: Option[UMLExpansionRegion[Uml]] = ???
   
 	override def regionAsOutput: Option[UMLExpansionRegion[Uml]] = ???
-  
 
 }
 

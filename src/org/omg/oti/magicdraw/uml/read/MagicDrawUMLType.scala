@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Option
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLType 
   extends UMLType[MagicDrawUML]
@@ -50,14 +51,18 @@ trait MagicDrawUMLType
 
   override protected def e: Uml#Type
   def getMagicDrawType = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def _package: Option[UMLPackage[Uml]] =
     Option.apply(e.getOwningPackage)
 
-  override def type_operation: Set[UMLOperation[Uml]] = ???
+  override def type_operation: Set[UMLOperation[Uml]] =
+    type_typedElement
+    .selectByKindOf { case op: UMLOperation[Uml] => op }
   
-  override def type_typedElement = e.get_typedElementOfType.toSet[Uml#TypedElement]
+  override def type_typedElement: Set[UMLTypedElement[Uml]] =
+    e.get_typedElementOfType.to[Set]
     
   override def raisedException_behavioralFeature = e.get_behavioralFeatureOfRaisedException.toSet[Uml#BehavioralFeature]
   

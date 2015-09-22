@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLRealization 
   extends UMLRealization[MagicDrawUML]
@@ -48,9 +47,6 @@ trait MagicDrawUMLRealization
 
   override protected def e: Uml#Realization
   def getMagicDrawRealization = e
-  import ops._
-
-
 }
 
 case class MagicDrawUMLRealizationImpl(val e: MagicDrawUML#Realization, ops: MagicDrawUMLUtil)

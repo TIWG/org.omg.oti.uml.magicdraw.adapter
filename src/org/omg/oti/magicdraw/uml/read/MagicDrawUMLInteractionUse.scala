@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLInteractionUse 
   extends UMLInteractionUse[MagicDrawUML]
@@ -49,7 +51,6 @@ trait MagicDrawUMLInteractionUse
 
   override protected def e: Uml#InteractionUse
   def getMagicDrawInteractionUse = e
-  import ops._
 
   // 17.18
   override def argument: Seq[UMLValueSpecification[Uml]] = ???

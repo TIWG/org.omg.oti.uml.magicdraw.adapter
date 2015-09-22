@@ -39,11 +39,14 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.StringContext
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.language.postfixOps
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.{Set=>_,Map=>_,_}
 
 trait MagicDrawUMLDurationObservation 
   extends UMLDurationObservation[MagicDrawUML]
@@ -51,21 +54,22 @@ trait MagicDrawUMLDurationObservation
 
   override protected def e: Uml#DurationObservation
   def getMagicDrawDurationObservation = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def event =
-    e.getEvent.toSeq
+    e.getEvent.to[Seq]
     
   override def firstEvent =
-    e.isFirstEvent() map ((b) => if (b) true else false) toSeq
+    e.isFirstEvent().map ((b) => if (b) true else false).to[Seq]
   
 
 }
 
 case class MagicDrawUMLDurationObservationImpl(val e: MagicDrawUML#DurationObservation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDurationObservation
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLDurationObservation(ID=${e.getID}, qname=${e.getQualifiedName})"

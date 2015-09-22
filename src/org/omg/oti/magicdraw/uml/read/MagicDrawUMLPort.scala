@@ -40,12 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
-import org.omg.oti.uml._
+import scala.collection.immutable._
+import scala.{Boolean,Option,None,Some,StringContext}
+import scala.Predef.String
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 import scala.reflect.runtime.universe
-import scala.reflect._
 
 trait MagicDrawUMLPort 
   extends UMLPort[MagicDrawUML]
@@ -53,7 +53,8 @@ trait MagicDrawUMLPort
 
   override protected def e: Uml#Port
   def getMagicDrawPort = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 11.10
 	override def isBehavior: Boolean =
@@ -107,8 +108,8 @@ trait MagicDrawUMLPort
 
 case class MagicDrawUMLPortImpl( val e: MagicDrawUML#Port, ops: MagicDrawUMLUtil )
   extends MagicDrawUMLPort
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLPort(ID=${e.getID}, qname=${e.getQualifiedName})"

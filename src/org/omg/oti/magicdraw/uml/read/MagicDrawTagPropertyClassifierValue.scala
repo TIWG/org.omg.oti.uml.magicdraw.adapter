@@ -41,6 +41,10 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read._
 
+import scala.{Boolean,Double,Int}
+import scala.Predef.{???,String}
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.language.{implicitConversions, postfixOps}
 import scala.util.{Success, Try}
 
@@ -237,7 +241,7 @@ with TagPropertyProfileLifecycleDependentClassifierValueReference[MagicDrawUML] 
 
   override val tagPropertyValueElementReferences
   : Iterable[MagicDrawUMLElement] =
-    ???
+    Iterable()
 
 }
 
@@ -254,6 +258,6 @@ with TagPropertyProfileLifecycleDependentClassifierValueObject[MagicDrawUML] {
 
   override val tagPropertyValueElementReferences
   : Iterable[MagicDrawUMLElement] =
-    ???
+    Iterable()
 
 }

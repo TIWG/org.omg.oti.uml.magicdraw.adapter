@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Double,Option}
+import java.lang.IllegalArgumentException
 
 trait MagicDrawUMLLiteralReal 
   extends UMLLiteralReal[MagicDrawUML]
@@ -48,13 +49,14 @@ trait MagicDrawUMLLiteralReal
 
   override protected def e: Uml#LiteralReal
   def getMagicDrawLiteralReal = e
-  import ops._
   
-  override def value = Option.apply(e.getValue) match {
-    case None => throw new IllegalArgumentException("a LiteralReal must have a value")
-    case Some( d ) => d
-  }
-  
+  override def value: Double =
+    Option.apply(e.getValue)
+    .fold[Double] {
+      throw new IllegalArgumentException("a LiteralReal must have a value")
+    }{ d =>
+      d
+    }
 
 }
 

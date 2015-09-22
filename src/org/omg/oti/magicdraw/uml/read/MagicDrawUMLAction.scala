@@ -42,7 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLAction 
   extends UMLAction[MagicDrawUML]
@@ -50,11 +53,12 @@ trait MagicDrawUMLAction
 
   override protected def e: Uml#Action
   def getMagicDrawAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def context = Option.apply( e.getContext )
   
-  override def input = e.getInput.toSeq
+  override def input = e.getInput.to[Seq]
   
   override def isLocallyReentrant = e.isLocallyReentrant
   
@@ -62,7 +66,7 @@ trait MagicDrawUMLAction
   
   override def localPrecondition = e.getLocalPrecondition.toSet[Uml#Constraint]
   
-  override def output = e.getOutput.toSeq
+  override def output = e.getOutput.to[Seq]
   
   override def action_interaction = Option.apply( e.get_interactionOfAction )
   

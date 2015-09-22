@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.StringContext
+import scala.Predef.{???,String}
+import scala.collection.immutable._
 
 trait MagicDrawUMLInformationItem 
   extends UMLInformationItem[MagicDrawUML]
@@ -49,7 +50,6 @@ trait MagicDrawUMLInformationItem
 
   override protected def e: Uml#InformationItem
   def getMagicDrawInformationItem = e
-  import ops._
 
   // 20.1
   override def represented: Set[UMLClassifier[Uml]] = ???
@@ -59,8 +59,8 @@ trait MagicDrawUMLInformationItem
 
 case class MagicDrawUMLInformationItemImpl(val e: MagicDrawUML#InformationItem, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInformationItem
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLInformationItem(ID=${e.getID}, qname=${e.getQualifiedName})"

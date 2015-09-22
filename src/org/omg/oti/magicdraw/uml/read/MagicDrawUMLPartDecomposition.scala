@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLPartDecomposition 
   extends UMLPartDecomposition[MagicDrawUML]
@@ -48,11 +48,13 @@ trait MagicDrawUMLPartDecomposition
 
   override protected def e: Uml#PartDecomposition
   def getMagicDrawPartDecomposition = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 17.18
-	override def decomposedAs_lifeline: Option[UMLLifeline[Uml]] = ???
-  
+	override def decomposedAs_lifeline: Option[UMLLifeline[Uml]] =
+    Option.apply(e.get_lifelineOfDecomposedAs())
 
 }
 

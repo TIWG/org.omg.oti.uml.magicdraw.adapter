@@ -39,11 +39,15 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.{Boolean,Int,Option,StringContext}
+import scala.Predef.{Set=>_,Map=>_,_}
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.language.postfixOps
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import java.lang.Integer
 
 trait MagicDrawUMLOperation 
   extends UMLOperation[MagicDrawUML]
@@ -53,7 +57,8 @@ trait MagicDrawUMLOperation
 
   override protected def e: Uml#Operation
   def getMagicDrawOperation = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def bodyCondition: Option[UMLConstraint[Uml]] =
     Option.apply( e.getBodyCondition )
@@ -68,10 +73,10 @@ trait MagicDrawUMLOperation
     e.isQuery
   
   override def lower: Option[Integer] =
-    Some( e.getLower )
+    Option.apply( e.getLower )
     
   override def ownedParameter: Seq[UMLParameter[Uml]] =
-    e.getOwnedParameter.toSeq
+    e.getOwnedParameter.to[Seq]
   
   override def postcondition: Set[UMLConstraint[Uml]] =
     e.getPostcondition.toSet[Uml#Constraint]
@@ -89,7 +94,7 @@ trait MagicDrawUMLOperation
     Option.apply( e.getType )
   
   override def upper: Option[Integer] =
-    Some( e.getUpper )
+    Option.apply( e.getUpper )
   
   override def operation_callOperationAction: Set[UMLCallOperationAction[Uml]] =
     e.get_callOperationActionOfOperation.toSet[Uml#CallOperationAction]
@@ -104,8 +109,8 @@ trait MagicDrawUMLOperation
 
 case class MagicDrawUMLOperationImpl(val e: MagicDrawUML#Operation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOperation
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLOperation(ID=${e.getID}, qname=${e.getQualifiedName})"

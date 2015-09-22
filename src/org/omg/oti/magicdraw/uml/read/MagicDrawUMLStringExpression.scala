@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLStringExpression 
   extends UMLStringExpression[MagicDrawUML]
@@ -51,19 +54,21 @@ trait MagicDrawUMLStringExpression
 
   override protected def e: Uml#StringExpression
   def getMagicDrawStringExpression = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   // 8.2
-  override def subExpression = e.getSubExpression.toSeq
+  override def subExpression = e.getSubExpression.to[Seq]
     
-	override def nameExpression_namedElement: Option[UMLNamedElement[Uml]] = ???
+	override def nameExpression_namedElement: Option[UMLNamedElement[Uml]] =
+    Option.apply(e.get_namedElementOfNameExpression())
 
 }
 
 case class MagicDrawUMLStringExpressionImpl(val e: MagicDrawUML#StringExpression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStringExpression
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLStringExpression(ID=${e.getID}, qname=${e.getQualifiedName})"

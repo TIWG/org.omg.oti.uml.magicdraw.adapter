@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLCentralBufferNode 
   extends UMLCentralBufferNode[MagicDrawUML]
@@ -48,7 +47,6 @@ trait MagicDrawUMLCentralBufferNode
 
   override protected def e: Uml#CentralBufferNode
   def getMagicDrawCentralBufferNode = e
-  import ops._
 
 
 }

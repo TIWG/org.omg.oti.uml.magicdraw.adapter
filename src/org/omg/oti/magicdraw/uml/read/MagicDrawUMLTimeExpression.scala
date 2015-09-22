@@ -40,8 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Option,StringContext}
+import scala.Predef.String
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLTimeExpression 
   extends UMLTimeExpression[MagicDrawUML]
@@ -49,26 +52,31 @@ trait MagicDrawUMLTimeExpression
 
   override protected def e: Uml#TimeExpression
   def getMagicDrawTimeExpression = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 8.3  
-	override def expr: Option[UMLValueSpecification[Uml]] = ???
+	override def expr: Option[UMLValueSpecification[Uml]] =
+    Option.apply(e.getExpr)
   
   // 8.3
-  override def observation: Set[UMLObservation[Uml]] = ??? 
+  override def observation: Set[UMLObservation[Uml]] =
+    e.getObservation.to[Set]
   
   // 8.4  
-	override def max_timeInterval: Set[UMLTimeInterval[Uml]] = ???
+	override def max_timeInterval: Set[UMLTimeInterval[Uml]] =
+    e.get_timeIntervalOfMax().to[Set]
   
   // 8.4
-	override def min_timeInterval: Set[UMLTimeInterval[Uml]] = ???
+	override def min_timeInterval: Set[UMLTimeInterval[Uml]] =
+    e.get_timeIntervalOfMin().to[Set]
 
 }
 
 case class MagicDrawUMLTimeExpressionImpl(val e: MagicDrawUML#TimeExpression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeExpression
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLTimeExpression(ID=${e.getID}, qname=${e.getQualifiedName})"

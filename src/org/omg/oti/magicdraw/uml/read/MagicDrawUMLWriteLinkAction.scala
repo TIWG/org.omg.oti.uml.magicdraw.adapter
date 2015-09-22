@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLWriteLinkAction 
   extends UMLWriteLinkAction[MagicDrawUML]
@@ -48,6 +47,5 @@ trait MagicDrawUMLWriteLinkAction
 
   override protected def e: Uml#WriteLinkAction
   def getMagicDrawWriteLinkAction = e
-  import ops._
 
 }

@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.StringContext
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDataType 
   extends UMLDataType[MagicDrawUML]
@@ -50,20 +53,21 @@ trait MagicDrawUMLDataType
 
   override protected def e: Uml#DataType
   def getMagicDrawDataType = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.toSeq
+    e.getOwnedAttribute.to[Seq]
   
   override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.toSeq
+    e.getOwnedOperation.to[Seq]
   
 }
 
 case class MagicDrawUMLDataTypeImpl( val e: MagicDrawUML#DataType, ops: MagicDrawUMLUtil )
   extends MagicDrawUMLDataType
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLDataType(ID=${e.getID}, qname=${e.getQualifiedName})"

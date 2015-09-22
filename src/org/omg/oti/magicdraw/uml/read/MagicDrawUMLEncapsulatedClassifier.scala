@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLEncapsulatedClassifier 
   extends UMLEncapsulatedClassifier[MagicDrawUML]
@@ -48,6 +47,5 @@ trait MagicDrawUMLEncapsulatedClassifier
 
   override protected def e: Uml#EncapsulatedClassifier
   def getMagicDrawEncapsulatedClassifier = e
-  import ops._
 
 }

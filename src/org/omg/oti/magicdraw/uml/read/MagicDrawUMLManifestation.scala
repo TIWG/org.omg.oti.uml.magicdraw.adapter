@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLManifestation 
   extends UMLManifestation[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLManifestation
 
   override protected def e: Uml#Manifestation
   def getMagicDrawManifestation = e
-  import ops._
 
   override def utilizedElement: Option[UMLPackageableElement[Uml]] = ???
   

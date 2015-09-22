@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
 
 trait MagicDrawUMLJoinNode 
   extends UMLJoinNode[MagicDrawUML]
@@ -48,7 +48,9 @@ trait MagicDrawUMLJoinNode
 
   override protected def e: Uml#JoinNode
   def getMagicDrawJoinNode = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def isCombineDuplicate: Boolean =
     e.isCombineDuplicate

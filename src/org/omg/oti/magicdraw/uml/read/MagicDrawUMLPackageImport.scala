@@ -40,16 +40,17 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLPackageImport 
   extends UMLPackageImport[MagicDrawUML]
   with MagicDrawUMLDirectedRelationship {
 
-  import ops._
-
   override protected def e: Uml#PackageImport
   def getMagicDrawPackageImport = e
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 12.12
   override def metamodelReference_profile: Option[UMLProfile[Uml]] =

@@ -40,17 +40,13 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLPackageMerge 
   extends UMLPackageMerge[MagicDrawUML]
   with MagicDrawUMLDirectedRelationship {
 
-  import ops._
   override protected def e: Uml#PackageMerge
   def getMagicDrawPackageMerge = e
-
-  
 
 }
 

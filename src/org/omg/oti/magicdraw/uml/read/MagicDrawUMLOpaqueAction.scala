@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.String
 
 trait MagicDrawUMLOpaqueAction 
   extends UMLOpaqueAction[MagicDrawUML]
@@ -53,13 +55,13 @@ trait MagicDrawUMLOpaqueAction
   import ops._
 
   override def body: Seq[String] =
-    e.getBody.toSeq
+    e.getBody.to[Seq]
    
 	override def inputValue: Set[UMLInputPin[Uml]] =
     e.getInputValue.toSet[Uml#InputPin]
   
   override def language: Seq[String] =
-    e.getLanguage.toSeq
+    e.getLanguage.to[Seq]
   
   override def outputValue: Set[UMLOutputPin[Uml]] =
     e.getOutputValue.toSet[Uml#OutputPin]

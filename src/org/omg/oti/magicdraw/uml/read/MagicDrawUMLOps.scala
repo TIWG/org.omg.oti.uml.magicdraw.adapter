@@ -40,14 +40,16 @@
 package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.magicdraw.core.Project
+import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawBuiltInDocument
 
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.language.postfixOps
 import scala.reflect.runtime.universe._
 
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
-import org.omg.oti.uml.canonicalXMI.BuiltInDocument
-import org.omg.oti.uml.canonicalXMI.DocumentEdge
+import org.omg.oti.uml.canonicalXMI._
 import java.net.URI
 
 trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
@@ -795,7 +797,7 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
     val mdPrimitiveTypesExtent: Set[UMLElement[MagicDrawUML]] =
       Set(mdPrimitiveTypesPkg) ++ mdPrimitiveTypesPkg.ownedType.toSet
       
-    BuiltInDocument(
+    MagicDrawBuiltInDocument(
         uri=new URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
         nsPrefix="PrimitiveTypes",
         uuidPrefix="org.omg.uml.PrimitiveTypes",
@@ -811,8 +813,8 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
  
     val mdUMLExtent: Set[UMLElement[MagicDrawUML]] =
       Set(mdUMLPkg) ++ mdUMLPkg.ownedType.selectByKindOf { case mc: UMLClass[MagicDrawUML] => mc }
-      
-    BuiltInDocument(
+
+    MagicDrawBuiltInDocument(
         uri=new URI("http://www.omg.org/spec/UML/20131001"),
         nsPrefix="uml",
         uuidPrefix="org.omg.uml.UML",
@@ -834,8 +836,8 @@ trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUM
       Set(mdStandardProfile) ++ 
       mdStandardProfileExtensions ++ mdStandardProfileExtensionFeatures ++
       mdStandardProfileStereotypes ++ mdStandardProfileStereotypeFeatures
-      
-    BuiltInDocument(
+
+    MagicDrawBuiltInDocument(
         uri=new URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
         nsPrefix="StandardProfile",
         uuidPrefix="org.omg.uml.StandardProfile",

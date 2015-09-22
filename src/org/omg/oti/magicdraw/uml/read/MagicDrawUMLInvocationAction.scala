@@ -39,10 +39,12 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.Option
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLInvocationAction 
   extends UMLInvocationAction[MagicDrawUML]
@@ -50,10 +52,11 @@ trait MagicDrawUMLInvocationAction
 
   override protected def e: Uml#InvocationAction
   def getMagicDrawInvocationAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def argument: Seq[UMLInputPin[Uml]] =
-    e.getArgument.toSeq
+    e.getArgument.to[Seq]
     
   override def onPort: Option[UMLPort[Uml]] =
     Option.apply( e.getOnPort )

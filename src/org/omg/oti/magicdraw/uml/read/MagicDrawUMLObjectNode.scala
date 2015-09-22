@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.{Boolean,Option}
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 import com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum
 
 trait MagicDrawUMLObjectNode
@@ -51,7 +53,9 @@ trait MagicDrawUMLObjectNode
 
   override protected def e: Uml#ObjectNode
   def getMagicDrawObjectNode = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def inState: Set[UMLState[Uml]] =
     e.getInState.toSet[Uml#State]

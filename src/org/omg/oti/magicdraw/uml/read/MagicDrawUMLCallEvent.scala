@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
 
 trait MagicDrawUMLCallEvent 
   extends UMLCallEvent[MagicDrawUML]

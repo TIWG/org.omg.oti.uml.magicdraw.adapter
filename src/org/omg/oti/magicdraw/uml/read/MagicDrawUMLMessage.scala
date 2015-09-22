@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Option
+import scala.Predef.???
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLMessage 
   extends UMLMessage[MagicDrawUML]
@@ -49,7 +51,6 @@ trait MagicDrawUMLMessage
 
   override protected def e: Uml#Message
   def getMagicDrawMessage = e
-  import ops._
 
   // 17.7
   override def argument: Seq[UMLValueSpecification[Uml]] = ???

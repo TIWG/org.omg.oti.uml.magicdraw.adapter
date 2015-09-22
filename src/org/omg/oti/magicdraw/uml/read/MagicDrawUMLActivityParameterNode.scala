@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
 
 trait MagicDrawUMLActivityParameterNode 
   extends UMLActivityParameterNode[MagicDrawUML]
@@ -48,7 +49,8 @@ trait MagicDrawUMLActivityParameterNode
 
   override protected def e: Uml#ActivityParameterNode
   def getMagicDrawActivityParameterNode = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def parameter: Option[UMLParameter[Uml]] = 
     Option.apply( e.getParameter )

@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLiteralSpecification 
   extends UMLLiteralSpecification[MagicDrawUML]
@@ -48,5 +47,4 @@ trait MagicDrawUMLLiteralSpecification
 
   override protected def e: Uml#LiteralSpecification
   def getMagicDrawLiteralSpecification = e
-  import ops._
 }

@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
+import scala.{Option,None,Some,StringContext}
+import scala.Predef.{require,String}
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLAssociation 
   extends UMLAssociation[MagicDrawUML]
@@ -51,7 +54,9 @@ trait MagicDrawUMLAssociation
   
   override protected def e: Uml#Association
   def getMagicDrawAssociation = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def isDerived = e.isDerived
   
@@ -59,7 +64,7 @@ trait MagicDrawUMLAssociation
   
   override def navigableOwnedEnd = e.getNavigableOwnedEnd.toSet[Uml#Property]
   
-  override def memberEnd = e.getMemberEnd.toSeq
+  override def memberEnd = e.getMemberEnd.to[Seq]
   
   override def type_connector = e.get_connectorOfType.toSet[Uml#Connector]
     
@@ -74,8 +79,8 @@ trait MagicDrawUMLAssociation
 
 case class MagicDrawUMLAssociationImpl(val e: MagicDrawUML#Association, ops: MagicDrawUMLUtil)
 extends MagicDrawUMLAssociation
-with sext.TreeString
-with sext.ValueTreeString {
+with sext.PrettyPrinting.TreeString
+with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLAssociation(ID=${e.getID}, qname=${e.getQualifiedName})"

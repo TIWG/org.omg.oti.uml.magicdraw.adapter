@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.collection.JavaConversions._
 
 trait MagicDrawUMLVariable 
   extends UMLVariable[MagicDrawUML]
@@ -49,10 +50,12 @@ trait MagicDrawUMLVariable
 
   override protected def e: Uml#Variable
   def getMagicDrawVariable = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.37
-	override def variable_variableAction: Set[UMLVariableAction[Uml]] = ???
+	override def variable_variableAction: Set[UMLVariableAction[Uml]] =
+    e.get_variableActionOfVariable().to[Set]
 
 }
 

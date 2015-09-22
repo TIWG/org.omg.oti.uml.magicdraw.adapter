@@ -39,6 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.{Boolean,Option}
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
@@ -51,7 +54,9 @@ trait MagicDrawUMLInstanceSpecification
 
   override protected def e: Uml#InstanceSpecification
   def getMagicDrawInstanceSpecification = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean = e == e.getOwner.getAppliedStereotypeInstance
   
@@ -62,7 +67,7 @@ trait MagicDrawUMLInstanceSpecification
     e.getSlot.toSet[Uml#Slot]
   
   override def classifier: Iterable[UMLClassifier[Uml]] =
-    e.getClassifier().toSeq
+    e.getClassifier().to[Seq]
   
   override def instance_instanceValue: Set[UMLInstanceValue[Uml]] =
     e.get_instanceValueOfInstance.toSet[Uml#InstanceValue]

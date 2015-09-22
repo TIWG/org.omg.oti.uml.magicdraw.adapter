@@ -42,7 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLActivityPartition 
   extends UMLActivityPartition[MagicDrawUML]
@@ -50,10 +53,11 @@ trait MagicDrawUMLActivityPartition
 
   override protected def e: Uml#ActivityPartition
   def getMagicDrawActivityPartition = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def edge: Set[UMLActivityEdge[Uml]] =
-    e.getEdge.toSet[Uml#ActivityEdge]
+    e.getEdge.to[Set]
   
   override def isDimension =
     e.isDimension
@@ -62,13 +66,13 @@ trait MagicDrawUMLActivityPartition
     e.isExternal
     
   override def node: Set[UMLActivityNode[Uml]] =
-    e.getNode.toSet[Uml#ActivityNode]
+    e.getNode.to[Set]
   
   override def represents: Option[UMLElement[Uml]] =
     Option.apply( e.getRepresents )
     
   override def subpartition: Set[UMLActivityPartition[Uml]] =
-    e.getSubpartition.toSet[Uml#ActivityPartition]
+    e.getSubpartition.to[Set]
   
   override def superPartition: Option[UMLActivityPartition[Uml]] =
     Option.apply( e.getSuperPartition )

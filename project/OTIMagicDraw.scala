@@ -85,10 +85,55 @@ object OTIMagicDraw extends Build {
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
         "xml-resolver" % "xml-resolver" % Versions.xmlResolver % "provided",
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core" % Versions.oti_core_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-core", "resource"),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration" % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-change-migration", "resource"),
-        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees" % Versions.oti_trees_version intransitive() withSources() withJavadoc() artifacts Artifact("oti-trees", "resource")
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-core"
+        % Versions.oti_core_version intransitive() withSources() withJavadoc()
+        artifacts Artifact("oti-core", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration"
+        % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc()
+        artifacts Artifact("oti-change-migration", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees"
+        % Versions.oti_trees_version intransitive() withSources() withJavadoc()
+        artifacts Artifact("oti-trees", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-canonical-xmi"
+        % Versions.oti_canonical_xmi_version intransitive() withSources() withJavadoc()
+        artifacts Artifact("oti-canonical-xmi", "resource"),
+        "gov.nasa.jpl.mbee.omg.oti" %% "oti-loader"
+        % Versions.oti_loader_version intransitive() withSources() withJavadoc()
+        artifacts Artifact("oti-loader", "resource")
       ),
+
+      scalacOptions ++= List("-target:jvm-1.7"),
+
+      // https://tpolecat.github.io/2014/04/11/scalac-flags.html
+      scalacOptions ++= Seq(
+        "-deprecation",
+        "-encoding", "UTF-8", // yes, this is 2 args
+        "-feature",
+        "-language:existentials",
+        "-language:higherKinds",
+        "-language:implicitConversions",
+        "-unchecked",
+        "-Xfatal-warnings",
+        "-Xlint:_,-option-implicit",
+        "-Yno-adapted-args",
+        "-Ywarn-dead-code", // N.B. doesn't work well with the ??? hole
+        "-Ywarn-numeric-widen",
+        "-Ywarn-value-discard",
+        "-Xfuture",
+        "-Ywarn-unused-import", // 2.11 only
+        "-Yno-imports" // no automatic imports at all; all symbols must be imported explicitly
+      ),
+
+      // https://github.com/puffnfresh/wartremover
+      //wartremoverErrors ++= Warts.unsafe,
+      //wartremoverWarnings ++= Warts.all,
+
+      scalacOptions in(Compile, doc) ++= Seq(
+        "-diagrams",
+        "-doc-title", name.value,
+        "-doc-root-content", baseDirectory.value + "/rootdoc.txt"
+      ),
+
       scalaSource in Compile := baseDirectory.value / "src",
       classDirectory in Compile := baseDirectory.value / "bin",
       scalacOptions ++= List("-target:jvm-1.7", "-feature"),

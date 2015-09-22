@@ -44,8 +44,16 @@ import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.write.api.UMLUpdate
 
+import scala.{Boolean,Double,Option,None,Some,StringContext,Tuple2,Unit}
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.Predef.{Set => _, Map => _, _}
 import scala.util.{Failure, Success, Try}
+
+import java.lang.Integer
+import java.lang.Throwable
+import java.lang.IllegalArgumentException
 
 case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   extends UMLUpdate[MagicDrawUML] {
@@ -131,25 +139,25 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
             case Success(ve) => Success(Tuple2(f, vs + ve))
           }
       }
-    } map { case (_from, _tos) =>
+    } flatMap { case (_from, _tos) =>
 
-      val _current = m_n(_from)
+      Try({
+        val _current = m_n(_from)
 
-      val _toAdd = for {
-        _add <- _tos
-        if !_current.contains(_add)
-      } yield _add
+        val _toAdd = for {
+          _add <- _tos
+          if !_current.contains(_add)
+        } yield _add
 
-      val _toRemove = for {
-        _rem <- _current
-        if !_tos.contains(_rem)
-      } yield _rem
+        val _toRemove = for {
+          _rem <- _current
+          if !_tos.contains(_rem)
+        } yield _rem
 
-      for {_rem <- _toRemove} m_n(_from).remove(_rem)
+        for {_rem <- _toRemove} m_n(_from).remove(_rem)
 
-      for {_add <- _toAdd} m_n(_from).add(_add)
-
-      Unit
+        for {_add <- _toAdd} m_n(_from).add(_add)
+      })
     }
 
   /**
@@ -192,12 +200,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
             case Success(ve) => Success(Tuple2(f, vs :+ ve))
           }
       }
-    } map { case (_from, _tos) =>
+    } flatMap { case (_from, _tos) =>
 
-      m_n(_from).clear()
-      for {_add <- _tos} m_n(_from).add(_add)
-
-      Unit
+      Try({
+        m_n(_from).clear()
+        for {_add <- _tos} m_n(_from).add(_add)
+      })
     }
 
   /**
@@ -234,15 +242,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       n match {
         case None =>
-          m_n(_from, null.asInstanceOf[N])
-          Success(Unit)
+          Try(m_n(_from, null.asInstanceOf[N]))
         case Some(e) =>
           checkSession(nAdaptee(nAdapter(e))) match {
             case Failure(f) =>
               Failure(f)
             case Success(ve) =>
-              m_n(_from, ve)
-              Success(Unit)
+              Try(m_n(_from, ve))
           }
       }
     }
@@ -278,7 +284,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: (M => java.util.Collection[N]),
    nAdaptee: (NAdapt => N)): Try[Unit] =
-    checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
+    checkSession(mAdaptee(mAdapter(m)))
+    .flatMap { _from =>
       (Try[(M, Set[N])](Tuple2(_from, Set())) /: ns) {
         case (Failure(f), _) => Failure(f)
         case (Success(Tuple2(f, vs)), e) =>
@@ -287,7 +294,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
             case Success(ve) => Success(Tuple2(f, vs + ve))
           }
       }
-    } map { case (_from, _tos) =>
+    }
+    .flatMap { case ((_from, _tos)) =>
 
       val _current = m_n(_from)
 
@@ -301,11 +309,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         if !_tos.contains(_rem)
       } yield _rem
 
-      for {_rem <- _toRemove} m_n(_from).remove(_rem)
-
-      for {_add <- _toAdd} m_n(_from).add(_add)
-
-      Unit
+      Try({
+        for {_rem <- _toRemove} m_n(_from).remove(_rem)
+      }).flatMap { _ =>
+        Try({
+          for {_add <- _toAdd} m_n(_from).add(_add)
+        })
+      }
     }
 
   /**
@@ -348,12 +358,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
             case Success(ve) => Success(Tuple2(f, vs :+ ve))
           }
       }
-    } map { case (_from, _tos) =>
+    } flatMap { case (_from, _tos) =>
 
-      m_n(_from).clear()
-      for {_add <- _tos} m_n(_from).add(_add)
-
-      Unit
+      Try({
+        m_n(_from).clear()
+        for {_add <- _tos} m_n(_from).add(_add)
+      })
     }
 
   /**
@@ -390,15 +400,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       n match {
         case None =>
-          m_n(_from, null.asInstanceOf[N])
-          Success(Unit)
+         Try( m_n(_from, null.asInstanceOf[N]) )
         case Some(e) =>
           checkElement(nAdaptee(nAdapter(e))) match {
             case Failure(f) =>
               Failure(f)
             case Success(ve) =>
-              m_n(_from, ve)
-              Success(Unit)
+              Try( m_n(_from, ve) )
           }
       }
     }
@@ -453,9 +461,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_AcceptEventAction_isUnmarshall
   (e: UMLAcceptEventAction[MagicDrawUML], isUnmarshall: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLAcceptEventAction(e).getMagicDrawAcceptEventAction) map { _e =>
-      _e.setUnmarshall(isUnmarshall)
-      Unit
+    checkSession(ops.umlMagicDrawUMLAcceptEventAction(e).getMagicDrawAcceptEventAction)
+    .flatMap { _e =>
+      Try(_e.setUnmarshall(isUnmarshall))
     }
 
   // Action
@@ -482,9 +490,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Action_isLocallyReentrant
   (e: UMLAction[MagicDrawUML], isLocallyReentrant: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLAction(e).getMagicDrawAction) map { _e =>
-      _e.setLocallyReentrant(isLocallyReentrant)
-      Unit
+    checkSession(ops.umlMagicDrawUMLAction(e).getMagicDrawAction)
+    .flatMap { _e =>
+      Try(_e.setLocallyReentrant(isLocallyReentrant))
     }
 
   // ActionExecutionSpecification
@@ -577,16 +585,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Activity_isReadOnly
   (e: UMLActivity[MagicDrawUML], isReadOnly: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity) map { _e =>
-      _e.setReadOnly(isReadOnly)
-      Unit
+    checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity)
+    .flatMap { _e =>
+      Try(_e.setReadOnly(isReadOnly))
     }
 
   override def set_Activity_isSingleExecution
   (e: UMLActivity[MagicDrawUML], isSingleExecution: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity) map { _e =>
-      _e.setSingleExecution(isSingleExecution)
-      Unit
+    checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity)
+    .flatMap { _e =>
+      Try(_e.setSingleExecution(isSingleExecution))
     }
 
   // ActivityEdge
@@ -782,16 +790,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ActivityPartition_isDimension
   (e: UMLActivityPartition[MagicDrawUML], isDimension: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition) map { _e =>
-      _e.setDimension(isDimension)
-      Unit
+    checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition)
+    .flatMap { _e =>
+      Try(_e.setDimension(isDimension))
     }
 
   override def set_ActivityPartition_isExternal
   (e: UMLActivityPartition[MagicDrawUML], isExternal: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition) map { _e =>
-      _e.setExternal(isExternal)
-      Unit
+    checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition)
+    .flatMap { _e =>
+      Try(_e.setExternal(isExternal))
     }
 
 
@@ -813,9 +821,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_AddStructuralFeatureValueAction_isReplaceAll
   (e: UMLAddStructuralFeatureValueAction[MagicDrawUML], isReplaceAll: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLAddStructuralFeatureValueAction(e).getMagicDrawAddStructuralFeatureValueAction) map { _e =>
-      _e.setReplaceAll(isReplaceAll)
-      Unit
+    checkSession(ops.umlMagicDrawUMLAddStructuralFeatureValueAction(e).getMagicDrawAddStructuralFeatureValueAction)
+    .flatMap { _e =>
+      Try(_e.setReplaceAll(isReplaceAll))
     }
 
   // AddVariableValueAction
@@ -833,9 +841,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_AddVariableValueAction_isReplaceAll
   (e: UMLAddVariableValueAction[MagicDrawUML], isReplaceAll: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLAddVariableValueAction(e).getMagicDrawAddVariableValueAction) map { _e =>
-      _e.setReplaceAll(isReplaceAll)
-      Unit
+    checkSession(ops.umlMagicDrawUMLAddVariableValueAction(e).getMagicDrawAddVariableValueAction)
+    .flatMap { _e =>
+      Try(_e.setReplaceAll(isReplaceAll))
     }
 
   // AnyReceiveEvent
@@ -885,12 +893,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Artifact_fileName
   (e: UMLArtifact[MagicDrawUML], fileName: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLArtifact(e).getMagicDrawArtifact) map { _e =>
-      fileName match {
-        case None => _e.setFileName(null)
-        case Some(f) => _e.setFileName(f)
+    checkSession(ops.umlMagicDrawUMLArtifact(e).getMagicDrawArtifact)
+    .flatMap { _e =>
+      fileName
+      .fold[Try[Unit]]{
+        Try(_e.setFileName(null))
+      }{
+        f => Try(_e.setFileName(f))
       }
-      Unit
     }
 
 
@@ -928,9 +938,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Association_isDerived
   (e: UMLAssociation[MagicDrawUML], isDerived: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLAssociation(e).getMagicDrawAssociation) map { _e =>
-      _e.setDerived(isDerived)
-      Unit
+    checkSession(ops.umlMagicDrawUMLAssociation(e).getMagicDrawAssociation).flatMap { _e =>
+      Try(_e.setDerived(isDerived))
     }
 
 
@@ -1002,9 +1011,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Behavior_isReentrant
   (e: UMLBehavior[MagicDrawUML], isReentrant: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLBehavior(e).getMagicDrawBehavior) map { _e =>
-      _e.setReentrant(isReentrant)
-      Unit
+    checkSession(ops.umlMagicDrawUMLBehavior(e).getMagicDrawBehavior).flatMap { _e =>
+      Try(_e.setReentrant(isReentrant))
     }
 
 
@@ -1065,20 +1073,24 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_BehavioralFeature_concurrency
   (e: UMLBehavioralFeature[MagicDrawUML], concurrency: UMLCallConcurrencyKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature) map { _e =>
-      _e.setConcurrency(concurrency match {
-        case UMLCallConcurrencyKind.concurrent => com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT
-        case UMLCallConcurrencyKind.guarded => com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.GUARDED
-        case UMLCallConcurrencyKind.sequential => com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.SEQUENTIAL
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature)
+    .flatMap { _e =>
+      val c = concurrency match {
+        case UMLCallConcurrencyKind.concurrent =>
+          com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT
+        case UMLCallConcurrencyKind.guarded =>
+          com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.GUARDED
+        case UMLCallConcurrencyKind.sequential =>
+          com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.SEQUENTIAL
+      }
+      Try(_e.setConcurrency(c))
     }
 
   override def set_BehavioralFeature_isAbstract
   (e: UMLBehavioralFeature[MagicDrawUML], isAbstract: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature) map { _e =>
-      _e.setAbstract(isAbstract)
-      Unit
+    checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature)
+    .flatMap { _e =>
+      Try(_e.setAbstract(isAbstract))
     }
 
   // BehavioredClassifier
@@ -1141,9 +1153,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_CallAction_isSynchronous
   (e: UMLCallAction[MagicDrawUML], isSynchronous: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLCallAction(e).getMagicDrawCallAction) map { _e =>
-      _e.setSynchronous(isSynchronous)
-      Unit
+    checkSession(ops.umlMagicDrawUMLCallAction(e).getMagicDrawCallAction).flatMap { _e =>
+      Try(_e.setSynchronous(isSynchronous))
     }
 
   // CallBehaviorAction
@@ -1256,16 +1267,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Class_isAbstract
   (e: UMLClass[MagicDrawUML], isAbstract: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass) map { _e =>
-      _e.setAbstract(isAbstract)
-      Unit
+    checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass).flatMap { _e =>
+      Try(_e.setAbstract(isAbstract))
     }
 
   override def set_Class_isActive
   (e: UMLClass[MagicDrawUML], isActive: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass) map { _e =>
-      _e.setActive(isActive)
-      Unit
+    checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass).flatMap { _e =>
+      Try(_e.setActive(isActive))
     }
 
   // Classifier
@@ -1375,16 +1384,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Classifier_isAbstract
   (e: UMLClassifier[MagicDrawUML], isAbstract: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier) map { _e =>
-      _e.setAbstract(isAbstract)
-      Unit
+    checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier).flatMap { _e =>
+      Try(_e.setAbstract(isAbstract))
     }
 
   override def set_Classifier_isFinalSpecialization
   (e: UMLClassifier[MagicDrawUML], isFinalSpecialization: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier) map { _e =>
-      _e.setFinalSpecialization(isFinalSpecialization)
-      Unit
+    checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier).flatMap { _e =>
+      Try(_e.setFinalSpecialization(isFinalSpecialization))
     }
 
   // ClassifierTemplateParameter
@@ -1412,9 +1419,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ClassifierTemplateParameter_allowSubstitutable
   (e: UMLClassifierTemplateParameter[MagicDrawUML], allowSubstitutable: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLClassifierTemplateParameter(e).getMagicDrawClassifierTemplateParameter) map { _e =>
-      _e.setAllowSubstitutable(allowSubstitutable)
-      Unit
+    checkSession(ops.umlMagicDrawUMLClassifierTemplateParameter(e).getMagicDrawClassifierTemplateParameter).flatMap { _e =>
+      Try(_e.setAllowSubstitutable(allowSubstitutable))
     }
 
   // Clause
@@ -1579,8 +1585,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_CombinedFragment_interactionOperator
   (e: UMLCombinedFragment[MagicDrawUML], interactionOperator: UMLInteractionOperatorKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLCombinedFragment(e).getMagicDrawCombinedFragment) map { _e =>
-      _e.setInteractionOperator(interactionOperator match {
+    checkSession(ops.umlMagicDrawUMLCombinedFragment(e).getMagicDrawCombinedFragment)
+    .flatMap { _e =>
+      val i = interactionOperator match {
         case UMLInteractionOperatorKind.alt => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.ALT
         case UMLInteractionOperatorKind.assert => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.ASSERT
         case UMLInteractionOperatorKind.break => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.BREAK
@@ -1593,8 +1600,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         case UMLInteractionOperatorKind.par => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.PAR
         case UMLInteractionOperatorKind.seq => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.SEQ
         case UMLInteractionOperatorKind.strict => com.nomagic.uml2.ext.magicdraw.interactions.mdfragments.InteractionOperatorKindEnum.STRICT
-      })
-      Unit
+      }
+      Try(_e.setInteractionOperator(i))
     }
 
   // Comment
@@ -1613,12 +1620,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Comment_body
   (e: UMLComment[MagicDrawUML], body: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLComment(e).getMagicDrawComment) map { _e =>
-      body match {
-        case Some(s) => _e.setBody(s)
-        case None => _e.setBody(null)
+    checkSession(ops.umlMagicDrawUMLComment(e).getMagicDrawComment)
+    .flatMap { _e =>
+      body
+      .fold[Try[Unit]]{
+        Try(_e.setBody(null))
+      }{ s =>
+        Try(_e.setBody(s))
       }
-      Unit
     }
 
   // CommunicationPath
@@ -1648,9 +1657,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Component_isIndirectlyInstantiated
   (e: UMLComponent[MagicDrawUML], isIndirectlyInstantiated: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLComponent(e).getMagicDrawComponent) map { _e =>
-      _e.setIndirectlyInstantiated(isIndirectlyInstantiated)
-      Unit
+    checkSession(ops.umlMagicDrawUMLComponent(e).getMagicDrawComponent).flatMap { _e =>
+      Try(_e.setIndirectlyInstantiated(isIndirectlyInstantiated))
     }
 
   // ComponentRealization
@@ -1689,16 +1697,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ConditionalNode_isAssured
   (e: UMLConditionalNode[MagicDrawUML], isAssured: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode) map { _e =>
-      _e.setAssured(isAssured)
-      Unit
+    checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode).flatMap { _e =>
+      Try(_e.setAssured(isAssured))
     }
 
   override def set_ConditionalNode_isDeterminate
   (e: UMLConditionalNode[MagicDrawUML], isDeterminate: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode) map { _e =>
-      _e.setDeterminate(isDeterminate)
-      Unit
+    checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode).flatMap { _e =>
+      Try(_e.setDeterminate(isDeterminate))
     }
 
   // ConnectableElement
@@ -1845,9 +1851,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Continuation_setting
   (e: UMLContinuation[MagicDrawUML], setting: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLContinuation(e).getMagicDrawContinuation) map { _e =>
-      _e.setSetting(setting)
-      Unit
+    checkSession(ops.umlMagicDrawUMLContinuation(e).getMagicDrawContinuation).flatMap { _e =>
+      Try(_e.setSetting(setting))
     }
 
   // ControlFlow
@@ -1995,22 +2000,26 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_DeploymentSpecification_deploymentLocation
   (e: UMLDeploymentSpecification[MagicDrawUML], deploymentLocation: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification) map { _e =>
-      deploymentLocation match {
-        case Some(s) => _e.setDeploymentLocation(s)
-        case None => _e.setDeploymentLocation(null)
+    checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification)
+    .flatMap { _e =>
+      deploymentLocation
+      .fold[Try[Unit]] {
+        Try(_e.setDeploymentLocation(null))
+      }{ s =>
+        Try(_e.setDeploymentLocation(s))
       }
-      Unit
     }
 
   override def set_DeploymentSpecification_executionLocation
   (e: UMLDeploymentSpecification[MagicDrawUML], executionLocation: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification) map { _e =>
-      executionLocation match {
-        case Some(s) => _e.setExecutionLocation(s)
-        case None => _e.setExecutionLocation(null)
+    checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification)
+    .flatMap { _e =>
+      executionLocation
+      .fold[Try[Unit]]{
+        Try(_e.setExecutionLocation(null))
+      }{s =>
+        Try(_e.setExecutionLocation(s))
       }
-      Unit
     }
 
   // DeploymentTarget
@@ -2052,16 +2061,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_DestroyObjectAction_isDestroyLinks
   (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyLinks: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction) map { _e =>
-      _e.setDestroyLinks(isDestroyLinks)
-      Unit
+    checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction).flatMap { _e =>
+      Try(_e.setDestroyLinks(isDestroyLinks))
     }
 
   override def set_DestroyObjectAction_isDestroyOwnedObjects
   (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyOwnedObjects: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction) map { _e =>
-      _e.setDestroyOwnedObjects(isDestroyOwnedObjects)
-      Unit
+    checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction).flatMap { _e =>
+      Try(_e.setDestroyOwnedObjects(isDestroyOwnedObjects))
     }
 
   // DestructionOccurrenceSpecification
@@ -2111,10 +2118,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_DurationConstraint_firstEvent
   (e: UMLDurationConstraint[MagicDrawUML], firstEvent: Set[Boolean]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDurationConstraint(e).getMagicDrawDurationConstraint) map { _e =>
-      _e.isFirstEvent().clear()
-      for {b <- firstEvent} _e.isFirstEvent().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLDurationConstraint(e).getMagicDrawDurationConstraint)
+    .flatMap { _e =>
+      Try({
+        _e.isFirstEvent().clear()
+        for {b <- firstEvent} _e.isFirstEvent().add(b)
+
+      })
     }
 
   // DurationInterval
@@ -2155,10 +2165,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_DurationObservation_firstEvent
   (e: UMLDurationObservation[MagicDrawUML], firstEvent: Seq[Boolean]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLDurationObservation(e).getMagicDrawDurationObservation) map { _e =>
-      _e.isFirstEvent().clear()
-      for {b <- firstEvent} _e.isFirstEvent().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLDurationObservation(e).getMagicDrawDurationObservation)
+    .flatMap { _e =>
+      Try({
+        _e.isFirstEvent().clear()
+        for {b <- firstEvent} _e.isFirstEvent().add(b)
+      })
     }
 
   // Element
@@ -2188,24 +2200,32 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ElementImport_alias
   (e: UMLElementImport[MagicDrawUML], alias: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport) map { _e =>
-      alias match {
-        case None => _e.setAlias(null)
-        case Some(s) => _e.setAlias(s)
+    checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport)
+    .flatMap { _e =>
+      alias
+      .fold[Try[Unit]] {
+        Try(_e.setAlias(null))
+      }{ s =>
+        Try(_e.setAlias(s))
       }
-      Unit
     }
 
   override def set_ElementImport_visibility
   (e: UMLElementImport[MagicDrawUML], visibility: UMLVisibilityKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport) map { _e =>
-      _e.setVisibility(visibility match {
-        case UMLVisibilityKind._package => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
-        case UMLVisibilityKind._private => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
-        case UMLVisibilityKind._protected => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
-        case UMLVisibilityKind.public => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
+    checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport)
+    .flatMap { _e =>
+      Try({
+        _e.setVisibility(visibility match {
+          case UMLVisibilityKind._package =>
+            com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
+          case UMLVisibilityKind._private =>
+            com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
+          case UMLVisibilityKind._protected =>
+            com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
+          case UMLVisibilityKind.public =>
+            com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
+        })
       })
-      Unit
     }
 
   // EncapsulatedClassifier
@@ -2363,13 +2383,18 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ExpansionRegion_mode
   (e: UMLExpansionRegion[MagicDrawUML], mode: UMLExpansionKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLExpansionRegion(e).getMagicDrawExpansionRegion) map { _e =>
-      _e.setMode(mode match {
-        case UMLExpansionKind.iterative => com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.ITERATIVE
-        case UMLExpansionKind.parallel => com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.PARALLEL
-        case UMLExpansionKind.stream => com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.STREAM
+    checkSession(ops.umlMagicDrawUMLExpansionRegion(e).getMagicDrawExpansionRegion)
+    .flatMap { _e =>
+      Try({
+        _e.setMode(mode match {
+          case UMLExpansionKind.iterative =>
+            com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.ITERATIVE
+          case UMLExpansionKind.parallel =>
+            com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.PARALLEL
+          case UMLExpansionKind.stream =>
+            com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.STREAM
+        })
       })
-      Unit
     }
 
   // Expression
@@ -2386,12 +2411,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Expression_symbol
   (e: UMLExpression[MagicDrawUML], symbol: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLExpression(e).getMagicDrawExpression) map { _e =>
-      symbol match {
-        case Some(s) => _e.setSymbol(s)
-        case None => _e.setSymbol(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLExpression(e).getMagicDrawExpression)
+    .flatMap { _e =>
+      Try({
+        symbol
+        .fold[Unit] {
+          _e.setSymbol(null)
+        }{ s =>
+          _e.setSymbol(s)
+        }
+      })
     }
 
   // Extend
@@ -2462,9 +2491,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Feature_isStatic
   (e: UMLFeature[MagicDrawUML], isStatic: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLFeature(e).getMagicDrawFeature) map { _e =>
-      _e.setStatic(isStatic)
-      Unit
+    checkSession(ops.umlMagicDrawUMLFeature(e).getMagicDrawFeature).flatMap { _e =>
+      Try(_e.setStatic(isStatic))
     }
 
   // FinalNode
@@ -2534,12 +2562,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Generalization_isSubstitutable
   (e: UMLGeneralization[MagicDrawUML], isSubstitutable: Option[Boolean]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLGeneralization(e).getMagicDrawGeneralization) map { _e =>
-      _e.setSubstitutable(isSubstitutable match {
-        case Some(b) => b
-        case None => true
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLGeneralization(e).getMagicDrawGeneralization)
+    .flatMap { _e =>
+      Try({
+        _e.setSubstitutable(
+          isSubstitutable.fold[Boolean](true)(b => b)
+        )
+        })
     }
 
   // GeneralizationSet
@@ -2567,16 +2596,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_GeneralizationSet_isCovering
   (e: UMLGeneralizationSet[MagicDrawUML], isCovering: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet) map { _e =>
-      _e.setCovering(isCovering)
-      Unit
+    checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet).flatMap { _e =>
+      Try(_e.setCovering(isCovering))
     }
 
   override def set_GeneralizationSet_isDisjoint
   (e: UMLGeneralizationSet[MagicDrawUML], isDisjoint: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet) map { _e =>
-      _e.setDisjoint(isDisjoint)
-      Unit
+    checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet).flatMap { _e =>
+      Try(_e.setDisjoint(isDisjoint))
     }
 
   // Image
@@ -2584,32 +2611,44 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Image_content
   (e: UMLImage[MagicDrawUML], content: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage) map { _e =>
-      content match {
-        case Some(s) => _e.setContent(s)
-        case None => _e.setContent(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
+    .flatMap { _e =>
+      Try({
+        content
+        .fold[Unit] {
+          _e.setContent(null)
+        }{ s =>
+          _e.setContent(s)
+        }
+      })
     }
 
   override def set_Image_format
   (e: UMLImage[MagicDrawUML], format: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage) map { _e =>
-      format match {
-        case Some(s) => _e.setFormat(s)
-        case None => _e.setFormat(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
+    .flatMap { _e =>
+      Try({
+        format
+        .fold[Unit] {
+          _e.setFormat(null)
+        }{ s =>
+          _e.setFormat(s)
+        }
+      })
     }
 
   override def set_Image_location
   (e: UMLImage[MagicDrawUML], location: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage) map { _e =>
-      location match {
-        case Some(s) => _e.setLocation(s)
-        case None => _e.setLocation(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
+    .flatMap { _e =>
+      Try({
+        location
+        .fold[Unit] {
+          _e.setLocation(null)
+        }{ s =>
+          _e.setLocation(s)
+        }
+      })
     }
 
   // Include
@@ -3110,9 +3149,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_JoinNode_isCombineDuplicate
   (e: UMLJoinNode[MagicDrawUML], isCombineDuplicate: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLJoinNode(e).getMagicDrawJoinNode) map { _e =>
-      _e.setCombineDuplicate(isCombineDuplicate)
-      Unit
+    checkSession(ops.umlMagicDrawUMLJoinNode(e).getMagicDrawJoinNode).flatMap { _e =>
+      Try(_e.setCombineDuplicate(isCombineDuplicate))
     }
 
   // Lifeline
@@ -3197,9 +3235,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LinkEndCreationData_isReplaceAll
   (e: UMLLinkEndCreationData[MagicDrawUML], isReplaceAll: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLinkEndCreationData(e).getMagicDrawLinkEndCreationData) map { _e =>
-      _e.setReplaceAll(isReplaceAll)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLinkEndCreationData(e).getMagicDrawLinkEndCreationData).flatMap { _e =>
+      Try(_e.setReplaceAll(isReplaceAll))
     }
 
   // LinkEndData
@@ -3251,9 +3288,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LinkEndDestructionData_isDestroyDuplicates
   (e: UMLLinkEndDestructionData[MagicDrawUML], isDestroyDuplicates: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLinkEndDestructionData(e).getMagicDrawLinkEndDestructionData) map { _e =>
-      _e.setDestroyDuplicates(isDestroyDuplicates)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLinkEndDestructionData(e).getMagicDrawLinkEndDestructionData).flatMap { _e =>
+      Try(_e.setDestroyDuplicates(isDestroyDuplicates))
     }
 
   // LiteralBoolean
@@ -3261,9 +3297,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LiteralBoolean_value
   (e: UMLLiteralBoolean[MagicDrawUML], value: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLiteralBoolean(e).getMagicDrawLiteralBoolean) map { _e =>
-      _e.setValue(value)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLiteralBoolean(e).getMagicDrawLiteralBoolean).flatMap { _e =>
+      Try(_e.setValue(value))
     }
 
   // LiteralInteger
@@ -3271,9 +3306,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LiteralInteger_value
   (e: UMLLiteralInteger[MagicDrawUML], value: Integer): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLiteralInteger(e).getMagicDrawLiteralInteger) map { _e =>
-      _e.setValue(value)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLiteralInteger(e).getMagicDrawLiteralInteger).flatMap { _e =>
+      Try(_e.setValue(value))
     }
 
   // LiteralNull
@@ -3284,9 +3318,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LiteralReal_value
   (e: UMLLiteralReal[MagicDrawUML], value: Double): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLiteralReal(e).getMagicDrawLiteralReal) map { _e =>
-      _e.setValue(value)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLiteralReal(e).getMagicDrawLiteralReal).flatMap { _e =>
+      Try(_e.setValue(value))
     }
 
   // LiteralSpecification
@@ -3297,12 +3330,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LiteralString_value
   (e: UMLLiteralString[MagicDrawUML], value: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLiteralString(e).getMagicDrawLiteralString) map { _e =>
-      value match {
-        case None => _e.setValue(null)
-        case Some(s) => _e.setValue(s)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLLiteralString(e).getMagicDrawLiteralString)
+    .flatMap { _e =>
+      Try({
+        value
+        .fold[Unit] {
+          _e.setValue(null)
+        }{ s =>
+          _e.setValue(s)
+        }
+      })
     }
 
   // LiteralUnlimitedNatural
@@ -3310,9 +3347,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LiteralUnlimitedNatural_value
   (e: UMLLiteralUnlimitedNatural[MagicDrawUML], value: Integer): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLiteralUnlimitedNatural(e).getMagicDrawLiteralUnlimitedNatural) map { _e =>
-      _e.setValue(value)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLiteralUnlimitedNatural(e).getMagicDrawLiteralUnlimitedNatural).flatMap { _e =>
+      Try(_e.setValue(value))
     }
 
   // LoopNode
@@ -3400,9 +3436,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_LoopNode_isTestedFirst
   (e: UMLLoopNode[MagicDrawUML], isTestedFirst: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLLoopNode(e).getMagicDrawLoopNode) map { _e =>
-      _e.setTestedFirst(isTestedFirst)
-      Unit
+    checkSession(ops.umlMagicDrawUMLLoopNode(e).getMagicDrawLoopNode).flatMap { _e =>
+      Try(_e.setTestedFirst(isTestedFirst))
     }
 
   // Manifestation
@@ -3479,16 +3514,24 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Message_messageSort
   (e: UMLMessage[MagicDrawUML], messageSort: UMLMessageSort.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLMessage(e).getMagicDrawMessage) map { _e =>
-      _e.setMessageSort(messageSort match {
-        case UMLMessageSort.asynchCall => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.ASYNCHCALL
-        case UMLMessageSort.asynchSignal => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.ASYNCHSIGNAL
-        case UMLMessageSort.createMessage => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.CREATEMESSAGE
-        case UMLMessageSort.deleteMessage => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.DELETEMESSAGE
-        case UMLMessageSort.reply => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.REPLY
-        case UMLMessageSort.synchCall => com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.SYNCHCALL
+    checkSession(ops.umlMagicDrawUMLMessage(e).getMagicDrawMessage)
+    .flatMap { _e =>
+      Try({
+        _e.setMessageSort(messageSort match {
+          case UMLMessageSort.asynchCall =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.ASYNCHCALL
+          case UMLMessageSort.asynchSignal =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.ASYNCHSIGNAL
+          case UMLMessageSort.createMessage =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.CREATEMESSAGE
+          case UMLMessageSort.deleteMessage =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.DELETEMESSAGE
+          case UMLMessageSort.reply =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.REPLY
+          case UMLMessageSort.synchCall =>
+            com.nomagic.uml2.ext.magicdraw.interactions.mdbasicinteractions.MessageSortEnum.SYNCHCALL
+        })
       })
-      Unit
     }
 
   // MessageEnd
@@ -3515,12 +3558,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Model_viewpoint
   (e: UMLModel[MagicDrawUML], viewpoint: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLModel(e).getMagicDrawModel) map { _e =>
-      viewpoint match {
-        case Some(s) => _e.setViewpoint(s)
-        case None => _e.setViewpoint(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLModel(e).getMagicDrawModel)
+    .flatMap { _e =>
+      Try({
+        viewpoint
+        .fold[Unit] {
+          _e.setViewpoint(null)
+        }{ s =>
+          _e.setViewpoint(s)
+        }
+      })
     }
 
   // MultiplicityElement
@@ -3549,16 +3596,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_MultiplicityElement_isOrdered
   (e: UMLMultiplicityElement[MagicDrawUML], isOrdered: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement) map { _e =>
-      _e.setOrdered(isOrdered)
-      Unit
+    checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement).flatMap { _e =>
+      Try(_e.setOrdered(isOrdered))
     }
 
   override def set_MultiplicityElement_isUnique
   (e: UMLMultiplicityElement[MagicDrawUML], isUnique: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement) map { _e =>
-      _e.setUnique(isUnique)
-      Unit
+    checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement).flatMap { _e =>
+      Try(_e.setUnique(isUnique))
     }
 
   // NamedElement
@@ -3576,27 +3621,36 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_NamedElement_name
   (e: UMLNamedElement[MagicDrawUML], name: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement) map { _e =>
-      name match {
-        case Some(s) => _e.setName(s)
-        case None => _e.setName(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement)
+    .flatMap { _e =>
+      Try({
+        name
+        .fold[Unit] {
+          _e.setName(null)
+        }{ s =>
+          _e.setName(s)
+        }
+      })
     }
 
   override def set_NamedElement_visibility
   (e: UMLNamedElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement) map { _e =>
-      _e.setVisibility(visibility match {
-        case None => null
-        case Some(v) => v match {
-          case UMLVisibilityKind._package => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
-          case UMLVisibilityKind._private => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
-          case UMLVisibilityKind._protected => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
-          case UMLVisibilityKind.public => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
-        }
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement)
+    .flatMap { _e =>
+      Try({
+        _e.setVisibility(
+          visibility
+          .fold[com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKind](null) {
+            case UMLVisibilityKind._package =>
+              com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
+            case UMLVisibilityKind._private =>
+              com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
+            case UMLVisibilityKind._protected =>
+              com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
+            case UMLVisibilityKind.public =>
+              com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
+          })
+        })
     }
 
   // Namespace
@@ -3669,16 +3723,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ObjectFlow_isMulticast
   (e: UMLObjectFlow[MagicDrawUML], isMulticast: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow) map { _e =>
-      _e.setMulticast(isMulticast)
-      Unit
+    checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow).flatMap { _e =>
+      Try(_e.setMulticast(isMulticast))
     }
 
   override def set_ObjectFlow_isMultireceive
   (e: UMLObjectFlow[MagicDrawUML], isMultireceive: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow) map { _e =>
-      _e.setMultireceive(isMultireceive)
-      Unit
+    checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow).flatMap { _e =>
+      Try(_e.setMultireceive(isMultireceive))
     }
 
   // ObjectNode
@@ -3717,21 +3769,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ObjectNode_isControlType
   (e: UMLObjectNode[MagicDrawUML], isControlType: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode) map { _e =>
-      _e.setControlType(isControlType)
-      Unit
+    checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode).flatMap { _e =>
+      Try(_e.setControlType(isControlType))
     }
 
   override def set_ObjectNode_ordering
   (e: UMLObjectNode[MagicDrawUML], ordering: UMLObjectNodeOrderingKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode) map { _e =>
-      _e.setOrdering(ordering match {
-        case UMLObjectNodeOrderingKind.FIFO => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.FIFO
-        case UMLObjectNodeOrderingKind.LIFO => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.LIFO
-        case UMLObjectNodeOrderingKind.ordered => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.ORDERED
-        case UMLObjectNodeOrderingKind.unordered => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.UNORDERED
+    checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode)
+    .flatMap { _e =>
+      Try({
+        _e.setOrdering(ordering match {
+          case UMLObjectNodeOrderingKind.FIFO => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.FIFO
+          case UMLObjectNodeOrderingKind.LIFO => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.LIFO
+          case UMLObjectNodeOrderingKind.ordered => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.ORDERED
+          case UMLObjectNodeOrderingKind.unordered => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ObjectNodeOrderingKindEnum.UNORDERED
+        })
       })
-      Unit
     }
 
   // Observation
@@ -3793,18 +3846,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_OpaqueAction_body
   (e: UMLOpaqueAction[MagicDrawUML], body: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction) map { _e =>
-      _e.getBody().clear()
-      for {b <- body} _e.getBody().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction)
+    .flatMap { _e =>
+      Try({
+        _e.getBody().clear()
+        for {b <- body} _e.getBody().add(b)
+      })
     }
 
   override def set_OpaqueAction_language
   (e: UMLOpaqueAction[MagicDrawUML], language: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction) map { _e =>
-      _e.getLanguage().clear()
-      for {b <- language} _e.getLanguage().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction)
+    .flatMap { _e =>
+      Try({
+        _e.getLanguage().clear()
+        for {b <- language} _e.getLanguage().add(b)
+      })
     }
 
   // OpaqueBehavior
@@ -3812,18 +3869,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_OpaqueBehavior_body
   (e: UMLOpaqueBehavior[MagicDrawUML], body: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior) map { _e =>
-      _e.getBody().clear()
-      for {b <- body} _e.getBody().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior)
+    .flatMap { _e =>
+      Try({
+        _e.getBody().clear()
+        for {b <- body} _e.getBody().add(b)
+      })
     }
 
   override def set_OpaqueBehavior_language
   (e: UMLOpaqueBehavior[MagicDrawUML], language: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior) map { _e =>
-      _e.getLanguage().clear()
-      for {b <- language} _e.getLanguage().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior)
+    .flatMap { _e =>
+      Try({
+        _e.getLanguage().clear()
+        for {b <- language} _e.getLanguage().add(b)
+      })
     }
 
   // OpaqueExpression
@@ -3841,18 +3902,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_OpaqueExpression_body
   (e: UMLOpaqueExpression[MagicDrawUML], body: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression) map { _e =>
-      _e.getBody().clear()
-      for {b <- body} _e.getBody().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression)
+    .flatMap { _e =>
+      Try({
+        _e.getBody().clear()
+        for {b <- body} _e.getBody().add(b)
+      })
     }
 
   override def set_OpaqueExpression_language
   (e: UMLOpaqueExpression[MagicDrawUML], language: Seq[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression) map { _e =>
-      _e.getLanguage().clear()
-      for {b <- language} _e.getLanguage().add(b)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression)
+    .flatMap { _e =>
+      Try({
+        _e.getLanguage().clear()
+        for {b <- language} _e.getLanguage().add(b)
+      })
     }
 
   // Operation
@@ -3931,9 +3996,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Operation_isQuery
   (e: UMLOperation[MagicDrawUML], isQuery: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLOperation(e).getMagicDrawOperation) map { _e =>
-      _e.setQuery(isQuery)
-      Unit
+    checkSession(ops.umlMagicDrawUMLOperation(e).getMagicDrawOperation).flatMap { _e =>
+      Try(_e.setQuery(isQuery))
     }
 
   // OperationTemplateParameter
@@ -3986,12 +4050,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Package_URI
   (e: UMLPackage[MagicDrawUML], URI: Option[String]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPackage(e).getMagicDrawPackage) map { _e =>
-      URI match {
-        case Some(s) => _e.setURI(s)
-        case None => _e.setURI(null)
-      }
-      Unit
+    checkSession(ops.umlMagicDrawUMLPackage(e).getMagicDrawPackage)
+    .flatMap { _e =>
+      Try(URI.fold[Unit] {
+        _e.setURI(null)
+      } { s =>
+        _e.setURI(s)
+      })
     }
 
   // PackageImport
@@ -4009,14 +4074,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_PackageImport_visibility
   (e: UMLPackageImport[MagicDrawUML], visibility: UMLVisibilityKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPackageImport(e).getMagicDrawPackageImport) map { _e =>
-      _e.setVisibility(visibility match {
+    checkSession(ops.umlMagicDrawUMLPackageImport(e).getMagicDrawPackageImport)
+    .flatMap { _e =>
+      Try(_e.setVisibility(visibility match {
         case UMLVisibilityKind._package => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
         case UMLVisibilityKind._private => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
         case UMLVisibilityKind._protected => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
         case UMLVisibilityKind.public => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
-      })
-      Unit
+      }))
     }
 
   // PackageMerge
@@ -4037,17 +4102,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_PackageableElement_visibility
   (e: UMLPackageableElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPackageableElement(e).getMagicDrawPackageableElement) map { _e =>
-      _e.setVisibility(visibility match {
-        case None => null
-        case Some(v) => v match {
+    checkSession(ops.umlMagicDrawUMLPackageableElement(e).getMagicDrawPackageableElement)
+    .flatMap { _e =>
+      Try(_e.setVisibility(
+        visibility
+        .fold[com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKind](null) {
           case UMLVisibilityKind._package => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE
           case UMLVisibilityKind._private => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE
           case UMLVisibilityKind._protected => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED
           case UMLVisibilityKind.public => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC
-        }
-      })
-      Unit
+        }))
     }
 
   // Parameter
@@ -4075,43 +4139,41 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Parameter_direction
   (e: UMLParameter[MagicDrawUML], direction: UMLParameterDirectionKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter) map { _e =>
-      _e.setDirection(direction match {
+    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter)
+    .flatMap { _e =>
+      Try(_e.setDirection(direction match {
         case UMLParameterDirectionKind.in => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN
         case UMLParameterDirectionKind.inout => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.INOUT
         case UMLParameterDirectionKind.out => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.OUT
         case UMLParameterDirectionKind._return => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.RETURN
-      })
-      Unit
+      }))
     }
 
   override def set_Parameter_effect
   (e: UMLParameter[MagicDrawUML], effect: Option[UMLParameterEffectKind.Value]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter) map { _e =>
-      _e.setEffect(effect match {
-        case None => null
-        case Some(e) => e match {
+    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter)
+    .flatMap { _e =>
+      Try(
+      _e.setEffect(
+        effect
+        .fold[com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKind](null) {
           case UMLParameterEffectKind.create => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE
           case UMLParameterEffectKind.delete => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE
           case UMLParameterEffectKind.read => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ
           case UMLParameterEffectKind.update => com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE
-        }
-      })
-      Unit
+        }))
     }
 
   override def set_Parameter_isException
   (e: UMLParameter[MagicDrawUML], isException: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter) map { _e =>
-      _e.setException(isException)
-      Unit
+    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter).flatMap { _e =>
+      Try(_e.setException(isException))
     }
 
   override def set_Parameter_isStream
   (e: UMLParameter[MagicDrawUML], isStream: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter) map { _e =>
-      _e.setStream(isStream)
-      Unit
+    checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter).flatMap { _e =>
+      Try(_e.setStream(isStream))
     }
 
   // ParameterSet
@@ -4157,9 +4219,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Pin_isControl
   (e: UMLPin[MagicDrawUML], isControl: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPin(e).getMagicDrawPin) map { _e =>
-      _e.setControl(isControl)
-      Unit
+    checkSession(ops.umlMagicDrawUMLPin(e).getMagicDrawPin).flatMap { _e =>
+      Try(_e.setControl(isControl))
     }
 
   // Port
@@ -4187,23 +4248,20 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Port_isBehavior
   (e: UMLPort[MagicDrawUML], isBehavior: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort) map { _e =>
-      _e.setBehavior(isBehavior)
-      Unit
+    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
+      Try(_e.setBehavior(isBehavior))
     }
 
   override def set_Port_isConjugated
   (e: UMLPort[MagicDrawUML], isConjugated: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort) map { _e =>
-      _e.setConjugated(isConjugated)
-      Unit
+    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
+      Try(_e.setConjugated(isConjugated))
     }
 
   override def set_Port_isService
   (e: UMLPort[MagicDrawUML], isService: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort) map { _e =>
-      _e.setService(isService)
-      Unit
+    checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
+      Try(_e.setService(isService))
     }
 
   // PrimitiveType
@@ -4246,9 +4304,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ProfileApplication_isStrict
   (e: UMLProfileApplication[MagicDrawUML], isStrict: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLProfileApplication(e).getMagicDrawProfileApplication) map { _e =>
-      _e.setStrict(isStrict)
-      Unit
+    checkSession(ops.umlMagicDrawUMLProfileApplication(e).getMagicDrawProfileApplication).flatMap { _e =>
+      Try(_e.setStrict(isStrict))
     }
 
   // Property
@@ -4307,34 +4364,35 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Property_aggregation
   (e: UMLProperty[MagicDrawUML], aggregation: UMLAggregationKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty) map { _e =>
-      _e.setAggregation(aggregation match {
-        case UMLAggregationKind.composite => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.COMPOSITE
-        case UMLAggregationKind.none => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.NONE
-        case UMLAggregationKind.shared => com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.SHARED
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty)
+    .flatMap { _e =>
+      val a = aggregation match {
+        case UMLAggregationKind.composite =>
+          com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.COMPOSITE
+        case UMLAggregationKind.none =>
+          com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.NONE
+        case UMLAggregationKind.shared =>
+          com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.SHARED
+      }
+      Try(_e.setAggregation(a))
     }
 
   override def set_Property_isDerived
   (e: UMLProperty[MagicDrawUML], isDerived: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty) map { _e =>
-      _e.setDerived(isDerived)
-      Unit
+    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
+      Try(_e.setDerived(isDerived))
     }
 
   override def set_Property_isDerivedUnion
   (e: UMLProperty[MagicDrawUML], isDerivedUnion: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty) map { _e =>
-      _e.setDerivedUnion(isDerivedUnion)
-      Unit
+    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
+      Try(_e.setDerivedUnion(isDerivedUnion))
     }
 
   override def set_Property_isID
   (e: UMLProperty[MagicDrawUML], isID: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty) map { _e =>
-      _e.setID(isID)
-      Unit
+    checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
+      Try(_e.setID(isID))
     }
 
   // ProtocolConformance
@@ -4390,20 +4448,31 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Pseudostate_kind
   (e: UMLPseudostate[MagicDrawUML], kind: UMLPseudostateKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLPseudostate(e).getMagicDrawPseudostate) map { _e =>
-      _e.setKind(kind match {
-        case UMLPseudostateKind.choice => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.CHOICE
-        case UMLPseudostateKind.deepHistory => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.DEEPHISTORY
-        case UMLPseudostateKind.entryPoint => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.ENTRYPOINT
-        case UMLPseudostateKind.exitPoint => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.EXITPOINT
-        case UMLPseudostateKind.fork => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.FORK
-        case UMLPseudostateKind.initial => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.INITIAL
-        case UMLPseudostateKind.join => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JOIN
-        case UMLPseudostateKind.junction => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JUNCTION
-        case UMLPseudostateKind.shallowHistory => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.SHALLOWHISTORY
-        case UMLPseudostateKind.terminate => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.TERMINATE
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLPseudostate(e).getMagicDrawPseudostate)
+    .flatMap { _e =>
+      val k = kind match {
+        case UMLPseudostateKind.choice =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.CHOICE
+        case UMLPseudostateKind.deepHistory =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.DEEPHISTORY
+        case UMLPseudostateKind.entryPoint =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.ENTRYPOINT
+        case UMLPseudostateKind.exitPoint =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.EXITPOINT
+        case UMLPseudostateKind.fork =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.FORK
+        case UMLPseudostateKind.initial =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.INITIAL
+        case UMLPseudostateKind.join =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JOIN
+        case UMLPseudostateKind.junction =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JUNCTION
+        case UMLPseudostateKind.shallowHistory =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.SHALLOWHISTORY
+        case UMLPseudostateKind.terminate =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.TERMINATE
+      }
+      Try(_e.setKind(k))
     }
 
   // QualifierValue
@@ -4504,9 +4573,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ReadIsClassifiedObjectAction_isDirect
   (e: UMLReadIsClassifiedObjectAction[MagicDrawUML], isDirect: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLReadIsClassifiedObjectAction(e).getMagicDrawReadIsClassifiedObjectAction) map { _e =>
-      _e.setDirect(isDirect)
-      Unit
+    checkSession(ops.umlMagicDrawUMLReadIsClassifiedObjectAction(e).getMagicDrawReadIsClassifiedObjectAction).flatMap { _e =>
+      Try(_e.setDirect(isDirect))
     }
 
   // ReadLinkAction
@@ -4682,9 +4750,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ReclassifyObjectAction_isReplaceAll
   (e: UMLReclassifyObjectAction[MagicDrawUML], isReplaceAll: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLReclassifyObjectAction(e).getMagicDrawReclassifyObjectAction) map { _e =>
-      _e.setReplaceAll(isReplaceAll)
-      Unit
+    checkSession(ops.umlMagicDrawUMLReclassifyObjectAction(e).getMagicDrawReclassifyObjectAction).flatMap { _e =>
+      Try(_e.setReplaceAll(isReplaceAll))
     }
 
   // RedefinableElement
@@ -4692,9 +4759,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_RedefinableElement_isLeaf
   (e: UMLRedefinableElement[MagicDrawUML], isLeaf: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLRedefinableElement(e).getMagicDrawRedefinableElement) map { _e =>
-      _e.setLeaf(isLeaf)
-      Unit
+    checkSession(ops.umlMagicDrawUMLRedefinableElement(e).getMagicDrawRedefinableElement).flatMap { _e =>
+      Try(_e.setLeaf(isLeaf))
     }
 
   // RedefinableTemplateSignature
@@ -4746,9 +4812,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_ReduceAction_isOrdered
   (e: UMLReduceAction[MagicDrawUML], isOrdered: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLReduceAction(e).getMagicDrawReduceAction) map { _e =>
-      _e.setOrdered(isOrdered)
-      Unit
+    checkSession(ops.umlMagicDrawUMLReduceAction(e).getMagicDrawReduceAction).flatMap { _e =>
+      Try(_e.setOrdered(isOrdered))
     }
 
   // Region
@@ -4802,9 +4867,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_RemoveStructuralFeatureValueAction_isRemoveDuplicates
   (e: UMLRemoveStructuralFeatureValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLRemoveStructuralFeatureValueAction(e).getMagicDrawRemoveStructuralFeatureValueAction) map { _e =>
-      _e.setRemoveDuplicates(isRemoveDuplicates)
-      Unit
+    checkSession(ops.umlMagicDrawUMLRemoveStructuralFeatureValueAction(e).getMagicDrawRemoveStructuralFeatureValueAction).flatMap { _e =>
+      Try(_e.setRemoveDuplicates(isRemoveDuplicates))
     }
 
   // RemoveVariableValueAction
@@ -4822,9 +4886,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_RemoveVariableValueAction_isRemoveDuplicates
   (e: UMLRemoveVariableValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLRemoveVariableValueAction(e).getMagicDrawRemoveVariableValueAction) map { _e =>
-      _e.setRemoveDuplicates(isRemoveDuplicates)
-      Unit
+    checkSession(ops.umlMagicDrawUMLRemoveVariableValueAction(e).getMagicDrawRemoveVariableValueAction).flatMap { _e =>
+      Try(_e.setRemoveDuplicates(isRemoveDuplicates))
     }
 
   // ReplyAction
@@ -5197,9 +5260,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_StructuralFeature_isReadOnly
   (e: UMLStructuralFeature[MagicDrawUML], isReadOnly: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLStructuralFeature(e).getMagicDrawStructuralFeature) map { _e =>
-      _e.setReadOnly(isReadOnly)
-      Unit
+    checkSession(ops.umlMagicDrawUMLStructuralFeature(e).getMagicDrawStructuralFeature).flatMap { _e =>
+      Try(_e.setReadOnly(isReadOnly))
     }
 
   // StructuralFeatureAction
@@ -5280,9 +5342,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_StructuredActivityNode_mustIsolate
   (e: UMLStructuredActivityNode[MagicDrawUML], mustIsolate: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLStructuredActivityNode(e).getMagicDrawStructuredActivityNode) map { _e =>
-      _e.setMustIsolate(mustIsolate)
-      Unit
+    checkSession(ops.umlMagicDrawUMLStructuredActivityNode(e).getMagicDrawStructuredActivityNode).flatMap { _e =>
+      Try(_e.setMustIsolate(mustIsolate))
     }
 
   // StructuredClassifier
@@ -5519,12 +5580,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_TimeConstraint_firstEvent
   (e: UMLTimeConstraint[MagicDrawUML], firstEvent: Option[Boolean]): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLTimeConstraint(e).getMagicDrawTimeConstraint) map { _e =>
-      _e.setFirstEvent(firstEvent match {
+    checkSession(ops.umlMagicDrawUMLTimeConstraint(e).getMagicDrawTimeConstraint)
+    .flatMap { _e =>
+      Try(_e.setFirstEvent(firstEvent match {
         case Some(b) => b
         case None => true
-      })
-      Unit
+      }))
     }
 
   // TimeEvent
@@ -5542,9 +5603,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_TimeEvent_isRelative
   (e: UMLTimeEvent[MagicDrawUML], isRelative: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLTimeEvent(e).getMagicDrawTimeEvent) map { _e =>
-      _e.setRelative(isRelative)
-      Unit
+    checkSession(ops.umlMagicDrawUMLTimeEvent(e).getMagicDrawTimeEvent).flatMap { _e =>
+      Try(_e.setRelative(isRelative))
     }
 
   // TimeExpression
@@ -5609,9 +5669,8 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_TimeObservation_firstEvent
   (e: UMLTimeObservation[MagicDrawUML], firstEvent: Boolean): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLTimeObservation(e).getMagicDrawTimeObservation) map { _e =>
-      _e.setFirstEvent(firstEvent)
-      Unit
+    checkSession(ops.umlMagicDrawUMLTimeObservation(e).getMagicDrawTimeObservation).flatMap { _e =>
+      Try(_e.setFirstEvent(firstEvent))
     }
 
   // Transition
@@ -5661,13 +5720,17 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def set_Transition_kind
   (e: UMLTransition[MagicDrawUML], kind: UMLTransitionKind.Value): Try[Unit] =
-    checkSession(ops.umlMagicDrawUMLTransition(e).getMagicDrawTransition) map { _e =>
-      _e.setKind(kind match {
-        case UMLTransitionKind.external => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.EXTERNAL
-        case UMLTransitionKind.internal => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.INTERNAL
-        case UMLTransitionKind.local => com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.LOCAL
-      })
-      Unit
+    checkSession(ops.umlMagicDrawUMLTransition(e).getMagicDrawTransition)
+    .flatMap { _e =>
+      val k = kind match {
+        case UMLTransitionKind.external =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.EXTERNAL
+        case UMLTransitionKind.internal =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.INTERNAL
+        case UMLTransitionKind.local =>
+          com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.LOCAL
+      }
+      Try(_e.setKind(k))
     }
 
   // Trigger

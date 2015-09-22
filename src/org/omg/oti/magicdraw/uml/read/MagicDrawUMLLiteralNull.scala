@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLiteralNull 
   extends UMLLiteralNull[MagicDrawUML]
@@ -48,7 +47,6 @@ trait MagicDrawUMLLiteralNull
 
   override protected def e: Uml#LiteralNull
   def getMagicDrawLiteralNull = e
-  import ops._
 
 }
 

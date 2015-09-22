@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLExecutionEnvironment 
   extends UMLExecutionEnvironment[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLExecutionEnvironment
 
   override protected def e: Uml#ExecutionEnvironment
   def getMagicDrawExecutionEnvironment = e
-  import ops._
-
 
 }
 

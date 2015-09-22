@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLRaiseExceptionAction 
   extends UMLRaiseExceptionAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLRaiseExceptionAction
 
   override protected def e: Uml#RaiseExceptionAction
   def getMagicDrawRaiseExceptionAction = e
-  import ops._
 
   // 16.56
   override def exception: Option[UMLInputPin[Uml]] = ???

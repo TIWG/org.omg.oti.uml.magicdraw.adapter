@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLReception 
   extends UMLReception[MagicDrawUML]
@@ -48,10 +48,13 @@ trait MagicDrawUMLReception
 
   override protected def e: Uml#Reception
   def getMagicDrawReception = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 10.5
-  override def signal: Option[UMLSignal[Uml]] = ??? 
+  override def signal: Option[UMLSignal[Uml]] =
+    Option.apply(e.getSignal)
 
 }
 

@@ -3,7 +3,7 @@ import sbt.Process
 object Versions {
   val scala = "2.11.7"
   
-  val version_prefix = "0.17.0"
+  val version_prefix = "0.18.0"
   val version_suffix = {
     val svnProc = Process(command = "svn", arguments = Seq("info"))
     val sedCommand = "s/^.*Last Changed Rev: \\([[:digit:]]\\{1,\\}\\).*$/\\1/p"
@@ -21,20 +21,32 @@ object Versions {
   
   // OTI Core version
     
-  val oti_core_prefix = "0.17.0"
-  val oti_core_suffix = "444758"
+  val oti_core_prefix = version_prefix
+  val oti_core_suffix = "444882"
   val oti_core_version = oti_core_prefix+"-"+oti_core_suffix
 
   // OTI Change Migration version
     
-  val oti_changeMigration_prefix = "0.17.0"
-  val oti_changeMigration_suffix = "444766"
+  val oti_changeMigration_prefix = version_prefix
+  val oti_changeMigration_suffix = "444883"
   val oti_changeMigration_version = oti_changeMigration_prefix+"-"+oti_changeMigration_suffix
 
   // OTI Trees version
     
-  val oti_trees_prefix = "0.17.0"
-  val oti_trees_suffix = "444767"
+  val oti_trees_prefix = version_prefix
+  val oti_trees_suffix = "444884"
   val oti_trees_version = oti_trees_prefix+"-"+oti_trees_suffix
+
+  // OTI Canonical XMI version
+
+  val oti_canonical_xmi_prefix = version_prefix
+  val oti_canonical_xmi_suffix = "444885"
+  val oti_canonical_xmi_version = oti_canonical_xmi_prefix+"-"+oti_canonical_xmi_suffix
+
+  // OTI UML Loader version
+
+  val oti_loader_prefix = version_prefix
+  val oti_loader_suffix = "444887"
+  val oti_loader_version = oti_loader_prefix+"-"+oti_loader_suffix
 
 }

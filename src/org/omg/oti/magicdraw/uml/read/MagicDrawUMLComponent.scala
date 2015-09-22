@@ -41,7 +41,11 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.StringContext
+import scala.Predef.String
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLComponent 
   extends UMLComponent[MagicDrawUML]
@@ -66,8 +70,8 @@ trait MagicDrawUMLComponent
 
 case class MagicDrawUMLComponentImpl( val e: MagicDrawUML#Component, ops: MagicDrawUMLUtil )
 extends MagicDrawUMLComponent
-with sext.TreeString
-with sext.ValueTreeString {
+with sext.PrettyPrinting.TreeString
+with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLComponent(ID=${e.getID}, qname=${e.getQualifiedName})"

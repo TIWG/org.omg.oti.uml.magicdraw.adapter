@@ -39,8 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.immutable._
+import scala.Predef.???
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLRedefinableTemplateSignature 
   extends UMLRedefinableTemplateSignature[MagicDrawUML]
@@ -49,7 +51,8 @@ trait MagicDrawUMLRedefinableTemplateSignature
 
   override protected def e: Uml#RedefinableTemplateSignature
   def getMagicDrawRedefinableTemplateSignature = e
-  import ops._
+  override implicit val umlOps = ops
+  //import umlOps._
 
   // BUG: NO FIGURE
   override def inheritedParameter: Set[UMLTemplateParameter[Uml]] = ???

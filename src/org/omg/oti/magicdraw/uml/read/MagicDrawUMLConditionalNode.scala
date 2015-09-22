@@ -42,7 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Boolean
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLConditionalNode 
   extends UMLConditionalNode[MagicDrawUML]
@@ -62,7 +65,7 @@ trait MagicDrawUMLConditionalNode
     e.isDeterminate
     
 	override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.toSeq
+    e.getResult.to[Seq]
     
 
 }

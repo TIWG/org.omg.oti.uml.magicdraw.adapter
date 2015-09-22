@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLExecutionOccurrenceSpecification 
   extends UMLExecutionOccurrenceSpecification[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLExecutionOccurrenceSpecification
 
   override protected def e: Uml#ExecutionOccurrenceSpecification
   def getMagicDrawExecutionOccurrenceSpecification = e
-  import ops._
 
   override def execution: Option[UMLExecutionSpecification[Uml]] = ???
   

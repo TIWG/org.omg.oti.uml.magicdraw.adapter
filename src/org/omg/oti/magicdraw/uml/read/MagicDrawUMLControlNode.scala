@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLControlNode 
   extends UMLControlNode[MagicDrawUML]
@@ -48,6 +47,5 @@ trait MagicDrawUMLControlNode
 
   override protected def e: Uml#ControlNode
   def getMagicDrawControlNode = e
-  import ops._
 
 }

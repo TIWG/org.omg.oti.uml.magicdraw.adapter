@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLReadLinkObjectEndAction 
   extends UMLReadLinkObjectEndAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLReadLinkObjectEndAction
 
   override protected def e: Uml#ReadLinkObjectEndAction
   def getMagicDrawReadLinkObjectEndAction = e
-  import ops._
 
   // 16.35
 	override def end: Option[UMLProperty[Uml]] = ??? 

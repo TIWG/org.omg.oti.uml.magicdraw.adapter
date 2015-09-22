@@ -40,9 +40,13 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Boolean,Option,None,Some,StringContext}
+import scala.Predef.{???,String}
+
 import scala.language.postfixOps
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLProperty 
   extends UMLProperty[MagicDrawUML]
@@ -52,7 +56,8 @@ trait MagicDrawUMLProperty
 
   override protected def e: Uml#Property
   def getMagicDrawProperty = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def aggregation: UMLAggregationKind.Value = 
     e.getAggregation match {
@@ -61,12 +66,14 @@ trait MagicDrawUMLProperty
     case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.SHARED => UMLAggregationKind.shared
   }
   
-  override def association = Option.apply( e.getAssociation )
+  override def association: Option[UMLAssociation[Uml]] =
+    Option.apply( e.getAssociation )
  
-  override def owningAssociation: Option[UMLAssociation[Uml]] = association match {
-    case None => None
-    case Some( a ) => if (a.ownedEnd.contains(this)) association else None
-  }
+  override def owningAssociation: Option[UMLAssociation[Uml]] =
+    association.fold[Option[UMLAssociation[Uml]]](None) { a =>
+      if (a.ownedEnd.contains(this)) Some(a)
+      else None
+    }
   
   override def associationEnd = Option.apply( e.getAssociationEnd )
   
@@ -80,13 +87,13 @@ trait MagicDrawUMLProperty
   
   override def isID = e.isID
     
-  override def opposite = association match {
-    case None => None
-    case Some( a ) => a.memberEnd filter (_ != this) headOption
-  }
+  override def opposite: Option[UMLProperty[Uml]] =
+    association.fold[Option[UMLProperty[Uml]]](None) { a =>
+      a.memberEnd filter (_ != this) headOption
+    }
     
 	override def qualifier: Seq[UMLProperty[Uml]] = 
-    e.getQualifier.toSeq
+    e.getQualifier.to[Seq]
   
   override def subsettedProperty = e.getSubsettedProperty.toSet[Uml#Property]
   
@@ -110,23 +117,23 @@ trait MagicDrawUMLProperty
   
   override def navigableOwnedEnd_association = Option.apply( e.get_associationOfNavigableOwnedEnd )
   
-  override def opposite_property: Option[UMLProperty[Uml]] = association match {
-    case None => None
-    case Some( a ) => a.memberEnd filter (_ != this) headOption
-  }
+  override def opposite_property: Option[UMLProperty[Uml]] =
+    association.fold[Option[UMLProperty[Uml]]](None) { a =>
+      a.memberEnd filter (_ != this) headOption
+    }
 
   override def redefinedProperty_property: Set[UMLProperty[Uml]] =
-    umlProperty( e.get_propertyOfRedefinedProperty.toSet )
+    e.get_propertyOfRedefinedProperty.to[Set]
   
   override def subsettedProperty_property: Set[UMLProperty[Uml]] = 
-    umlProperty( e.get_propertyOfSubsettedProperty.toSet )
+    e.get_propertyOfSubsettedProperty.to[Set]
   
 }
 
 case class MagicDrawUMLPropertyImpl( val e: MagicDrawUML#Property, ops: MagicDrawUMLUtil )
 extends MagicDrawUMLProperty
-with sext.TreeString
-with sext.ValueTreeString {
+with sext.PrettyPrinting.TreeString
+with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLProperty(ID=${e.getID}, qname=${e.getQualifiedName})"

@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Option,StringContext}
+import scala.Predef.{???,String}
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLInterface 
   extends UMLInterface[MagicDrawUML]
@@ -50,16 +53,17 @@ trait MagicDrawUMLInterface
 
   override protected def e: Uml#Interface
   def getMagicDrawInterface = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
 	override def nestedClassifier: Seq[UMLClassifier[Uml]] =
-    e.getNestedClassifier.toSeq
+    e.getNestedClassifier.to[Seq]
     
   override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.toSeq
+    e.getOwnedAttribute.to[Seq]
     
   override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.toSeq
+    e.getOwnedOperation.to[Seq]
     
 
   override def provided_port: Set[UMLPort[Uml]] = ???
@@ -86,8 +90,8 @@ trait MagicDrawUMLInterface
 
 case class MagicDrawUMLInterfaceImpl(val e: MagicDrawUML#Interface, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInterface
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLInterface(ID=${e.getID}, qname=${e.getQualifiedName})"

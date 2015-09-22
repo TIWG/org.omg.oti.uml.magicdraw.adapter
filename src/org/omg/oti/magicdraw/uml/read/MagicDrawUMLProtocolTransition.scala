@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLProtocolTransition 
   extends UMLProtocolTransition[MagicDrawUML]
@@ -48,15 +49,12 @@ trait MagicDrawUMLProtocolTransition
 
   override protected def e: Uml#ProtocolTransition
   def getMagicDrawProtocolTransition = e
-  import ops._
 
   // 14.41
   override def postCondition: Option[UMLConstraint[Uml]] = ???
   
   // 14.41
   override def preCondition: Option[UMLConstraint[Uml]] = ???
-  
-  
 
 }
 

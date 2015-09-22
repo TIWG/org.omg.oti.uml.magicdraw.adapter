@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.Option
+import scala.Predef.???
+import scala.collection.immutable._
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLExtend 
   extends UMLExtend[MagicDrawUML]
@@ -50,7 +52,8 @@ trait MagicDrawUMLExtend
 
   override protected def e: Uml#Extend
   def getMagicDrawExtend = e
-  import ops._
+  override implicit val umlOps = ops
+  //import umlOps._
  
   // 18.1
   override def condition: Option[UMLConstraint[Uml]] = ???

@@ -37,29 +37,50 @@
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.omg.oti.magicdraw.uml.read
+package org.omg.oti.magicdraw.uml.canonicalXMI
 
-import scala.collection.JavaConversions._
+import java.net.URI
+
+import org.omg.oti.uml.xmi._
 
 import org.omg.oti.uml.read.api._
 
-import scala.Boolean
+import org.omg.oti.magicdraw.uml.read._
+
+import scala.Predef.String
 import scala.collection.immutable._
-import scala.collection.Iterable
 
-trait MagicDrawUMLCallAction 
-  extends UMLCallAction[MagicDrawUML]
-  with MagicDrawUMLInvocationAction {
 
-  override protected def e: Uml#CallAction
-  def getMagicDrawCallAction = e
-  override implicit val umlOps = ops
-  import umlOps._
+/**
+ * MagicDraw-specific adaptation of the OTI Document API
+ *
+ * The OTI/MagicDraw adaptation uses a stereotype applicable to a kind of UML Package to designate an OTI Document.
+ * This designation is orthogonal to MagicDraw's model persistence architecture
+ * (see: com.nomagic.ci.persistence.{IProject, IAttachedProject, IPrimaryProject})
+ */
+sealed abstract trait MagicDrawDocument extends Document[MagicDrawUML]
 
-  override def isSynchronous: Boolean =
-    e.isSynchronous
-   
-  override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.to[Seq]
-    
-}
+/**
+ * MagicDraw-specific adaptation of the OTI BuiltInDocument API
+ */
+case class MagicDrawBuiltInDocument
+(uri: URI,
+ nsPrefix: String,
+ uuidPrefix: String,
+ documentURL: URI,
+ scope: UMLElement[MagicDrawUML],
+ builtInExtent: Set[UMLElement[MagicDrawUML]])
+(implicit val ops: MagicDrawUMLOps)
+  extends MagicDrawDocument with BuiltInDocument[MagicDrawUML]
+
+/**
+ * MagicDraw-specific adaptation of the OTI SerializableDocument API
+ */
+case class MagicDrawSerializableDocument
+(uri: URI,
+ nsPrefix: String,
+ uuidPrefix: String,
+ documentURL: URI,
+ scope: UMLElement[MagicDrawUML])
+(implicit val ops: MagicDrawUMLOps)
+  extends MagicDrawDocument with SerializableDocument[MagicDrawUML]

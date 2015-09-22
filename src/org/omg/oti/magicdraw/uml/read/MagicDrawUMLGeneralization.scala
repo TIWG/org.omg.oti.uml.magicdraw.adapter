@@ -41,7 +41,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option,None,Some}
+import scala.collection.immutable._
 
 trait MagicDrawUMLGeneralization 
   extends UMLGeneralization[MagicDrawUML]
@@ -49,7 +50,9 @@ trait MagicDrawUMLGeneralization
 
   override protected def e: Uml#Generalization
   def getMagicDrawGeneralization = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   /**
    * BUG: in UML 2.5, isSubstituable:Boolean[0..1] = true

@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
+import scala.Predef.String
 
 trait MagicDrawUMLDeploymentSpecification 
   extends UMLDeploymentSpecification[MagicDrawUML]
@@ -48,12 +50,12 @@ trait MagicDrawUMLDeploymentSpecification
 
   override protected def e: Uml#DeploymentSpecification
   def getMagicDrawDeploymentSpecification = e
-  import ops._
 
-  override def deploymentLocation: Option[String] = ???
+  override def deploymentLocation: Option[String] =
+    Option.apply(e.getDeploymentLocation)
   
-  override def executionLocation: Option[String] = ??? 
-
+  override def executionLocation: Option[String] =
+    Option.apply(e.getExecutionLocation)
 
 }
 

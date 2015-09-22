@@ -40,10 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
 import scala.language.postfixOps
+import scala.{Boolean,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDurationConstraint 
   extends UMLDurationConstraint[MagicDrawUML]
@@ -51,21 +53,22 @@ trait MagicDrawUMLDurationConstraint
 
   override protected def e: Uml#DurationConstraint
   def getMagicDrawDurationConstraint = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def specification: Option[UMLDurationInterval[Uml]] =
     Option.apply( e.getSpecification )
     
-  override def firstEvent =
-    (e.isFirstEvent map ((b) => if (b) true else false)).toSet[Boolean]
-    
+  override def firstEvent: Set[Boolean] =
+    e.isFirstEvent.map(b => b.booleanValue()).toSet[Boolean]
 
 }
 
 case class MagicDrawUMLDurationConstraintImpl(val e: MagicDrawUML#DurationConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDurationConstraint
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLDurationConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"

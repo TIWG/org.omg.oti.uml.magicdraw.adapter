@@ -39,10 +39,8 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLTestIdentityAction 
   extends UMLTestIdentityAction[MagicDrawUML]
@@ -50,7 +48,8 @@ trait MagicDrawUMLTestIdentityAction
 
   override protected def e: Uml#TestIdentityAction
   def getMagicDrawTestIdentityAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def first: Option[UMLInputPin[Uml]] =
     Option.apply( e.getFirst )

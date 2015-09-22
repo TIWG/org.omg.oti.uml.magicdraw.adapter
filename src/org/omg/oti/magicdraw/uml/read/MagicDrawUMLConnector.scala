@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLConnector 
   extends UMLConnector[MagicDrawUML]
@@ -50,10 +53,11 @@ trait MagicDrawUMLConnector
 
   override protected def e: Uml#Connector
   def getMagicDrawConnector = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def end: Seq[UMLConnectorEnd[Uml]] =
-    e.getEnd.toSeq
+    e.getEnd.to[Seq]
   
   override def _type: Option[UMLAssociation[Uml]] =
     Option.apply( e.getType )
@@ -72,8 +76,8 @@ trait MagicDrawUMLConnector
 
 case class MagicDrawUMLConnectorImpl(val e: MagicDrawUML#Connector, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnector
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLConnector(ID=${e.getID}, qname=${e.getQualifiedName})"

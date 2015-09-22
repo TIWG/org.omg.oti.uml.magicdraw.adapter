@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Option
+import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLOutputPin 
   extends UMLOutputPin[MagicDrawUML]
@@ -50,7 +52,9 @@ trait MagicDrawUMLOutputPin
 
   override protected def e: Uml#OutputPin
   def getMagicDrawOutputPin = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
 	override def bodyOutput_clause: Set[UMLClause[Uml]] =
    e.get_clauseOfBodyOutput.toSet[Uml#Clause]

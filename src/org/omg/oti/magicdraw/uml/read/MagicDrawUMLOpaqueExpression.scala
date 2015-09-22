@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option,StringContext}
+import scala.Predef.{???,String}
 
 trait MagicDrawUMLOpaqueExpression 
   extends UMLOpaqueExpression[MagicDrawUML]
@@ -50,17 +53,18 @@ trait MagicDrawUMLOpaqueExpression
 
   override protected def e: Uml#OpaqueExpression
   def getMagicDrawOpaqueExpression = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 8.2
   override def behavior: Option[UMLBehavior[Uml]] = 
     Option.apply( e.getBehavior )
   
   // 8.2
-  override def body = e.getBody.toSeq
+  override def body = e.getBody.to[Seq]
   
   // 8.2
-  override def language = e.getLanguage.toSeq
+  override def language = e.getLanguage.to[Seq]
   
   // 8.2
   override def result: Option[UMLParameter[Uml]] = ???
@@ -70,8 +74,8 @@ trait MagicDrawUMLOpaqueExpression
 
 case class MagicDrawUMLOpaqueExpressionImpl(val e: MagicDrawUML#OpaqueExpression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOpaqueExpression
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLOpaqueExpression(ID=${e.getID}, qname=${e.getQualifiedName})"

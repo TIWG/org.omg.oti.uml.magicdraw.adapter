@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLInputPin 
   extends UMLInputPin[MagicDrawUML]
@@ -48,7 +49,9 @@ trait MagicDrawUMLInputPin
 
   override protected def e: Uml#InputPin
   def getMagicDrawInputPin = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
 	override def value_linkEndData: Option[UMLLinkEndData[Uml]] =
     Option.apply( e.get_linkEndDataOfValue )

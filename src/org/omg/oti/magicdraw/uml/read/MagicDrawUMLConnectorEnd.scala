@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,None,Some,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLConnectorEnd 
   extends UMLConnectorEnd[MagicDrawUML]
@@ -48,8 +49,10 @@ trait MagicDrawUMLConnectorEnd
 
   override protected def e: Uml#ConnectorEnd
   def getMagicDrawConnectorEnd = e
-  import ops._
-  
+
+  override implicit val umlOps = ops
+  import umlOps._
+
   override def definingEnd: Option[UMLProperty[Uml]] =
     Option.apply(e.getDefiningEnd)
   
@@ -64,8 +67,8 @@ trait MagicDrawUMLConnectorEnd
 
 case class MagicDrawUMLConnectorEndImpl(val e: MagicDrawUML#ConnectorEnd, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnectorEnd
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLConnectorEnd(ID=${e.getID}, " +

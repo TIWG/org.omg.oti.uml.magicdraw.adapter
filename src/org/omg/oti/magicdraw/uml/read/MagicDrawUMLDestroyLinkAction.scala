@@ -40,9 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDestroyLinkAction 
   extends UMLDestroyLinkAction[MagicDrawUML]

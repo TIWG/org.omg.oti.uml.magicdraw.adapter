@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLFinalState 
   extends UMLFinalState[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLFinalState
 
   override protected def e: Uml#FinalState
   def getMagicDrawFinalState = e
-  import ops._
-
 
 }
 

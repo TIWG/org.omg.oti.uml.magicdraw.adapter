@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
 
 trait MagicDrawUMLRemoveStructuralFeatureValueAction 
   extends UMLRemoveStructuralFeatureValueAction[MagicDrawUML]
@@ -48,13 +48,16 @@ trait MagicDrawUMLRemoveStructuralFeatureValueAction
 
   override protected def e: Uml#RemoveStructuralFeatureValueAction
   def getMagicDrawRemoveStructuralFeatureValueAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.36
-	override def isRemoveDuplicates: Boolean = ???
+	override def isRemoveDuplicates: Boolean =
+    e.isRemoveDuplicates
   
   // 16.36
-	override def removeAt: Option[UMLInputPin[Uml]] = ???
+	override def removeAt: Option[UMLInputPin[Uml]] =
+    Option.apply(e.getRemoveAt)
 
 }
 

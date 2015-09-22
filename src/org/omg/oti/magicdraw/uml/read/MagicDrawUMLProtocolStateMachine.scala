@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLProtocolStateMachine 
   extends UMLProtocolStateMachine[MagicDrawUML]
@@ -48,7 +50,6 @@ trait MagicDrawUMLProtocolStateMachine
 
   override protected def e: Uml#ProtocolStateMachine
   def getMagicDrawProtocolStateMachine = e
-  import ops._
 
   // 14.41
 	override def conformance: Set[UMLProtocolConformance[Uml]] = ???

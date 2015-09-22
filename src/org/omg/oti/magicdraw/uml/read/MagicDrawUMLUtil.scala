@@ -40,6 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import java.io.File
+import java.lang.Runnable
 import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
@@ -52,7 +53,52 @@ import org.omg.oti.uml.read.api._
 
 import scala.reflect.runtime.universe._
 import scala.language.implicitConversions
+import scala.deprecated
+import scala.collection.immutable._
 import scala.collection.JavaConversions._
+import scala.{Array,Boolean,Int,Option,None,Some,StringContext,Unit}
+import scala.Predef.String
+
+// workaround to MD's deprecated API: com.nomagic.magicdraw.core.ApplicationEnvironment.getInstallRoot
+// see https://issues.scala-lang.org/browse/SI-7934
+@deprecated("", "")
+case class MagicDrawFileChooser(title: String) extends Runnable {
+
+    var result: Option[File] = None
+
+    override def run(): Unit = {
+
+      val ff = new FileFilter() {
+
+        def getDescription: String = "*.catalog.xml"
+
+        def accept(f: File): Boolean =
+          f.isDirectory ||
+          (f.isFile && f.getName.endsWith(".catalog.xml"))
+
+      }
+
+      val mdInstallDir = new File(ApplicationEnvironment.getInstallRoot)
+      val fc = new JFileChooser(mdInstallDir) {
+
+        override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
+
+        override def getDialogTitle = title
+      }
+
+      fc.setFileFilter(ff)
+      fc.setFileHidingEnabled(true)
+      fc.setAcceptAllFileFilterUsed(false)
+
+      fc.showOpenDialog(Application.getInstance().getMainFrame) match {
+        case JFileChooser.APPROVE_OPTION =>
+          val migrationFile = fc.getSelectedFile
+          result = Some(migrationFile)
+        case _                           =>
+          result = None
+      }
+    }
+}
 
 case class MagicDrawUMLUtil(project: Project)
   extends MagicDrawUMLOps {
@@ -62,46 +108,11 @@ case class MagicDrawUMLUtil(project: Project)
 
   def chooseCatalogFile(title: String = "Select a *.catalog.xml file"): Option[File] = {
 
-    var result: Option[File] = None
-
-    def chooser = new Runnable {
-      override def run(): Unit = {
-
-        val ff = new FileFilter() {
-
-          def getDescription: String = "*.catalog.xml"
-
-          def accept(f: File): Boolean =
-            f.isDirectory ||
-            (f.isFile && f.getName.endsWith(".catalog.xml"))
-
-        }
-
-        val mdInstallDir = new File(ApplicationEnvironment.getInstallRoot)
-        val fc = new JFileChooser(mdInstallDir) {
-
-          override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
-
-          override def getDialogTitle = title
-        }
-
-        fc.setFileFilter(ff)
-        fc.setFileHidingEnabled(true)
-        fc.setAcceptAllFileFilterUsed(false)
-
-        fc.showOpenDialog(Application.getInstance().getMainFrame) match {
-          case JFileChooser.APPROVE_OPTION =>
-            val migrationFile = fc.getSelectedFile
-            result = Some(migrationFile)
-          case _                           =>
-            result = None
-        }
-      }
-    }
+    def chooser = MagicDrawFileChooser(title)
     if (SwingUtilities.isEventDispatchThread) chooser.run
     else SwingUtilities.invokeAndWait(chooser)
 
-    result
+    chooser.result
   }
 
   /**

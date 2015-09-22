@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
+import scala.Predef.???
 
 trait MagicDrawUMLObjectFlow 
   extends UMLObjectFlow[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLObjectFlow
 
   override protected def e: Uml#ObjectFlow
   def getMagicDrawObjectFlow = e
-  import ops._
 
   // 15.1
   override def isMulticast: Boolean = ???

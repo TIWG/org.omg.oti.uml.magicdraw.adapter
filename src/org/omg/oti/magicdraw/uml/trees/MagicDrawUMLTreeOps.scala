@@ -44,6 +44,11 @@ import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.uml.read.api.UMLClassifier
 import org.omg.oti.uml.trees.TreeOps
 
+import scala.{Boolean,Option,None,Some,StringContext}
+import scala.Predef.String
+
+import java.lang.IllegalArgumentException
+
 case class MagicDrawUMLTreeOps
 ( umlUtil: MagicDrawUMLUtil,
   blockSpecificTypeProfileName: String,

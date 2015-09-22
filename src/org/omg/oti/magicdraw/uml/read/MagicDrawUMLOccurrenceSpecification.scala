@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.Predef.???
 
 trait MagicDrawUMLOccurrenceSpecification 
   extends UMLOccurrenceSpecification[MagicDrawUML]
@@ -49,7 +50,6 @@ trait MagicDrawUMLOccurrenceSpecification
 
   override protected def e: Uml#OccurrenceSpecification
   def getMagicDrawOccurrenceSpecification = e
-  import ops._
 
 	override def covered: Iterable[UMLLifeline[Uml]] = ???
   

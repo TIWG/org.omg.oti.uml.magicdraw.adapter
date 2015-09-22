@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLInstanceValue 
   extends UMLInstanceValue[MagicDrawUML]
@@ -48,7 +48,9 @@ trait MagicDrawUMLInstanceValue
 
   override protected def e: Uml#InstanceValue
   def getMagicDrawInstanceValue = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   def instance = Option.apply( e.getInstance )
 

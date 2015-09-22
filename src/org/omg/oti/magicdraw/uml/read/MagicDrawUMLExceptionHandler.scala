@@ -39,10 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
+import scala.collection.immutable._
 
 trait MagicDrawUMLExceptionHandler 
   extends UMLExceptionHandler[MagicDrawUML]
@@ -50,7 +51,6 @@ trait MagicDrawUMLExceptionHandler
 
   override protected def e: Uml#ExceptionHandler
   def getMagicDrawExceptionHandler = e
-  import ops._
 
   override def exceptionInput: Option[UMLObjectNode[Uml]] = ???
   

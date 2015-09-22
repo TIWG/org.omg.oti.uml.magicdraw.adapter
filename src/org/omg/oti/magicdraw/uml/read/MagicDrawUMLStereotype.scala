@@ -42,7 +42,9 @@ package org.omg.oti.magicdraw.uml.read
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Boolean,Option}
+import scala.collection.immutable._
 import scala.collection.JavaConversions._
 
 trait MagicDrawUMLStereotype 

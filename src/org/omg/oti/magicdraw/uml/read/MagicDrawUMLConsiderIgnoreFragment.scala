@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.collection.immutable._
+import scala.Predef.???
 
 trait MagicDrawUMLConsiderIgnoreFragment 
   extends UMLConsiderIgnoreFragment[MagicDrawUML]
@@ -48,10 +50,8 @@ trait MagicDrawUMLConsiderIgnoreFragment
 
   override protected def e: Uml#ConsiderIgnoreFragment
   def getMagicDrawConsiderIgnoreFragment = e
-  import ops._
 
-  override def message: Set[UMLNamedElement[Uml]] = ??? 
-
+  override def message: Set[UMLNamedElement[Uml]] = ???
 
 }
 

@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLControlFlow 
   extends UMLControlFlow[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLControlFlow
 
   override protected def e: Uml#ControlFlow
   def getMagicDrawControlFlow = e
-  import ops._
-
 
 }
 

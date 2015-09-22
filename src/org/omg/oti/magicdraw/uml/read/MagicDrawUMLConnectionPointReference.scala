@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Predef.???
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLConnectionPointReference 
   extends UMLConnectionPointReference[MagicDrawUML]
@@ -49,7 +50,6 @@ trait MagicDrawUMLConnectionPointReference
 
   override protected def e: Uml#ConnectionPointReference
   def getMagicDrawConnectionPointReference = e
-  import ops._
 
   // 14.1
   override def entry: Set[UMLPseudostate[Uml]] = ???

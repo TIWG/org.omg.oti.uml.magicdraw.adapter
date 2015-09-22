@@ -42,6 +42,10 @@ package org.omg.oti.magicdraw.uml.canonicalXMI
 import java.net.URL
 import java.net.MalformedURLException
 
+import scala.{Option}
+import scala.Predef.String
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.language.postfixOps
 import scala.util.Failure
 import scala.util.Success
@@ -49,13 +53,13 @@ import scala.util.Try
 
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._
+import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
 
-case class MagicDrawIDGenerator(
-  val resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )(
+case class MagicDrawIDGenerator( resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )(
     implicit val umlOps: MagicDrawUMLUtil )
-  extends IDGenerator[MagicDrawUML] {
+  extends DocumentIDGenerator[MagicDrawUML] {
 
   import umlOps._
   implicit val idg = this
@@ -71,25 +75,36 @@ case class MagicDrawIDGenerator(
   
   // -------------
   val MD_crule0: ContainedElement2IDRule = {
-    case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification ) if is.isMagicDrawUMLAppliedStereotypeInstance =>
+    case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification )
+      if is.isMagicDrawUMLAppliedStereotypeInstance =>
       Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" )
   }
 
   val MD_crule1a0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, ev: MagicDrawUMLElementValue ) =>
-      ev.element match {
-        case None => Failure( illegalElementException( "ElementValue without Element is not supported", ev ) )
-        case Some( nev: UMLNamedElement[Uml] ) =>
-          nev.name match {
-            case None      => Failure( illegalElementException( "ElementValue must refer to a named NamedElement", ev ) )
-            case Some( n ) => Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
+      ev.element
+      .fold[Try[String]](
+          Failure( illegalElementException( "ElementValue without Element is not supported", ev ) )
+      ){
+        case nev: UMLNamedElement[Uml] =>
+          nev
+          .name
+          .fold[Try[String]](
+            Failure( illegalElementException( "ElementValue must refer to a named NamedElement", ev ) )
+          ){ n =>
+              Success(
+                ownerID + "_" +
+                IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
           }
-        case Some( ev: UMLElement[Uml] ) =>
+        case ev: UMLElement[Uml] =>
           Failure( illegalElementException( "ElementValue refers to an Element that is not a NamedElement!", ev ) )
       }
   }
 
-  protected val elementRules = List( rule0 )
-  protected val containmentRules = List( MD_crule0, crule1, MD_crule1a0, crule1a, crule3, crule1b, crule2, crule4, crule5, crule6 )
+  protected val elementRules =
+    List( rule0 )
+
+  protected val containmentRules =
+    List( MD_crule0, crule1, MD_crule1a0, crule1a, crule3, crule1b, crule2, crule4, crule5, crule6 )
 
 }

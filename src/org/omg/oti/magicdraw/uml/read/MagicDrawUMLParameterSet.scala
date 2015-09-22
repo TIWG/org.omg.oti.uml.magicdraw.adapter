@@ -40,9 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLParameterSet 
   extends UMLParameterSet[MagicDrawUML]
@@ -50,15 +50,15 @@ trait MagicDrawUMLParameterSet
 
   override protected def e: Uml#ParameterSet
   def getMagicDrawParameterSet = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def condition: Set[UMLConstraint[Uml]] =
-    e.getCondition.toSet[Uml#Constraint]
+    e.getCondition.to[Set]
   
   override def parameter: Set[UMLParameter[Uml]] =
-    e.getParameter.toSet[Uml#Parameter]
-  
-  
+    e.getParameter.to[Set]
 
 }
 

@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.String
 
 trait MagicDrawUMLLiteralString 
   extends UMLLiteralString[MagicDrawUML]
@@ -48,9 +49,9 @@ trait MagicDrawUMLLiteralString
 
   override protected def e: Uml#LiteralString
   def getMagicDrawLiteralString = e
-  import ops._
   
-  override def value = Option.apply(e.getValue)
+  override def value: Option[String] =
+    Option.apply(e.getValue)
 
 }
 

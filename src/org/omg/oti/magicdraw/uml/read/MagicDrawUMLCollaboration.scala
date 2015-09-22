@@ -42,7 +42,6 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLCollaboration 
   extends UMLCollaboration[MagicDrawUML]

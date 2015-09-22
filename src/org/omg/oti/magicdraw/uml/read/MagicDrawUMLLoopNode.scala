@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Boolean,Option}
+import scala.Predef.???
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLoopNode 
   extends UMLLoopNode[MagicDrawUML]
@@ -49,7 +51,6 @@ trait MagicDrawUMLLoopNode
 
   override protected def e: Uml#LoopNode
   def getMagicDrawLoopNode = e
-  import ops._
 
   // 16.45
   override def bodyOutput: Seq[UMLOutputPin[Uml]] = ???

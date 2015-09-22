@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Boolean,Option}
+import scala.Predef.???
 
 trait MagicDrawUMLDestroyObjectAction 
   extends UMLDestroyObjectAction[MagicDrawUML]
@@ -48,14 +50,12 @@ trait MagicDrawUMLDestroyObjectAction
 
   override protected def e: Uml#DestroyObjectAction
   def getMagicDrawDestroyObjectAction = e
-  import ops._
 
   override def isDestroyLinks: Boolean = ???
   
   override def isDestroyOwnedObjects: Boolean = ???
   
 	override def target: Option[UMLInputPin[Uml]] = ???
-  
 
 }
 

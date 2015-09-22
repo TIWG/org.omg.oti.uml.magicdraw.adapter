@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDevice 
   extends UMLDevice[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLDevice
 
   override protected def e: Uml#Device
   def getMagicDrawDevice = e
-  import ops._
-
 
 }
 

@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLAnyReceiveEvent 
   extends UMLAnyReceiveEvent[MagicDrawUML]
@@ -48,6 +47,5 @@ trait MagicDrawUMLAnyReceiveEvent
 
   override protected def e: Uml#AnyReceiveEvent
   def getMagicDrawAnyReceiveEvent = e
-  import ops._
 
 }

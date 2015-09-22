@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLFlowFinalNode 
   extends UMLFlowFinalNode[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLFlowFinalNode
 
   override protected def e: Uml#FlowFinalNode
   def getMagicDrawFlowFinalNode = e
-  import ops._
-
 
 }
 

@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,None,Some}
+import scala.collection.immutable._
+import scala.collection.JavaConversions._
 
 trait MagicDrawUMLTrigger 
   extends UMLTrigger[MagicDrawUML]
@@ -48,17 +50,25 @@ trait MagicDrawUMLTrigger
 
   override protected def e: Uml#Trigger
   def getMagicDrawTrigger = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 13.2
-  override def event: Option[UMLEvent[Uml]] = ???
+  override def event: Option[UMLEvent[Uml]] =
+    Option.apply(e.getEvent)
   
   // 13.2
-  override def port: Set[UMLPort[Uml]] = ???
+  override def port: Set[UMLPort[Uml]] =
+    e.getPort.to[Set]
   
   // 16.39
-  override def replyToCall_replyAction: Option[UMLReplyAction[Uml]] = ???
-  
+  override def replyToCall_replyAction: Option[UMLReplyAction[Uml]] =
+    e
+    .get_replyActionOfReplyToCall()
+    .headOption
+    .fold[Option[UMLReplyAction[Uml]]](None){ ra =>
+      Some(ra)
+    }
 
 }
 

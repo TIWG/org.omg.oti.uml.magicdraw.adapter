@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
+import scala.Predef.???
 
 trait MagicDrawUMLReduceAction 
   extends UMLReduceAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLReduceAction
 
   override protected def e: Uml#ReduceAction
   def getMagicDrawReduceAction = e
-  import ops._
 
   // 16.56
   override def collection: Option[UMLInputPin[Uml]] = ??? 

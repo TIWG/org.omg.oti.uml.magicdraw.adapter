@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDuration 
   extends UMLDuration[MagicDrawUML]
@@ -69,8 +70,8 @@ trait MagicDrawUMLDuration
 
 case class MagicDrawUMLDurationImpl(val e: MagicDrawUML#Duration, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDuration
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLDuration(ID=${e.getID}, qname=${e.getQualifiedName})"

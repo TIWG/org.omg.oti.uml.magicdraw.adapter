@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Boolean
 
 trait MagicDrawUMLStructuredActivityNode 
   extends UMLStructuredActivityNode[MagicDrawUML]
@@ -50,7 +50,6 @@ trait MagicDrawUMLStructuredActivityNode
 
   override protected def e: Uml#StructuredActivityNode
   def getMagicDrawStructuredActivityNode = e
-  import ops._
 
   override def mustIsolate: Boolean = 
     e.isMustIsolate

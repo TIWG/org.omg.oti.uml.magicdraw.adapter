@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.StringContext
+import scala.Predef.{???,String}
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLSignal 
   extends UMLSignal[MagicDrawUML]
@@ -49,7 +51,8 @@ trait MagicDrawUMLSignal
 
   override protected def e: Uml#Signal
   def getMagicDrawSignal = e
-  import ops._
+  //implicit val umlOps = ops
+  //import umlOps._
 
   // 10.5
   override def ownedAttribute: Seq[UMLProperty[Uml]] = ???
@@ -71,8 +74,8 @@ trait MagicDrawUMLSignal
 
 case class MagicDrawUMLSignalImpl(val e: MagicDrawUML#Signal, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLSignal
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLSignal(ID=${e.getID}, qname=${e.getQualifiedName})"

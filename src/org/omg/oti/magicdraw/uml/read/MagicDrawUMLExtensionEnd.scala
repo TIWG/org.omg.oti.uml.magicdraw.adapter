@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Int,Option}
+import scala.Predef._
+import java.lang.Integer
 
 trait MagicDrawUMLExtensionEnd 
   extends UMLExtensionEnd[MagicDrawUML]
@@ -48,15 +50,18 @@ trait MagicDrawUMLExtensionEnd
 
   override protected def e: Uml#ExtensionEnd
   def getMagicDrawExtensionEnd = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
+
+  override def lower: Integer =
+    e.getLower
   
-  override def lower: Integer = ???
-  
-  override def _type: Option[UMLStereotype[Uml]] = super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
+  override def _type: Option[UMLStereotype[Uml]] =
+    super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
   
   override def ownedEnd_extension: Option[UMLExtension[Uml]] =
     Option.apply(e.get_extensionOfOwnedEnd)
-
 
 }
 

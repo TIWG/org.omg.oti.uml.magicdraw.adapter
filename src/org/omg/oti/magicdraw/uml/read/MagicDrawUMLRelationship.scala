@@ -42,7 +42,7 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
 
 trait MagicDrawUMLRelationship 
   extends UMLRelationship[MagicDrawUML]
@@ -50,9 +50,11 @@ trait MagicDrawUMLRelationship
 
   override protected def e: Uml#Relationship
   def getMagicDrawRelationship = e
-  import ops._
+  implicit val umlOps = ops
+  import umlOps._
   
-  override def relatedElement = e.getRelatedElement.toSet[Uml#Element]
+  override def relatedElement: Set[UMLElement[Uml]] =
+    e.getRelatedElement.to[Set]
   
   override def realization_abstraction = e.get_abstraction.toSet[Uml#InformationFlow]
   

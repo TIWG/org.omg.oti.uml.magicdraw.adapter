@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.require
 
 trait MagicDrawUMLExtension 
   extends UMLExtension[MagicDrawUML]
@@ -51,7 +51,8 @@ trait MagicDrawUMLExtension
   import ops._
   
   override def ownedEnd = {
-    val extensionOwnedEnds = super[MagicDrawUMLAssociation].ownedEnd.selectByKindOf { case ee: UMLExtensionEnd[Uml] => ee }
+    val extensionOwnedEnds =
+      super[MagicDrawUMLAssociation].ownedEnd.selectByKindOf { case ee: UMLExtensionEnd[Uml] => ee }
     require( extensionOwnedEnds.size <= 1 )
     extensionOwnedEnds
   }

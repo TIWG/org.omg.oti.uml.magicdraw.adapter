@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
+import scala.collection.immutable._
+import scala.Predef.???
 
 trait MagicDrawUMLReclassifyObjectAction 
   extends UMLReclassifyObjectAction[MagicDrawUML]
@@ -48,7 +50,8 @@ trait MagicDrawUMLReclassifyObjectAction
 
   override protected def e: Uml#ReclassifyObjectAction
   def getMagicDrawReclassifyObjectAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.30
 	override def isReplaceAll: Boolean = ???
@@ -57,7 +60,8 @@ trait MagicDrawUMLReclassifyObjectAction
 	override def newClassifier: Set[UMLClassifier[Uml]] = ??? 
   
   // 16.30
-	override def _object: Option[UMLInputPin[Uml]] = ???
+	override def _object: Option[UMLInputPin[Uml]] =
+    Option.apply(e.getObject)
   
   // 16.30  
 	override def oldClassifier: Set[UMLClassifier[Uml]] = ???

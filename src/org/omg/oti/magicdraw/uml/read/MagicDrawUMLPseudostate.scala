@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLPseudostate 
   extends UMLPseudostate[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLPseudostate
 
   override protected def e: Uml#Pseudostate
   def getMagicDrawPseudostate = e
-  import ops._
 
   // 14.1
   override def kind: UMLPseudostateKind.Value = ???

@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.String
 
 trait MagicDrawUMLOpaqueBehavior 
   extends UMLOpaqueBehavior[MagicDrawUML]
@@ -50,13 +52,12 @@ trait MagicDrawUMLOpaqueBehavior
 
   override protected def e: Uml#OpaqueBehavior
   def getMagicDrawOpaqueBehavior = e
-  import ops._
 
   override def body: Seq[String] =
-    e.getBody.toSeq
+    e.getBody.to[Seq]
    
   override def language: Seq[String] =
-    e.getLanguage.toSeq
+    e.getLanguage.to[Seq]
     
 
 }

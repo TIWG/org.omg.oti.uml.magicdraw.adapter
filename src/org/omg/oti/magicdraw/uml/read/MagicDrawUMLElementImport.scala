@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Option,None,Some}
+import scala.Predef.String
 
 trait MagicDrawUMLElementImport 
   extends UMLElementImport[MagicDrawUML]
@@ -48,7 +50,9 @@ trait MagicDrawUMLElementImport
 
   override protected def e: Uml#ElementImport
   def getMagicDrawElementImport = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def alias: Option[String] =
     e.getAlias match {

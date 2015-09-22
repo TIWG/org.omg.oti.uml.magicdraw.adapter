@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
+import scala.Predef.???
+import scala.collection.immutable._
 
 trait MagicDrawUMLGeneralizationSet 
   extends UMLGeneralizationSet[MagicDrawUML]
@@ -49,7 +50,6 @@ trait MagicDrawUMLGeneralizationSet
 
   override protected def e: Uml#GeneralizationSet
   def getMagicDrawGeneralizationSet = e
-  import ops._
 
   // 9.14
   override def generalization: Set[UMLGeneralization[Uml]] = ??? 

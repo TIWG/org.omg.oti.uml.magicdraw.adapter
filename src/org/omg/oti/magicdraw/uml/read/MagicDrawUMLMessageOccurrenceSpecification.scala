@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLMessageOccurrenceSpecification 
   extends UMLMessageOccurrenceSpecification[MagicDrawUML]
@@ -49,7 +48,6 @@ trait MagicDrawUMLMessageOccurrenceSpecification
 
   override protected def e: Uml#MessageOccurrenceSpecification
   def getMagicDrawMessageOccurrenceSpecification = e
-  import ops._
 
 
 }

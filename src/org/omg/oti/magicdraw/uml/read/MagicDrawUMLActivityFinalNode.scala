@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLActivityFinalNode 
   extends UMLActivityFinalNode[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLActivityFinalNode
 
   override protected def e: Uml#ActivityFinalNode
   def getMagicDrawActivityFinalNode = e
-  import ops._
-
 
 }
 

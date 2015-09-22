@@ -44,7 +44,16 @@ import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import org.omg.oti.uml.read.api._
 
+import scala.annotation
+import scala.deprecated
+import scala.{Boolean,Option,None,Some,StringBuilder}
+import scala.Predef.String
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+
+import java.lang.Runnable
+
 import scala.language.{implicitConversions, postfixOps}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
@@ -138,11 +147,11 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
           def prefixStream(prefix: String): Stream[String] = prefix #:: prefixStream(prefix + "  ")
           val prefixes: List[String] = prefixStream("").take(path.length).toList
 
-          val pair = ((new StringBuffer(""), prefixes) /: path.reverse) {
-            case ((result: StringBuffer, ps: List[String]), segment: String) =>
-              (result.append("\n" + ps.head + segment), ps.tail)
-          }
-          pair._1.toString
+          val result = new StringBuilder(500)
+          for {
+            (prefix, segment) <- prefixes.zip(path.reverse)
+          } result.append("\n" + prefix + segment)
+          result.result()
 
         case Some(e) =>
           describe(e.owner, path :+ (e.xmiType.head + " {id=" + e.toolSpecific_id + "}"))
@@ -153,5 +162,14 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   // MagicDraw-specific
 
-  def selectInContainmentTreeRunnable: Runnable = new SelectInContainmentTreeRunnable(e)
+  def selectInContainmentTreeRunnable: Runnable = MagicDrawSelectInContainmentTree(e).makeRunnable
+}
+
+// Workaround to MD's deprecated API: com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
+// see https://issues.scala-lang.org/browse/SI-7934
+@deprecated("", "")
+case class MagicDrawSelectInContainmentTree(e: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element) {
+
+  def makeRunnable: Runnable =
+    new SelectInContainmentTreeRunnable(e)
 }

@@ -42,7 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.Iterable
+import scala.collection.immutable._
 
 trait MagicDrawUMLInteractionFragment 
   extends UMLInteractionFragment[MagicDrawUML]
@@ -50,7 +51,9 @@ trait MagicDrawUMLInteractionFragment
 
   override protected def e: Uml#InteractionFragment
   def getMagicDrawInteractionFragment = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def covered: Iterable[UMLLifeline[Uml]] =
     e.getCovered.toIterable

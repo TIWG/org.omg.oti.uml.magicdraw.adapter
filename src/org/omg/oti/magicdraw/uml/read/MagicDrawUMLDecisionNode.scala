@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLDecisionNode 
   extends UMLDecisionNode[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLDecisionNode
 
   override protected def e: Uml#DecisionNode
   def getMagicDrawDecisionNode = e
-  import ops._
 
   override def decisionInput: Option[UMLBehavior[Uml]] = ???
   

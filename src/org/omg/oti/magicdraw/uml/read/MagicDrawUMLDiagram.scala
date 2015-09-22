@@ -39,17 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
-import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
-
 trait MagicDrawUMLDiagram 
   extends MagicDrawUMLNamedElement {
   
   override protected def e: Uml#Diagram
   def getMagicDrawDiagram = e
-  import ops._
     
   override def metaAttributes: MetaAttributeFunctions =
     namedElement_metaAttributes

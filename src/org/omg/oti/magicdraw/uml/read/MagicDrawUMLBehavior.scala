@@ -40,9 +40,14 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Boolean
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLBehavior 
   extends UMLBehavior[MagicDrawUML]
@@ -50,7 +55,8 @@ trait MagicDrawUMLBehavior
 
   override protected def e: Uml#Behavior
   def getMagicDrawBehavior = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def context =
     Option.apply( e.getContext )
@@ -59,7 +65,7 @@ trait MagicDrawUMLBehavior
     e.isReentrant
   
   override def ownedParameter =
-    e.getOwnedParameter.toSeq
+    e.getOwnedParameter.to[Seq]
   
   override def postcondition =
     e.getPostcondition.toSet[Uml#Constraint]

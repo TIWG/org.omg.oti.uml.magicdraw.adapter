@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLCreateLinkObjectAction 
   extends UMLCreateLinkObjectAction[MagicDrawUML]
@@ -48,10 +50,8 @@ trait MagicDrawUMLCreateLinkObjectAction
 
   override protected def e: Uml#CreateLinkObjectAction
   def getMagicDrawCreateLinkObjectAction = e
-  import ops._
 
   override def result: Option[UMLOutputPin[Uml]] = ???
-  
 
 }
 

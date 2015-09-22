@@ -40,15 +40,17 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLAcceptCallAction 
   extends UMLAcceptCallAction[MagicDrawUML]
   with MagicDrawUMLAcceptEventAction {
 
+
   override protected def e: Uml#AcceptCallAction
   def getMagicDrawAcceptCallAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def returnInformation: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getReturnInformation )

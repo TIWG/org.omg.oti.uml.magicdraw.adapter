@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLVertex 
   extends UMLVertex[MagicDrawUML]
@@ -48,6 +47,5 @@ trait MagicDrawUMLVertex
 
   override protected def e: Uml#Vertex
   def getMagicDrawVertex = e
-  import ops._
 
 }

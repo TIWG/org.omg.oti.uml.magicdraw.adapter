@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import java.lang.Integer
 
 trait MagicDrawUMLLiteralUnlimitedNatural 
   extends UMLLiteralUnlimitedNatural[MagicDrawUML]
@@ -48,9 +48,11 @@ trait MagicDrawUMLLiteralUnlimitedNatural
 
   override protected def e: Uml#LiteralUnlimitedNatural
   def getMagicDrawLiteralUnlimitedNatural = e
-  import ops._
+  override implicit val umlOps = ops
+  //import umlOps._
   
-  override def value = e.getValue
+  override def value: Integer =
+    new Integer(e.getValue)
 
 }
 

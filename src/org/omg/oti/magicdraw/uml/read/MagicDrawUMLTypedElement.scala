@@ -39,10 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLTypedElement 
   extends UMLTypedElement[MagicDrawUML]
@@ -50,7 +49,8 @@ trait MagicDrawUMLTypedElement
 
   override protected def e: Uml#TypedElement
   def getMagicDrawTypedElement = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   def _type: Option[UMLType[Uml]] = Option.apply( e.getType )
   

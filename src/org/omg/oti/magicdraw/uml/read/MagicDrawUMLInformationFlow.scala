@@ -41,7 +41,9 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLInformationFlow 
   extends UMLInformationFlow[MagicDrawUML]
@@ -50,7 +52,9 @@ trait MagicDrawUMLInformationFlow
 
   override protected def e: Uml#InformationFlow
   def getMagicDrawInformationFlow = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   // 20.1  
 	override def conveyed: Set[UMLClassifier[Uml]] = e.getConveyed.toSet[Uml#Classifier]
@@ -71,8 +75,8 @@ trait MagicDrawUMLInformationFlow
 
 case class MagicDrawUMLInformationFlowImpl(val e: MagicDrawUML#InformationFlow, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInformationFlow
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLInformationFlow(ID=${e.getID}, qname=${e.getQualifiedName})"

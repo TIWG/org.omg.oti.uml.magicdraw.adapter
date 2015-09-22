@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLReadVariableAction 
   extends UMLReadVariableAction[MagicDrawUML]
@@ -48,11 +48,12 @@ trait MagicDrawUMLReadVariableAction
 
   override protected def e: Uml#ReadVariableAction
   def getMagicDrawReadVariableAction = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def result: Option[UMLOutputPin[Uml]] =
     Option.apply( e.getResult )
-    
 
 }
 

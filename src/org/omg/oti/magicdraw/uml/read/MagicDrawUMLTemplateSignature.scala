@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLTemplateSignature 
   extends UMLTemplateSignature[MagicDrawUML]
@@ -50,13 +51,14 @@ trait MagicDrawUMLTemplateSignature
 
   override protected def e: Uml#TemplateSignature
   def getMagicDrawTemplateSignature = e
-  import ops._
+  implicit val umlOps = ops
+  import umlOps._
 
   override def ownedParameter: Seq[UMLTemplateParameter[Uml]] =
-    e.getOwnedParameter.toSeq
+    e.getOwnedParameter.to[Seq]
     
   override def parameter: Seq[UMLTemplateParameter[Uml]] =
-    e.getParameter.toSeq
+    e.getParameter.to[Seq]
 
 
 }

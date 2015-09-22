@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.Option
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLSlot 
   extends UMLSlot[MagicDrawUML]
@@ -50,7 +52,8 @@ trait MagicDrawUMLSlot
 
   override protected def e: Uml#Slot
   def getMagicDrawSlot = e
-  import ops._
+  implicit val umlOps = ops
+  import umlOps._
     
   // 9.27
   def definingFeature: Option[UMLStructuralFeature[Uml]] =
@@ -58,7 +61,7 @@ trait MagicDrawUMLSlot
 
   // 9.27
   override def value: Seq[UMLValueSpecification[Uml]] =
-    e.getValue.toSeq
+    e.getValue.to[Seq]
 
 }
 

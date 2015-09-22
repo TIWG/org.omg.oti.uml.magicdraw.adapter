@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLClearVariableAction 
   extends UMLClearVariableAction[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLClearVariableAction
 
   override protected def e: Uml#ClearVariableAction
   def getMagicDrawClearVariableAction = e
-  import ops._
-
 
 }
 

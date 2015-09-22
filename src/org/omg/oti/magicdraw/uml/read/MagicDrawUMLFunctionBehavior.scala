@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLFunctionBehavior 
   extends UMLFunctionBehavior[MagicDrawUML]
@@ -48,15 +49,13 @@ trait MagicDrawUMLFunctionBehavior
 
   override protected def e: Uml#FunctionBehavior
   def getMagicDrawFunctionBehavior = e
-  import ops._
-
 
 }
 
 case class MagicDrawUMLFunctionBehaviorImpl(val e: MagicDrawUML#FunctionBehavior, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLFunctionBehavior
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLFunctionBehavior(ID=${e.getID}, qname=${e.getQualifiedName})"

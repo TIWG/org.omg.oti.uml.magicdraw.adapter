@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInterval 
   extends UMLInterval[MagicDrawUML]
@@ -48,8 +50,10 @@ trait MagicDrawUMLInterval
 
   override protected def e: Uml#Interval
   def getMagicDrawInterval = e
-  import ops._
-  
+
+  override implicit val umlOps = ops
+  import umlOps._
+
   override def max = 
     Option.apply( e.getMax )
     
@@ -61,8 +65,8 @@ trait MagicDrawUMLInterval
 
 case class MagicDrawUMLIntervalImpl(val e: MagicDrawUML#Interval, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInterval
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLInterval(ID=${e.getID}, qname=${e.getQualifiedName})"

@@ -42,15 +42,17 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
 
 trait MagicDrawUMLNamespace 
   extends UMLNamespace[MagicDrawUML]
   with MagicDrawUMLNamedElement {
 
-  import ops._
   override protected def e: Uml#Namespace
   def getMagicDrawNamespace = e
+
+  override implicit val umlOps = ops
+  import umlOps._
   
   override def member: Set[UMLNamedElement[Uml]] =
     e.getMember.toSet[Uml#NamedElement]

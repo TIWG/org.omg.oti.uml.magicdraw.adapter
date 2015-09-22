@@ -40,18 +40,21 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.StringContext
+import scala.Predef.String
 import scala.language.implicitConversions
 import scala.language.postfixOps
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLProfile 
   extends UMLProfile[MagicDrawUML]
   with MagicDrawUMLPackage {
 
-  import ops._
   override protected def e: Uml#Profile
   def getMagicDrawProfile = e
+  override implicit val umlOps = ops
+  import umlOps._
   
   // 12.12
   override def metamodelReference = 
@@ -62,14 +65,15 @@ trait MagicDrawUMLProfile
     e.getMetaclassReference.toSet[Uml#ElementImport]
   
   // 12.12
-  override def profile_stereotype: Set[UMLStereotype[Uml]] = ???
+  override def profile_stereotype: Set[UMLStereotype[Uml]] =
+    allNestedPackages.flatMap(p => p.ownedStereotype).to[Set]
 
 }
 
 case class MagicDrawUMLProfileImpl(val e: MagicDrawUML#Profile, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLProfile
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLProfile(ID=${e.getID}, qname=${e.getQualifiedName})"

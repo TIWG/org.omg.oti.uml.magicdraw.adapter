@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.String
+import scala.{Option,None,Some,StringContext}
 
 trait MagicDrawUMLTimeConstraint 
   extends UMLTimeConstraint[MagicDrawUML]
@@ -48,7 +49,8 @@ trait MagicDrawUMLTimeConstraint
 
   override protected def e: Uml#TimeConstraint
   def getMagicDrawTimeConstraint = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def firstEvent =
     if (e.isFirstEvent) None
@@ -62,8 +64,8 @@ trait MagicDrawUMLTimeConstraint
 
 case class MagicDrawUMLTimeConstraintImpl(val e: MagicDrawUML#TimeConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeConstraint
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLTimeConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"

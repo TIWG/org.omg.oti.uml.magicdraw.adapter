@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLQualifierValue 
   extends UMLQualifierValue[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLQualifierValue
 
   override protected def e: Uml#QualifierValue
   def getMagicDrawQualifierValue = e
-  import ops._
 
   // 16.33
   override def qualifier: Option[UMLProperty[Uml]] = ??? 

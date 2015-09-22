@@ -39,25 +39,29 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.Boolean
+import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLAcceptEventAction 
   extends UMLAcceptEventAction[MagicDrawUML]
   with MagicDrawUMLAction {
 
+  override implicit val umlOps = ops
+  import umlOps._
+
   override protected def e: Uml#AcceptEventAction
   def getMagicDrawAcceptEventAction = e
-  import ops._
 
   override def isUnmarshall: Boolean =
     e.isUnmarshall()
   
   override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.toSeq
-  
+    e.getResult.to[Seq]
+
   override def trigger: Set[UMLTrigger[Uml]] =
     e.getTrigger.toSet[Uml#Trigger]
   

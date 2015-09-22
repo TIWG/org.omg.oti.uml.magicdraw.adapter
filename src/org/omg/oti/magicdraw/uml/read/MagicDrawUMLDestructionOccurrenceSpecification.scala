@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDestructionOccurrenceSpecification 
   extends UMLDestructionOccurrenceSpecification[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLDestructionOccurrenceSpecification
 
   override protected def e: Uml#DestructionOccurrenceSpecification
   def getMagicDrawDestructionOccurrenceSpecification = e
-  import ops._
-  
 
 }
 

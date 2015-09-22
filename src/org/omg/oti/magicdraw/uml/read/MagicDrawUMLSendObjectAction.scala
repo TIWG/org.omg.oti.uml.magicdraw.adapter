@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLSendObjectAction 
   extends UMLSendObjectAction[MagicDrawUML]
@@ -48,13 +48,16 @@ trait MagicDrawUMLSendObjectAction
 
   override protected def e: Uml#SendObjectAction
   def getMagicDrawSendObjectAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.13
-	override def request: Option[UMLInputPin[Uml]] = ???
+	override def request: Option[UMLInputPin[Uml]] =
+    Option.apply(e.getRequest)
   
   // 16.13
-	override def target: Option[UMLInputPin[Uml]] = ??? 
+	override def target: Option[UMLInputPin[Uml]] =
+    Option.apply(e.getTarget)
 
 }
 

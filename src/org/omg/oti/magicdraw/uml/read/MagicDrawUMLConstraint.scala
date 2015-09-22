@@ -40,9 +40,12 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLConstraint 
   extends UMLConstraint[MagicDrawUML]
@@ -53,7 +56,7 @@ trait MagicDrawUMLConstraint
   import ops._
   
   override def constrainedElement: Seq[UMLElement[Uml]] =
-    for { c <- e.getConstrainedElement } yield umlElement( c )
+    for { c <- e.getConstrainedElement.to[Seq] } yield umlElement( c )
   
   override def bodyCondition_bodyContext: Option[UMLOperation[Uml]] =
     Option.apply( e.getBodyContext )
@@ -108,8 +111,8 @@ trait MagicDrawUMLConstraint
 
 case class MagicDrawUMLConstraintImpl(val e: MagicDrawUML#Constraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConstraint
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"

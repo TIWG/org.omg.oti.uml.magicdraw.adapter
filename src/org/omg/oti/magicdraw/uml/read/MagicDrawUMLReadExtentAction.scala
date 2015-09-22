@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLReadExtentAction 
   extends UMLReadExtentAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLReadExtentAction
 
   override protected def e: Uml#ReadExtentAction
   def getMagicDrawReadExtentAction = e
-  import ops._
 
   // 16.30
   override def classifier: Option[UMLClassifier[Uml]] = ??? 

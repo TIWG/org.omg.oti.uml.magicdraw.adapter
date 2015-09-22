@@ -39,9 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.Predef.???
 
 trait MagicDrawUMLExpansionRegion 
   extends UMLExpansionRegion[MagicDrawUML]
@@ -49,7 +49,6 @@ trait MagicDrawUMLExpansionRegion
 
   override protected def e: Uml#ExpansionRegion
   def getMagicDrawExpansionRegion = e
-  import ops._
 
   override def inputElement: Set[UMLExpansionNode[Uml]] = ???
   

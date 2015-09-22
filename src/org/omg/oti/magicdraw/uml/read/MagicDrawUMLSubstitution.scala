@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLSubstitution 
   extends UMLSubstitution[MagicDrawUML]
@@ -48,7 +48,8 @@ trait MagicDrawUMLSubstitution
 
   override protected def e: Uml#Substitution
   def getMagicDrawSubstitution = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def contract: Option[UMLClassifier[Uml]] =
     Option.apply(e.getContract)

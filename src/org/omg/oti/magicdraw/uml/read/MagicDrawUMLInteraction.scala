@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Predef.{???,String}
+import scala.StringContext
 
 trait MagicDrawUMLInteraction 
   extends UMLInteraction[MagicDrawUML]
@@ -50,7 +52,8 @@ trait MagicDrawUMLInteraction
 
   override protected def e: Uml#Interaction
   def getMagicDrawInteraction = e
-  import ops._
+  override implicit val umlOps = ops
+  //import umlOps._
 
   // 17.1
 	override def formalGate: Set[UMLGate[Uml]] = ???
@@ -65,8 +68,8 @@ trait MagicDrawUMLInteraction
 
 case class MagicDrawUMLInteractionImpl(val e: MagicDrawUML#Interaction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInteraction
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLInteraction(ID=${e.getID}, qname=${e.getQualifiedName})"

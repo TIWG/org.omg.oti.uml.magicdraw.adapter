@@ -40,7 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.collection.immutable._
+import scala.Predef.???
+import scala.Option
 
 trait MagicDrawUMLInteractionOperand 
   extends UMLInteractionOperand[MagicDrawUML]
@@ -49,7 +52,6 @@ trait MagicDrawUMLInteractionOperand
 
   override protected def e: Uml#InteractionOperand
   def getMagicDrawInteractionOperand = e
-  import ops._
 
   // 17.11
 	override def fragment: Seq[UMLInteractionFragment[Uml]] = ???

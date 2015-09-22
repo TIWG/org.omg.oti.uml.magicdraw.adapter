@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLForkNode 
   extends UMLForkNode[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLForkNode
 
   override protected def e: Uml#ForkNode
   def getMagicDrawForkNode = e
-  import ops._
-
 
 }
 

@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLCommunicationPath 
   extends UMLCommunicationPath[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLCommunicationPath
 
   override protected def e: Uml#CommunicationPath
   def getMagicDrawCommunicationPath = e
-  import ops._
-
 
 }
 

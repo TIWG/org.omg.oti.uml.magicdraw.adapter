@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLStartObjectBehaviorAction 
   extends UMLStartObjectBehaviorAction[MagicDrawUML]
@@ -48,10 +48,12 @@ trait MagicDrawUMLStartObjectBehaviorAction
 
   override protected def e: Uml#StartObjectBehaviorAction
   def getMagicDrawStartObjectBehaviorAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.13
-  override def _object: Option[UMLInputPin[Uml]] = ???
+  override def _object: Option[UMLInputPin[Uml]] =
+    Option.apply(e.getObject)
   
 
 }

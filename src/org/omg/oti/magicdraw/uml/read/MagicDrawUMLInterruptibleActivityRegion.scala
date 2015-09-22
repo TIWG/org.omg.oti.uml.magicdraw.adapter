@@ -42,7 +42,7 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
 
 trait MagicDrawUMLInterruptibleActivityRegion 
   extends UMLInterruptibleActivityRegion[MagicDrawUML]
@@ -50,7 +50,9 @@ trait MagicDrawUMLInterruptibleActivityRegion
 
   override protected def e: Uml#InterruptibleActivityRegion
   def getMagicDrawInterruptibleActivityRegion = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def interruptingEdge: Set[UMLActivityEdge[Uml]] =
     e.getInterruptingEdge.toSet[Uml#ActivityEdge]

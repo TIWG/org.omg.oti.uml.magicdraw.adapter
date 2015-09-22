@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Option,Some}
+import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLPackageableElement 
   extends UMLPackageableElement[MagicDrawUML]
@@ -51,13 +53,15 @@ trait MagicDrawUMLPackageableElement
 
   override protected def e: Uml#PackageableElement
   def getMagicDrawPackageableElement = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def visibility: Option[UMLVisibilityKind.Value] =
-    Option.apply(e.getVisibility) match {
-      case None =>
+    Option.apply(e.getVisibility)
+    .fold[Option[UMLVisibilityKind.Value]] {
         Some(UMLVisibilityKind.public)
-      case Some(v) => v match {
+     }{
         case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
           Some(UMLVisibilityKind.public)
         case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE =>
@@ -67,7 +71,6 @@ trait MagicDrawUMLPackageableElement
         case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE =>
           Some(UMLVisibilityKind._package)
       }
-    }
 
   override def importedMember_namespace: Set[UMLNamespace[Uml]] =
     ???
@@ -76,6 +79,6 @@ trait MagicDrawUMLPackageableElement
     ???
 
   override def utilizedElement_manifestation: Set[UMLManifestation[Uml]] =
-    e.get_manifestationOfUtilizedElement.toSet[Uml#Manifestation]
+    e.get_manifestationOfUtilizedElement.to[Set]
   
 }

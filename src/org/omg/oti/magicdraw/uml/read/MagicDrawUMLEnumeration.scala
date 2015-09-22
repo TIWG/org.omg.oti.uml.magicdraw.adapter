@@ -40,9 +40,13 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLEnumeration 
   extends UMLEnumeration[MagicDrawUML]
@@ -50,17 +54,18 @@ trait MagicDrawUMLEnumeration
 
   override protected def e: Uml#Enumeration
   def getMagicDrawEnumeration = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
   
-  override def ownedLiteral = e.getOwnedLiteral.toSeq
+  override def ownedLiteral = e.getOwnedLiteral.to[Seq]
   
 
 }
 
 case class MagicDrawUMLEnumerationImpl(val e: MagicDrawUML#Enumeration, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLEnumeration
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLEnumeration(ID=${e.getID}, qname=${e.getQualifiedName})"

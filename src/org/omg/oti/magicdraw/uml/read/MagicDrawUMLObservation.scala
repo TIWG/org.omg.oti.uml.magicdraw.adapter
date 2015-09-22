@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
 
 trait MagicDrawUMLObservation 
   extends UMLObservation[MagicDrawUML]
@@ -48,7 +48,9 @@ trait MagicDrawUMLObservation
 
   override protected def e: Uml#Observation
   def getMagicDrawObservation = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def observation_timeExpression =
     Option.apply( e.get_timeExpressionOfObservation )

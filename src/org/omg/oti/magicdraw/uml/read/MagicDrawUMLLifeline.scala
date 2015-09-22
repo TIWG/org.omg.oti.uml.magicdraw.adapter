@@ -39,9 +39,11 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Option
+import scala.Predef.???
+
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLifeline 
   extends UMLLifeline[MagicDrawUML]
@@ -49,7 +51,6 @@ trait MagicDrawUMLLifeline
 
   override protected def e: Uml#Lifeline
   def getMagicDrawLifeline = e
-  import ops._
 
   // 17.6
 	override def coveredBy: Set[UMLInteractionFragment[Uml]] = ???

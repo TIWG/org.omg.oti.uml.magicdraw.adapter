@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLGeneralOrdering 
   extends UMLGeneralOrdering[MagicDrawUML]
@@ -48,12 +49,10 @@ trait MagicDrawUMLGeneralOrdering
 
   override protected def e: Uml#GeneralOrdering
   def getMagicDrawGeneralOrdering = e
-  import ops._
   
 	override def after: Option[UMLOccurrenceSpecification[Uml]] = ???
   
   override def before: Option[UMLOccurrenceSpecification[Uml]] = ???
-  
 
 }
 

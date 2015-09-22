@@ -42,7 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,None,Some}
+import scala.Predef.String
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLArtifact 
   extends UMLArtifact[MagicDrawUML]
@@ -51,7 +54,9 @@ trait MagicDrawUMLArtifact
 
   override protected def e: Uml#Artifact
   def getMagicDrawArtifact = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
 	override def fileName: Option[String] =
     e.getFileName match {
@@ -61,10 +66,10 @@ trait MagicDrawUMLArtifact
   }
   
   override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.toSeq
+    e.getOwnedAttribute.to[Seq]
     
   override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.toSeq
+    e.getOwnedOperation.to[Seq]
 
 
 }

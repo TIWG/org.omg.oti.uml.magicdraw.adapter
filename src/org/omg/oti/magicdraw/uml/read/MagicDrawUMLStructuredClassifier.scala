@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLStructuredClassifier 
   extends UMLStructuredClassifier[MagicDrawUML]
@@ -50,9 +51,10 @@ trait MagicDrawUMLStructuredClassifier
 
   override protected def e: Uml#StructuredClassifier
   def getMagicDrawStructuredClassifier = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
-  override def ownedAttribute = e.getOwnedAttribute.toSeq
+  override def ownedAttribute = e.getOwnedAttribute.to[Seq]
   
   override def part = e.getPart.toSet[Uml#Property]
   

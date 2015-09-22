@@ -40,9 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLDeployedArtifact 
   extends UMLDeployedArtifact[MagicDrawUML]
@@ -50,7 +50,9 @@ trait MagicDrawUMLDeployedArtifact
 
   override protected def e: Uml#DeployedArtifact
   def getMagicDrawDeployedArtifact = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def deployedArtifact_deploymentForArtifact: Set[UMLDeployment[MagicDrawUML]] = 
     e.get_deploymentOfDeployedArtifact.toSet[Uml#Deployment]

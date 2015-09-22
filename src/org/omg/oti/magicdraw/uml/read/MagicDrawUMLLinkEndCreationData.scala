@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
 
 trait MagicDrawUMLLinkEndCreationData 
   extends UMLLinkEndCreationData[MagicDrawUML]
@@ -48,7 +48,9 @@ trait MagicDrawUMLLinkEndCreationData
 
   override protected def e: Uml#LinkEndCreationData
   def getMagicDrawLinkEndCreationData = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def insertAt: Option[UMLInputPin[Uml]] =
     Option.apply( e.getInsertAt )

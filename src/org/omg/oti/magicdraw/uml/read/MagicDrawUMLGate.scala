@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLGate 
   extends UMLGate[MagicDrawUML]
@@ -48,8 +47,6 @@ trait MagicDrawUMLGate
 
   override protected def e: Uml#Gate
   def getMagicDrawGate = e
-  import ops._
-
 
 }
 

@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLDependency 
   extends UMLDependency[MagicDrawUML]
@@ -50,14 +51,15 @@ trait MagicDrawUMLDependency
 
   override protected def e: Uml#Dependency
   def getMagicDrawDependency = e
-
+  override implicit val umlOps = ops
+  //import umlOps._
 
 }
 
 case class MagicDrawUMLDependencyImpl(val e: MagicDrawUML#Dependency, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDependency
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLDependency(ID=${e.getID}, qname=${e.getQualifiedName})"

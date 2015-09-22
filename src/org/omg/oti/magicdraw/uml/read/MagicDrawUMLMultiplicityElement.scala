@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef._
 
 trait MagicDrawUMLMultiplicityElement 
   extends UMLMultiplicityElement[MagicDrawUML]
@@ -48,7 +49,9 @@ trait MagicDrawUMLMultiplicityElement
 
   override protected def e: Uml#MultiplicityElement
   def getMagicDrawMultiplicityElement = e
-  import ops._
+
+  implicit val umlOps = ops
+  import umlOps._
   
   override def isOrdered = e.isOrdered
   

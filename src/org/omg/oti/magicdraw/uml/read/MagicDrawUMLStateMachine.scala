@@ -40,8 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLStateMachine 
   extends UMLStateMachine[MagicDrawUML]
@@ -49,7 +51,8 @@ trait MagicDrawUMLStateMachine
 
   override protected def e: Uml#StateMachine
   def getMagicDrawStateMachine = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 14.1
   def submachineState: Set[UMLState[Uml]] =
@@ -65,8 +68,8 @@ trait MagicDrawUMLStateMachine
 
 case class MagicDrawUMLStateMachineImpl(val e: MagicDrawUML#StateMachine, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStateMachine
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLStateMachine(ID=${e.getID}, qname=${e.getQualifiedName})"

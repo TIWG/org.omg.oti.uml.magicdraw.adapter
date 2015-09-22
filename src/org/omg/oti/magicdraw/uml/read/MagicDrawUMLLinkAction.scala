@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLinkAction 
   extends UMLLinkAction[MagicDrawUML]
@@ -50,7 +51,9 @@ trait MagicDrawUMLLinkAction
 
   override protected def e: Uml#LinkAction
   def getMagicDrawLinkAction = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def endData: Iterable[UMLLinkEndData[Uml]] =
     e.getEndData.toIterable

@@ -40,13 +40,20 @@
 package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.uml2.ext.jmi.helpers.{ModelHelper, StereotypesHelper}
-import org.omg.oti.uml.canonicalXMI.IDGenerator
 import org.omg.oti.uml.read._
 import org.omg.oti.uml.read.api._
+import org.omg.oti.uml.xmi._
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+
+import scala.Predef._
+import scala.{Int,Option,None,Ordering,Some,StringContext,Tuple2}
 import scala.language.{implicitConversions, postfixOps}
 import scala.util.{Failure, Success, Try}
+
+import java.lang.System
 
 sealed abstract class MagicDrawUMLStereotypeTagValue
   extends UMLStereotypeTagValue[MagicDrawUML]
@@ -282,7 +289,7 @@ object MagicDrawUMLStereotypeTagValue {
                   stereotypeTagProperty = f,
                   stereotypeTagPropertyType = ops.umlMagicDrawUMLStereotype(ts),
                   tagPropertyValueAppliedStereotypeAndElementReferences = for {
-                    v <- s.getValue
+                    v <- s.getValue.to[scala.collection.immutable.Iterable]
                     e <- v match {
                       case ev: Uml#ElementValue =>
                         ev.element match {
@@ -309,7 +316,7 @@ object MagicDrawUMLStereotypeTagValue {
                     stereotypeTagProperty = f,
                     stereotypeTagPropertyType = ops.umlMagicDrawUMLClass(tc),
                     tagPropertyValueElementReferences = for {
-                      v <- s.getValue
+                      v <- s.getValue.to[scala.collection.immutable.Iterable]
                       e <- v match {
                         case ev: Uml#ElementValue =>
                           ev.element match {
@@ -335,7 +342,7 @@ object MagicDrawUMLStereotypeTagValue {
                     stereotypeTagProperty = f,
                     stereotypeTagPropertyType = ops.umlMagicDrawUMLClass(tc),
                     values = for {
-                      v <- s.getValue
+                      v <- s.getValue.to[scala.collection.immutable.Iterable]
                       e <- v match {
                         case iv: Uml#InstanceValue =>
                           iv.instance match {
@@ -358,7 +365,7 @@ object MagicDrawUMLStereotypeTagValue {
                   stereotypeTagProperty = f,
                   stereotypeTagPropertyType = ops.umlMagicDrawUMLEnumeration(te),
                   values = for {
-                    v <- s.getValue
+                    v <- s.getValue.to[scala.collection.immutable.Iterable]
                     e <- v match {
                       case iv: Uml#InstanceValue =>
                         Option.apply(iv.getInstance) match {
@@ -387,7 +394,7 @@ object MagicDrawUMLStereotypeTagValue {
                   stereotypeTagProperty = f,
                   stereotypeTagPropertyType = ops.umlMagicDrawUMLPrimitiveType(tp),
                   values = for {
-                    v <- s.getValue
+                    v <- s.getValue.to[scala.collection.immutable.Iterable]
                     e <- v match {
                       case ev: Uml#LiteralBoolean =>
                         Some(MagicDrawTagPropertyBooleanValue(property=f, value=ev.value))
@@ -423,7 +430,7 @@ object MagicDrawUMLStereotypeTagValue {
                         stereotypeTagProperty = f,
                         stereotypeTagPropertyType = ops.umlMagicDrawUMLPrimitiveType(tdp),
                         values = for {
-                          v <- s.getValue
+                          v <- s.getValue.to[scala.collection.immutable.Iterable]
                           e <- v match {
                             case ev: Uml#LiteralBoolean =>
                               Some(MagicDrawTagPropertyBooleanValue(property=f, value=ev.value))
@@ -450,7 +457,7 @@ object MagicDrawUMLStereotypeTagValue {
                     stereotypeTagProperty = f,
                     stereotypeTagPropertyType = ops.umlMagicDrawUMLDataType(td),
                     values = for {
-                      v <- s.getValue
+                      v <- s.getValue.to[scala.collection.immutable.Iterable]
                       e <- v match {
                         case iv: Uml#InstanceValue =>
                           Option.apply(iv.getInstance) match {
@@ -477,7 +484,7 @@ object MagicDrawUMLStereotypeTagValue {
                   stereotypeTagProperty = f,
                   stereotypeTagPropertyType = ops.umlMagicDrawUMLAssociation(ta),
                   values = for {
-                    v <- s.getValue
+                    v <- s.getValue.to[scala.collection.immutable.Iterable]
                     e <- v match {
                       case iv: Uml#InstanceValue =>
                         Option.apply(iv.getInstance) match {

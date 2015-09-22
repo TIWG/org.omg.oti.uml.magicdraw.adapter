@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import java.lang.Integer
 
 trait MagicDrawUMLLiteralInteger 
   extends UMLLiteralInteger[MagicDrawUML]
@@ -48,9 +48,9 @@ trait MagicDrawUMLLiteralInteger
 
   override protected def e: Uml#LiteralInteger
   def getMagicDrawLiteralInteger = e
-  import ops._
   
-  override def value = e.getValue
+  override def value: Integer =
+    new Integer(e.getValue)
 
 }
 

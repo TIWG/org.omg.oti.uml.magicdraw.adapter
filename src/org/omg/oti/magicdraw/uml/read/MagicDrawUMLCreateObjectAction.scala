@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLCreateObjectAction 
   extends UMLCreateObjectAction[MagicDrawUML]
@@ -48,12 +50,10 @@ trait MagicDrawUMLCreateObjectAction
 
   override protected def e: Uml#CreateObjectAction
   def getMagicDrawCreateObjectAction = e
-  import ops._
 
 	override def classifier: Option[UMLClassifier[Uml]] = ???
   
-  override def result: Option[UMLOutputPin[Uml]] = ??? 
-  
+  override def result: Option[UMLOutputPin[Uml]] = ???
 
 }
 

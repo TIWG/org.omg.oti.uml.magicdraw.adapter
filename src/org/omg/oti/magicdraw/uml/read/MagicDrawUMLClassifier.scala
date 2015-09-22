@@ -40,9 +40,13 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.{Boolean,Option,None,Some}
+import scala.Predef.{???,require}
 
 trait MagicDrawUMLClassifier 
   extends UMLClassifier[MagicDrawUML]
@@ -53,12 +57,13 @@ trait MagicDrawUMLClassifier
 
   override protected def e: Uml#Classifier
   def getMagicDrawClassifier = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
     
   override def templateParameter: Option[UMLClassifierTemplateParameter[Uml]] = Option.apply( e.getTemplateParameter )
     
   override def attribute: Seq[UMLProperty[Uml]] =
-    e.getAttribute.toSeq
+    e.getAttribute.to[Seq]
   
   override def inheritedMember: Set[UMLNamedElement[Uml]] =
     e.getInheritedMember.toSet[Uml#NamedElement]

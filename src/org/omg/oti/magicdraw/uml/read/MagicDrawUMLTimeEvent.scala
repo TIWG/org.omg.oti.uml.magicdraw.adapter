@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTimeEvent 
   extends UMLTimeEvent[MagicDrawUML]
@@ -48,7 +49,8 @@ trait MagicDrawUMLTimeEvent
 
   override protected def e: Uml#TimeEvent
   def getMagicDrawTimeEvent = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def when = Option.apply( e.getWhen )
     
@@ -60,8 +62,8 @@ trait MagicDrawUMLTimeEvent
 
 case class MagicDrawUMLTimeEventImpl(val e: MagicDrawUML#TimeEvent, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeEvent
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLTimeEvent(ID=${e.getID}, qname=${e.getQualifiedName})"

@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
+import scala.Predef.???
 
 trait MagicDrawUMLReadIsClassifiedObjectAction 
   extends UMLReadIsClassifiedObjectAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLReadIsClassifiedObjectAction
 
   override protected def e: Uml#ReadIsClassifiedObjectAction
   def getMagicDrawReadIsClassifiedObjectAction = e
-  import ops._
 
   // 16.30
   override def classifier: Option[UMLClassifier[Uml]] = ??? 

@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.String
 
 trait MagicDrawUMLModel 
   extends UMLModel[MagicDrawUML]
@@ -48,10 +49,10 @@ trait MagicDrawUMLModel
 
   override protected def e: Uml#Model
   def getMagicDrawModel = e
-  import ops._
   
   // 12.1  
-	override def viewpoint: Option[String] = ???
+	override def viewpoint: Option[String] =
+    Option.apply(e.getViewpoint)
 
 }
 

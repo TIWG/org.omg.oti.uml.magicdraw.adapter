@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Option
 
 trait MagicDrawUMLChangeEvent 
   extends UMLChangeEvent[MagicDrawUML]
@@ -48,7 +49,9 @@ trait MagicDrawUMLChangeEvent
 
   override protected def e: Uml#ChangeEvent
   def getMagicDrawChangeEvent = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def changeExpression = 
     Option.apply( e.getChangeExpression )

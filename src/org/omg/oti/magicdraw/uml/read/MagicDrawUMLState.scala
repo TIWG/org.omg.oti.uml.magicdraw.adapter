@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.{Option,StringContext}
+import scala.Predef.String
 
 import scala.collection.JavaConversions._
 
@@ -52,7 +54,8 @@ trait MagicDrawUMLState
 
   override protected def e: Uml#State
   def getMagicDrawState = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 14.1
   def doActivity: Option[UMLBehavior[Uml]] =
@@ -79,8 +82,8 @@ trait MagicDrawUMLState
 
 case class MagicDrawUMLStateImpl(val e: MagicDrawUML#State, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLState
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLState(ID=${e.getID}, qname=${e.getQualifiedName})"

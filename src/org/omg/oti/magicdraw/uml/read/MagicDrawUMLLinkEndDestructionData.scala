@@ -39,10 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Boolean,Option}
 
 trait MagicDrawUMLLinkEndDestructionData 
   extends UMLLinkEndDestructionData[MagicDrawUML]
@@ -50,7 +49,9 @@ trait MagicDrawUMLLinkEndDestructionData
 
   override protected def e: Uml#LinkEndDestructionData
   def getMagicDrawLinkEndDestructionData = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def destroyAt: Option[UMLInputPin[Uml]] =
     Option.apply( e.getDestroyAt )

@@ -42,7 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,None,Some}
+import scala.Predef.String
+import scala.collection.immutable._
+import scala.collection.Iterable
 
 trait MagicDrawUMLNamedElement 
   extends UMLNamedElement[MagicDrawUML]
@@ -50,7 +53,8 @@ trait MagicDrawUMLNamedElement
 
   override protected def e: Uml#NamedElement
   def getMagicDrawNamedElement = e
-  import ops._
+  implicit val umlOps = ops
+  import umlOps._
   
   override def clientDependency: Set[UMLDependency[Uml]] =
     e.getClientDependency.toSet[Uml#Dependency]

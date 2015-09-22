@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.Predef.???
 
 trait MagicDrawUMLReadStructuralFeatureAction 
   extends UMLReadStructuralFeatureAction[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLReadStructuralFeatureAction
 
   override protected def e: Uml#ReadStructuralFeatureAction
   def getMagicDrawReadStructuralFeatureAction = e
-  import ops._
 
   // 16.36  
 	override def result: Option[UMLOutputPin[Uml]] = ??? 

@@ -40,9 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.Option
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLUseCase 
   extends UMLUseCase[MagicDrawUML]
@@ -50,18 +51,20 @@ trait MagicDrawUMLUseCase
 
   override protected def e: Uml#UseCase
   def getMagicDrawUseCase = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def subject: Set[UMLClassifier[Uml]] =
-    e.getSubject.toSet[Uml#Classifier]
+    e.getSubject.to[Set]
   
   override def extendedCase_extend: Set[UMLExtend[Uml]] =
-    e.get_extendOfExtendedCase.toSet[Uml#Extend]
+    e.get_extendOfExtendedCase.to[Set]
   
   override def addition_include: Set[UMLInclude[Uml]] =
-    e.get_includeOfAddition.toSet[Uml#Include]
+    e.get_includeOfAddition.to[Set]
     
-	override def ownedUseCase_classifier: Option[UMLClassifier[Uml]] = ???
+	override def ownedUseCase_classifier: Option[UMLClassifier[Uml]] =
+    Option.apply(e.get_classifierOfOwnedUseCase())
   
 
 }

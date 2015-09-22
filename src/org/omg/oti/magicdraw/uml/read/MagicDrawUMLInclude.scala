@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLInclude 
   extends UMLInclude[MagicDrawUML]
@@ -49,8 +48,8 @@ trait MagicDrawUMLInclude
 
   override protected def e: Uml#Include
   def getMagicDrawInclude = e
-  import ops._
-
+  override implicit val umlOps = ops
+  //import umlOps._
 
 }
 

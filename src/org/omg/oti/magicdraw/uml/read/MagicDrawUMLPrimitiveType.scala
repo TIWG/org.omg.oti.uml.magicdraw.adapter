@@ -40,23 +40,22 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.StringContext
+import scala.Predef.String
 
 trait MagicDrawUMLPrimitiveType 
   extends UMLPrimitiveType[MagicDrawUML]
   with MagicDrawUMLDataType {
 
-  import ops._
   override protected def e: Uml#PrimitiveType
   def getMagicDrawPrimitiveType = e
-  
 
 }
 
 case class MagicDrawUMLPrimitiveTypeImpl(val e: MagicDrawUML#PrimitiveType, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPrimitiveType
-  with sext.TreeString
-  with sext.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
   override def toString: String =
     s"MagicDrawUMLPrimitiveType(ID=${e.getID}, qname=${e.getQualifiedName})"

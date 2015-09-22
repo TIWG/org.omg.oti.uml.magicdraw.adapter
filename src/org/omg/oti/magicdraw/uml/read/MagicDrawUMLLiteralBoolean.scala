@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLLiteralBoolean 
   extends UMLLiteralBoolean[MagicDrawUML]
@@ -48,10 +47,8 @@ trait MagicDrawUMLLiteralBoolean
 
   override protected def e: Uml#LiteralBoolean
   def getMagicDrawLiteralBoolean = e
-  import ops._
   
   override def value = e.isValue
-  
 
 }
 

@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Boolean
 
 trait MagicDrawUMLContinuation 
   extends UMLContinuation[MagicDrawUML]
@@ -48,11 +49,9 @@ trait MagicDrawUMLContinuation
 
   override protected def e: Uml#Continuation
   def getMagicDrawContinuation = e
-  import ops._
 
   override def setting: Boolean =
     e.isSetting
-    
 
 }
 

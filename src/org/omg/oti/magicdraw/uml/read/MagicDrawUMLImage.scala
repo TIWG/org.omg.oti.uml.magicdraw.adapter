@@ -40,7 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.{Option,None,Some}
+import scala.Predef.String
 
 trait MagicDrawUMLImage 
   extends UMLImage[MagicDrawUML]
@@ -48,7 +49,6 @@ trait MagicDrawUMLImage
 
   override protected def e: Uml#Image
   def getMagicDrawImage = e
-  import ops._
   
   def content: Option[String] = e.getContent  match {
     case null => None

@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+
+import scala.Boolean
+import scala.Option
 
 trait MagicDrawUMLAddStructuralFeatureValueAction 
   extends UMLAddStructuralFeatureValueAction[MagicDrawUML]
@@ -48,7 +50,8 @@ trait MagicDrawUMLAddStructuralFeatureValueAction
 
   override protected def e: Uml#AddStructuralFeatureValueAction
   def getMagicDrawAddStructuralFeatureValueAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def insertAt: Option[UMLInputPin[Uml]] =
     Option.apply( e.getInsertAt )

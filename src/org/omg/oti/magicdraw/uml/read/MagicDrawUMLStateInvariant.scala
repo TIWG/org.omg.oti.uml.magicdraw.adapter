@@ -40,7 +40,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.Iterable
+import scala.collection.JavaConversions._
+import scala.Option
 
 trait MagicDrawUMLStateInvariant 
   extends UMLStateInvariant[MagicDrawUML]
@@ -48,13 +50,16 @@ trait MagicDrawUMLStateInvariant
 
   override protected def e: Uml#StateInvariant
   def getMagicDrawStateInvariant = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 17.6
-	override def covered: Iterable[UMLLifeline[Uml]] = ??? 
+	override def covered: Iterable[UMLLifeline[Uml]] =
+    e.getCovered.toIterable
   
   // 17.1
-	override def invariant: Option[UMLConstraint[Uml]] = ??? 
+	override def invariant: Option[UMLConstraint[Uml]] =
+    Option.apply(e.getInvariant)
 
 }
 

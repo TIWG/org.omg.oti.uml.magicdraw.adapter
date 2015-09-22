@@ -40,9 +40,11 @@
 package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.Option
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
 
 trait MagicDrawUMLUnmarshallAction 
   extends UMLUnmarshallAction[MagicDrawUML]
@@ -50,13 +52,14 @@ trait MagicDrawUMLUnmarshallAction
 
   override protected def e: Uml#UnmarshallAction
   def getMagicDrawUnmarshallAction = e
-  import ops._
+  override implicit val umlOps = ops
+  import umlOps._
 
   override def _object: Option[UMLInputPin[Uml]] =
     Option.apply( e.getObject )
     
   override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.toSeq
+    e.getResult.to[Seq]
     
   override def unmarshallType: Option[UMLClassifier[Uml]] =
     Option.apply( e.getUnmarshallType )

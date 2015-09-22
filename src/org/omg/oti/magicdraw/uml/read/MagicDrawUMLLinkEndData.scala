@@ -42,7 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.collection.immutable._
+import scala.Option
 
 trait MagicDrawUMLLinkEndData 
   extends UMLLinkEndData[MagicDrawUML]
@@ -50,7 +51,9 @@ trait MagicDrawUMLLinkEndData
 
   override protected def e: Uml#LinkEndData
   def getMagicDrawLinkEndData = e
-  import ops._
+
+  implicit val umlOps = ops
+  import umlOps._
 
   override def end: Option[UMLProperty[Uml]] =
     Option.apply( e.getEnd )

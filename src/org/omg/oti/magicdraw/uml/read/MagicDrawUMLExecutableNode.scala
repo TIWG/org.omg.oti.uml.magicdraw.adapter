@@ -42,7 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.read.operations._
+import scala.Option
+import scala.collection.immutable._
 
 trait MagicDrawUMLExecutableNode 
   extends UMLExecutableNode[MagicDrawUML]
@@ -50,7 +51,9 @@ trait MagicDrawUMLExecutableNode
 
   override protected def e: Uml#ExecutableNode
   def getMagicDrawExecutableNode = e
-  import ops._
+
+  override implicit val umlOps = ops
+  import umlOps._
 
 	override def test_loopNode: Option[UMLLoopNode[Uml]] =
     Option.apply( e.get_loopNodeOfTest )
