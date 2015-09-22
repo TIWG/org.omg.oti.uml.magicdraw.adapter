@@ -65,8 +65,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLInteractionUse.argument
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionUse.argument
 	 */
 	override def argument_interactionUse: Option[UMLInteractionUse[Uml]] =
     Option.apply(e.get_interactionUseOfArgument())
@@ -75,8 +75,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLMessage.argument
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLMessage.argument
 	 */
 	override def argument_message: Option[UMLMessage[Uml]] =
     Option.apply(e.get_messageOfArgument())
@@ -85,8 +85,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLChangeEvent.changeExpression
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLChangeEvent.changeExpression
 	 */
 	override def changeExpression_changeEvent: Option[UMLChangeEvent[Uml]] =
     Option.apply(e.get_changeEventOfChangeExpression())
@@ -95,8 +95,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLParameter.defaultValue
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLParameter.defaultValue
 	 */
 	override def defaultValue_owningParameter: Option[UMLParameter[Uml]] =
     Option.apply(e.getOwningParameter)
@@ -105,8 +105,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLProperty.defaultValue
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLProperty.defaultValue
 	 */
 	override def defaultValue_owningProperty: Option[UMLProperty[Uml]] =
     Option.apply(e.getOwningProperty)
@@ -115,8 +115,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLDuration.expr
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLDuration.expr
 	 */
 	override def expr_duration: Option[UMLDuration[Uml]] =
     Option.apply(e.get_durationOfExpr())
@@ -125,8 +125,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLTimeExpression.expr
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTimeExpression.expr
 	 */
 	override def expr_timeExpression: Option[UMLTimeExpression[Uml]] =
     Option.apply(e.get_timeExpressionOfExpr())
@@ -135,8 +135,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLActivityEdge.guard
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLActivityEdge.guard
 	 */
 	override def guard_activityEdge: Option[UMLActivityEdge[Uml]] =
     Option.apply(e.get_activityEdgeOfGuard())
@@ -145,8 +145,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLJoinNode.joinSpec
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLJoinNode.joinSpec
 	 */
 	override def joinSpec_joinNode: Option[UMLJoinNode[Uml]] =
     Option.apply(e.get_joinNodeOfJoinSpec())
@@ -155,8 +155,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLMultiplicityElement.lowerValue
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLMultiplicityElement.lowerValue
 	 */
 	override def lowerValue_owningLower: Option[UMLMultiplicityElement[Uml]] =
     Option.apply(e.getOwningLower)
@@ -166,8 +166,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLInteractionConstraint.maxint
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionConstraint.maxint
 	 */
 	override def maxint_interactionConstraint: Option[UMLInteractionConstraint[Uml]] =
     Option.apply(e.get_interactionConstraintOfMaxint())
@@ -176,8 +176,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLInteractionConstraint.minint
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionConstraint.minint
 	 */
 	override def minint_interactionConstraint: Option[UMLInteractionConstraint[Uml]] =
     Option.apply(e.get_interactionConstraintOfMinint())
@@ -186,8 +186,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLExpression.operand
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLExpression.operand
 	 */
 	override def operand_expression: Option[UMLExpression[Uml]] =
     Option.apply(e.getExpression)
@@ -196,8 +196,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLInteractionUse.returnValue
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionUse.returnValue
 	 */
 	override def returnValue_interactionUse: Option[UMLInteractionUse[Uml]] =
     Option.apply(e.get_interactionUseOfReturnValue())
@@ -206,8 +206,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLLifeline.selector
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLifeline.selector
 	 */
 	override def selector_lifeline: Option[UMLLifeline[Uml]] =
     Option.apply(e.get_lifelineOfSelector())
@@ -216,8 +216,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLConstraint.specification
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLConstraint.specification
 	 */
 	override def specification_owningConstraint: Option[UMLConstraint[Uml]] =
     Option.apply(e.getOwningConstraint)
@@ -226,8 +226,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLInstanceSpecification.specification
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInstanceSpecification.specification
 	 */
 	override def specification_owningInstanceSpec: Option[UMLInstanceSpecification[Uml]] =
     Option.apply(e.getOwningInstanceSpec)
@@ -239,8 +239,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLMultiplicityElement.upperValue
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLMultiplicityElement.upperValue
 	 */
 	override def upperValue_owningUpper: Option[UMLMultiplicityElement[Uml]] =
     Option.apply(e.getOwningUpper)
@@ -249,8 +249,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLSlot.value
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLSlot.value
 	 */
 	override def value_owningSlot: Option[UMLSlot[Uml]] =
     Option.apply(e.getOwningSlot)
@@ -259,8 +259,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLValuePin.value
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLValuePin.value
 	 */
 	override def value_valuePin: Option[UMLValuePin[Uml]] =
     Option.apply(e.get_valuePinOfValue())
@@ -269,8 +269,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLValueSpecificationAction.value
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLValueSpecificationAction.value
 	 */
 	override def value_valueSpecificationAction: Option[UMLValueSpecificationAction[Uml]] =
     Option.apply(e.get_valueSpecificationActionOfValue())
@@ -279,8 +279,8 @@ trait MagicDrawUMLValueSpecification
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLActivityEdge.weight
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLActivityEdge.weight
 	 */
 	override def weight_activityEdge: Option[UMLActivityEdge[Uml]] =
     Option.apply(e.get_activityEdgeOfWeight())

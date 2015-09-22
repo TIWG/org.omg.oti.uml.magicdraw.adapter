@@ -125,8 +125,8 @@ trait MagicDrawUMLBehavior
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
 	 *
-	 * @property derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * @opposite org.omg.oti.uml.read.api.UMLState.exit
+	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLState.exit
 	 */
 	override def exit_state: Option[UMLState[Uml]] =
     ???

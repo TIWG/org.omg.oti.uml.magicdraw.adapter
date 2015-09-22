@@ -101,12 +101,12 @@ trait MagicDrawUMLNamedElement
     e.get_considerIgnoreFragmentOfMessage.toSet[Uml#ConsiderIgnoreFragment]
 
   /**
-   * @TODO move this to UMLNamedElementOps
+   * @todo move this to UMLNamedElementOps
    */
   override def inheritedMember_inheritingClassifier: Set[UMLClassifier[Uml]] =
-    member_memberNamespace selectByKindOf 
-    { case cls: UMLClassifier[Uml] => cls } filter 
-    { case cls => cls.inheritedMember.contains( this ) }
+    member_memberNamespace
+    .selectByKindOf { case cls: UMLClassifier[Uml] => cls }
+    .filter { case cls => cls.inheritedMember.contains( this ) }
 
   // MD-specific
   
