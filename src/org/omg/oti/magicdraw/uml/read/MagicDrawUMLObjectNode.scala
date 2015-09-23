@@ -39,7 +39,7 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.{Boolean,Option}
+import scala.{Boolean,Option,None,Some}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
@@ -69,12 +69,13 @@ trait MagicDrawUMLObjectNode
   override def selection: Option[UMLBehavior[Uml]] =
     Option.apply( e.getSelection )
 
-  override def ordering: UMLObjectNodeOrderingKind.Value =
-    e.getOrdering match {
-      case ObjectNodeOrderingKindEnum.FIFO      => UMLObjectNodeOrderingKind.FIFO
-      case ObjectNodeOrderingKindEnum.LIFO      => UMLObjectNodeOrderingKind.LIFO
-      case ObjectNodeOrderingKindEnum.ORDERED   => UMLObjectNodeOrderingKind.ordered
-      case ObjectNodeOrderingKindEnum.UNORDERED => UMLObjectNodeOrderingKind.unordered
+  override def ordering: Option[UMLObjectNodeOrderingKind.Value] =
+    Option.apply(e.getOrdering)
+    .fold[Option[UMLObjectNodeOrderingKind.Value]](None) {
+      case ObjectNodeOrderingKindEnum.FIFO      => Some(UMLObjectNodeOrderingKind.FIFO)
+      case ObjectNodeOrderingKindEnum.LIFO      => Some(UMLObjectNodeOrderingKind.LIFO)
+      case ObjectNodeOrderingKindEnum.ORDERED   => Some(UMLObjectNodeOrderingKind.ordered)
+      case ObjectNodeOrderingKindEnum.UNORDERED => Some(UMLObjectNodeOrderingKind.unordered)
     }
 
   override def upperBound: Option[UMLValueSpecification[Uml]] =

@@ -41,7 +41,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Boolean
+import scala.{Boolean,Option,None,Some}
 
 import scala.collection.immutable._
 import scala.collection.Iterable
@@ -57,12 +57,16 @@ trait MagicDrawUMLBehavioralFeature
   override implicit val umlOps = ops
   import umlOps._
   
-  override def concurrency: UMLCallConcurrencyKind.Value =
-    e.getConcurrency match {
-    case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT => UMLCallConcurrencyKind.concurrent
-    case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.GUARDED => UMLCallConcurrencyKind.guarded
-    case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.SEQUENTIAL => UMLCallConcurrencyKind.sequential
-  }
+  override def concurrency: Option[UMLCallConcurrencyKind.Value] =
+    Option.apply(e.getConcurrency)
+    .fold[Option[UMLCallConcurrencyKind.Value]](None) {
+      case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT =>
+        Some(UMLCallConcurrencyKind.concurrent)
+      case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.GUARDED =>
+        Some(UMLCallConcurrencyKind.guarded)
+      case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.SEQUENTIAL =>
+        Some(UMLCallConcurrencyKind.sequential)
+    }
   
   override def isAbstract: Boolean =
     e.isAbstract

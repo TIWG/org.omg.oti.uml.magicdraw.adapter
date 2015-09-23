@@ -59,10 +59,10 @@ trait MagicDrawUMLMessage
   override def connector: Option[UMLConnector[Uml]] = ???
   
   // 17.7
-  override def messageKind: UMLMessageKind.Value = ???
+  override def messageKind: Option[UMLMessageKind.Value] = ???
   
   // 17.7
-  override def messageSort: UMLMessageSort.Value = ???
+  override def messageSort: Option[UMLMessageSort.Value] = ???
   
   // 17.7
   override def receiveEvent: Option[UMLMessageEnd[Uml]] = ???

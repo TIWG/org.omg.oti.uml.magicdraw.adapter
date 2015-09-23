@@ -59,11 +59,15 @@ trait MagicDrawUMLProperty
   override implicit val umlOps = ops
   import umlOps._
   
-  override def aggregation: UMLAggregationKind.Value = 
-    e.getAggregation match {
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.COMPOSITE => UMLAggregationKind.composite
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.NONE => UMLAggregationKind.none
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.SHARED => UMLAggregationKind.shared
+  override def aggregation: Option[UMLAggregationKind.Value] =
+    Option.apply(e.getAggregation)
+    .fold[Option[UMLAggregationKind.Value]](None) {
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.COMPOSITE =>
+        Some(UMLAggregationKind.composite)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.NONE =>
+        Some(UMLAggregationKind.none)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.AggregationKindEnum.SHARED =>
+        Some(UMLAggregationKind.shared)
   }
   
   override def association: Option[UMLAssociation[Uml]] =

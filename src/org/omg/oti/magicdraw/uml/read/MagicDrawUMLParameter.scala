@@ -69,22 +69,32 @@ trait MagicDrawUMLParameter
     Option.apply( e.getDefaultValue )
   
   // 9.9
-	override def direction: UMLParameterDirectionKind.Value =
-    e.getDirection match {
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN => UMLParameterDirectionKind.in
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.OUT => UMLParameterDirectionKind.out
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.INOUT => UMLParameterDirectionKind.inout
-    case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.RETURN => UMLParameterDirectionKind._return
+	override def direction: Option[UMLParameterDirectionKind.Value] =
+    Option.apply(e.getDirection)
+    .fold[Option[UMLParameterDirectionKind.Value]](None) {
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN =>
+        Some(UMLParameterDirectionKind.in)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.OUT =>
+        Some(UMLParameterDirectionKind.out)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.INOUT =>
+        Some(UMLParameterDirectionKind.inout)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.RETURN =>
+        Some(UMLParameterDirectionKind._return)
   }
   
   // 9.9
 	override def effect: Option[UMLParameterEffectKind.Value] = 
-    e.getEffect match {
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE => Some( UMLParameterEffectKind.create )
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ => Some( UMLParameterEffectKind.read )
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE => Some( UMLParameterEffectKind.update )
-    case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE => Some( UMLParameterEffectKind.delete )
-  }
+    Option.apply(e.getEffect)
+    .fold[Option[UMLParameterEffectKind.Value]](None) {
+      case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE =>
+        Some( UMLParameterEffectKind.create )
+      case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.READ =>
+        Some( UMLParameterEffectKind.read )
+      case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.UPDATE =>
+        Some( UMLParameterEffectKind.update )
+      case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.DELETE =>
+        Some( UMLParameterEffectKind.delete )
+    }
   
   // 9.9
 	override def isException: Boolean = 

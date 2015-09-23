@@ -41,6 +41,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.Option
 import scala.Predef.???
 import scala.collection.immutable._
 
@@ -53,7 +54,8 @@ trait MagicDrawUMLCombinedFragment
 
   override def cfragmentGate: Set[UMLGate[Uml]] = ???
   
-  override def interactionOperator: UMLInteractionOperatorKind.Value = ???
+  override def interactionOperator: Option[UMLInteractionOperatorKind.Value] =
+    ???
   
   override def operand: Seq[UMLInteractionOperand[Uml]] = ??? 
 

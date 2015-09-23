@@ -41,6 +41,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.collection.immutable._
+import scala.Option
 import scala.Predef.???
 
 trait MagicDrawUMLExpansionRegion 
@@ -52,7 +53,7 @@ trait MagicDrawUMLExpansionRegion
 
   override def inputElement: Set[UMLExpansionNode[Uml]] = ???
   
-  override def mode: UMLExpansionKind.Value = ???
+  override def mode: Option[UMLExpansionKind.Value] = ???
   
   override def outputElement: Set[UMLExpansionNode[Uml]] = ???
   

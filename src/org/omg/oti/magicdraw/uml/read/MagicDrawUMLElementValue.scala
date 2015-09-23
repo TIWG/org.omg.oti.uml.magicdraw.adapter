@@ -67,7 +67,8 @@ trait MagicDrawUMLElementValue
     
   override def referenceMetaProperties: MetaPropertyFunctions =
     valueSpecification_referenceMetaProperties ++
-    Seq( MetaPropertyReference[Uml, MagicDrawUMLElementValue, UMLElement[Uml]]( "element", _.element ) )
+    Seq( MetaPropertyReference[Uml, MagicDrawUMLElementValue, UMLElement[Uml]](
+      "element", _.element, isComposite=false, isUnique=true, isOrdered=false, redefinedMetaProperties=Set()) )
     
   override def asForwardReferencesToImportableOuterPackageableElements: Set[UMLPackageableElement[Uml]] = 
     element.fold(Set[UMLPackageableElement[Uml]]())(_.asForwardReferencesToImportableOuterPackageableElements)

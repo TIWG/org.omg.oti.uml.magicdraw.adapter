@@ -51,7 +51,7 @@ trait MagicDrawUMLPseudostate
   def getMagicDrawPseudostate = e
 
   // 14.1
-  override def kind: UMLPseudostateKind.Value = ???
+  override def kind: Option[UMLPseudostateKind.Value] = ???
   
   // 14.1
   override def entry_connectionPointReference: Option[UMLConnectionPointReference[Uml]] = ???

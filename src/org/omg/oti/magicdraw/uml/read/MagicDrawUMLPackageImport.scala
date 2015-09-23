@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Option,None,Some}
 
 trait MagicDrawUMLPackageImport 
   extends UMLPackageImport[MagicDrawUML]
@@ -56,12 +56,17 @@ trait MagicDrawUMLPackageImport
   override def metamodelReference_profile: Option[UMLProfile[Uml]] =
     Option.apply(e.get_profileOfMetamodelReference())
   
-  override def visibility: UMLVisibilityKind.Value =
-    e.getVisibility match {
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC => UMLVisibilityKind.public
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE => UMLVisibilityKind._private
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED => UMLVisibilityKind._protected
-      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE => UMLVisibilityKind._package
+  override def visibility: Option[UMLVisibilityKind.Value] =
+    Option.apply(e.getVisibility)
+    .fold[Option[UMLVisibilityKind.Value]](None) {
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
+        Some(UMLVisibilityKind.public)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PRIVATE =>
+        Some(UMLVisibilityKind._private)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PROTECTED =>
+        Some(UMLVisibilityKind._protected)
+      case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PACKAGE =>
+        Some(UMLVisibilityKind._package)
     }
 
 

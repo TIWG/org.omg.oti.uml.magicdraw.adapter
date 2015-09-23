@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,StringContext}
+import scala.{Option,None,Some,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLTransition 
@@ -53,14 +53,15 @@ trait MagicDrawUMLTransition
   override implicit val umlOps = ops
   import umlOps._
 
-  override def kind: UMLTransitionKind.Value =
-    e.getKind match {
+  override def kind: Option[UMLTransitionKind.Value] =
+    Option.apply(e.getKind)
+    .fold[Option[UMLTransitionKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.EXTERNAL =>
-        UMLTransitionKind.external
+        Some(UMLTransitionKind.external)
       case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.INTERNAL =>
-        UMLTransitionKind.internal
+        Some(UMLTransitionKind.internal)
       case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.LOCAL =>
-        UMLTransitionKind.local
+        Some(UMLTransitionKind.local)
     }
 
   override def source: Option[UMLVertex[Uml]] =
