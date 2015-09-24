@@ -39,6 +39,8 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import java.net.URL
+
 trait MagicDrawUML extends org.omg.oti.uml.read.api.UML {
 
   override type Element = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element
@@ -314,4 +316,49 @@ trait MagicDrawUML extends org.omg.oti.uml.read.api.UML {
   override type WriteStructuralFeatureAction = com.nomagic.uml2.ext.magicdraw.actions.mdintermediateactions.WriteStructuralFeatureAction
   override type WriteVariableAction = com.nomagic.uml2.ext.magicdraw.actions.mdstructuredactions.WriteVariableAction
 
+  override type LoadURL = MagicDrawLoadURL
+  override type DocumentSetAggregate = MagicDrawDocumentSetAggregate
 }
+
+case class MagicDrawDocumentSetAggregate()
+
+/**
+ * MagicDraw-specific adaptation for OTI `DocumentOps[MagicDrawUML].LoadURL`
+ */
+sealed trait MagicDrawLoadURL {
+  val externalDocumentResourceURL: URL
+}
+
+/**
+ * Load an external OTI Document as a MagicDraw Local Project
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
+ * @param magicDrawProjectResource the location where to save the MagicDraw local project upon successful
+ *                                 completion of loading the OTI Document
+ */
+case class MagicDrawLocalProjectLoadURL
+( override val externalDocumentResourceURL: URL,
+  magicDrawProjectResource: URL )
+extends MagicDrawLoadURL
+
+/**
+ * Load an external OTI Document as a MagicDraw Local Attached Module
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
+ * @param magicDrawAttachedLocalModuleResource the location where to save the MagicDraw local attached module
+ *                                             upon successful completion of loading the OTI Document
+ *                                             as an attached local module of the current MagicDraw project
+ */
+case class MagicDrawAttachedLocalModuleLoadURL
+( override val externalDocumentResourceURL: URL,
+  magicDrawAttachedLocalModuleResource: URL )
+  extends MagicDrawLoadURL
+
+/**
+ * Import an external OTI Document into the current MagicDraw project
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to import into MagicDraw
+ */
+case class MagicDrawImportLoadURL
+( override val externalDocumentResourceURL: URL )
+  extends MagicDrawLoadURL
