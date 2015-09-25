@@ -64,7 +64,10 @@ import java.lang.IllegalArgumentException
  * MagicDraw-specific adapter for the OTI Canonical XMI DocumentOps
  */
 class MagicDrawDocumentOps
+(implicit umlUtil: MagicDrawUMLUtil)
   extends DocumentOps[MagicDrawUML] {
+
+  implicit val docOps = this
 
   override def addDocument
   (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
@@ -179,15 +182,18 @@ class MagicDrawDocumentOps
    documentURL: MagicDrawUML#LoadURL,
    scope: UMLPackage[MagicDrawUML])
   (implicit ds: DocumentSet[MagicDrawUML])
-  : Try[SerializableDocument[MagicDrawUML]] = {
+  : Try[SerializableDocument[MagicDrawUML]] =
+  Success(
+    MagicDrawSerializableDocument(uri, nsPrefix, uuidPrefix, documentURL, scope)
+  )
 
-    ???
-  }
+  override def getExternalDocumentURL(lurl: MagicDrawUML#LoadURL): URI =
+    lurl.externalDocumentResourceURL
 
   override def openExternalDocumentStreamForImport
   (lurl: MagicDrawUML#LoadURL)
   : java.io.InputStream =
-    lurl.externalDocumentResourceURL.openStream()
+    lurl.externalDocumentResourceURL.toURL.openStream()
 
 
 }

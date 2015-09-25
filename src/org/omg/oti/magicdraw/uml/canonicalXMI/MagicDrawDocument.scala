@@ -67,10 +67,10 @@ case class MagicDrawBuiltInDocument
 (uri: URI,
  nsPrefix: String,
  uuidPrefix: String,
- documentURL: URI,
+ documentURL: MagicDrawUML#LoadURL,
  scope: UMLElement[MagicDrawUML],
  builtInExtent: Set[UMLElement[MagicDrawUML]])
-(implicit val ops: MagicDrawUMLOps)
+(implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with BuiltInDocument[MagicDrawUML]
 
 /**
@@ -80,7 +80,7 @@ case class MagicDrawSerializableDocument
 (uri: URI,
  nsPrefix: String,
  uuidPrefix: String,
- documentURL: URI,
+ documentURL: MagicDrawUML#LoadURL,
  scope: UMLElement[MagicDrawUML])
-(implicit val ops: MagicDrawUMLOps)
+(implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableDocument[MagicDrawUML]

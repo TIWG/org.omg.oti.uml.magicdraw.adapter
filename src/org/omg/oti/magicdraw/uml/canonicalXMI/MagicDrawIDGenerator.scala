@@ -57,8 +57,10 @@ import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
 
-case class MagicDrawIDGenerator( resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )(
-    implicit val umlOps: MagicDrawUMLUtil )
+case class MagicDrawIDGenerator
+( resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )
+( implicit val umlOps: MagicDrawUMLUtil,
+  override implicit val documentOps: MagicDrawDocumentOps )
   extends DocumentIDGenerator[MagicDrawUML] {
 
   import umlOps._

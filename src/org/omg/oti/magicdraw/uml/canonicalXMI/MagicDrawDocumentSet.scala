@@ -71,6 +71,7 @@ case class MagicDrawDocumentSet
  builtInURIMapper: CatalogURIMapper,
  override val aggregate: MagicDrawUML#DocumentSetAggregate )
 (override implicit val ops: UMLOps[MagicDrawUML],
+ override implicit val documentOps: MagicDrawDocumentOps,
  override implicit val nodeT: TypeTag[Document[MagicDrawUML]],
  override implicit val edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
   extends DocumentSet[MagicDrawUML]
@@ -84,7 +85,7 @@ object MagicDrawDocumentSet {
       case (pds: MagicDrawDocumentSet, pd: MagicDrawSerializableDocument) =>
         Success(
           pds
-          .copy( serializableDocuments = pds.serializableDocuments + pd )(pds.ops, pds.nodeT, pds.edgeT)
+          .copy( serializableDocuments = pds.serializableDocuments + pd )(pds.ops, pds.documentOps, pds.nodeT, pds.edgeT)
         )
     }
 

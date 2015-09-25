@@ -39,7 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import java.net.URL
+import scala.Predef.String
+
+import java.net.URI
 
 trait MagicDrawUML extends org.omg.oti.uml.read.api.UML {
 
@@ -326,7 +328,7 @@ case class MagicDrawDocumentSetAggregate()
  * MagicDraw-specific adaptation for OTI `DocumentOps[MagicDrawUML].LoadURL`
  */
 sealed trait MagicDrawLoadURL {
-  val externalDocumentResourceURL: URL
+  val externalDocumentResourceURL: URI
 }
 
 /**
@@ -337,21 +339,35 @@ sealed trait MagicDrawLoadURL {
  *                                 completion of loading the OTI Document
  */
 case class MagicDrawLocalProjectLoadURL
-( override val externalDocumentResourceURL: URL,
-  magicDrawProjectResource: URL )
+( override val externalDocumentResourceURL: URI,
+  magicDrawProjectResource: URI )
 extends MagicDrawLoadURL
 
 /**
- * Load an external OTI Document as a MagicDraw Local Attached Module
+ * Load an external OTI SerializableDocument as a MagicDraw Local Attached Module
  *
  * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
  * @param magicDrawAttachedLocalModuleResource the location where to save the MagicDraw local attached module
  *                                             upon successful completion of loading the OTI Document
  *                                             as an attached local module of the current MagicDraw project
  */
-case class MagicDrawAttachedLocalModuleLoadURL
-( override val externalDocumentResourceURL: URL,
-  magicDrawAttachedLocalModuleResource: URL )
+case class MagicDrawAttachedLocalModuleSerializableDocumentLoadURL
+( override val externalDocumentResourceURL: URI,
+  magicDrawAttachedLocalModuleResource: URI )
+  extends MagicDrawLoadURL
+
+
+/**
+ * Load an external OTI BuiltInDocument as a MagicDraw Local Attached Module
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
+ * @param magicDrawStandardSystemProfileResourceRelativePath the location relative to MagicDraw's
+ *                                                           installation root folder corresponding to
+ *                                                           the MagicDraw-specific OTI BuiltInDocument
+ */
+case class MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL
+( override val externalDocumentResourceURL: URI,
+  magicDrawStandardSystemProfileResourceRelativePath: String )
   extends MagicDrawLoadURL
 
 /**
@@ -360,5 +376,5 @@ case class MagicDrawAttachedLocalModuleLoadURL
  * @param externalDocumentResourceURL the external OTI Document resource to import into MagicDraw
  */
 case class MagicDrawImportLoadURL
-( override val externalDocumentResourceURL: URL )
+( override val externalDocumentResourceURL: URI )
   extends MagicDrawLoadURL
