@@ -40,13 +40,13 @@ object Versions {
   // OTI Canonical XMI version
 
   val oti_canonical_xmi_prefix = version_prefix
-  val oti_canonical_xmi_suffix = "444910"
+  val oti_canonical_xmi_suffix = "444915"
   val oti_canonical_xmi_version = oti_canonical_xmi_prefix+"-"+oti_canonical_xmi_suffix
 
   // OTI UML Loader version
 
   val oti_loader_prefix = version_prefix
-  val oti_loader_suffix = "444911"
+  val oti_loader_suffix = "444916"
   val oti_loader_version = oti_loader_prefix+"-"+oti_loader_suffix
 
 }
