@@ -39,15 +39,26 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
+import java.io.File
+
+import com.nomagic.magicdraw.core.{ApplicationEnvironment, Application}
+import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
+
 import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.magicdraw.uml.read._
+import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 import org.omg.oti.uml.xmi._
 
+import scala.{AnyRef, Boolean, Function1, Option, None, Some}
 import scala.collection.immutable._
+import scala.collection.Iterable
 import scala.reflect.runtime.universe._
-import scala.util.{ Success, Try }
+import scala.util.{ Failure, Success, Try }
+
+import java.lang.IllegalArgumentException
 
 /**
  * Papyrus-specific OTI DocumentSet
@@ -76,4 +87,59 @@ object MagicDrawDocumentSet {
           .copy( serializableDocuments = pds.serializableDocuments + pd )(pds.ops, pds.nodeT, pds.edgeT)
         )
     }
+
+  type MagicDrawDocumentSetInfo =
+  (MagicDrawOTISymbols,
+    ResolvedDocumentSet[MagicDrawUML],
+    MagicDrawDocumentSet,
+    Iterable[UnresolvedElementCrossReference[MagicDrawUML]])
+
+  def createMagicDrawProjectDocumentSet
+  (documentURIMapper: CatalogURIMapper,
+   builtInURIMapper: CatalogURIMapper,
+   ignoreCrossReferencedElementFilter: (UMLElement[MagicDrawUML] => Boolean),
+   unresolvedElementMapper: (UMLElement[MagicDrawUML] => Option[UMLElement[MagicDrawUML]]))
+  (implicit
+    nodeT: TypeTag[Document[MagicDrawUML]],
+    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
+  : Try[MagicDrawDocumentSetInfo] =
+
+    Option.apply(Application.getInstance().getProject)
+    .fold[Try[MagicDrawDocumentSetInfo]] {
+      Failure(new IllegalArgumentException(
+        "Cannot construct a MagicDrawDocumentSet without an active MagicDraw project"))
+    }{ p =>
+
+      implicit val umlUtil = MagicDrawUMLUtil( p )
+      import umlUtil._
+
+      resolvedMagicDrawOTISymbols
+      .fold[Try[MagicDrawDocumentSetInfo]] {
+      Failure(new IllegalArgumentException(
+        "Failed to resolve all the necessary OTI/MagicDraw profile stereotypes & properties"))
+    }{ mdOTISymbols =>
+    val mdBuiltIns: Set[BuiltInDocument[Uml]] =
+      Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
+
+    val mdBuiltInEdges: Set[DocumentEdge[Document[Uml]]] =
+      Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML )
+
+    implicit val mdDocOps = new MagicDrawDocumentOps()
+
+    DocumentSet.constructDocumentSetCrossReferenceGraph[Uml](
+      specificationRootPackages = getAllOTISerializableDocumentPackages(mdOTISymbols),
+      documentURIMapper, builtInURIMapper,
+      builtInDocuments = mdBuiltIns,
+      builtInDocumentEdges = mdBuiltInEdges,
+      ignoreCrossReferencedElementFilter,
+      unresolvedElementMapper,
+      aggregate = MagicDrawDocumentSetAggregate() )
+    .flatMap { case (( resolved, unresolved )) =>
+      resolved.ds match {
+        case mdDS: MagicDrawDocumentSet =>
+          Success((mdOTISymbols, resolved, mdDS, unresolved))
+      }
+      }
+    }
+  }
 }

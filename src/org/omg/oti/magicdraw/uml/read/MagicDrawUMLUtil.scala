@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import java.io.File
-import java.lang.Runnable
+import java.lang.{Object, Runnable}
 import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
@@ -56,7 +56,7 @@ import scala.language.implicitConversions
 import scala.deprecated
 import scala.collection.immutable._
 import scala.collection.JavaConversions._
-import scala.{Array,Boolean,Int,Option,None,Some,StringContext,Unit}
+import scala.{AnyRef, Array,Boolean,Int,Option,None,Some,StringContext,Unit}
 import scala.Predef.String
 
 // workaround to MD's deprecated API: com.nomagic.magicdraw.core.ApplicationEnvironment.getInstallRoot
@@ -64,47 +64,43 @@ import scala.Predef.String
 @deprecated("", "")
 case class MagicDrawFileChooser(title: String) extends Runnable {
 
-    var result: Option[File] = None
+  var result: Option[File] = None
 
-    override def run(): Unit = {
+  override def run(): Unit = {
 
-      val ff = new FileFilter() {
+    val ff = new FileFilter() {
 
-        def getDescription: String = "*.catalog.xml"
+      def getDescription: String = "*.catalog.xml"
 
-        def accept(f: File): Boolean =
-          f.isDirectory ||
-          (f.isFile && f.getName.endsWith(".catalog.xml"))
+      def accept(f: File): Boolean =
+        f.isDirectory ||
+        (f.isFile && f.getName.endsWith(".catalog.xml"))
 
-      }
-
-      val mdInstallDir = new File(ApplicationEnvironment.getInstallRoot)
-      val fc = new JFileChooser(mdInstallDir) {
-
-        override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
-
-        override def getDialogTitle = title
-      }
-
-      fc.setFileFilter(ff)
-      fc.setFileHidingEnabled(true)
-      fc.setAcceptAllFileFilterUsed(false)
-
-      fc.showOpenDialog(Application.getInstance().getMainFrame) match {
-        case JFileChooser.APPROVE_OPTION =>
-          val migrationFile = fc.getSelectedFile
-          result = Some(migrationFile)
-        case _                           =>
-          result = None
-      }
     }
+
+    val mdInstallDir = new File(ApplicationEnvironment.getInstallRoot)
+    val fc = new JFileChooser(mdInstallDir) {
+
+      override def getFileSelectionMode: Int = JFileChooser.FILES_ONLY
+
+      override def getDialogTitle = title
+    }
+
+    fc.setFileFilter(ff)
+    fc.setFileHidingEnabled(true)
+    fc.setAcceptAllFileFilterUsed(false)
+
+    fc.showOpenDialog(Application.getInstance().getMainFrame) match {
+      case JFileChooser.APPROVE_OPTION =>
+        val migrationFile = fc.getSelectedFile
+        result = Some(migrationFile)
+      case _ =>
+        result = None
+    }
+  }
 }
 
-case class MagicDrawUMLUtil(project: Project)
-  extends MagicDrawUMLOps {
-  self =>
-
-  type Uml = MagicDrawUML
+object MagicDrawFileChooser {
 
   def chooseCatalogFile(title: String = "Select a *.catalog.xml file"): Option[File] = {
 
@@ -114,6 +110,14 @@ case class MagicDrawUMLUtil(project: Project)
 
     chooser.result
   }
+
+}
+
+case class MagicDrawUMLUtil(project: Project)
+  extends MagicDrawUMLOps {
+  self =>
+
+  type Uml = MagicDrawUML
 
   /**
    * The MagicDraw-specific equivalent of OCL `T`.allInstances() for an OTI adapter `T` of an OMG UML metaclass
@@ -2751,6 +2755,82 @@ case class MagicDrawUMLUtil(project: Project)
 
   // -------------
 
+  lazy val resolvedMagicDrawOTISymbols : Option[MagicDrawOTISymbols]
+  = OTI_SPECIFICATION_ROOT_S
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_specification_root_s =>
+    OTI_SPECIFICATION_ROOT_packageURI
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_specification_root_packageuri =>
+    OTI_SPECIFICATION_ROOT_documentURL
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_specification_root_documenturl =>
+    OTI_SPECIFICATION_ROOT_uuidPrefix
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_specification_root_uuidprefix =>
+    OTI_SPECIFICATION_ROOT_artifactKind
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_specification_root_artifactkind =>
+    OTI_ARTIFACT_KIND_SPECIFIED_METAMODEL
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_specified_metamodel =>
+    OTI_ARTIFACT_KIND_SPECIFIED_PROFILE
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_specified_profile =>
+    OTI_ARTIFACT_KIND_SPECIFIED_MODEL_LIBRARY
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_specified_model_library =>
+    OTI_ARTIFACT_KIND_IMPLEMENTED_METAMODEL
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_implemented_metamodel =>
+    OTI_ARTIFACT_KIND_IMPLEMENTED_PROFILE
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_implemented_profile =>
+    OTI_ARTIFACT_KIND_IMPLEMENTED_MODEL_LIBRARY
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_artifact_kind_implemented_model_library =>
+    OTI_IDENTITY_S
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_identity_s =>
+    OTI_IDENTITY_xmiID
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_identity_xmiid =>
+    OTI_IDENTITY_xmiUUID
+    .fold[Option[MagicDrawOTISymbols]](None){ oti_identity_xmiuuid =>
+      Some(
+        MagicDrawOTISymbols(
+          oti_specification_root_s,
+          oti_specification_root_packageuri,
+          oti_specification_root_documenturl,
+          oti_specification_root_uuidprefix,
+          oti_specification_root_artifactkind,
+          oti_artifact_kind_specified_metamodel,
+          oti_artifact_kind_specified_profile,
+          oti_artifact_kind_specified_model_library,
+          oti_artifact_kind_implemented_metamodel,
+          oti_artifact_kind_implemented_profile,
+          oti_artifact_kind_implemented_model_library,
+          oti_identity_s,
+          oti_identity_xmiid,
+          oti_identity_xmiuuid)(this))
+    }}}}}}}}}}}}}}
+
+  def getAllOTISerializableDocumentPackages
+  (mdOTISymbols : MagicDrawOTISymbols)
+  : Set[UMLPackage[MagicDrawUML]] =
+    StereotypesHelper
+    .getExtendedElements(mdOTISymbols.md_specification_root_s)
+    .to[Set]
+    .flatMap {
+      case p: MagicDrawUML#Package =>
+        Option.apply(StereotypesHelper
+        .getStereotypePropertyValue(
+          p,
+          mdOTISymbols.md_specification_root_s,
+          mdOTISymbols.md_specification_root_artifactkind))
+        .fold[Option[UMLPackage[MagicDrawUML]]](None) { tagValueList: java.util.List[_] =>
+
+          tagValueList
+          .to[List]
+          .headOption
+          .fold[Option[UMLPackage[MagicDrawUML]]](None) { artifactKindValue =>
+
+            if (mdOTISymbols.serializableArtifactKindTagValues.contains(artifactKindValue))
+              Some(umlPackage(p))
+            else
+              None
+          }
+        }
+      case _ => None
+    }
+
   override val OTI_SPECIFICATION_ROOT_S: Option[UMLStereotype[MagicDrawUML]] =
     StereotypesHelper.getProfile(project, "OTI") match {
       case null =>
@@ -2903,4 +2983,77 @@ case class MagicDrawUMLUtil(project: Project)
 
   override val UML_PRIMITIVE_TYPES_STRING: UMLPrimitiveType[Uml] =
     StereotypesHelper.getPrimitiveByName(project, "String")
+}
+
+case class MagicDrawOTISymbols
+(oti_specification_root_s: UMLStereotype[MagicDrawUML],
+ oti_specification_root_packageuri: UMLProperty[MagicDrawUML],
+ oti_specification_root_documenturl: UMLProperty[MagicDrawUML],
+ oti_specification_root_uuidprefix: UMLProperty[MagicDrawUML],
+ oti_specification_root_artifactkind: UMLProperty[MagicDrawUML],
+ oti_artifact_kind_specified_metamodel: UMLEnumerationLiteral[MagicDrawUML],
+ oti_artifact_kind_specified_profile: UMLEnumerationLiteral[MagicDrawUML],
+ oti_artifact_kind_specified_model_library: UMLEnumerationLiteral[MagicDrawUML],
+ oti_artifact_kind_implemented_metamodel: UMLEnumerationLiteral[MagicDrawUML],
+ oti_artifact_kind_implemented_profile: UMLEnumerationLiteral[MagicDrawUML],
+ oti_artifact_kind_implemented_model_library: UMLEnumerationLiteral[MagicDrawUML],
+ oti_identity_s: UMLStereotype[MagicDrawUML],
+ oti_identity_xmiid: UMLProperty[MagicDrawUML],
+ oti_identity_xmiuuid: UMLProperty[MagicDrawUML])
+(implicit umlUtil: MagicDrawUMLUtil) {
+
+  import umlUtil._
+
+  lazy val serializableArtifactKindTagValues =
+    Set(
+      md_artifact_kind_specified_metamodel,
+      md_artifact_kind_specified_profile,
+      md_artifact_kind_specified_model_library)
+
+  def isSerializableArtifactKindTagValue(value: AnyRef)
+  : Boolean =
+    serializableArtifactKindTagValues.contains(value)
+
+  val md_specification_root_s =
+    umlMagicDrawUMLStereotype(oti_specification_root_s).getMagicDrawStereotype
+  
+  val md_specification_root_packageuri =
+    umlMagicDrawUMLProperty(oti_specification_root_packageuri).getMagicDrawProperty
+  
+  val md_specification_root_documenturl =
+    umlMagicDrawUMLProperty(oti_specification_root_documenturl).getMagicDrawProperty
+  
+  val md_specification_root_uuidprefix =
+    umlMagicDrawUMLProperty(oti_specification_root_uuidprefix).getMagicDrawProperty
+  
+  val md_specification_root_artifactkind =
+    umlMagicDrawUMLProperty(oti_specification_root_artifactkind).getMagicDrawProperty
+
+  val md_artifact_kind_specified_metamodel =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_specified_metamodel).getMagicDrawEnumerationLiteral
+  
+  val md_artifact_kind_specified_profile =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_specified_profile).getMagicDrawEnumerationLiteral
+
+  val md_artifact_kind_specified_model_library =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_specified_model_library).getMagicDrawEnumerationLiteral
+
+  val md_artifact_kind_implemented_metamodel =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_implemented_metamodel).getMagicDrawEnumerationLiteral
+
+  val md_artifact_kind_implemented_profile =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_implemented_profile).getMagicDrawEnumerationLiteral
+
+  val md_artifact_kind_implemented_model_library =
+    umlMagicDrawUMLEnumerationLiteral(oti_artifact_kind_implemented_model_library).getMagicDrawEnumerationLiteral
+
+  val md_identity_s =
+    umlMagicDrawUMLStereotype(oti_identity_s).getMagicDrawStereotype
+  
+  val md_identity_xmiid =
+    umlMagicDrawUMLProperty(oti_identity_xmiid).getMagicDrawProperty
+
+  val md_identity_xmiuuid =
+    umlMagicDrawUMLProperty(oti_identity_xmiuuid).getMagicDrawProperty
+
 }
