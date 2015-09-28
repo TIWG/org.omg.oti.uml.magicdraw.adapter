@@ -335,13 +335,24 @@ sealed trait MagicDrawLoadURL {
  * Load an external OTI Document as a MagicDraw Local Project
  *
  * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
- * @param magicDrawProjectResource the location where to save the MagicDraw local project upon successful
- *                                 completion of loading the OTI Document
+ * @param magicDrawLocalProjectResource the location where to save the MagicDraw local project upon successful
+ *                                      completion of loading the OTI Document
  */
 case class MagicDrawLocalProjectLoadURL
 ( override val externalDocumentResourceURL: URI,
-  magicDrawProjectResource: URI )
+  magicDrawLocalProjectResource: URI )
 extends MagicDrawLoadURL
+
+/**
+ * Load an external OTI Document as a MagicDraw Server Project
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
+ * @param magicDrawServerProjectResource the location that the MagicDraw Server project has been loaded from
+ */
+case class MagicDrawServerProjectLoadURL
+( override val externalDocumentResourceURL: URI,
+  magicDrawServerProjectResource: URI )
+  extends MagicDrawLoadURL
 
 /**
  * Load an external OTI SerializableDocument as a MagicDraw Local Attached Module
@@ -356,6 +367,16 @@ case class MagicDrawAttachedLocalModuleSerializableDocumentLoadURL
   magicDrawAttachedLocalModuleResource: URI )
   extends MagicDrawLoadURL
 
+/**
+ * Load an external OTI SerializableDocument as a MagicDraw Teamwork Attached Module
+ *
+ * @param externalDocumentResourceURL the external OTI Document resource to load into MagicDraw
+ * @param magicDrawAttachedServerModuleResource the location that the MagicDraw Server module has been loaded from
+ */
+case class MagicDrawAttachedServerModuleSerializableDocumentLoadURL
+( override val externalDocumentResourceURL: URI,
+  magicDrawAttachedServerModuleResource: URI )
+  extends MagicDrawLoadURL
 
 /**
  * Load an external OTI BuiltInDocument as a MagicDraw Local Attached Module

@@ -28,7 +28,7 @@ object Versions {
   // OTI Change Migration version
     
   val oti_changeMigration_prefix = version_prefix
-  val oti_changeMigration_suffix = "444921"
+  val oti_changeMigration_suffix = "444931"
   val oti_changeMigration_version = oti_changeMigration_prefix+"-"+oti_changeMigration_suffix
 
   // OTI Trees version
@@ -40,13 +40,13 @@ object Versions {
   // OTI Canonical XMI version
 
   val oti_canonical_xmi_prefix = version_prefix
-  val oti_canonical_xmi_suffix = "444923"
+  val oti_canonical_xmi_suffix = "444928"
   val oti_canonical_xmi_version = oti_canonical_xmi_prefix+"-"+oti_canonical_xmi_suffix
 
   // OTI UML Loader version
 
   val oti_loader_prefix = version_prefix
-  val oti_loader_suffix = "444924"
+  val oti_loader_suffix = "444929"
   val oti_loader_version = oti_loader_prefix+"-"+oti_loader_suffix
 
 }

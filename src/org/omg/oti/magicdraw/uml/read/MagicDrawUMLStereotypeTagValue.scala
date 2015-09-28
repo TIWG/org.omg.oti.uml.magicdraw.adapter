@@ -415,9 +415,12 @@ object MagicDrawUMLStereotypeTagValue {
               // Must cover all the MagicDraw specializations of ValueSpecification
 
               val (slotOwned, modelOwned) = s.getValue partition {
-                case _: Uml#LiteralSpecification => true
-                case _: Uml#ElementValue => false
-                case _: Uml#InstanceValue => false
+                case _: Uml#LiteralSpecification =>
+                  true
+                case _: Uml#ElementValue =>
+                  false
+                case _: Uml#InstanceValue =>
+                  false
               }
 
               if (slotOwned.nonEmpty & modelOwned.isEmpty)
@@ -446,7 +449,8 @@ object MagicDrawUMLStereotypeTagValue {
                               None
                           }
                         } yield e))
-                  case _ => None
+                  case _ =>
+                    None
                 }
 
               else if (slotOwned.isEmpty && modelOwned.nonEmpty)
@@ -501,6 +505,7 @@ object MagicDrawUMLStereotypeTagValue {
               None
           }
         } yield v
+
         extendedMetaclassTagValues ++ tagValues
     }
   }

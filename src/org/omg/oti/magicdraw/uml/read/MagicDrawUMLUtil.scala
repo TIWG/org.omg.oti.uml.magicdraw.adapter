@@ -40,7 +40,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import java.io.File
-import java.lang.{Object, Runnable}
+import java.lang.{Object, Runnable, System}
 import java.net.URI
 import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
@@ -62,7 +62,8 @@ import scala.collection.JavaConversions._
 import scala.{AnyRef, Array,Boolean,Int,Option,None,Some,StringContext,Unit}
 import scala.Predef.String
 
-// workaround to MD's deprecated API: com.nomagic.magicdraw.core.ApplicationEnvironment.getInstallRoot
+// workaround to MD's deprecated, internal API:
+// com.nomagic.magicdraw.core.ApplicationEnvironment.getInstallRoot
 // see https://issues.scala-lang.org/browse/SI-7934
 @deprecated("", "")
 case class MagicDrawFileChooser(title: String) extends Runnable {
@@ -2787,6 +2788,7 @@ case class MagicDrawUMLUtil(project: Project)
     .fold[Option[MagicDrawOTISymbols]](None){ oti_identity_xmiid =>
     OTI_IDENTITY_xmiUUID
     .fold[Option[MagicDrawOTISymbols]](None){ oti_identity_xmiuuid =>
+      System.out.println(s"resolvedMagicDrawOTISymbols...")
       Some(
         MagicDrawOTISymbols(
           oti_specification_root_s,
@@ -2835,139 +2837,91 @@ case class MagicDrawUMLUtil(project: Project)
     }
 
   override val OTI_SPECIFICATION_ROOT_S: Option[UMLStereotype[MagicDrawUML]] =
-    StereotypesHelper.getProfile(project, "OTI") match {
-      case null =>
-        None
-      case pf   =>
+    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    .flatMap { pf   =>
         Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
     }
 
   override val OTI_SPECIFICATION_ROOT_packageURI: Option[UMLProperty[MagicDrawUML]] =
-    OTI_SPECIFICATION_ROOT_S match {
-      case None    =>
-        None
-      case Some(s) =>
+    OTI_SPECIFICATION_ROOT_S.flatMap { s =>
         Option
-        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
+        .apply(StereotypesHelper
+               .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
     }
 
   override val OTI_SPECIFICATION_ROOT_documentURL: Option[UMLProperty[MagicDrawUML]] =
-    OTI_SPECIFICATION_ROOT_S match {
-      case None    =>
-        None
-      case Some(s) =>
+    OTI_SPECIFICATION_ROOT_S.flatMap { s =>
         Option
-        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
+        .apply(StereotypesHelper
+               .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
     }
 
   override val OTI_SPECIFICATION_ROOT_uuidPrefix: Option[UMLProperty[MagicDrawUML]] =
-    OTI_SPECIFICATION_ROOT_S match {
-      case None    =>
-        None
-      case Some(s) =>
+    OTI_SPECIFICATION_ROOT_S.flatMap { s =>
         Option
-        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
+        .apply(StereotypesHelper
+               .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
     }
 
   override val OTI_SPECIFICATION_ROOT_artifactKind: Option[UMLProperty[MagicDrawUML]] =
-    OTI_SPECIFICATION_ROOT_S match {
-      case None    =>
-        None
-      case Some(s) =>
+    OTI_SPECIFICATION_ROOT_S.flatMap { s =>
         Option
-        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
+        .apply(StereotypesHelper
+               .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
     }
 
   override val OTI_ARTIFACT_KIND: Option[UMLEnumeration[MagicDrawUML]] =
-    StereotypesHelper.getProfile(project, "OTI") match {
-      case null =>
-        None
-      case pf   =>
+    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    .flatMap { pf =>
         val enums = umlProfile(pf).ownedType.selectByKindOf { case e: UMLEnumeration[MagicDrawUML] => e }
-        enums.find { e => e.name.get == "ArtifactKind" }
+        enums.find { e => e.name.get == "OMG ArtifactKind" }
     }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_METAMODEL: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "SPECIFIED_METAMODEL"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+        k.ownedLiteral.find (_.name.get == "SPECIFIED_METAMODEL")
     }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_PROFILE: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "SPECIFIED_PROFILE"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+      k.ownedLiteral.find (_.name.get == "SPECIFIED_PROFILE")
     }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_MODEL_LIBRARY: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "SPECIFIED_MODEL_LIBRARY"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+      k.ownedLiteral.find (_.name.get == "SPECIFIED_MODEL_LIBRARY")
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_METAMODEL: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "IMPLEMENTED_METAMODEL"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+      k.ownedLiteral.find (_.name.get == "IMPLEMENTED_METAMODEL")
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_PROFILE: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "IMPLEMENTED_PROFILE"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+      k.ownedLiteral.find (_.name.get == "IMPLEMENTED_PROFILE")
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_MODEL_LIBRARY: Option[UMLEnumerationLiteral[MagicDrawUML]] =
-    OTI_ARTIFACT_KIND match {
-      case Some(k) =>
-        k.ownedLiteral.find {
-                              _.name.get == "IMPLEMENTED_MODEL_LIBRARY"
-                            }
-      case _       =>
-        None
+    OTI_ARTIFACT_KIND.flatMap { k =>
+      k.ownedLiteral.find (_.name.get == "IMPLEMENTED_MODEL_LIBRARY")
     }
 
   override val OTI_IDENTITY_S: Option[UMLStereotype[MagicDrawUML]] =
-    StereotypesHelper.getProfile(project, "OTI") match {
-      case null =>
-        None
-      case pf   =>
-        Option.apply(StereotypesHelper.getStereotype(project, "Identity", pf))
+    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    .flatMap { pf =>
+        Option
+        .apply(StereotypesHelper.getStereotype(project, "Identity", pf))
     }
 
   override val OTI_IDENTITY_xmiID: Option[UMLProperty[MagicDrawUML]] =
-    OTI_IDENTITY_S match {
-      case None    =>
-        None
-      case Some(s) =>
-        Option.apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiID"))
+    OTI_IDENTITY_S.flatMap { s =>
+        Option
+        .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiID"))
     }
 
   override val OTI_IDENTITY_xmiUUID: Option[UMLProperty[MagicDrawUML]] =
-    OTI_IDENTITY_S match {
-      case None    =>
-        None
-      case Some(s) =>
+    OTI_IDENTITY_S.flatMap { s =>
         Option
         .apply(StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
     }
@@ -3093,6 +3047,29 @@ case class MagicDrawOTISymbols
   def isSerializableArtifactKindTagValue(value: AnyRef)
   : Boolean =
     serializableArtifactKindTagValues.contains(value)
+
+  def isSerializableDocumentPackage(pkg: UMLPackage[Uml]): Boolean = {
+    val mdPkg = umlMagicDrawUMLPackage(pkg).getMagicDrawPackage
+    if (!StereotypesHelper.hasStereotype(mdPkg, md_specification_root_s))
+      false
+    else
+      Option.apply(
+        StereotypesHelper
+        .getStereotypePropertyValue(mdPkg, md_specification_root_s, md_specification_root_artifactkind)
+      )
+      .fold[Boolean](false) { l =>
+        l.headOption.fold[Boolean](false) {
+        case `md_artifact_kind_specified_metamodel` =>
+          true
+        case `md_artifact_kind_specified_profile` =>
+          true
+        case `md_artifact_kind_specified_model_library` =>
+          true
+        case _ =>
+          false
+        }
+      }
+    }
 
   val md_specification_root_s =
     umlMagicDrawUMLStereotype(oti_specification_root_s).getMagicDrawStereotype
