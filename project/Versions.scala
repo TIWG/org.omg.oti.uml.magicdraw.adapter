@@ -46,7 +46,7 @@ object Versions {
   // OTI UML Loader version
 
   val oti_loader_prefix = version_prefix
-  val oti_loader_suffix = "444929"
+  val oti_loader_suffix = "444934"
   val oti_loader_version = oti_loader_prefix+"-"+oti_loader_suffix
 
 }
