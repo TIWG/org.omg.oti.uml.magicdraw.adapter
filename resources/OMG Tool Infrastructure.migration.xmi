@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<migration:Old2NewIDMapping xmlns:xmi="http://www.omg.org/XMI" xmlns:migration="http://www.omg.org/ToolInfrastructure/20141225/Migration" xmi:version="2.0" modelIdentifier="dynamicScripts/org.omg.oti.magicdraw/resources/OMG%20Tool%20Infrastructure.mdzip">
+<migration:Old2NewIDMapping xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:migration="http://www.omg.org/ToolInfrastructure/20141225/Migration" modelIdentifier="dynamicScripts/org.omg.oti.magicdraw/resources/OMG%20Tool%20Infrastructure.mdzip">
   <entries oldID="_18_0_4_ff3038a_1434859244007_259489_49226" oldUUID="e767e58f-954a-46d0-9767-b93a42c85b63" newID="OTI" newUUID="www.omg.org_TIWG_OTI"/>
   <entries oldID="_18_0_4_ff3038a_1443377028401_671541_5495" oldUUID="0fe543ec-3a4a-4b2b-9596-e7b4d3d3ada8" newID="OTI._packageImport.http_u003A_u002F_u002Fwww.omg.org_u002Fspec_u002FUML_u002F20131001._0" newUUID="www.omg.org_TIWG_OTI._packageImport.http_u003A_u002F_u002Fwww.omg.org_u002Fspec_u002FUML_u002F20131001._0"/>
   <entries oldID="_18_0_4_ff3038a_1434859244009_997171_49229" oldUUID="9528c941-a338-405d-a08d-773ac92cf776" newID="OTI.enumeration_packagedElement_OMG_ArtifactKind" newUUID="www.omg.org_TIWG_OTI.enumeration_packagedElement_OMG_ArtifactKind"/>
