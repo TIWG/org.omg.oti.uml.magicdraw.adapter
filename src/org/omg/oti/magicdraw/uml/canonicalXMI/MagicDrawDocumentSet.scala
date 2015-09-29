@@ -129,6 +129,7 @@ object MagicDrawDocumentSet {
           Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML )
 
         implicit val mdDocOps = new MagicDrawDocumentOps()(umlUtil, otiCharacterizations)
+        implicit val otiC = otiCharacterizations
 
         DocumentSet.constructDocumentSetCrossReferenceGraph[Uml](
           specificationRootPackages = getAllOTISerializableDocumentPackages(mdOTISymbols),
