@@ -68,7 +68,9 @@ import java.lang.System
  * MagicDraw-specific adapter for the OTI Canonical XMI DocumentOps
  */
 class MagicDrawDocumentOps
-(implicit umlUtil: MagicDrawUMLUtil)
+(implicit
+ umlUtil: MagicDrawUMLUtil,
+ otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]])
   extends DocumentOps[MagicDrawUML] {
 
   implicit val docOps = this

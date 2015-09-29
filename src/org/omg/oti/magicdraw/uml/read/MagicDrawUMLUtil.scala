@@ -2856,6 +2856,13 @@ case class MagicDrawUMLUtil(project: Project)
                .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
     }
 
+  override val OTI_SPECIFICATION_ROOT_nsPrefix: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "nsPrefix"))
+    }
+
   override val OTI_SPECIFICATION_ROOT_uuidPrefix: Option[UMLProperty[MagicDrawUML]] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
         Option
@@ -2868,6 +2875,47 @@ case class MagicDrawUMLUtil(project: Project)
         Option
         .apply(StereotypesHelper
                .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S: Option[UMLStereotype[MagicDrawUML]] =
+    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+      .flatMap { pf   =>
+        Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
+      }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_packageURI: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_documentURL: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_nsPrefix: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "nsPrefix"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_uuidPrefix: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
+    }
+
+  override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_artifactKind: Option[UMLProperty[MagicDrawUML]] =
+    OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
+      Option
+        .apply(StereotypesHelper
+          .getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
     }
 
   override val OTI_ARTIFACT_KIND: Option[UMLEnumeration[MagicDrawUML]] =

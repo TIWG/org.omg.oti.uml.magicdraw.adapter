@@ -6,5 +6,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.omg.oti"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.omg.oti.trees"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.omg.oti.changeMigration"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.omg.oti.uml.canonicalXMI"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.omg.oti.uml.loader"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
