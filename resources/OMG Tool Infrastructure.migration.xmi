@@ -29,11 +29,13 @@
   <entries oldID="_18_0_4_ff3038a_1443452416853_262066_5375" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.artifactKind"/>
   <entries oldID="_18_0_4_ff3038a_1443451631675_835671_4985" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.base_Comment"/>
   <entries oldID="_18_0_4_ff3038a_1443452416853_194973_5374" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.documentURL"/>
+  <entries oldID="_18_0_4_ff3038a_1443652703930_954948_5119" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.nsPrefix"/>
   <entries oldID="_18_0_4_ff3038a_1443452416852_603656_5373" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.packageURI"/>
   <entries oldID="_18_0_4_ff3038a_1443452416853_767670_5376" newID="OTI.stereotype_packagedElement_SpecificationRootCharacteristics_ownedAttribute.uuidPrefix"/>
   <entries oldID="_18_0_4_ff3038a_1434859245878_420663_49261" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.artifactKind"/>
   <entries oldID="_18_0_4_ff3038a_1434859245877_732810_49258" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.base_Package"/>
   <entries oldID="_18_0_4_ff3038a_1434859245878_956211_49260" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.documentURL"/>
+  <entries oldID="_18_0_4_ff3038a_1443652635018_649587_5100" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.nsPrefix"/>
   <entries oldID="_18_0_4_ff3038a_1434859245877_763448_49259" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.packageURI"/>
   <entries oldID="_18_0_4_ff3038a_1434859272285_173376_49345" newID="OTI.stereotype_packagedElement_SpecificationRoot_ownedAttribute.uuidPrefix"/>
 </migration:Old2NewIDMapping>
