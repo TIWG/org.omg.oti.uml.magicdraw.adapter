@@ -2836,8 +2836,18 @@ case class MagicDrawUMLUtil(project: Project)
       case _ => None
     }
 
-  override val OTI_SPECIFICATION_ROOT_S: Option[UMLStereotype[MagicDrawUML]] =
+  val md_OTI_PROFILE: Option[MagicDrawUML#Profile] =
     Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+
+  override val OTI_PROFILE: Option[UMLProfile[MagicDrawUML]] =
+    md_OTI_PROFILE
+    .map { pf =>
+      umlProfile(pf)
+    }
+
+
+  override val OTI_SPECIFICATION_ROOT_S: Option[UMLStereotype[MagicDrawUML]] =
+    md_OTI_PROFILE
     .flatMap { pf   =>
         Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
     }
@@ -2878,9 +2888,9 @@ case class MagicDrawUMLUtil(project: Project)
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S: Option[UMLStereotype[MagicDrawUML]] =
-    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    md_OTI_PROFILE
       .flatMap { pf   =>
-        Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRoot", pf))
+        Option.apply(StereotypesHelper.getStereotype(project, "SpecificationRootCharacteristics", pf))
       }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_packageURI: Option[UMLProperty[MagicDrawUML]] =
@@ -2919,7 +2929,7 @@ case class MagicDrawUMLUtil(project: Project)
     }
 
   override val OTI_ARTIFACT_KIND: Option[UMLEnumeration[MagicDrawUML]] =
-    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    md_OTI_PROFILE
     .flatMap { pf =>
         val enums = umlProfile(pf).ownedType.selectByKindOf { case e: UMLEnumeration[MagicDrawUML] => e }
         enums.find { e => e.name.get == "OMG ArtifactKind" }
@@ -2956,7 +2966,7 @@ case class MagicDrawUMLUtil(project: Project)
     }
 
   override val OTI_IDENTITY_S: Option[UMLStereotype[MagicDrawUML]] =
-    Option.apply(StereotypesHelper.getProfile(project, "OTI"))
+    md_OTI_PROFILE
     .flatMap { pf =>
         Option
         .apply(StereotypesHelper.getStereotype(project, "Identity", pf))

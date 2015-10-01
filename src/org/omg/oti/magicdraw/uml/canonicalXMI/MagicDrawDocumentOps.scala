@@ -184,7 +184,7 @@ class MagicDrawDocumentOps
       root.getEffectiveURI.flatMap { uri =>
         root.name.flatMap { nsPrefix =>
           root.oti_uuidPrefix.flatMap { uuidPrefix =>
-            root.oti_documentURL.flatMap { documentURL =>
+            root.getDocumentURL.flatMap { documentURL =>
               val externalDocumentResourceURL = new URI(documentURL)
               val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
               import MagicDrawProjectAPIHelper._
