@@ -54,7 +54,8 @@ trait MagicDrawUMLTemplateParameter
   def getMagicDrawTemplateParameter = e
   import ops._
 
-  override def default: Option[UMLParameterableElement[Uml]] = ???
+  override def default: Option[UMLParameterableElement[Uml]] =
+    Option.apply( e.getDefault )
   
   override def ownedParameteredElement: Option[UMLParameterableElement[Uml]] = 
     Option.apply( e.getOwnedParameteredElement )

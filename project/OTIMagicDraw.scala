@@ -29,7 +29,8 @@ object OTIMagicDraw extends Build {
 
     // publish Maven POM metadata (instead of Ivy); this is important for the UpdatesPlugin's ability to find available updates.
     publishMavenStyle := true) ++
-    ((Option.apply(System.getProperty("OTI_LOCAL_REPOSITORY")), Option.apply(System.getProperty("OTI_REMOTE_REPOSITORY"))) match {
+    ((Option.apply(System.getProperty("OTI_LOCAL_REPOSITORY")),
+      Option.apply(System.getProperty("OTI_REMOTE_REPOSITORY"))) match {
       case (Some(dir), _) =>
         if (new File(dir) / "settings.xml" exists) {
           val cache = new MavenCache("JPL-OMG", new File(dir))
@@ -70,33 +71,36 @@ object OTIMagicDraw extends Build {
 
   val QUALIFIED_NAME = "^[a-zA-Z][\\w_]*(\\.[a-zA-Z][\\w_]*)*$".r
 
-  lazy val oti_magicdraw = Project(
-    "oti-magicdraw",
-    file(".")).
-    enablePlugins(aether.AetherPlugin).
-    enablePlugins(com.typesafe.sbt.packager.universal.UniversalPlugin).
-    enablePlugins(com.timushev.sbt.updates.UpdatesPlugin).
-    enablePlugins(gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin).
-    settings(otiSettings: _*).
-    settings(commonSettings: _*).
-    settings(magicDrawEclipseClasspathSettings: _*).
-    settings(
+  lazy val oti_magicdraw = Project("oti-magicdraw", file("."))
+    .enablePlugins(aether.AetherPlugin)
+    .enablePlugins(com.typesafe.sbt.packager.universal.UniversalPlugin)
+    .enablePlugins(com.timushev.sbt.updates.UpdatesPlugin)
+    .enablePlugins(gov.nasa.jpl.sbt.MagicDrawEclipseClasspathPlugin)
+    .settings(otiSettings: _*)
+    .settings(commonSettings: _*)
+    .settings(magicDrawEclipseClasspathSettings: _*)
+    .settings(
       version := Versions.version,
       removeExistingHeaderBlock := true,
       libraryDependencies ++= Seq(
         "xml-resolver" % "xml-resolver" % Versions.xmlResolver % "provided",
+
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-core"
         % Versions.oti_core_version intransitive() withSources() withJavadoc()
         artifacts Artifact("oti-core", "resource"),
+
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-change-migration"
         % Versions.oti_changeMigration_version intransitive() withSources() withJavadoc()
         artifacts Artifact("oti-change-migration", "resource"),
+
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-trees"
         % Versions.oti_trees_version intransitive() withSources() withJavadoc()
         artifacts Artifact("oti-trees", "resource"),
+
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-canonical-xmi"
         % Versions.oti_canonical_xmi_version intransitive() withSources() withJavadoc()
         artifacts Artifact("oti-canonical-xmi", "resource"),
+
         "gov.nasa.jpl.mbee.omg.oti" %% "oti-loader"
         % Versions.oti_loader_version intransitive() withSources() withJavadoc()
         artifacts Artifact("oti-loader", "resource")
