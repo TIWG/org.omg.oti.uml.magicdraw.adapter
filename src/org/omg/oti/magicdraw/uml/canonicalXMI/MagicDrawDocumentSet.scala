@@ -110,8 +110,11 @@ object MagicDrawDocumentSet {
 
     Option.apply(Application.getInstance().getProject)
     .fold[Try[MagicDrawDocumentSetInfo]] {
-      Failure(new IllegalArgumentException(
-        "Cannot construct a MagicDrawDocumentSet without an active MagicDraw project"))
+      Failure(
+        DocumentSetException(
+        "createMagicDrawProjectDocumentSet failed",
+        new IllegalArgumentException(
+        "Cannot construct a MagicDrawDocumentSet without an active MagicDraw project")))
     }{ p =>
 
       implicit val umlUtil = MagicDrawUMLUtil( p )
@@ -119,8 +122,11 @@ object MagicDrawDocumentSet {
 
       resolvedMagicDrawOTISymbols
       .fold[Try[MagicDrawDocumentSetInfo]] {
-      Failure(new IllegalArgumentException(
-        "Failed to resolve all the necessary OTI/MagicDraw profile stereotypes & properties"))
+      Failure(
+        DocumentSetException(
+        "createMagicDrawProjectDocumentSet failed",
+        new IllegalArgumentException(
+        "Failed to resolve all the necessary OTI/MagicDraw profile stereotypes & properties")))
       }{ mdOTISymbols =>
         val mdBuiltIns: Set[BuiltInDocument[Uml]] =
           Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )

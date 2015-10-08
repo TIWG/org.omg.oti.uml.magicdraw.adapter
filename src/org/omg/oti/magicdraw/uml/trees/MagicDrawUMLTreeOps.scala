@@ -42,7 +42,7 @@ package org.omg.oti.magicdraw.uml.trees
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.uml.read.api.UMLClassifier
-import org.omg.oti.uml.trees.TreeOps
+import org.omg.oti.uml.trees._
 
 import scala.{Boolean,Option,None,Some,StringContext}
 import scala.Predef.String
@@ -59,7 +59,10 @@ extends TreeOps[MagicDrawUML] {
     Option.apply(StereotypesHelper.getProfile(
       umlUtil.project, blockSpecificTypeProfileName)) match {
       case None =>
-        throw new IllegalArgumentException(s"No profile named '$blockSpecificTypeProfileName'")
+        throw TreeOpsException(
+          this,
+          "MagicDrawUMLTreeOps initialization failed",
+          new IllegalArgumentException(s"No profile named '$blockSpecificTypeProfileName'"))
       case Some(pf) =>
         pf
     }
@@ -68,7 +71,10 @@ extends TreeOps[MagicDrawUML] {
     Option.apply(StereotypesHelper.getStereotype(
       umlUtil.project, blockSpecificTypeStereotypeName, blockSpecificTypePF)) match {
       case None =>
-        throw new IllegalArgumentException(s"No stereotype named '$blockSpecificTypeStereotypeName'")
+        throw TreeOpsException(
+          this,
+          "MagicDrawUMLTreeOps initialization failed",
+          new IllegalArgumentException(s"No stereotype named '$blockSpecificTypeStereotypeName'"))
       case Some(s) =>
         s
     }
@@ -77,7 +83,10 @@ extends TreeOps[MagicDrawUML] {
     Option.apply(StereotypesHelper.getProfile(
       umlUtil.project, "SysML")) match {
       case None =>
-        throw new IllegalArgumentException(s"No profile named 'SysML'")
+        throw TreeOpsException(
+          this,
+          "MagicDrawUMLTreeOps initialization failed",
+          new IllegalArgumentException(s"No profile named 'SysML'"))
       case Some(pf) =>
         pf
     }
@@ -86,7 +95,10 @@ extends TreeOps[MagicDrawUML] {
     Option.apply(StereotypesHelper.getStereotype(
       umlUtil.project, "PropertySpecificType", sysmlPF)) match {
       case None =>
-        throw new IllegalArgumentException(s"No stereotype named 'PropertySpecificType'")
+        throw TreeOpsException(
+          this,
+          "MagicDrawUMLTreeOps initialization failed",
+          new IllegalArgumentException(s"No stereotype named 'PropertySpecificType'"))
       case Some(s) =>
         s
     }

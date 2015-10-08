@@ -42,7 +42,7 @@ package org.omg.oti.magicdraw.uml.write
 import com.nomagic.magicdraw.openapi.uml.{ReadOnlyElementException, SessionManager}
 import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.read.api._
-import org.omg.oti.uml.write.api.UMLUpdate
+import org.omg.oti.uml.write.api.{UMLUpdateException, UMLUpdate}
 
 import scala.{Boolean,Double,Option,None,Some,StringContext,Tuple2,Unit}
 import scala.collection.JavaConversions._
@@ -76,13 +76,26 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         Success(e)
       } catch {
         case t: ReadOnlyElementException =>
-          Failure(t)
+          Failure(
+            UMLUpdateException(
+              this,
+              "checkSession error",
+              t))
         case t: Throwable =>
-          Failure(t)
+          Failure(
+            UMLUpdateException(
+              this,
+              "checkSession error",
+              t))
       }
     else
-      Failure(new IllegalArgumentException(
-        s"Modifying a MagicDraw UML project requires a MagicDraw session for that project"))
+      Failure(
+        UMLUpdateException(
+          this,
+          "checkSession error",
+          ops.illegalElementException(
+            s"Modifying a MagicDraw UML project requires a MagicDraw session for that project",
+            ops.umlElement(e))))
 
   /**
    * Ensures that the MagicDraw element is valid
@@ -93,9 +106,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    */
   def checkElement[M <: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element](e: M): Try[M] =
     if (e.isInvalid)
-      Failure(new IllegalArgumentException(
-        s"Invalid ${e.getHumanName} (ID=${e.getID})"
-      ))
+      Failure(
+        UMLUpdateException(
+          this,
+          "checkElement error",
+          ops.illegalElementException(
+            s"Invalid ${e.getHumanName} (ID=${e.getID})",
+            ops.umlElement(e))))
     else
       Success(e)
 
@@ -132,11 +149,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    nAdaptee: (NAdapt => N)): Try[Unit] =
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       (Try[(M, Set[N])](Tuple2(_from, Set())) /: ns) {
-        case (Failure(f), _) => Failure(f)
+        case (Failure(f), _) =>
+          Failure(f)
         case (Success(Tuple2(f, vs)), e) =>
           checkSession(nAdaptee(nAdapter(e))) match {
-            case Failure(f) => Failure(f)
-            case Success(ve) => Success(Tuple2(f, vs + ve))
+            case Failure(f) =>
+              Failure(f)
+            case Success(ve) =>
+              Success(Tuple2(f, vs + ve))
           }
       }
     } flatMap { case (_from, _tos) =>
@@ -154,9 +174,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
           if !_tos.contains(_rem)
         } yield _rem
 
-        for {_rem <- _toRemove} m_n(_from).remove(_rem)
+        for {_rem <- _toRemove}
+          m_n(_from).remove(_rem)
 
-        for {_add <- _toAdd} m_n(_from).add(_add)
+        for {_add <- _toAdd}
+          m_n(_from).add(_add)
       })
     }
 
@@ -193,18 +215,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    nAdaptee: (NAdapt => N)): Try[Unit] =
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       (Try[(M, Seq[N])](Tuple2(_from, Seq())) /: ns) {
-        case (Failure(f), _) => Failure(f)
+        case (Failure(f), _) =>
+          Failure(f)
         case (Success(Tuple2(f, vs)), e) =>
           checkSession(nAdaptee(nAdapter(e))) match {
-            case Failure(f) => Failure(f)
-            case Success(ve) => Success(Tuple2(f, vs :+ ve))
+            case Failure(f) =>
+              Failure(f)
+            case Success(ve) =>
+              Success(Tuple2(f, vs :+ ve))
           }
       }
     } flatMap { case (_from, _tos) =>
 
       Try({
         m_n(_from).clear()
-        for {_add <- _tos} m_n(_from).add(_add)
+        for {_add <- _tos}
+          m_n(_from).add(_add)
       })
     }
 
@@ -287,11 +313,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     checkSession(mAdaptee(mAdapter(m)))
     .flatMap { _from =>
       (Try[(M, Set[N])](Tuple2(_from, Set())) /: ns) {
-        case (Failure(f), _) => Failure(f)
+        case (Failure(f), _) =>
+          Failure(f)
         case (Success(Tuple2(f, vs)), e) =>
           checkElement(nAdaptee(nAdapter(e))) match {
-            case Failure(f) => Failure(f)
-            case Success(ve) => Success(Tuple2(f, vs + ve))
+            case Failure(f) =>
+              Failure(f)
+            case Success(ve) =>
+              Success(Tuple2(f, vs + ve))
           }
       }
     }
@@ -310,10 +339,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       } yield _rem
 
       Try({
-        for {_rem <- _toRemove} m_n(_from).remove(_rem)
+        for {_rem <- _toRemove}
+          m_n(_from).remove(_rem)
       }).flatMap { _ =>
         Try({
-          for {_add <- _toAdd} m_n(_from).add(_add)
+          for {_add <- _toAdd}
+            m_n(_from).add(_add)
         })
       }
     }
@@ -351,18 +382,22 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    nAdaptee: (NAdapt => N)): Try[Unit] =
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       (Try[(M, Seq[N])](Tuple2(_from, Seq())) /: ns) {
-        case (Failure(f), _) => Failure(f)
+        case (Failure(f), _) =>
+          Failure(f)
         case (Success(Tuple2(f, vs)), e) =>
           checkElement(nAdaptee(nAdapter(e))) match {
-            case Failure(f) => Failure(f)
-            case Success(ve) => Success(Tuple2(f, vs :+ ve))
+            case Failure(f) =>
+              Failure(f)
+            case Success(ve) =>
+              Success(Tuple2(f, vs :+ ve))
           }
       }
     } flatMap { case (_from, _tos) =>
 
       Try({
         m_n(_from).clear()
-        for {_add <- _tos} m_n(_from).add(_add)
+        for {_add <- _tos}
+          m_n(_from).add(_add)
       })
     }
 

@@ -110,7 +110,11 @@ class MagicDrawDocumentOps
         .flatMap { path => Option.apply(otiUMLCL.getResource(path)) }
         .headOption
         .fold[Try[URI]] {
-          Failure(new IllegalArgumentException(s"Cannot find OTI catalog file!"))
+          Failure(
+            DocumentOpsException(
+              this,
+              "initializeDocumentSet() failed",
+              new IllegalArgumentException(s"Cannot find OTI catalog file!")))
         }{ url =>
           Try(url.toURI)
         }
@@ -122,7 +126,11 @@ class MagicDrawDocumentOps
         .flatMap { path => Option.apply(mdUMLCL.getResource(path)) }
         .headOption
         .fold[Try[URI]] {
-          Failure(new IllegalArgumentException(s"Cannot find MagicDraw catalog file!"))
+          Failure(
+            DocumentOpsException(
+              this,
+              "initializeDocumentSet() failed",
+              new IllegalArgumentException(s"Cannot find MagicDraw catalog file!")))
         }{ url =>
           Try(url.toURI)
         }
@@ -144,7 +152,11 @@ class MagicDrawDocumentOps
 
     Option.apply(Application.getInstance.getProject)
     .fold[Try[DocumentSet[MagicDrawUML]]]{
-      Failure(new IllegalArgumentException("Cannot initialize a MagicDraw OTI DocumentSet without a current Project"))
+      Failure(
+        DocumentOpsException(
+          this,
+          "initializeDocumentSet(documentURIMapper, builtInURIMapper) failed",
+          new IllegalArgumentException("Cannot initialize a MagicDraw OTI DocumentSet without a current Project")))
     }{ p =>
         implicit val umlUtil = MagicDrawUMLUtil(p)
         import umlUtil._
