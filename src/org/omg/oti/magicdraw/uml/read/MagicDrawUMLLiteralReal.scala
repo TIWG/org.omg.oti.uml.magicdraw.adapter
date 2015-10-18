@@ -39,10 +39,8 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import org.omg.oti.uml.IllegalElementException
 import org.omg.oti.uml.read.api._
-import scala.{Double,Option}
-import scala.collection.Iterable
+import scala.Double
 
 trait MagicDrawUMLLiteralReal 
   extends UMLLiteralReal[MagicDrawUML]
@@ -52,13 +50,7 @@ trait MagicDrawUMLLiteralReal
   def getMagicDrawLiteralReal = e
   
   override def value: Double =
-    Option.apply(e.getValue)
-    .fold[Double] {
-      throw new IllegalElementException[MagicDrawUML, MagicDrawUMLLiteralReal](
-       "UMLLiteralReal[MagicDrawUML].value: a LiteralReal must have a value", Iterable(this))
-    }{ d =>
-      d
-    }
+    e.getValue
 
 }
 

@@ -40,8 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
-import scala.Predef.???
+import scala.collection.JavaConversions._
+import scala.{Option,Some}
 
 trait MagicDrawUMLPseudostate 
   extends UMLPseudostate[MagicDrawUML]
@@ -49,16 +49,45 @@ trait MagicDrawUMLPseudostate
 
   override protected def e: Uml#Pseudostate
   def getMagicDrawPseudostate = e
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 14.1
-  override def kind: Option[UMLPseudostateKind.Value] = ???
+  override def kind
+  : Option[UMLPseudostateKind.Value] =
+  Option.apply(e.getKind)
+  .fold[Option[UMLPseudostateKind.Value]](Option.empty[UMLPseudostateKind.Value]){
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.INITIAL =>
+      Some(UMLPseudostateKind.initial)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.DEEPHISTORY =>
+      Some(UMLPseudostateKind.deepHistory)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.SHALLOWHISTORY =>
+      Some(UMLPseudostateKind.shallowHistory)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JOIN =>
+      Some(UMLPseudostateKind.join)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.FORK =>
+      Some(UMLPseudostateKind.fork)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.JUNCTION =>
+      Some(UMLPseudostateKind.junction)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.CHOICE =>
+      Some(UMLPseudostateKind.choice)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.ENTRYPOINT =>
+      Some(UMLPseudostateKind.entryPoint)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.EXITPOINT =>
+      Some(UMLPseudostateKind.exitPoint)
+    case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.TERMINATE =>
+      Some(UMLPseudostateKind.terminate)
+  }
   
   // 14.1
-  override def entry_connectionPointReference: Option[UMLConnectionPointReference[Uml]] = ???
+  override def entry_connectionPointReference
+  : Option[UMLConnectionPointReference[Uml]] =
+  Option.apply(e.get_connectionPointReferenceOfEntry.toList.headOption.getOrElse(null))
   
   // 14.1
-  override def exit_connectionPointReference: Option[UMLConnectionPointReference[Uml]] = ???
-  
+  override def exit_connectionPointReference
+  : Option[UMLConnectionPointReference[Uml]] =
+  Option.apply(e.get_connectionPointReferenceOfExit.toList.headOption.getOrElse(null))
 
 }
 

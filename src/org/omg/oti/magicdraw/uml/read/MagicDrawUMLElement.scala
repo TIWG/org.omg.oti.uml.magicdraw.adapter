@@ -42,6 +42,7 @@ package org.omg.oti.magicdraw.uml.read
 import com.nomagic.magicdraw.uml.UUIDRegistry
 import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 import scala.annotation
@@ -55,6 +56,7 @@ import scala.collection.Iterable
 import java.lang.Runnable
 
 import scala.language.{implicitConversions, postfixOps}
+import scalaz.{\/, \/-, NonEmptyList}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
@@ -105,7 +107,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def mofMetaclassName: String =
     StereotypesHelper.getBaseClass(e).getName
 
-  override def tagValues: Seq[MagicDrawUMLStereotypeTagValue] =
+  override def tagValues
+  : NonEmptyList[UMLError.UException] \/ Seq[MagicDrawUMLStereotypeTagValue] =
     MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
   override def toolSpecific_id: Option[String] =
@@ -114,12 +117,14 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def toolSpecific_uuid: Option[String] =
     Some(UUIDRegistry.getUUID(e))
 
-  override def hasStereotype(s: UMLStereotype[Uml]): Boolean =
-    umlMagicDrawUMLStereotype(s).isStereotypeApplied(e)
+  override def hasStereotype(s: UMLStereotype[Uml])
+  : NonEmptyList[UMLError.UException] \/ Boolean =
+    \/-(umlMagicDrawUMLStereotype(s).isStereotypeApplied(e))
 
-  override def getAppliedStereotypesWithoutMetaclassProperties: Set[UMLStereotype[Uml]] = {
+  override def getAppliedStereotypesWithoutMetaclassProperties
+  : NonEmptyList[UMLError.UException] \/ Set[UMLStereotype[Uml]] = {
     val eMetaclass = e.getClassType
-    StereotypesHelper.getStereotypes(e).toSet[Uml#Stereotype] flatMap { s =>
+    \/-(StereotypesHelper.getStereotypes(e).toSet[Uml#Stereotype] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
         val pMetaclass = StereotypesHelper.getClassOfMetaClass(p.getType.asInstanceOf[Uml#Class])
         eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf(pMetaclass, eMetaclass)
@@ -128,15 +133,19 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
         Some(umlStereotype(s))
       else
         None
-    }
+    })
   }
 
-  override def isAncestorOf(other: UMLElement[Uml]): Boolean =
-    (e == umlMagicDrawUMLElement(other).getMagicDrawElement) ||
-      (other.owner match {
-        case None => false
-        case Some(parent) => isAncestorOf(parent)
-      })
+  override def isAncestorOf(other: UMLElement[Uml])
+  : NonEmptyList[UMLError.UException] \/ Boolean =
+    if (e == umlMagicDrawUMLElement(other).getMagicDrawElement)
+      \/-(true)
+    else
+      other
+      .owner
+      .fold[NonEmptyList[UMLError.UException] \/ Boolean](\/-(false)){ parent =>
+        isAncestorOf(parent)
+      }
 
   override def toWrappedObjectString: String = {
 

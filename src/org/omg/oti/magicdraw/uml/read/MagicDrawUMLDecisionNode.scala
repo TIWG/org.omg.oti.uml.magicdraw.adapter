@@ -41,7 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLDecisionNode 
   extends UMLDecisionNode[MagicDrawUML]
@@ -49,10 +48,16 @@ trait MagicDrawUMLDecisionNode
 
   override protected def e: Uml#DecisionNode
   def getMagicDrawDecisionNode = e
+  override implicit val umlOps = ops
+  import umlOps._
 
-  override def decisionInput: Option[UMLBehavior[Uml]] = ???
+  override def decisionInput
+  : Option[UMLBehavior[Uml]] =
+  Option.apply(e.getDecisionInput)
   
-  override def decisionInputFlow: Option[UMLObjectFlow[Uml]] = ??? 
+  override def decisionInputFlow
+  : Option[UMLObjectFlow[Uml]] =
+  Option.apply(e.getDecisionInputFlow)
 
 }
 

@@ -42,8 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.{Option,Some}
-import scala.Predef.???
 
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLPackageableElement 
@@ -73,10 +73,10 @@ trait MagicDrawUMLPackageableElement
       }
 
   override def importedMember_namespace: Set[UMLNamespace[Uml]] =
-    ???
+    throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.importedMember_namespace not available")
 
   override def deployedElement_deploymentTarget: Set[UMLDeploymentTarget[Uml]] =
-    ???
+    throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.deployedElement_deploymentTarget not available")
 
   override def utilizedElement_manifestation: Set[UMLManifestation[Uml]] =
     e.get_manifestationOfUtilizedElement.to[Set]

@@ -42,8 +42,9 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.{Boolean,Option,None,Some,StringContext}
-import scala.Predef.{???,String}
+import scala.Predef.String
 
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLParameter 
@@ -65,11 +66,11 @@ trait MagicDrawUMLParameter
   }
 
 	// 9.9
-	override def defaultValue: Option[UMLValueSpecification[Uml]] =
+  override def defaultValue: Option[UMLValueSpecification[Uml]] =
     Option.apply( e.getDefaultValue )
   
   // 9.9
-	override def direction: Option[UMLParameterDirectionKind.Value] =
+  override def direction: Option[UMLParameterDirectionKind.Value] =
     Option.apply(e.getDirection)
     .fold[Option[UMLParameterDirectionKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN =>
@@ -83,7 +84,7 @@ trait MagicDrawUMLParameter
   }
   
   // 9.9
-	override def effect: Option[UMLParameterEffectKind.Value] = 
+  override def effect: Option[UMLParameterEffectKind.Value] =
     Option.apply(e.getEffect)
     .fold[Option[UMLParameterEffectKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE =>
@@ -97,36 +98,36 @@ trait MagicDrawUMLParameter
     }
   
   // 9.9
-	override def isException: Boolean = 
+  override def isException: Boolean =
     e.isException
   
   // 9.9
-	override def isStream: Boolean =
+  override def isStream: Boolean =
     e.isStream
   
   // 9.9
-	override def operation: Option[UMLOperation[Uml]] = 
+  override def operation: Option[UMLOperation[Uml]] =
     Option.apply( e.getOperation )
   
   // 9.9
-	override def parameterSet: Set[UMLParameterSet[Uml]] =
+  override def parameterSet: Set[UMLParameterSet[Uml]] =
     e.getParameterSet.to[Set]
   
   // 9.9
-	override def ownedParameter_ownerFormalParam: Option[UMLBehavioralFeature[Uml]] =
+  override def ownedParameter_ownerFormalParam: Option[UMLBehavioralFeature[Uml]] =
     Option.apply(e.getOwnerFormalParam)
   
   // 9.9
-	override def parameter_activityParameterNode: Set[UMLActivityParameterNode[Uml]] =
+  override def parameter_activityParameterNode: Set[UMLActivityParameterNode[Uml]] =
     e.get_activityParameterNodeOfParameter().to[Set]
   
   // 9.9
-	override def ownedParameter_behavior: Option[UMLBehavior[Uml]] =
+  override def ownedParameter_behavior: Option[UMLBehavior[Uml]] =
     Option.apply(e.get_behaviorOfOwnedParameter())
   
   // 9.9
-	override def result_opaqueExpression: Set[UMLOpaqueExpression[Uml]] =
-    ???
+  override def result_opaqueExpression: Set[UMLOpaqueExpression[Uml]] =
+    throw UMLError.umlAdaptationError(s"MagicDrawUMLParameter.result_opaqueExpression is undefined!")
 
 
 }

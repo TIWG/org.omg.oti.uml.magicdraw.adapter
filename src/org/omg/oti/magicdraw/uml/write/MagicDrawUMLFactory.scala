@@ -40,10 +40,12 @@
 package org.omg.oti.magicdraw.uml.write
 
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
+
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.write.api.UMLFactory
 
-import scala.util.{Success, Try}
+import scalaz._
 
 case class MagicDrawUMLFactory(mdUMLUtils: MagicDrawUMLUtil)
   extends UMLFactory[MagicDrawUML] {
@@ -52,583 +54,583 @@ case class MagicDrawUMLFactory(mdUMLUtils: MagicDrawUMLUtil)
 
   import mdUMLUtils._
 
-  override def createUMLAbstraction: Try[UMLAbstraction[MagicDrawUML]] =
-    Success(f.createAbstractionInstance())
+  override def createUMLAbstraction: \/[NonEmptyList[UMLError.UException],UMLAbstraction[MagicDrawUML]] =
+    \/-(f.createAbstractionInstance())
 
-  override def createUMLAcceptCallAction: Try[UMLAcceptCallAction[MagicDrawUML]] =
-    Success(f.createAcceptCallActionInstance())
+  override def createUMLAcceptCallAction: \/[NonEmptyList[UMLError.UException],UMLAcceptCallAction[MagicDrawUML]] =
+    \/-(f.createAcceptCallActionInstance())
 
-  override def createUMLAcceptEventAction: Try[UMLAcceptEventAction[MagicDrawUML]] =
-    Success(f.createAcceptEventActionInstance())
+  override def createUMLAcceptEventAction: \/[NonEmptyList[UMLError.UException],UMLAcceptEventAction[MagicDrawUML]] =
+    \/-(f.createAcceptEventActionInstance())
 
-  override def createUMLActionExecutionSpecification: Try[UMLActionExecutionSpecification[Uml]] =
-    Success(f.createActionExecutionSpecificationInstance())
+  override def createUMLActionExecutionSpecification: \/[NonEmptyList[UMLError.UException],UMLActionExecutionSpecification[Uml]] =
+    \/-(f.createActionExecutionSpecificationInstance())
 
-  override def createUMLActionInputPin: Try[UMLActionInputPin[MagicDrawUML]] =
-    Success(f.createActionInputPinInstance())
+  override def createUMLActionInputPin: \/[NonEmptyList[UMLError.UException],UMLActionInputPin[MagicDrawUML]] =
+    \/-(f.createActionInputPinInstance())
 
-  override def createUMLActivity: Try[UMLActivity[MagicDrawUML]] =
-    Success(f.createActivityInstance())
+  override def createUMLActivity: \/[NonEmptyList[UMLError.UException],UMLActivity[MagicDrawUML]] =
+    \/-(f.createActivityInstance())
 
-  override def createUMLActivityFinalNode: Try[UMLActivityFinalNode[MagicDrawUML]] =
-    Success(f.createActivityFinalNodeInstance())
+  override def createUMLActivityFinalNode: \/[NonEmptyList[UMLError.UException],UMLActivityFinalNode[MagicDrawUML]] =
+    \/-(f.createActivityFinalNodeInstance())
 
-  override def createUMLActivityParameterNode: Try[UMLActivityParameterNode[MagicDrawUML]] =
-    Success(f.createActivityParameterNodeInstance())
+  override def createUMLActivityParameterNode: \/[NonEmptyList[UMLError.UException],UMLActivityParameterNode[MagicDrawUML]] =
+    \/-(f.createActivityParameterNodeInstance())
 
-  override def createUMLActivityPartition: Try[UMLActivityPartition[MagicDrawUML]] =
-    Success(f.createActivityPartitionInstance())
+  override def createUMLActivityPartition: \/[NonEmptyList[UMLError.UException],UMLActivityPartition[MagicDrawUML]] =
+    \/-(f.createActivityPartitionInstance())
 
-  override def createUMLActor: Try[UMLActor[MagicDrawUML]] =
-    Success(f.createActorInstance())
+  override def createUMLActor: \/[NonEmptyList[UMLError.UException],UMLActor[MagicDrawUML]] =
+    \/-(f.createActorInstance())
 
-  override def createUMLAddStructuralFeatureValueAction: Try[UMLAddStructuralFeatureValueAction[MagicDrawUML]] =
-    Success(f.createAddStructuralFeatureValueActionInstance())
+  override def createUMLAddStructuralFeatureValueAction: \/[NonEmptyList[UMLError.UException],UMLAddStructuralFeatureValueAction[MagicDrawUML]] =
+    \/-(f.createAddStructuralFeatureValueActionInstance())
 
-  override def createUMLAddVariableValueAction: Try[UMLAddVariableValueAction[MagicDrawUML]] =
-    Success(f.createAddVariableValueActionInstance())
+  override def createUMLAddVariableValueAction: \/[NonEmptyList[UMLError.UException],UMLAddVariableValueAction[MagicDrawUML]] =
+    \/-(f.createAddVariableValueActionInstance())
 
-  override def createUMLAnyReceiveEvent: Try[UMLAnyReceiveEvent[MagicDrawUML]] =
-    Success(f.createAnyReceiveEventInstance())
+  override def createUMLAnyReceiveEvent: \/[NonEmptyList[UMLError.UException],UMLAnyReceiveEvent[MagicDrawUML]] =
+    \/-(f.createAnyReceiveEventInstance())
 
-  override def createUMLArtifact: Try[UMLArtifact[MagicDrawUML]] =
-    Success(f.createArtifactInstance())
+  override def createUMLArtifact: \/[NonEmptyList[UMLError.UException],UMLArtifact[MagicDrawUML]] =
+    \/-(f.createArtifactInstance())
 
-  override def createUMLAssociation: Try[UMLAssociation[MagicDrawUML]] =
-    Success(f.createAssociationInstance())
+  override def createUMLAssociation: \/[NonEmptyList[UMLError.UException],UMLAssociation[MagicDrawUML]] =
+    \/-(f.createAssociationInstance())
 
-  override def createUMLAssociationClass: Try[UMLAssociationClass[MagicDrawUML]] =
-    Success(f.createAssociationClassInstance())
+  override def createUMLAssociationClass: \/[NonEmptyList[UMLError.UException],UMLAssociationClass[MagicDrawUML]] =
+    \/-(f.createAssociationClassInstance())
 
-  override def createUMLBehaviorExecutionSpecification: Try[UMLBehaviorExecutionSpecification[MagicDrawUML]] =
-    Success(f.createBehaviorExecutionSpecificationInstance())
+  override def createUMLBehaviorExecutionSpecification: \/[NonEmptyList[UMLError.UException],UMLBehaviorExecutionSpecification[MagicDrawUML]] =
+    \/-(f.createBehaviorExecutionSpecificationInstance())
 
-  override def createUMLBroadcastSignalAction: Try[UMLBroadcastSignalAction[MagicDrawUML]] =
-    Success(f.createBroadcastSignalActionInstance())
+  override def createUMLBroadcastSignalAction: \/[NonEmptyList[UMLError.UException],UMLBroadcastSignalAction[MagicDrawUML]] =
+    \/-(f.createBroadcastSignalActionInstance())
 
-  override def createUMLCallBehaviorAction: Try[UMLCallBehaviorAction[MagicDrawUML]] =
-    Success(f.createCallBehaviorActionInstance())
+  override def createUMLCallBehaviorAction: \/[NonEmptyList[UMLError.UException],UMLCallBehaviorAction[MagicDrawUML]] =
+    \/-(f.createCallBehaviorActionInstance())
 
-  override def createUMLCallEvent: Try[UMLCallEvent[MagicDrawUML]] =
-    Success(f.createCallEventInstance())
+  override def createUMLCallEvent: \/[NonEmptyList[UMLError.UException],UMLCallEvent[MagicDrawUML]] =
+    \/-(f.createCallEventInstance())
 
-  override def createUMLCallOperationAction: Try[UMLCallOperationAction[MagicDrawUML]] =
-    Success(f.createCallOperationActionInstance())
+  override def createUMLCallOperationAction: \/[NonEmptyList[UMLError.UException],UMLCallOperationAction[MagicDrawUML]] =
+    \/-(f.createCallOperationActionInstance())
 
-  override def createUMLCentralBufferNode: Try[UMLCentralBufferNode[MagicDrawUML]] =
-    Success(f.createCentralBufferNodeInstance())
+  override def createUMLCentralBufferNode: \/[NonEmptyList[UMLError.UException],UMLCentralBufferNode[MagicDrawUML]] =
+    \/-(f.createCentralBufferNodeInstance())
 
-  override def createUMLChangeEvent: Try[UMLChangeEvent[MagicDrawUML]] =
-    Success(f.createChangeEventInstance())
+  override def createUMLChangeEvent: \/[NonEmptyList[UMLError.UException],UMLChangeEvent[MagicDrawUML]] =
+    \/-(f.createChangeEventInstance())
 
-  override def createUMLClass: Try[UMLClass[MagicDrawUML]] =
-    Success(f.createClassInstance())
+  override def createUMLClass: \/[NonEmptyList[UMLError.UException],UMLClass[MagicDrawUML]] =
+    \/-(f.createClassInstance())
 
-  override def createUMLClassifierTemplateParameter: Try[UMLClassifierTemplateParameter[MagicDrawUML]] =
-    Success(f.createClassifierTemplateParameterInstance())
+  override def createUMLClassifierTemplateParameter: \/[NonEmptyList[UMLError.UException],UMLClassifierTemplateParameter[MagicDrawUML]] =
+    \/-(f.createClassifierTemplateParameterInstance())
 
-  override def createUMLClause: Try[UMLClause[MagicDrawUML]] =
-    Success(f.createClauseInstance())
+  override def createUMLClause: \/[NonEmptyList[UMLError.UException],UMLClause[MagicDrawUML]] =
+    \/-(f.createClauseInstance())
 
-  override def createUMLClearAssociationAction: Try[UMLClearAssociationAction[MagicDrawUML]] =
-    Success(f.createClearAssociationActionInstance())
+  override def createUMLClearAssociationAction: \/[NonEmptyList[UMLError.UException],UMLClearAssociationAction[MagicDrawUML]] =
+    \/-(f.createClearAssociationActionInstance())
 
-  override def createUMLClearStructuralFeatureAction: Try[UMLClearStructuralFeatureAction[MagicDrawUML]] =
-    Success(f.createClearStructuralFeatureActionInstance())
+  override def createUMLClearStructuralFeatureAction: \/[NonEmptyList[UMLError.UException],UMLClearStructuralFeatureAction[MagicDrawUML]] =
+    \/-(f.createClearStructuralFeatureActionInstance())
 
-  override def createUMLClearVariableAction: Try[UMLClearVariableAction[MagicDrawUML]] =
-    Success(f.createClearVariableActionInstance())
+  override def createUMLClearVariableAction: \/[NonEmptyList[UMLError.UException],UMLClearVariableAction[MagicDrawUML]] =
+    \/-(f.createClearVariableActionInstance())
 
-  override def createUMLCollaboration: Try[UMLCollaboration[MagicDrawUML]] =
-    Success(f.createCollaborationInstance())
+  override def createUMLCollaboration: \/[NonEmptyList[UMLError.UException],UMLCollaboration[MagicDrawUML]] =
+    \/-(f.createCollaborationInstance())
 
-  override def createUMLCollaborationUse: Try[UMLCollaborationUse[MagicDrawUML]] =
-    Success(f.createCollaborationUseInstance())
+  override def createUMLCollaborationUse: \/[NonEmptyList[UMLError.UException],UMLCollaborationUse[MagicDrawUML]] =
+    \/-(f.createCollaborationUseInstance())
 
-  override def createUMLCombinedFragment: Try[UMLCombinedFragment[MagicDrawUML]] =
-    Success(f.createCombinedFragmentInstance())
+  override def createUMLCombinedFragment: \/[NonEmptyList[UMLError.UException],UMLCombinedFragment[MagicDrawUML]] =
+    \/-(f.createCombinedFragmentInstance())
 
-  override def createUMLComment: Try[UMLComment[MagicDrawUML]] =
-    Success(f.createCommentInstance())
+  override def createUMLComment: \/[NonEmptyList[UMLError.UException],UMLComment[MagicDrawUML]] =
+    \/-(f.createCommentInstance())
 
-  override def createUMLCommunicationPath: Try[UMLCommunicationPath[MagicDrawUML]] =
-    Success(f.createCommunicationPathInstance())
+  override def createUMLCommunicationPath: \/[NonEmptyList[UMLError.UException],UMLCommunicationPath[MagicDrawUML]] =
+    \/-(f.createCommunicationPathInstance())
 
-  override def createUMLComponent: Try[UMLComponent[MagicDrawUML]] =
-    Success(f.createComponentInstance())
+  override def createUMLComponent: \/[NonEmptyList[UMLError.UException],UMLComponent[MagicDrawUML]] =
+    \/-(f.createComponentInstance())
 
-  override def createUMLComponentRealization: Try[UMLComponentRealization[MagicDrawUML]] =
-    Success(f.createComponentRealizationInstance())
+  override def createUMLComponentRealization: \/[NonEmptyList[UMLError.UException],UMLComponentRealization[MagicDrawUML]] =
+    \/-(f.createComponentRealizationInstance())
 
-  override def createUMLConditionalNode: Try[UMLConditionalNode[MagicDrawUML]] =
-    Success(f.createConditionalNodeInstance())
+  override def createUMLConditionalNode: \/[NonEmptyList[UMLError.UException],UMLConditionalNode[MagicDrawUML]] =
+    \/-(f.createConditionalNodeInstance())
 
-  override def createUMLConnectableElementTemplateParameter: Try[UMLConnectableElementTemplateParameter[MagicDrawUML]] =
-    Success(f.createConnectableElementTemplateParameterInstance())
+  override def createUMLConnectableElementTemplateParameter: \/[NonEmptyList[UMLError.UException],UMLConnectableElementTemplateParameter[MagicDrawUML]] =
+    \/-(f.createConnectableElementTemplateParameterInstance())
 
-  override def createUMLConnectionPointReference: Try[UMLConnectionPointReference[MagicDrawUML]] =
-    Success(f.createConnectionPointReferenceInstance())
+  override def createUMLConnectionPointReference: \/[NonEmptyList[UMLError.UException],UMLConnectionPointReference[MagicDrawUML]] =
+    \/-(f.createConnectionPointReferenceInstance())
 
-  override def createUMLConnector: Try[UMLConnector[MagicDrawUML]] =
-    Success(f.createConnectorInstance())
+  override def createUMLConnector: \/[NonEmptyList[UMLError.UException],UMLConnector[MagicDrawUML]] =
+    \/-(f.createConnectorInstance())
 
-  override def createUMLConnectorEnd: Try[UMLConnectorEnd[MagicDrawUML]] =
-    Success(f.createConnectorEndInstance())
+  override def createUMLConnectorEnd: \/[NonEmptyList[UMLError.UException],UMLConnectorEnd[MagicDrawUML]] =
+    \/-(f.createConnectorEndInstance())
 
-  override def createUMLConsiderIgnoreFragment: Try[UMLConsiderIgnoreFragment[MagicDrawUML]] =
-    Success(f.createConsiderIgnoreFragmentInstance())
+  override def createUMLConsiderIgnoreFragment: \/[NonEmptyList[UMLError.UException],UMLConsiderIgnoreFragment[MagicDrawUML]] =
+    \/-(f.createConsiderIgnoreFragmentInstance())
 
-  override def createUMLConstraint: Try[UMLConstraint[MagicDrawUML]] =
-    Success(f.createConstraintInstance())
+  override def createUMLConstraint: \/[NonEmptyList[UMLError.UException],UMLConstraint[MagicDrawUML]] =
+    \/-(f.createConstraintInstance())
 
-  override def createUMLContinuation: Try[UMLContinuation[MagicDrawUML]] =
-    Success(f.createContinuationInstance())
+  override def createUMLContinuation: \/[NonEmptyList[UMLError.UException],UMLContinuation[MagicDrawUML]] =
+    \/-(f.createContinuationInstance())
 
-  override def createUMLControlFlow: Try[UMLControlFlow[MagicDrawUML]] =
-    Success(f.createControlFlowInstance())
+  override def createUMLControlFlow: \/[NonEmptyList[UMLError.UException],UMLControlFlow[MagicDrawUML]] =
+    \/-(f.createControlFlowInstance())
 
-  override def createUMLCreateLinkAction: Try[UMLCreateLinkAction[MagicDrawUML]] =
-    Success(f.createCreateLinkActionInstance())
+  override def createUMLCreateLinkAction: \/[NonEmptyList[UMLError.UException],UMLCreateLinkAction[MagicDrawUML]] =
+    \/-(f.createCreateLinkActionInstance())
 
-  override def createUMLCreateLinkObjectAction: Try[UMLCreateLinkObjectAction[MagicDrawUML]] =
-    Success(f.createCreateLinkObjectActionInstance())
+  override def createUMLCreateLinkObjectAction: \/[NonEmptyList[UMLError.UException],UMLCreateLinkObjectAction[MagicDrawUML]] =
+    \/-(f.createCreateLinkObjectActionInstance())
 
-  override def createUMLCreateObjectAction: Try[UMLCreateObjectAction[MagicDrawUML]] =
-    Success(f.createCreateObjectActionInstance())
+  override def createUMLCreateObjectAction: \/[NonEmptyList[UMLError.UException],UMLCreateObjectAction[MagicDrawUML]] =
+    \/-(f.createCreateObjectActionInstance())
 
-  override def createUMLDataStoreNode: Try[UMLDataStoreNode[MagicDrawUML]] =
-    Success(f.createDataStoreNodeInstance())
+  override def createUMLDataStoreNode: \/[NonEmptyList[UMLError.UException],UMLDataStoreNode[MagicDrawUML]] =
+    \/-(f.createDataStoreNodeInstance())
 
-  override def createUMLDataType: Try[UMLDataType[MagicDrawUML]] =
-    Success(f.createDataTypeInstance())
+  override def createUMLDataType: \/[NonEmptyList[UMLError.UException],UMLDataType[MagicDrawUML]] =
+    \/-(f.createDataTypeInstance())
 
-  override def createUMLDecisionNode: Try[UMLDecisionNode[MagicDrawUML]] =
-    Success(f.createDecisionNodeInstance())
+  override def createUMLDecisionNode: \/[NonEmptyList[UMLError.UException],UMLDecisionNode[MagicDrawUML]] =
+    \/-(f.createDecisionNodeInstance())
 
-  override def createUMLDependency: Try[UMLDependency[MagicDrawUML]] =
-    Success(f.createDependencyInstance())
+  override def createUMLDependency: \/[NonEmptyList[UMLError.UException],UMLDependency[MagicDrawUML]] =
+    \/-(f.createDependencyInstance())
 
-  override def createUMLDeployment: Try[UMLDeployment[MagicDrawUML]] =
-    Success(f.createDeploymentInstance())
+  override def createUMLDeployment: \/[NonEmptyList[UMLError.UException],UMLDeployment[MagicDrawUML]] =
+    \/-(f.createDeploymentInstance())
 
-  override def createUMLDeploymentSpecification: Try[UMLDeploymentSpecification[MagicDrawUML]] =
-    Success(f.createDeploymentSpecificationInstance())
+  override def createUMLDeploymentSpecification: \/[NonEmptyList[UMLError.UException],UMLDeploymentSpecification[MagicDrawUML]] =
+    \/-(f.createDeploymentSpecificationInstance())
 
-  override def createUMLDestroyLinkAction: Try[UMLDestroyLinkAction[MagicDrawUML]] =
-    Success(f.createDestroyLinkActionInstance())
+  override def createUMLDestroyLinkAction: \/[NonEmptyList[UMLError.UException],UMLDestroyLinkAction[MagicDrawUML]] =
+    \/-(f.createDestroyLinkActionInstance())
 
-  override def createUMLDestroyObjectAction: Try[UMLDestroyObjectAction[MagicDrawUML]] =
-    Success(f.createDestroyObjectActionInstance())
+  override def createUMLDestroyObjectAction: \/[NonEmptyList[UMLError.UException],UMLDestroyObjectAction[MagicDrawUML]] =
+    \/-(f.createDestroyObjectActionInstance())
 
-  override def createUMLDestructionOccurrenceSpecification: Try[UMLDestructionOccurrenceSpecification[MagicDrawUML]] =
-    Success(f.createDestructionOccurrenceSpecificationInstance())
+  override def createUMLDestructionOccurrenceSpecification: \/[NonEmptyList[UMLError.UException],UMLDestructionOccurrenceSpecification[MagicDrawUML]] =
+    \/-(f.createDestructionOccurrenceSpecificationInstance())
 
-  override def createUMLDevice: Try[UMLDevice[MagicDrawUML]] =
-    Success(f.createDeviceInstance())
+  override def createUMLDevice: \/[NonEmptyList[UMLError.UException],UMLDevice[MagicDrawUML]] =
+    \/-(f.createDeviceInstance())
 
-  override def createUMLDuration: Try[UMLDuration[MagicDrawUML]] =
-    Success(f.createDurationInstance())
+  override def createUMLDuration: \/[NonEmptyList[UMLError.UException],UMLDuration[MagicDrawUML]] =
+    \/-(f.createDurationInstance())
 
-  override def createUMLDurationConstraint: Try[UMLDurationConstraint[MagicDrawUML]] =
-    Success(f.createDurationConstraintInstance())
+  override def createUMLDurationConstraint: \/[NonEmptyList[UMLError.UException],UMLDurationConstraint[MagicDrawUML]] =
+    \/-(f.createDurationConstraintInstance())
 
-  override def createUMLDurationInterval: Try[UMLDurationInterval[MagicDrawUML]] =
-    Success(f.createDurationIntervalInstance())
+  override def createUMLDurationInterval: \/[NonEmptyList[UMLError.UException],UMLDurationInterval[MagicDrawUML]] =
+    \/-(f.createDurationIntervalInstance())
 
-  override def createUMLDurationObservation: Try[UMLDurationObservation[MagicDrawUML]] =
-    Success(f.createDurationObservationInstance())
+  override def createUMLDurationObservation: \/[NonEmptyList[UMLError.UException],UMLDurationObservation[MagicDrawUML]] =
+    \/-(f.createDurationObservationInstance())
 
-  override def createUMLElementImport: Try[UMLElementImport[MagicDrawUML]] =
-    Success(f.createElementImportInstance())
+  override def createUMLElementImport: \/[NonEmptyList[UMLError.UException],UMLElementImport[MagicDrawUML]] =
+    \/-(f.createElementImportInstance())
 
-  override def createUMLEnumeration: Try[UMLEnumeration[MagicDrawUML]] =
-    Success(f.createEnumerationInstance())
+  override def createUMLEnumeration: \/[NonEmptyList[UMLError.UException],UMLEnumeration[MagicDrawUML]] =
+    \/-(f.createEnumerationInstance())
 
-  override def createUMLEnumerationLiteral: Try[UMLEnumerationLiteral[MagicDrawUML]] =
-    Success(f.createEnumerationLiteralInstance())
+  override def createUMLEnumerationLiteral: \/[NonEmptyList[UMLError.UException],UMLEnumerationLiteral[MagicDrawUML]] =
+    \/-(f.createEnumerationLiteralInstance())
 
-  override def createUMLExceptionHandler: Try[UMLExceptionHandler[MagicDrawUML]] =
-    Success(f.createExceptionHandlerInstance())
+  override def createUMLExceptionHandler: \/[NonEmptyList[UMLError.UException],UMLExceptionHandler[MagicDrawUML]] =
+    \/-(f.createExceptionHandlerInstance())
 
-  override def createUMLExecutionEnvironment: Try[UMLExecutionEnvironment[MagicDrawUML]] =
-    Success(f.createExecutionEnvironmentInstance())
+  override def createUMLExecutionEnvironment: \/[NonEmptyList[UMLError.UException],UMLExecutionEnvironment[MagicDrawUML]] =
+    \/-(f.createExecutionEnvironmentInstance())
 
-  override def createUMLExecutionOccurrenceSpecification: Try[UMLExecutionOccurrenceSpecification[MagicDrawUML]] =
-    Success(f.createExecutionOccurrenceSpecificationInstance())
+  override def createUMLExecutionOccurrenceSpecification: \/[NonEmptyList[UMLError.UException],UMLExecutionOccurrenceSpecification[MagicDrawUML]] =
+    \/-(f.createExecutionOccurrenceSpecificationInstance())
 
-  override def createUMLExpansionNode: Try[UMLExpansionNode[MagicDrawUML]] =
-    Success(f.createExpansionNodeInstance())
+  override def createUMLExpansionNode: \/[NonEmptyList[UMLError.UException],UMLExpansionNode[MagicDrawUML]] =
+    \/-(f.createExpansionNodeInstance())
 
-  override def createUMLExpansionRegion: Try[UMLExpansionRegion[MagicDrawUML]] =
-    Success(f.createExpansionRegionInstance())
+  override def createUMLExpansionRegion: \/[NonEmptyList[UMLError.UException],UMLExpansionRegion[MagicDrawUML]] =
+    \/-(f.createExpansionRegionInstance())
 
-  override def createUMLExpression: Try[UMLExpression[MagicDrawUML]] =
-    Success(f.createExpressionInstance())
+  override def createUMLExpression: \/[NonEmptyList[UMLError.UException],UMLExpression[MagicDrawUML]] =
+    \/-(f.createExpressionInstance())
 
-  override def createUMLExtend: Try[UMLExtend[MagicDrawUML]] =
-    Success(f.createExtendInstance())
+  override def createUMLExtend: \/[NonEmptyList[UMLError.UException],UMLExtend[MagicDrawUML]] =
+    \/-(f.createExtendInstance())
 
-  override def createUMLExtension: Try[UMLExtension[MagicDrawUML]] =
-    Success(f.createExtensionInstance())
+  override def createUMLExtension: \/[NonEmptyList[UMLError.UException],UMLExtension[MagicDrawUML]] =
+    \/-(f.createExtensionInstance())
 
-  override def createUMLExtensionEnd: Try[UMLExtensionEnd[MagicDrawUML]] =
-    Success(f.createExtensionEndInstance())
+  override def createUMLExtensionEnd: \/[NonEmptyList[UMLError.UException],UMLExtensionEnd[MagicDrawUML]] =
+    \/-(f.createExtensionEndInstance())
 
-  override def createUMLExtensionPoint: Try[UMLExtensionPoint[MagicDrawUML]] =
-    Success(f.createExtensionPointInstance())
+  override def createUMLExtensionPoint: \/[NonEmptyList[UMLError.UException],UMLExtensionPoint[MagicDrawUML]] =
+    \/-(f.createExtensionPointInstance())
 
-  override def createUMLFinalState: Try[UMLFinalState[MagicDrawUML]] =
-    Success(f.createFinalStateInstance())
+  override def createUMLFinalState: \/[NonEmptyList[UMLError.UException],UMLFinalState[MagicDrawUML]] =
+    \/-(f.createFinalStateInstance())
 
-  override def createUMLFlowFinalNode: Try[UMLFlowFinalNode[MagicDrawUML]] =
-    Success(f.createFlowFinalNodeInstance())
+  override def createUMLFlowFinalNode: \/[NonEmptyList[UMLError.UException],UMLFlowFinalNode[MagicDrawUML]] =
+    \/-(f.createFlowFinalNodeInstance())
 
-  override def createUMLForkNode: Try[UMLForkNode[MagicDrawUML]] =
-    Success(f.createForkNodeInstance())
+  override def createUMLForkNode: \/[NonEmptyList[UMLError.UException],UMLForkNode[MagicDrawUML]] =
+    \/-(f.createForkNodeInstance())
 
-  override def createUMLFunctionBehavior: Try[UMLFunctionBehavior[MagicDrawUML]] =
-    Success(f.createFunctionBehaviorInstance())
+  override def createUMLFunctionBehavior: \/[NonEmptyList[UMLError.UException],UMLFunctionBehavior[MagicDrawUML]] =
+    \/-(f.createFunctionBehaviorInstance())
 
-  override def createUMLGate: Try[UMLGate[MagicDrawUML]] =
-    Success(f.createGateInstance())
+  override def createUMLGate: \/[NonEmptyList[UMLError.UException],UMLGate[MagicDrawUML]] =
+    \/-(f.createGateInstance())
 
-  override def createUMLGeneralOrdering: Try[UMLGeneralOrdering[MagicDrawUML]] =
-    Success(f.createGeneralOrderingInstance())
+  override def createUMLGeneralOrdering: \/[NonEmptyList[UMLError.UException],UMLGeneralOrdering[MagicDrawUML]] =
+    \/-(f.createGeneralOrderingInstance())
 
-  override def createUMLGeneralization: Try[UMLGeneralization[MagicDrawUML]] =
-    Success(f.createGeneralizationInstance())
+  override def createUMLGeneralization: \/[NonEmptyList[UMLError.UException],UMLGeneralization[MagicDrawUML]] =
+    \/-(f.createGeneralizationInstance())
 
-  override def createUMLGeneralizationSet: Try[UMLGeneralizationSet[MagicDrawUML]] =
-    Success(f.createGeneralizationSetInstance())
+  override def createUMLGeneralizationSet: \/[NonEmptyList[UMLError.UException],UMLGeneralizationSet[MagicDrawUML]] =
+    \/-(f.createGeneralizationSetInstance())
 
-  override def createUMLImage: Try[UMLImage[MagicDrawUML]] =
-    Success(f.createImageInstance())
+  override def createUMLImage: \/[NonEmptyList[UMLError.UException],UMLImage[MagicDrawUML]] =
+    \/-(f.createImageInstance())
 
-  override def createUMLInclude: Try[UMLInclude[MagicDrawUML]] =
-    Success(f.createIncludeInstance())
+  override def createUMLInclude: \/[NonEmptyList[UMLError.UException],UMLInclude[MagicDrawUML]] =
+    \/-(f.createIncludeInstance())
 
-  override def createUMLInformationFlow: Try[UMLInformationFlow[MagicDrawUML]] =
-    Success(f.createInformationFlowInstance())
+  override def createUMLInformationFlow: \/[NonEmptyList[UMLError.UException],UMLInformationFlow[MagicDrawUML]] =
+    \/-(f.createInformationFlowInstance())
 
-  override def createUMLInformationItem: Try[UMLInformationItem[MagicDrawUML]] =
-    Success(f.createInformationItemInstance())
+  override def createUMLInformationItem: \/[NonEmptyList[UMLError.UException],UMLInformationItem[MagicDrawUML]] =
+    \/-(f.createInformationItemInstance())
 
-  override def createUMLInitialNode: Try[UMLInitialNode[MagicDrawUML]] =
-    Success(f.createInitialNodeInstance())
+  override def createUMLInitialNode: \/[NonEmptyList[UMLError.UException],UMLInitialNode[MagicDrawUML]] =
+    \/-(f.createInitialNodeInstance())
 
-  override def createUMLInputPin: Try[UMLInputPin[MagicDrawUML]] =
-    Success(f.createInputPinInstance())
+  override def createUMLInputPin: \/[NonEmptyList[UMLError.UException],UMLInputPin[MagicDrawUML]] =
+    \/-(f.createInputPinInstance())
 
-  override def createUMLInstanceSpecification: Try[UMLInstanceSpecification[MagicDrawUML]] =
-    Success(f.createInstanceSpecificationInstance())
+  override def createUMLInstanceSpecification: \/[NonEmptyList[UMLError.UException],UMLInstanceSpecification[MagicDrawUML]] =
+    \/-(f.createInstanceSpecificationInstance())
 
-  override def createUMLInstanceValue: Try[UMLInstanceValue[MagicDrawUML]] =
-    Success(f.createInstanceValueInstance())
+  override def createUMLInstanceValue: \/[NonEmptyList[UMLError.UException],UMLInstanceValue[MagicDrawUML]] =
+    \/-(f.createInstanceValueInstance())
 
-  override def createUMLInteraction: Try[UMLInteraction[MagicDrawUML]] =
-    Success(f.createInteractionInstance())
+  override def createUMLInteraction: \/[NonEmptyList[UMLError.UException],UMLInteraction[MagicDrawUML]] =
+    \/-(f.createInteractionInstance())
 
-  override def createUMLInteractionConstraint: Try[UMLInteractionConstraint[MagicDrawUML]] =
-    Success(f.createInteractionConstraintInstance())
+  override def createUMLInteractionConstraint: \/[NonEmptyList[UMLError.UException],UMLInteractionConstraint[MagicDrawUML]] =
+    \/-(f.createInteractionConstraintInstance())
 
-  override def createUMLInteractionOperand: Try[UMLInteractionOperand[MagicDrawUML]] =
-    Success(f.createInteractionOperandInstance())
+  override def createUMLInteractionOperand: \/[NonEmptyList[UMLError.UException],UMLInteractionOperand[MagicDrawUML]] =
+    \/-(f.createInteractionOperandInstance())
 
-  override def createUMLInteractionUse: Try[UMLInteractionUse[MagicDrawUML]] =
-    Success(f.createInteractionUseInstance())
+  override def createUMLInteractionUse: \/[NonEmptyList[UMLError.UException],UMLInteractionUse[MagicDrawUML]] =
+    \/-(f.createInteractionUseInstance())
 
-  override def createUMLInterface: Try[UMLInterface[MagicDrawUML]] =
-    Success(f.createInterfaceInstance())
+  override def createUMLInterface: \/[NonEmptyList[UMLError.UException],UMLInterface[MagicDrawUML]] =
+    \/-(f.createInterfaceInstance())
 
-  override def createUMLInterfaceRealization: Try[UMLInterfaceRealization[MagicDrawUML]] =
-    Success(f.createInterfaceRealizationInstance())
+  override def createUMLInterfaceRealization: \/[NonEmptyList[UMLError.UException],UMLInterfaceRealization[MagicDrawUML]] =
+    \/-(f.createInterfaceRealizationInstance())
 
-  override def createUMLInterruptibleActivityRegion: Try[UMLInterruptibleActivityRegion[MagicDrawUML]] =
-    Success(f.createInterruptibleActivityRegionInstance())
+  override def createUMLInterruptibleActivityRegion: \/[NonEmptyList[UMLError.UException],UMLInterruptibleActivityRegion[MagicDrawUML]] =
+    \/-(f.createInterruptibleActivityRegionInstance())
 
-  override def createUMLInterval: Try[UMLInterval[MagicDrawUML]] =
-    Success(f.createIntervalInstance())
+  override def createUMLInterval: \/[NonEmptyList[UMLError.UException],UMLInterval[MagicDrawUML]] =
+    \/-(f.createIntervalInstance())
 
-  override def createUMLIntervalConstraint: Try[UMLIntervalConstraint[MagicDrawUML]] =
-    Success(f.createIntervalConstraintInstance())
+  override def createUMLIntervalConstraint: \/[NonEmptyList[UMLError.UException],UMLIntervalConstraint[MagicDrawUML]] =
+    \/-(f.createIntervalConstraintInstance())
 
-  override def createUMLJoinNode: Try[UMLJoinNode[MagicDrawUML]] =
-    Success(f.createJoinNodeInstance())
+  override def createUMLJoinNode: \/[NonEmptyList[UMLError.UException],UMLJoinNode[MagicDrawUML]] =
+    \/-(f.createJoinNodeInstance())
 
-  override def createUMLLifeline: Try[UMLLifeline[MagicDrawUML]] =
-    Success(f.createLifelineInstance())
+  override def createUMLLifeline: \/[NonEmptyList[UMLError.UException],UMLLifeline[MagicDrawUML]] =
+    \/-(f.createLifelineInstance())
 
-  override def createUMLLinkEndCreationData: Try[UMLLinkEndCreationData[MagicDrawUML]] =
-    Success(f.createLinkEndCreationDataInstance())
+  override def createUMLLinkEndCreationData: \/[NonEmptyList[UMLError.UException],UMLLinkEndCreationData[MagicDrawUML]] =
+    \/-(f.createLinkEndCreationDataInstance())
 
-  override def createUMLLinkEndData: Try[UMLLinkEndData[MagicDrawUML]] =
-    Success(f.createLinkEndDataInstance())
+  override def createUMLLinkEndData: \/[NonEmptyList[UMLError.UException],UMLLinkEndData[MagicDrawUML]] =
+    \/-(f.createLinkEndDataInstance())
 
-  override def createUMLLinkEndDestructionData: Try[UMLLinkEndDestructionData[MagicDrawUML]] =
-    Success(f.createLinkEndDestructionDataInstance())
+  override def createUMLLinkEndDestructionData: \/[NonEmptyList[UMLError.UException],UMLLinkEndDestructionData[MagicDrawUML]] =
+    \/-(f.createLinkEndDestructionDataInstance())
 
-  override def createUMLLiteralBoolean: Try[UMLLiteralBoolean[MagicDrawUML]] =
-    Success(f.createLiteralBooleanInstance())
+  override def createUMLLiteralBoolean: \/[NonEmptyList[UMLError.UException],UMLLiteralBoolean[MagicDrawUML]] =
+    \/-(f.createLiteralBooleanInstance())
 
-  override def createUMLLiteralInteger: Try[UMLLiteralInteger[MagicDrawUML]] =
-    Success(f.createLiteralIntegerInstance())
+  override def createUMLLiteralInteger: \/[NonEmptyList[UMLError.UException],UMLLiteralInteger[MagicDrawUML]] =
+    \/-(f.createLiteralIntegerInstance())
 
-  override def createUMLLiteralNull: Try[UMLLiteralNull[MagicDrawUML]] =
-    Success(f.createLiteralNullInstance())
+  override def createUMLLiteralNull: \/[NonEmptyList[UMLError.UException],UMLLiteralNull[MagicDrawUML]] =
+    \/-(f.createLiteralNullInstance())
 
-  override def createUMLLiteralReal: Try[UMLLiteralReal[MagicDrawUML]] =
-    Success(f.createLiteralRealInstance())
+  override def createUMLLiteralReal: \/[NonEmptyList[UMLError.UException],UMLLiteralReal[MagicDrawUML]] =
+    \/-(f.createLiteralRealInstance())
 
-  override def createUMLLiteralString: Try[UMLLiteralString[MagicDrawUML]] =
-    Success(f.createLiteralStringInstance())
+  override def createUMLLiteralString: \/[NonEmptyList[UMLError.UException],UMLLiteralString[MagicDrawUML]] =
+    \/-(f.createLiteralStringInstance())
 
-  override def createUMLLiteralUnlimitedNatural: Try[UMLLiteralUnlimitedNatural[MagicDrawUML]] =
-    Success(f.createLiteralUnlimitedNaturalInstance())
+  override def createUMLLiteralUnlimitedNatural: \/[NonEmptyList[UMLError.UException],UMLLiteralUnlimitedNatural[MagicDrawUML]] =
+    \/-(f.createLiteralUnlimitedNaturalInstance())
 
-  override def createUMLLoopNode: Try[UMLLoopNode[MagicDrawUML]] =
-    Success(f.createLoopNodeInstance())
+  override def createUMLLoopNode: \/[NonEmptyList[UMLError.UException],UMLLoopNode[MagicDrawUML]] =
+    \/-(f.createLoopNodeInstance())
 
-  override def createUMLManifestation: Try[UMLManifestation[MagicDrawUML]] =
-    Success(f.createManifestationInstance())
+  override def createUMLManifestation: \/[NonEmptyList[UMLError.UException],UMLManifestation[MagicDrawUML]] =
+    \/-(f.createManifestationInstance())
 
-  override def createUMLMergeNode: Try[UMLMergeNode[MagicDrawUML]] =
-    Success(f.createMergeNodeInstance())
+  override def createUMLMergeNode: \/[NonEmptyList[UMLError.UException],UMLMergeNode[MagicDrawUML]] =
+    \/-(f.createMergeNodeInstance())
 
-  override def createUMLMessage: Try[UMLMessage[MagicDrawUML]] =
-    Success(f.createMessageInstance())
+  override def createUMLMessage: \/[NonEmptyList[UMLError.UException],UMLMessage[MagicDrawUML]] =
+    \/-(f.createMessageInstance())
 
-  override def createUMLMessageOccurrenceSpecification: Try[UMLMessageOccurrenceSpecification[MagicDrawUML]] =
-    Success(f.createMessageOccurrenceSpecificationInstance())
+  override def createUMLMessageOccurrenceSpecification: \/[NonEmptyList[UMLError.UException],UMLMessageOccurrenceSpecification[MagicDrawUML]] =
+    \/-(f.createMessageOccurrenceSpecificationInstance())
 
-  override def createUMLModel: Try[UMLModel[MagicDrawUML]] =
-    Success(f.createModelInstance())
+  override def createUMLModel: \/[NonEmptyList[UMLError.UException],UMLModel[MagicDrawUML]] =
+    \/-(f.createModelInstance())
 
-  override def createUMLNode: Try[UMLNode[MagicDrawUML]] =
-    Success(f.createNodeInstance())
+  override def createUMLNode: \/[NonEmptyList[UMLError.UException],UMLNode[MagicDrawUML]] =
+    \/-(f.createNodeInstance())
 
-  override def createUMLObjectFlow: Try[UMLObjectFlow[MagicDrawUML]] =
-    Success(f.createObjectFlowInstance())
+  override def createUMLObjectFlow: \/[NonEmptyList[UMLError.UException],UMLObjectFlow[MagicDrawUML]] =
+    \/-(f.createObjectFlowInstance())
 
-  override def createUMLOccurrenceSpecification: Try[UMLOccurrenceSpecification[MagicDrawUML]] =
-    Success(f.createOccurrenceSpecificationInstance())
+  override def createUMLOccurrenceSpecification: \/[NonEmptyList[UMLError.UException],UMLOccurrenceSpecification[MagicDrawUML]] =
+    \/-(f.createOccurrenceSpecificationInstance())
 
-  override def createUMLOpaqueAction: Try[UMLOpaqueAction[MagicDrawUML]] =
-    Success(f.createOpaqueActionInstance())
+  override def createUMLOpaqueAction: \/[NonEmptyList[UMLError.UException],UMLOpaqueAction[MagicDrawUML]] =
+    \/-(f.createOpaqueActionInstance())
 
-  override def createUMLOpaqueBehavior: Try[UMLOpaqueBehavior[MagicDrawUML]] =
-    Success(f.createOpaqueBehaviorInstance())
+  override def createUMLOpaqueBehavior: \/[NonEmptyList[UMLError.UException],UMLOpaqueBehavior[MagicDrawUML]] =
+    \/-(f.createOpaqueBehaviorInstance())
 
-  override def createUMLOpaqueExpression: Try[UMLOpaqueExpression[MagicDrawUML]] =
-    Success(f.createOpaqueExpressionInstance())
+  override def createUMLOpaqueExpression: \/[NonEmptyList[UMLError.UException],UMLOpaqueExpression[MagicDrawUML]] =
+    \/-(f.createOpaqueExpressionInstance())
 
-  override def createUMLOperation: Try[UMLOperation[MagicDrawUML]] =
-    Success(f.createOperationInstance())
+  override def createUMLOperation: \/[NonEmptyList[UMLError.UException],UMLOperation[MagicDrawUML]] =
+    \/-(f.createOperationInstance())
 
-  override def createUMLOperationTemplateParameter: Try[UMLOperationTemplateParameter[MagicDrawUML]] =
-    Success(f.createOperationTemplateParameterInstance())
+  override def createUMLOperationTemplateParameter: \/[NonEmptyList[UMLError.UException],UMLOperationTemplateParameter[MagicDrawUML]] =
+    \/-(f.createOperationTemplateParameterInstance())
 
-  override def createUMLOutputPin: Try[UMLOutputPin[MagicDrawUML]] =
-    Success(f.createOutputPinInstance())
+  override def createUMLOutputPin: \/[NonEmptyList[UMLError.UException],UMLOutputPin[MagicDrawUML]] =
+    \/-(f.createOutputPinInstance())
 
-  override def createUMLPackage: Try[UMLPackage[MagicDrawUML]] =
-    Success(f.createPackageInstance())
+  override def createUMLPackage: \/[NonEmptyList[UMLError.UException],UMLPackage[MagicDrawUML]] =
+    \/-(f.createPackageInstance())
 
-  override def createUMLPackageImport: Try[UMLPackageImport[MagicDrawUML]] =
-    Success(f.createPackageImportInstance())
+  override def createUMLPackageImport: \/[NonEmptyList[UMLError.UException],UMLPackageImport[MagicDrawUML]] =
+    \/-(f.createPackageImportInstance())
 
-  override def createUMLPackageMerge: Try[UMLPackageMerge[MagicDrawUML]] =
-    Success(f.createPackageMergeInstance())
+  override def createUMLPackageMerge: \/[NonEmptyList[UMLError.UException],UMLPackageMerge[MagicDrawUML]] =
+    \/-(f.createPackageMergeInstance())
 
-  override def createUMLParameter: Try[UMLParameter[MagicDrawUML]] =
-    Success(f.createParameterInstance())
+  override def createUMLParameter: \/[NonEmptyList[UMLError.UException],UMLParameter[MagicDrawUML]] =
+    \/-(f.createParameterInstance())
 
-  override def createUMLParameterSet: Try[UMLParameterSet[MagicDrawUML]] =
-    Success(f.createParameterSetInstance())
+  override def createUMLParameterSet: \/[NonEmptyList[UMLError.UException],UMLParameterSet[MagicDrawUML]] =
+    \/-(f.createParameterSetInstance())
 
-  override def createUMLPartDecomposition: Try[UMLPartDecomposition[MagicDrawUML]] =
-    Success(f.createPartDecompositionInstance())
+  override def createUMLPartDecomposition: \/[NonEmptyList[UMLError.UException],UMLPartDecomposition[MagicDrawUML]] =
+    \/-(f.createPartDecompositionInstance())
 
-  override def createUMLPort: Try[UMLPort[MagicDrawUML]] =
-    Success(f.createPortInstance())
+  override def createUMLPort: \/[NonEmptyList[UMLError.UException],UMLPort[MagicDrawUML]] =
+    \/-(f.createPortInstance())
 
-  override def createUMLPrimitiveType: Try[UMLPrimitiveType[MagicDrawUML]] =
-    Success(f.createPrimitiveTypeInstance())
+  override def createUMLPrimitiveType: \/[NonEmptyList[UMLError.UException],UMLPrimitiveType[MagicDrawUML]] =
+    \/-(f.createPrimitiveTypeInstance())
 
-  override def createUMLProfile: Try[UMLProfile[MagicDrawUML]] =
-    Success(f.createProfileInstance())
+  override def createUMLProfile: \/[NonEmptyList[UMLError.UException],UMLProfile[MagicDrawUML]] =
+    \/-(f.createProfileInstance())
 
-  override def createUMLProfileApplication: Try[UMLProfileApplication[MagicDrawUML]] =
-    Success(f.createProfileApplicationInstance())
+  override def createUMLProfileApplication: \/[NonEmptyList[UMLError.UException],UMLProfileApplication[MagicDrawUML]] =
+    \/-(f.createProfileApplicationInstance())
 
-  override def createUMLProperty: Try[UMLProperty[MagicDrawUML]] =
-    Success(f.createPropertyInstance())
+  override def createUMLProperty: \/[NonEmptyList[UMLError.UException],UMLProperty[MagicDrawUML]] =
+    \/-(f.createPropertyInstance())
 
-  override def createUMLProtocolConformance: Try[UMLProtocolConformance[MagicDrawUML]] =
-    Success(f.createProtocolConformanceInstance())
+  override def createUMLProtocolConformance: \/[NonEmptyList[UMLError.UException],UMLProtocolConformance[MagicDrawUML]] =
+    \/-(f.createProtocolConformanceInstance())
 
-  override def createUMLProtocolStateMachine: Try[UMLProtocolStateMachine[MagicDrawUML]] =
-    Success(f.createProtocolStateMachineInstance())
+  override def createUMLProtocolStateMachine: \/[NonEmptyList[UMLError.UException],UMLProtocolStateMachine[MagicDrawUML]] =
+    \/-(f.createProtocolStateMachineInstance())
 
-  override def createUMLProtocolTransition: Try[UMLProtocolTransition[MagicDrawUML]] =
-    Success(f.createProtocolTransitionInstance())
+  override def createUMLProtocolTransition: \/[NonEmptyList[UMLError.UException],UMLProtocolTransition[MagicDrawUML]] =
+    \/-(f.createProtocolTransitionInstance())
 
-  override def createUMLPseudostate: Try[UMLPseudostate[MagicDrawUML]] =
-    Success(f.createPseudostateInstance())
+  override def createUMLPseudostate: \/[NonEmptyList[UMLError.UException],UMLPseudostate[MagicDrawUML]] =
+    \/-(f.createPseudostateInstance())
 
-  override def createUMLQualifierValue: Try[UMLQualifierValue[MagicDrawUML]] =
-    Success(f.createQualifierValueInstance())
+  override def createUMLQualifierValue: \/[NonEmptyList[UMLError.UException],UMLQualifierValue[MagicDrawUML]] =
+    \/-(f.createQualifierValueInstance())
 
-  override def createUMLRaiseExceptionAction: Try[UMLRaiseExceptionAction[MagicDrawUML]] =
-    Success(f.createRaiseExceptionActionInstance())
+  override def createUMLRaiseExceptionAction: \/[NonEmptyList[UMLError.UException],UMLRaiseExceptionAction[MagicDrawUML]] =
+    \/-(f.createRaiseExceptionActionInstance())
 
-  override def createUMLReadExtentAction: Try[UMLReadExtentAction[MagicDrawUML]] =
-    Success(f.createReadExtentActionInstance())
+  override def createUMLReadExtentAction: \/[NonEmptyList[UMLError.UException],UMLReadExtentAction[MagicDrawUML]] =
+    \/-(f.createReadExtentActionInstance())
 
-  override def createUMLReadIsClassifiedObjectAction: Try[UMLReadIsClassifiedObjectAction[MagicDrawUML]] =
-    Success(f.createReadIsClassifiedObjectActionInstance())
+  override def createUMLReadIsClassifiedObjectAction: \/[NonEmptyList[UMLError.UException],UMLReadIsClassifiedObjectAction[MagicDrawUML]] =
+    \/-(f.createReadIsClassifiedObjectActionInstance())
 
-  override def createUMLReadLinkAction: Try[UMLReadLinkAction[MagicDrawUML]] =
-    Success(f.createReadLinkActionInstance())
+  override def createUMLReadLinkAction: \/[NonEmptyList[UMLError.UException],UMLReadLinkAction[MagicDrawUML]] =
+    \/-(f.createReadLinkActionInstance())
 
-  override def createUMLReadLinkObjectEndAction: Try[UMLReadLinkObjectEndAction[MagicDrawUML]] =
-    Success(f.createReadLinkObjectEndActionInstance())
+  override def createUMLReadLinkObjectEndAction: \/[NonEmptyList[UMLError.UException],UMLReadLinkObjectEndAction[MagicDrawUML]] =
+    \/-(f.createReadLinkObjectEndActionInstance())
 
-  override def createUMLReadLinkObjectEndQualifierAction: Try[UMLReadLinkObjectEndQualifierAction[MagicDrawUML]] =
-    Success(f.createReadLinkObjectEndQualifierActionInstance())
+  override def createUMLReadLinkObjectEndQualifierAction: \/[NonEmptyList[UMLError.UException],UMLReadLinkObjectEndQualifierAction[MagicDrawUML]] =
+    \/-(f.createReadLinkObjectEndQualifierActionInstance())
 
-  override def createUMLReadSelfAction: Try[UMLReadSelfAction[MagicDrawUML]] =
-    Success(f.createReadSelfActionInstance())
+  override def createUMLReadSelfAction: \/[NonEmptyList[UMLError.UException],UMLReadSelfAction[MagicDrawUML]] =
+    \/-(f.createReadSelfActionInstance())
 
-  override def createUMLReadStructuralFeatureAction: Try[UMLReadStructuralFeatureAction[MagicDrawUML]] =
-    Success(f.createReadStructuralFeatureActionInstance())
+  override def createUMLReadStructuralFeatureAction: \/[NonEmptyList[UMLError.UException],UMLReadStructuralFeatureAction[MagicDrawUML]] =
+    \/-(f.createReadStructuralFeatureActionInstance())
 
-  override def createUMLReadVariableAction: Try[UMLReadVariableAction[MagicDrawUML]] =
-    Success(f.createReadVariableActionInstance())
+  override def createUMLReadVariableAction: \/[NonEmptyList[UMLError.UException],UMLReadVariableAction[MagicDrawUML]] =
+    \/-(f.createReadVariableActionInstance())
 
-  override def createUMLRealization: Try[UMLRealization[MagicDrawUML]] =
-    Success(f.createRealizationInstance())
+  override def createUMLRealization: \/[NonEmptyList[UMLError.UException],UMLRealization[MagicDrawUML]] =
+    \/-(f.createRealizationInstance())
 
-  override def createUMLReception: Try[UMLReception[MagicDrawUML]] =
-    Success(f.createReceptionInstance())
+  override def createUMLReception: \/[NonEmptyList[UMLError.UException],UMLReception[MagicDrawUML]] =
+    \/-(f.createReceptionInstance())
 
-  override def createUMLReclassifyObjectAction: Try[UMLReclassifyObjectAction[MagicDrawUML]] =
-    Success(f.createReclassifyObjectActionInstance())
+  override def createUMLReclassifyObjectAction: \/[NonEmptyList[UMLError.UException],UMLReclassifyObjectAction[MagicDrawUML]] =
+    \/-(f.createReclassifyObjectActionInstance())
 
-  override def createUMLRedefinableTemplateSignature: Try[UMLRedefinableTemplateSignature[MagicDrawUML]] =
-    Success(f.createRedefinableTemplateSignatureInstance())
+  override def createUMLRedefinableTemplateSignature: \/[NonEmptyList[UMLError.UException],UMLRedefinableTemplateSignature[MagicDrawUML]] =
+    \/-(f.createRedefinableTemplateSignatureInstance())
 
-  override def createUMLReduceAction: Try[UMLReduceAction[MagicDrawUML]] =
-    Success(f.createReduceActionInstance())
+  override def createUMLReduceAction: \/[NonEmptyList[UMLError.UException],UMLReduceAction[MagicDrawUML]] =
+    \/-(f.createReduceActionInstance())
 
-  override def createUMLRegion: Try[UMLRegion[MagicDrawUML]] =
-    Success(f.createRegionInstance())
+  override def createUMLRegion: \/[NonEmptyList[UMLError.UException],UMLRegion[MagicDrawUML]] =
+    \/-(f.createRegionInstance())
 
-  override def createUMLRemoveStructuralFeatureValueAction: Try[UMLRemoveStructuralFeatureValueAction[MagicDrawUML]] =
-    Success(f.createRemoveStructuralFeatureValueActionInstance())
+  override def createUMLRemoveStructuralFeatureValueAction: \/[NonEmptyList[UMLError.UException],UMLRemoveStructuralFeatureValueAction[MagicDrawUML]] =
+    \/-(f.createRemoveStructuralFeatureValueActionInstance())
 
-  override def createUMLRemoveVariableValueAction: Try[UMLRemoveVariableValueAction[MagicDrawUML]] =
-    Success(f.createRemoveVariableValueActionInstance())
+  override def createUMLRemoveVariableValueAction: \/[NonEmptyList[UMLError.UException],UMLRemoveVariableValueAction[MagicDrawUML]] =
+    \/-(f.createRemoveVariableValueActionInstance())
 
-  override def createUMLReplyAction: Try[UMLReplyAction[MagicDrawUML]] =
-    Success(f.createReplyActionInstance())
+  override def createUMLReplyAction: \/[NonEmptyList[UMLError.UException],UMLReplyAction[MagicDrawUML]] =
+    \/-(f.createReplyActionInstance())
 
-  override def createUMLSendObjectAction: Try[UMLSendObjectAction[MagicDrawUML]] =
-    Success(f.createSendObjectActionInstance())
+  override def createUMLSendObjectAction: \/[NonEmptyList[UMLError.UException],UMLSendObjectAction[MagicDrawUML]] =
+    \/-(f.createSendObjectActionInstance())
 
-  override def createUMLSendSignalAction: Try[UMLSendSignalAction[MagicDrawUML]] =
-    Success(f.createSendSignalActionInstance())
+  override def createUMLSendSignalAction: \/[NonEmptyList[UMLError.UException],UMLSendSignalAction[MagicDrawUML]] =
+    \/-(f.createSendSignalActionInstance())
 
-  override def createUMLSequenceNode: Try[UMLSequenceNode[MagicDrawUML]] =
-    Success(f.createSequenceNodeInstance())
+  override def createUMLSequenceNode: \/[NonEmptyList[UMLError.UException],UMLSequenceNode[MagicDrawUML]] =
+    \/-(f.createSequenceNodeInstance())
 
-  override def createUMLSignal: Try[UMLSignal[MagicDrawUML]] =
-    Success(f.createSignalInstance())
+  override def createUMLSignal: \/[NonEmptyList[UMLError.UException],UMLSignal[MagicDrawUML]] =
+    \/-(f.createSignalInstance())
 
-  override def createUMLSignalEvent: Try[UMLSignalEvent[MagicDrawUML]] =
-    Success(f.createSignalEventInstance())
+  override def createUMLSignalEvent: \/[NonEmptyList[UMLError.UException],UMLSignalEvent[MagicDrawUML]] =
+    \/-(f.createSignalEventInstance())
 
-  override def createUMLSlot: Try[UMLSlot[MagicDrawUML]] =
-    Success(f.createSlotInstance())
+  override def createUMLSlot: \/[NonEmptyList[UMLError.UException],UMLSlot[MagicDrawUML]] =
+    \/-(f.createSlotInstance())
 
-  override def createUMLStartClassifierBehaviorAction: Try[UMLStartClassifierBehaviorAction[MagicDrawUML]] =
-    Success(f.createStartClassifierBehaviorActionInstance())
+  override def createUMLStartClassifierBehaviorAction: \/[NonEmptyList[UMLError.UException],UMLStartClassifierBehaviorAction[MagicDrawUML]] =
+    \/-(f.createStartClassifierBehaviorActionInstance())
 
-  override def createUMLStartObjectBehaviorAction: Try[UMLStartObjectBehaviorAction[MagicDrawUML]] =
-    Success(f.createStartObjectBehaviorActionInstance())
+  override def createUMLStartObjectBehaviorAction: \/[NonEmptyList[UMLError.UException],UMLStartObjectBehaviorAction[MagicDrawUML]] =
+    \/-(f.createStartObjectBehaviorActionInstance())
 
-  override def createUMLState: Try[UMLState[MagicDrawUML]] =
-    Success(f.createStateInstance())
+  override def createUMLState: \/[NonEmptyList[UMLError.UException],UMLState[MagicDrawUML]] =
+    \/-(f.createStateInstance())
 
-  override def createUMLStateInvariant: Try[UMLStateInvariant[MagicDrawUML]] =
-    Success(f.createStateInvariantInstance())
+  override def createUMLStateInvariant: \/[NonEmptyList[UMLError.UException],UMLStateInvariant[MagicDrawUML]] =
+    \/-(f.createStateInvariantInstance())
 
-  override def createUMLStateMachine: Try[UMLStateMachine[MagicDrawUML]] =
-    Success(f.createStateMachineInstance())
+  override def createUMLStateMachine: \/[NonEmptyList[UMLError.UException],UMLStateMachine[MagicDrawUML]] =
+    \/-(f.createStateMachineInstance())
 
-  override def createUMLStereotype: Try[UMLStereotype[MagicDrawUML]] =
-    Success(f.createStereotypeInstance())
+  override def createUMLStereotype: \/[NonEmptyList[UMLError.UException],UMLStereotype[MagicDrawUML]] =
+    \/-(f.createStereotypeInstance())
 
-  override def createUMLStringExpression: Try[UMLStringExpression[MagicDrawUML]] =
-    Success(f.createStringExpressionInstance())
+  override def createUMLStringExpression: \/[NonEmptyList[UMLError.UException],UMLStringExpression[MagicDrawUML]] =
+    \/-(f.createStringExpressionInstance())
 
-  override def createUMLStructuredActivityNode: Try[UMLStructuredActivityNode[MagicDrawUML]] =
-    Success(f.createStructuredActivityNodeInstance())
+  override def createUMLStructuredActivityNode: \/[NonEmptyList[UMLError.UException],UMLStructuredActivityNode[MagicDrawUML]] =
+    \/-(f.createStructuredActivityNodeInstance())
 
-  override def createUMLSubstitution: Try[UMLSubstitution[MagicDrawUML]] =
-    Success(f.createSubstitutionInstance())
+  override def createUMLSubstitution: \/[NonEmptyList[UMLError.UException],UMLSubstitution[MagicDrawUML]] =
+    \/-(f.createSubstitutionInstance())
 
-  override def createUMLTemplateBinding: Try[UMLTemplateBinding[MagicDrawUML]] =
-    Success(f.createTemplateBindingInstance())
+  override def createUMLTemplateBinding: \/[NonEmptyList[UMLError.UException],UMLTemplateBinding[MagicDrawUML]] =
+    \/-(f.createTemplateBindingInstance())
 
-  override def createUMLTemplateParameter: Try[UMLTemplateParameter[MagicDrawUML]] =
-    Success(f.createTemplateParameterInstance())
+  override def createUMLTemplateParameter: \/[NonEmptyList[UMLError.UException],UMLTemplateParameter[MagicDrawUML]] =
+    \/-(f.createTemplateParameterInstance())
 
-  override def createUMLTemplateParameterSubstitution: Try[UMLTemplateParameterSubstitution[MagicDrawUML]] =
-    Success(f.createTemplateParameterSubstitutionInstance())
+  override def createUMLTemplateParameterSubstitution: \/[NonEmptyList[UMLError.UException],UMLTemplateParameterSubstitution[MagicDrawUML]] =
+    \/-(f.createTemplateParameterSubstitutionInstance())
 
-  override def createUMLTemplateSignature: Try[UMLTemplateSignature[MagicDrawUML]] =
-    Success(f.createTemplateSignatureInstance())
+  override def createUMLTemplateSignature: \/[NonEmptyList[UMLError.UException],UMLTemplateSignature[MagicDrawUML]] =
+    \/-(f.createTemplateSignatureInstance())
 
-  override def createUMLTestIdentityAction: Try[UMLTestIdentityAction[MagicDrawUML]] =
-    Success(f.createTestIdentityActionInstance())
+  override def createUMLTestIdentityAction: \/[NonEmptyList[UMLError.UException],UMLTestIdentityAction[MagicDrawUML]] =
+    \/-(f.createTestIdentityActionInstance())
 
-  override def createUMLTimeConstraint: Try[UMLTimeConstraint[MagicDrawUML]] =
-    Success(f.createTimeConstraintInstance())
+  override def createUMLTimeConstraint: \/[NonEmptyList[UMLError.UException],UMLTimeConstraint[MagicDrawUML]] =
+    \/-(f.createTimeConstraintInstance())
 
-  override def createUMLTimeEvent: Try[UMLTimeEvent[MagicDrawUML]] =
-    Success(f.createTimeEventInstance())
+  override def createUMLTimeEvent: \/[NonEmptyList[UMLError.UException],UMLTimeEvent[MagicDrawUML]] =
+    \/-(f.createTimeEventInstance())
 
-  override def createUMLTimeExpression: Try[UMLTimeExpression[MagicDrawUML]] =
-    Success(f.createTimeExpressionInstance())
+  override def createUMLTimeExpression: \/[NonEmptyList[UMLError.UException],UMLTimeExpression[MagicDrawUML]] =
+    \/-(f.createTimeExpressionInstance())
 
-  override def createUMLTimeInterval: Try[UMLTimeInterval[MagicDrawUML]] =
-    Success(f.createTimeIntervalInstance())
+  override def createUMLTimeInterval: \/[NonEmptyList[UMLError.UException],UMLTimeInterval[MagicDrawUML]] =
+    \/-(f.createTimeIntervalInstance())
 
-  override def createUMLTimeObservation: Try[UMLTimeObservation[MagicDrawUML]] =
-    Success(f.createTimeObservationInstance())
+  override def createUMLTimeObservation: \/[NonEmptyList[UMLError.UException],UMLTimeObservation[MagicDrawUML]] =
+    \/-(f.createTimeObservationInstance())
 
-  override def createUMLTransition: Try[UMLTransition[MagicDrawUML]] =
-    Success(f.createTransitionInstance())
+  override def createUMLTransition: \/[NonEmptyList[UMLError.UException],UMLTransition[MagicDrawUML]] =
+    \/-(f.createTransitionInstance())
 
-  override def createUMLTrigger: Try[UMLTrigger[MagicDrawUML]] =
-    Success(f.createTriggerInstance())
+  override def createUMLTrigger: \/[NonEmptyList[UMLError.UException],UMLTrigger[MagicDrawUML]] =
+    \/-(f.createTriggerInstance())
 
-  override def createUMLUnmarshallAction: Try[UMLUnmarshallAction[MagicDrawUML]] =
-    Success(f.createUnmarshallActionInstance())
+  override def createUMLUnmarshallAction: \/[NonEmptyList[UMLError.UException],UMLUnmarshallAction[MagicDrawUML]] =
+    \/-(f.createUnmarshallActionInstance())
 
-  override def createUMLUsage: Try[UMLUsage[MagicDrawUML]] =
-    Success(f.createUsageInstance())
+  override def createUMLUsage: \/[NonEmptyList[UMLError.UException],UMLUsage[MagicDrawUML]] =
+    \/-(f.createUsageInstance())
 
-  override def createUMLUseCase: Try[UMLUseCase[MagicDrawUML]] =
-    Success(f.createUseCaseInstance())
+  override def createUMLUseCase: \/[NonEmptyList[UMLError.UException],UMLUseCase[MagicDrawUML]] =
+    \/-(f.createUseCaseInstance())
 
-  override def createUMLValuePin: Try[UMLValuePin[MagicDrawUML]] =
-    Success(f.createValuePinInstance())
+  override def createUMLValuePin: \/[NonEmptyList[UMLError.UException],UMLValuePin[MagicDrawUML]] =
+    \/-(f.createValuePinInstance())
 
-  override def createUMLValueSpecificationAction: Try[UMLValueSpecificationAction[MagicDrawUML]] =
-    Success(f.createValueSpecificationActionInstance())
+  override def createUMLValueSpecificationAction: \/[NonEmptyList[UMLError.UException],UMLValueSpecificationAction[MagicDrawUML]] =
+    \/-(f.createValueSpecificationActionInstance())
 
-  override def createUMLVariable: Try[UMLVariable[MagicDrawUML]] =
-    Success(f.createVariableInstance())
+  override def createUMLVariable: \/[NonEmptyList[UMLError.UException],UMLVariable[MagicDrawUML]] =
+    \/-(f.createVariableInstance())
 
 }

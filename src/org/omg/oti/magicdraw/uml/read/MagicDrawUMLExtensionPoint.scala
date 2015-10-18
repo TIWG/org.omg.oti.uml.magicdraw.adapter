@@ -40,8 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Predef.???
 
 trait MagicDrawUMLExtensionPoint 
   extends UMLExtensionPoint[MagicDrawUML]
@@ -49,10 +49,12 @@ trait MagicDrawUMLExtensionPoint
 
   override protected def e: Uml#ExtensionPoint
   def getMagicDrawExtensionPoint = e
+  override implicit val umlOps = ops
+  import umlOps._
 
-  override def extensionLocation_extension: Set[UMLExtend[Uml]] =
-    ???
-  
+  override def extensionLocation_extension
+  : Set[UMLExtend[Uml]] =
+    e.getExtension.toSet[Uml#Extend]
 
 }
 

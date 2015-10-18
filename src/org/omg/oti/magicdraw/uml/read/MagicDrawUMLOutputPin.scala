@@ -42,11 +42,10 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.Option
-import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
 
-trait MagicDrawUMLOutputPin 
+trait MagicDrawUMLOutputPin
   extends UMLOutputPin[MagicDrawUML]
   with MagicDrawUMLPin {
 
@@ -56,207 +55,232 @@ trait MagicDrawUMLOutputPin
   override implicit val umlOps = ops
   import umlOps._
 
-	override def bodyOutput_clause: Set[UMLClause[Uml]] =
+  override def bodyOutput_clause: Set[UMLClause[Uml]] =
    e.get_clauseOfBodyOutput.toSet[Uml#Clause]
       
-	override def decider_clause: Option[UMLClause[Uml]] =
+  override def decider_clause: Option[UMLClause[Uml]] =
     Option.apply( e.get_clauseOfDecider )
 
-	override def decider_loopNode: Option[UMLLoopNode[Uml]] =
+  override def decider_loopNode: Option[UMLLoopNode[Uml]] =
     Option.apply( e.get_loopNodeOfDecider )
   
-	override def bodyOutput_loopNode: Set[UMLLoopNode[Uml]] =
+  override def bodyOutput_loopNode: Set[UMLLoopNode[Uml]] =
     e.get_loopNodeOfBodyOutput.toSet[Uml#LoopNode]
 
-  override def loopVariable_loopNode: Option[UMLLoopNode[Uml]] = ???
+  override def loopVariable_loopNode: Option[UMLLoopNode[Uml]] =
+    Option.apply(e.get_loopNodeOfLoopVariable())
   
-  override def output_action: Option[UMLAction[Uml]] = ???
+  override def output_action: Option[UMLAction[Uml]] =
+    Option.apply(e.get_actionOfOutput())
   
-  override def outputValue_opaqueAction: Option[UMLOpaqueAction[Uml]] = ???
+  override def outputValue_opaqueAction: Option[UMLOpaqueAction[Uml]] =
+    Option.apply(e.get_opaqueActionOfOutputValue())
   
-  override def result_acceptEventAction: Option[UMLAcceptEventAction[Uml]] = ???
+  override def result_acceptEventAction: Option[UMLAcceptEventAction[Uml]] =
+    Option.apply(e.get_acceptEventActionOfResult())
   
-  override def result_callAction: Option[UMLCallAction[Uml]] = ???
+  override def result_callAction: Option[UMLCallAction[Uml]] =
+    Option.apply(e.get_callActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLClearStructuralFeatureAction.result
-	 */
-	override def result_clearStructuralFeatureAction: Option[UMLClearStructuralFeatureAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLClearStructuralFeatureAction.result
+    */
+  override def result_clearStructuralFeatureAction: Option[UMLClearStructuralFeatureAction[Uml]] =
+    Option.apply(e.get_clearStructuralFeatureActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLConditionalNode.result
-	 */
-	override def result_conditionalNode: Option[UMLConditionalNode[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLConditionalNode.result
+    */
+  override def result_conditionalNode: Option[UMLConditionalNode[Uml]] =
+    Option.apply(e.get_conditionalNodeOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLCreateLinkObjectAction.result
-	 */
-	override def result_createLinkObjectAction: Option[UMLCreateLinkObjectAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLCreateLinkObjectAction.result
+    */
+  override def result_createLinkObjectAction: Option[UMLCreateLinkObjectAction[Uml]] =
+    Option.apply(e.get_createLinkObjectActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLCreateObjectAction.result
-	 */
-	override def result_createObjectAction: Option[UMLCreateObjectAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLCreateObjectAction.result
+    */
+  override def result_createObjectAction: Option[UMLCreateObjectAction[Uml]] =
+    Option.apply(e.get_createObjectActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLoopNode.result
-	 */
-	override def result_loopNode: Option[UMLLoopNode[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLoopNode.result
+    */
+  override def result_loopNode: Option[UMLLoopNode[Uml]] =
+    Option.apply(e.get_loopNodeOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadExtentAction.result
-	 */
-	override def result_readExtentAction: Option[UMLReadExtentAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadExtentAction.result
+    */
+  override def result_readExtentAction: Option[UMLReadExtentAction[Uml]] =
+    Option.apply(e.get_readExtentActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadIsClassifiedObjectAction.result
-	 */
-	override def result_readIsClassifiedObjectAction: Option[UMLReadIsClassifiedObjectAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadIsClassifiedObjectAction.result
+    */
+  override def result_readIsClassifiedObjectAction: Option[UMLReadIsClassifiedObjectAction[Uml]] =
+    Option.apply(e.get_readIsClassifiedObjectActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkAction.result
-	 */
-	override def result_readLinkAction: Option[UMLReadLinkAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkAction.result
+    */
+  override def result_readLinkAction: Option[UMLReadLinkAction[Uml]] =
+    Option.apply(e.get_readLinkActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndAction.result
-	 */
-	override def result_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndAction.result
+    */
+  override def result_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] =
+    Option.apply(e.get_readLinkObjectEndActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndQualifierAction.result
-	 */
-	override def result_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndQualifierAction.result
+    */
+  override def result_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] =
+    Option.apply(e.get_readLinkObjectEndQualifierActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadSelfAction.result
-	 */
-	override def result_readSelfAction: Option[UMLReadSelfAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadSelfAction.result
+    */
+  override def result_readSelfAction: Option[UMLReadSelfAction[Uml]] =
+    Option.apply(e.get_readSelfActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadStructuralFeatureAction.result
-	 */
-	override def result_readStructuralFeatureAction: Option[UMLReadStructuralFeatureAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadStructuralFeatureAction.result
+    */
+  override def result_readStructuralFeatureAction: Option[UMLReadStructuralFeatureAction[Uml]] =
+    Option.apply(e.get_readStructuralFeatureActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadVariableAction.result
-	 */
-	override def result_readVariableAction: Option[UMLReadVariableAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadVariableAction.result
+    */
+  override def result_readVariableAction: Option[UMLReadVariableAction[Uml]] =
+    Option.apply(e.get_readVariableActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReduceAction.result
-	 */
-	override def result_reduceAction: Option[UMLReduceAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReduceAction.result
+    */
+  override def result_reduceAction: Option[UMLReduceAction[Uml]] =
+    Option.apply(e.get_reduceActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.result
-	 */
-	override def result_testIdentityAction: Option[UMLTestIdentityAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.result
+    */
+  override def result_testIdentityAction: Option[UMLTestIdentityAction[Uml]] =
+    Option.apply(e.get_testIdentityActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLUnmarshallAction.result
-	 */
-	override def result_unmarshallAction: Option[UMLUnmarshallAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLUnmarshallAction.result
+    */
+  override def result_unmarshallAction: Option[UMLUnmarshallAction[Uml]] =
+    Option.apply(e.get_unmarshallActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLValueSpecificationAction.result
-	 */
-	override def result_valueSpecificationAction: Option[UMLValueSpecificationAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLValueSpecificationAction.result
+    */
+  override def result_valueSpecificationAction: Option[UMLValueSpecificationAction[Uml]] =
+    Option.apply(e.get_valueSpecificationActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteStructuralFeatureAction.result
-	 */
-	override def result_writeStructuralFeatureAction: Option[UMLWriteStructuralFeatureAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteStructuralFeatureAction.result
+    */
+  override def result_writeStructuralFeatureAction: Option[UMLWriteStructuralFeatureAction[Uml]] =
+    Option.apply(e.get_writeStructuralFeatureActionOfResult())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAcceptCallAction.returnInformation
-	 */
-	override def returnInformation_acceptCallAction: Option[UMLAcceptCallAction[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAcceptCallAction.returnInformation
+    */
+  override def returnInformation_acceptCallAction: Option[UMLAcceptCallAction[Uml]] =
+    Option.apply(e.get_acceptCallActionOfReturnInformation())
 
-	/**
-	 * <!-- begin-model-doc -->
-	 * <!-- end-model-doc -->
-	 *
-	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
-	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStructuredActivityNode.structuredNodeOutput
-	 */
-	override def structuredNodeOutput_structuredActivityNode: Option[UMLStructuredActivityNode[Uml]] = ???
+  /**
+    * <!-- begin-model-doc -->
+    * <!-- end-model-doc -->
+    *
+    * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
+    * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStructuredActivityNode.structuredNodeOutput
+    */
+  override def structuredNodeOutput_structuredActivityNode: Option[UMLStructuredActivityNode[Uml]] =
+    Option.apply(e.get_structuredActivityNodeOfStructuredNodeOutput())
 
 }
 

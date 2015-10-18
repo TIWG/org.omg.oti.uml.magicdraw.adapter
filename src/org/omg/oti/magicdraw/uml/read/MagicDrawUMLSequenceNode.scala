@@ -39,8 +39,8 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
 
@@ -50,11 +50,12 @@ trait MagicDrawUMLSequenceNode
 
   override protected def e: Uml#SequenceNode
   def getMagicDrawSequenceNode = e
-  //implicit val umlOps = ops
-  //import umlOps._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.45
-	override def executableNode: Seq[UMLExecutableNode[Uml]] = ??? 
+  override def executableNode: Seq[UMLExecutableNode[Uml]] =
+    e.getExecutableNode().to[Seq]
 
 }
 

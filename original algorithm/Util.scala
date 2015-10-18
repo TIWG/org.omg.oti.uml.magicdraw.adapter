@@ -3,13 +3,13 @@ package org.omg.oti.magicdraw.scripts
 import java.net.MalformedURLException
 import java.net.URL
 
+import org.omg.oti.uml.UMLError
+
 import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.language.postfixOps
-import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
+import scalaz._, Scalaz._
 
 import com.nomagic.magicdraw.uml.ClassTypes
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
@@ -416,7 +416,8 @@ endif
           }
       } ).stripPrefix( "OMG." ) )
 
-  def getImageLocationURL( i: Image ): Try[String] =
+  def getImageLocationURL( i: Image )
+  : NonEmptyList[UMLError.UException] \/ String =
     i.getLocation match {
       case null =>
         Failure( new IllegalArgumentException( "An Image must have a non-null location URL" ) )

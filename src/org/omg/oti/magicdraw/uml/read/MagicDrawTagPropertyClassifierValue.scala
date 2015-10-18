@@ -38,7 +38,7 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.omg.oti.magicdraw.uml.read
-
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 
 import scala.{Boolean,Double,Int}
@@ -46,7 +46,7 @@ import scala.Predef.{???,String}
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.language.{implicitConversions, postfixOps}
-import scala.util.{Success, Try}
+import scalaz._
 
 sealed abstract class MagicDrawTagPropertyClassifierValue
   extends TagPropertyClassifierValue[MagicDrawUML] {
@@ -55,7 +55,7 @@ sealed abstract class MagicDrawTagPropertyClassifierValue
 
   def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem]
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem
 
 }
 
@@ -71,8 +71,8 @@ case class MagicDrawTagPropertyEnumerationLiteralValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(
       scala.xml.Elem(
         prefix = null,
         label = property.name.get,
@@ -91,8 +91,8 @@ case class MagicDrawTagPropertyInstanceSpecificationValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(
       scala.xml.Elem(
         prefix = null,
         label = property.name.get,
@@ -115,8 +115,8 @@ case class MagicDrawTagPropertyBooleanValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(scala.xml.Elem(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -134,8 +134,8 @@ case class MagicDrawTagPropertyIntegerValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(scala.xml.Elem(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -153,8 +153,8 @@ case class MagicDrawTagPropertyUnlimitedNaturalValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(scala.xml.Elem(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -172,8 +172,8 @@ case class MagicDrawTagPropertyRealValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(scala.xml.Elem(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -191,8 +191,8 @@ case class MagicDrawTagPropertyStringValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
-    Success(scala.xml.Elem(
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
+    \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -236,7 +236,7 @@ with TagPropertyProfileLifecycleDependentClassifierValueReference[MagicDrawUML] 
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
     ???
 
   override val tagPropertyValueElementReferences
@@ -253,7 +253,7 @@ with TagPropertyProfileLifecycleDependentClassifierValueObject[MagicDrawUML] {
 
   def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Try[scala.xml.Elem] =
+  : NonEmptyList[UMLError.UException] \/ scala.xml.Elem =
     ???
 
   override val tagPropertyValueElementReferences

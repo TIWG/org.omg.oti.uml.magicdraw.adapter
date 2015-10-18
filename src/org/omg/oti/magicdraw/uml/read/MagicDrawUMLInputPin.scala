@@ -41,7 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLInputPin 
   extends UMLInputPin[MagicDrawUML]
@@ -67,7 +66,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInvocationAction.argument
 	 */
-	override def argument_invocationAction: Option[UMLInvocationAction[Uml]] = ???
+	override def argument_invocationAction
+	: Option[UMLInvocationAction[Uml]] =
+  Option.apply(e.get_invocationActionOfArgument)
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -76,7 +77,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReduceAction.collection
 	 */
-	override def collection_reduceAction: Option[UMLReduceAction[Uml]] = ???
+	override def collection_reduceAction
+  : Option[UMLReduceAction[Uml]] =
+  Option.apply(e.get_reduceActionOfCollection)
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -85,7 +88,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLinkEndDestructionData.destroyAt
 	 */
-	override def destroyAt_linkEndDestructionData: Option[UMLLinkEndDestructionData[Uml]] = ???
+	override def destroyAt_linkEndDestructionData
+  : Option[UMLLinkEndDestructionData[Uml]] =
+  Option.apply(e.get_linkEndDestructionDataOfDestroyAt)
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -94,7 +99,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLRaiseExceptionAction.exception
 	 */
-	override def exception_raiseExceptionAction: Option[UMLRaiseExceptionAction[Uml]] = ???
+	override def exception_raiseExceptionAction
+  : Option[UMLRaiseExceptionAction[Uml]] =
+  Option.apply(e.get_raiseExceptionActionOfException())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -103,7 +110,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.first
 	 */
-	override def first_testIdentityAction: Option[UMLTestIdentityAction[Uml]] = ???
+	override def first_testIdentityAction
+  : Option[UMLTestIdentityAction[Uml]] =
+  Option.apply(e.get_testIdentityActionOfFirst())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -112,7 +121,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLinkAction.inputValue
 	 */
-	override def inputValue_linkAction: Option[UMLLinkAction[Uml]] = ???
+	override def inputValue_linkAction
+  : Option[UMLLinkAction[Uml]] =
+  Option.apply(e.get_linkActionOfInputValue())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -121,7 +132,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLOpaqueAction.inputValue
 	 */
-	override def inputValue_opaqueAction: Option[UMLOpaqueAction[Uml]] = ???
+	override def inputValue_opaqueAction
+  : Option[UMLOpaqueAction[Uml]] =
+  Option.apply(e.get_opaqueActionOfInputValue())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -130,7 +143,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="true" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAction.input
 	 */
-	override def input_action: Option[UMLAction[Uml]] = ???
+	override def input_action
+  : Option[UMLAction[Uml]] =
+  Option.apply(e.get_actionOfInput())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -139,7 +154,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAddStructuralFeatureValueAction.insertAt
 	 */
-	override def insertAt_addStructuralFeatureValueAction: Option[UMLAddStructuralFeatureValueAction[Uml]] = ???
+	override def insertAt_addStructuralFeatureValueAction
+  : Option[UMLAddStructuralFeatureValueAction[Uml]] =
+  Option.apply(e.get_addStructuralFeatureValueActionOfInsertAt())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -148,7 +165,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAddVariableValueAction.insertAt
 	 */
-	override def insertAt_addVariableValueAction: Option[UMLAddVariableValueAction[Uml]] = ???
+	override def insertAt_addVariableValueAction
+  : Option[UMLAddVariableValueAction[Uml]] =
+  Option.apply(e.get_addVariableValueActionOfInsertAt())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -157,7 +176,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLinkEndCreationData.insertAt
 	 */
-	override def insertAt_linkEndCreationData: Option[UMLLinkEndCreationData[Uml]] = ???
+	override def insertAt_linkEndCreationData
+  : Option[UMLLinkEndCreationData[Uml]] =
+  Option.apply(e.get_linkEndCreationDataOfInsertAt())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -166,7 +187,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLoopNode.loopVariableInput
 	 */
-	override def loopVariableInput_loopNode: Option[UMLLoopNode[Uml]] = ???
+	override def loopVariableInput_loopNode
+  : Option[UMLLoopNode[Uml]] =
+  Option.apply(e.get_loopNodeOfLoopVariableInput())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -175,7 +198,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLClearAssociationAction._object
 	 */
-	override def object_clearAssociationAction: Option[UMLClearAssociationAction[Uml]] = ???
+	override def object_clearAssociationAction
+  : Option[UMLClearAssociationAction[Uml]] =
+  Option.apply(e.get_clearAssociationActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -184,7 +209,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadIsClassifiedObjectAction._object
 	 */
-	override def object_readIsClassifiedObjectAction: Option[UMLReadIsClassifiedObjectAction[Uml]] = ???
+	override def object_readIsClassifiedObjectAction
+  : Option[UMLReadIsClassifiedObjectAction[Uml]] =
+  Option.apply(e.get_readIsClassifiedObjectActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -193,7 +220,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndAction._object
 	 */
-	override def object_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] = ???
+	override def object_readLinkObjectEndAction
+  : Option[UMLReadLinkObjectEndAction[Uml]] =
+  Option.apply(e.get_readLinkObjectEndActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -202,7 +231,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReadLinkObjectEndQualifierAction._object
 	 */
-	override def object_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] = ???
+	override def object_readLinkObjectEndQualifierAction
+  : Option[UMLReadLinkObjectEndQualifierAction[Uml]] =
+  Option.apply(e.get_readLinkObjectEndQualifierActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -211,7 +242,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReclassifyObjectAction._object
 	 */
-	override def object_reclassifyObjectAction: Option[UMLReclassifyObjectAction[Uml]] = ???
+	override def object_reclassifyObjectAction
+  : Option[UMLReclassifyObjectAction[Uml]] =
+  Option.apply(e.get_reclassifyObjectActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -220,7 +253,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStartClassifierBehaviorAction._object
 	 */
-	override def object_startClassifierBehaviorAction: Option[UMLStartClassifierBehaviorAction[Uml]] = ???
+	override def object_startClassifierBehaviorAction
+  : Option[UMLStartClassifierBehaviorAction[Uml]] =
+  Option.apply(e.get_startClassifierBehaviorActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -229,7 +264,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStartObjectBehaviorAction._object
 	 */
-	override def object_startObjectBehaviorAction: Option[UMLStartObjectBehaviorAction[Uml]] = ???
+	override def object_startObjectBehaviorAction
+  : Option[UMLStartObjectBehaviorAction[Uml]] =
+  Option.apply(e.get_startObjectBehaviorActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -238,7 +275,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStructuralFeatureAction._object
 	 */
-	override def object_structuralFeatureAction: Option[UMLStructuralFeatureAction[Uml]] = ???
+	override def object_structuralFeatureAction
+  : Option[UMLStructuralFeatureAction[Uml]] =
+  Option.apply(e.get_structuralFeatureActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -247,7 +286,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLUnmarshallAction._object
 	 */
-	override def object_unmarshallAction: Option[UMLUnmarshallAction[Uml]] = ???
+	override def object_unmarshallAction
+  : Option[UMLUnmarshallAction[Uml]] =
+  Option.apply(e.get_unmarshallActionOfObject())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -256,7 +297,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLRemoveStructuralFeatureValueAction.removeAt
 	 */
-	override def removeAt_removeStructuralFeatureValueAction: Option[UMLRemoveStructuralFeatureValueAction[Uml]] = ???
+	override def removeAt_removeStructuralFeatureValueAction
+  : Option[UMLRemoveStructuralFeatureValueAction[Uml]] =
+  Option.apply(e.get_removeStructuralFeatureValueActionOfRemoveAt())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -265,7 +308,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLRemoveVariableValueAction.removeAt
 	 */
-	override def removeAt_removeVariableValueAction: Option[UMLRemoveVariableValueAction[Uml]] = ???
+	override def removeAt_removeVariableValueAction
+  : Option[UMLRemoveVariableValueAction[Uml]] =
+  Option.apply(e.get_removeVariableValueActionOfRemoveAt())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -274,7 +319,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReplyAction.replyValue
 	 */
-	override def replyValue_replyAction: Option[UMLReplyAction[Uml]] = ???
+	override def replyValue_replyAction
+  : Option[UMLReplyAction[Uml]] =
+  Option.apply(e.get_replyActionOfReplyValue())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -283,7 +330,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLSendObjectAction.request
 	 */
-	override def request_sendObjectAction: Option[UMLSendObjectAction[Uml]] = ???
+	override def request_sendObjectAction
+  : Option[UMLSendObjectAction[Uml]] =
+  Option.apply(e.get_sendObjectActionOfRequest())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -292,7 +341,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReplyAction.returnInformation
 	 */
-	override def returnInformation_replyAction: Option[UMLReplyAction[Uml]] = ???
+	override def returnInformation_replyAction
+  : Option[UMLReplyAction[Uml]] =
+  Option.apply(e.get_replyActionOfReturnInformation())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -301,7 +352,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.second
 	 */
-	override def second_testIdentityAction: Option[UMLTestIdentityAction[Uml]] = ???
+	override def second_testIdentityAction
+  : Option[UMLTestIdentityAction[Uml]] =
+  Option.apply(e.get_testIdentityActionOfSecond())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -310,7 +363,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStructuredActivityNode.structuredNodeInput
 	 */
-	override def structuredNodeInput_structuredActivityNode: Option[UMLStructuredActivityNode[Uml]] = ???
+	override def structuredNodeInput_structuredActivityNode
+  : Option[UMLStructuredActivityNode[Uml]] =
+  Option.apply(e.get_structuredActivityNodeOfStructuredNodeInput())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -319,7 +374,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLCallOperationAction.target
 	 */
-	override def target_callOperationAction: Option[UMLCallOperationAction[Uml]] = ???
+	override def target_callOperationAction
+  : Option[UMLCallOperationAction[Uml]] =
+  Option.apply(e.get_callOperationActionOfTarget())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -328,7 +385,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLDestroyObjectAction.target
 	 */
-	override def target_destroyObjectAction: Option[UMLDestroyObjectAction[Uml]] = ???
+	override def target_destroyObjectAction
+  : Option[UMLDestroyObjectAction[Uml]] =
+  Option.apply(e.get_destroyObjectActionOfTarget())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -337,7 +396,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLSendObjectAction.target
 	 */
-	override def target_sendObjectAction: Option[UMLSendObjectAction[Uml]] = ???
+	override def target_sendObjectAction
+  : Option[UMLSendObjectAction[Uml]] =
+  Option.apply(e.get_sendObjectActionOfTarget())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -346,7 +407,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLSendSignalAction.target
 	 */
-	override def target_sendSignalAction: Option[UMLSendSignalAction[Uml]] = ???
+	override def target_sendSignalAction
+  : Option[UMLSendSignalAction[Uml]] =
+  Option.apply(e.get_sendSignalActionOfTarget())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -355,7 +418,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteStructuralFeatureAction.value
 	 */
-	override def value_writeStructuralFeatureAction: Option[UMLWriteStructuralFeatureAction[Uml]] = ???
+	override def value_writeStructuralFeatureAction
+  : Option[UMLWriteStructuralFeatureAction[Uml]] =
+  Option.apply(e.get_writeStructuralFeatureActionOfValue())
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -364,7 +429,9 @@ trait MagicDrawUMLInputPin
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteVariableAction.value
 	 */
-	override def value_writeVariableAction: Option[UMLWriteVariableAction[Uml]] = ???
+	override def value_writeVariableAction
+  : Option[UMLWriteVariableAction[Uml]] =
+  Option.apply(e.get_writeVariableActionOfValue())
 
 
 }

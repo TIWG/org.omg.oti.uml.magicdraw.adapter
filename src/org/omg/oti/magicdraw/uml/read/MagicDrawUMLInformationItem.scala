@@ -41,7 +41,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.StringContext
-import scala.Predef.{???,String}
+import scala.Predef.String
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
 trait MagicDrawUMLInformationItem 
@@ -51,9 +52,12 @@ trait MagicDrawUMLInformationItem
   override protected def e: Uml#InformationItem
   def getMagicDrawInformationItem = e
 
+  override implicit val umlOps = ops
+  import umlOps._
+
   // 20.1
-  override def represented: Set[UMLClassifier[Uml]] = ???
-  
+  override def represented: Set[UMLClassifier[Uml]] =
+    e.getRepresented().toSet[Uml#Classifier]
 
 }
 

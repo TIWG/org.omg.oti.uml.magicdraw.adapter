@@ -45,7 +45,7 @@ import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
 import scala.{Boolean,Option,StringContext}
-import scala.Predef.{???,String}
+import scala.Predef.String
 
 trait MagicDrawUMLOpaqueExpression 
   extends UMLOpaqueExpression[MagicDrawUML]
@@ -67,8 +67,9 @@ trait MagicDrawUMLOpaqueExpression
   override def language = e.getLanguage.to[Seq]
   
   // 8.2
-  override def result: Option[UMLParameter[Uml]] = ???
-  
+  override def result
+  : Option[UMLParameter[Uml]] =
+  Option.apply(e.getResult)
 
 }
 

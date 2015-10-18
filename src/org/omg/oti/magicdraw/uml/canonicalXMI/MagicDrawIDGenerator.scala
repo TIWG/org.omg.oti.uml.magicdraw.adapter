@@ -47,15 +47,14 @@ import scala.Predef.String
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.language.postfixOps
-import scala.util.Failure
-import scala.util.Success
-import scala.util.Try
 
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
+import scalaz._, Scalaz._
 
 case class MagicDrawIDGenerator
 ( resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )
@@ -66,40 +65,53 @@ case class MagicDrawIDGenerator
   import umlOps._
   implicit val idg = this
 
-  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], Try[String]]()
+  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[UMLError.UException],String]]()
 
-  override def getMappedOrReferencedElement( ref: UMLElement[Uml] ): UMLElement[Uml] =
-    ref.xmiID() match {
+  override def getMappedOrReferencedElement( ref: UMLElement[Uml] )
+  : NonEmptyList[UMLError.UException] \/ UMLElement[Uml] =
+    ref
+    .xmiID()
+    .map {
       case "_UML_" => MDBuiltInUML.scope
       case "_StandardProfile_" => MDBuiltInStandardProfile.scope
       case _ => ref
-  }
+    }
   
   // -------------
   val MD_crule0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification )
       if is.isMagicDrawUMLAppliedStereotypeInstance =>
-      Success( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" )
+      ( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" ).right
   }
 
   val MD_crule1a0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, ev: MagicDrawUMLElementValue ) =>
       ev.element
-      .fold[Try[String]](
-          Failure( illegalElementException( "ElementValue without Element is not supported", ev ) )
+      .fold[\/[NonEmptyList[UMLError.UException],String]](
+          NonEmptyList(
+            UMLError
+            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue without Element is not supported", Iterable(owner, ev) ) )
+          .left
       ){
         case nev: UMLNamedElement[Uml] =>
           nev
           .name
-          .fold[Try[String]](
-            Failure( illegalElementException( "ElementValue must refer to a named NamedElement", ev ) )
+          .fold[\/[NonEmptyList[UMLError.UException],String]](
+            NonEmptyList(
+              UMLError
+                .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue must refer to a named NamedElement", Iterable(owner, ev, nev ) ) )
+            .left
           ){ n =>
-              Success(
+            (
                 ownerID + "_" +
                 IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
+            .right
           }
-        case ev: UMLElement[Uml] =>
-          Failure( illegalElementException( "ElementValue refers to an Element that is not a NamedElement!", ev ) )
+        case uev: UMLElement[Uml] =>
+          NonEmptyList(
+            UMLError
+              .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue refers to an Element that is not a NamedElement!", Iterable(owner, ev, uev ) ) )
+          .left
       }
   }
 

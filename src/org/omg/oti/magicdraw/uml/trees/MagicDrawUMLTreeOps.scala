@@ -40,14 +40,15 @@
 package org.omg.oti.magicdraw.uml.trees
 
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+
+import org.omg.oti.uml.UMLError
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.uml.read.api.UMLClassifier
 import org.omg.oti.uml.trees._
 
 import scala.{Boolean,Option,None,Some,StringContext}
 import scala.Predef.String
-
-import java.lang.IllegalArgumentException
+import scalaz._, Scalaz._
 
 case class MagicDrawUMLTreeOps
 ( umlUtil: MagicDrawUMLUtil,
@@ -55,63 +56,78 @@ case class MagicDrawUMLTreeOps
   blockSpecificTypeStereotypeName: String)
 extends TreeOps[MagicDrawUML] {
 
-  val blockSpecificTypePF =
-    Option.apply(StereotypesHelper.getProfile(
-      umlUtil.project, blockSpecificTypeProfileName)) match {
-      case None =>
-        throw TreeOpsException(
+  val blockSpecificTypePF
+  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+    Option
+    .apply(StereotypesHelper.getProfile(umlUtil.project, blockSpecificTypeProfileName))
+    .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]](
+      NonEmptyList(
+        new TreeOpsException(
           this,
-          "MagicDrawUMLTreeOps initialization failed",
-          new IllegalArgumentException(s"No profile named '$blockSpecificTypeProfileName'"))
-      case Some(pf) =>
-        pf
+          s"MagicDrawUMLTreeOps initialization failed: No profile named '$blockSpecificTypeProfileName'"))
+      .left
+    ){ _.right }
+
+  val blockSpecificTypeS
+  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+    blockSpecificTypePF.flatMap { _blockSpecificTypePF =>
+      Option
+        .apply(StereotypesHelper.getStereotype(umlUtil.project, blockSpecificTypeStereotypeName, _blockSpecificTypePF))
+        .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]](
+        NonEmptyList(
+          new TreeOpsException(
+            this,
+            s"MagicDrawUMLTreeOps initialization failed: No stereotype named '$blockSpecificTypeStereotypeName'"))
+          .left
+      ) {
+        _.right
+      }
     }
 
-  val blockSpecificTypeS =
-    Option.apply(StereotypesHelper.getStereotype(
-      umlUtil.project, blockSpecificTypeStereotypeName, blockSpecificTypePF)) match {
-      case None =>
-        throw TreeOpsException(
+  val sysmlPF
+  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+    Option
+    .apply(StereotypesHelper.getProfile(umlUtil.project, "SysML"))
+    .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]](
+      NonEmptyList(
+        new TreeOpsException(
           this,
-          "MagicDrawUMLTreeOps initialization failed",
-          new IllegalArgumentException(s"No stereotype named '$blockSpecificTypeStereotypeName'"))
-      case Some(s) =>
-        s
-    }
+          "MagicDrawUMLTreeOps initialization failed: No profile named 'SysML'"))
+      .left
+    ){ _.right }
 
-  val sysmlPF =
-    Option.apply(StereotypesHelper.getProfile(
-      umlUtil.project, "SysML")) match {
-      case None =>
-        throw TreeOpsException(
-          this,
-          "MagicDrawUMLTreeOps initialization failed",
-          new IllegalArgumentException(s"No profile named 'SysML'"))
-      case Some(pf) =>
-        pf
-    }
 
-  val sysmlPropertySpecificTypeS =
-    Option.apply(StereotypesHelper.getStereotype(
-      umlUtil.project, "PropertySpecificType", sysmlPF)) match {
-      case None =>
-        throw TreeOpsException(
-          this,
-          "MagicDrawUMLTreeOps initialization failed",
-          new IllegalArgumentException(s"No stereotype named 'PropertySpecificType'"))
-      case Some(s) =>
-        s
+  val sysmlPropertySpecificTypeS
+  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+    sysmlPF.flatMap { _sysmlPF =>
+      Option
+        .apply(StereotypesHelper.getStereotype(umlUtil.project, "PropertySpecificType", _sysmlPF))
+        .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]](
+        NonEmptyList(
+          new TreeOpsException(
+            this,
+            "MagicDrawUMLTreeOps initialization failed: No stereotype named 'PropertySpecificType'"))
+          .left
+      ) {
+        _.right
+      }
     }
 
 
-  def isRootBlockSpecificType(treeType: UMLClassifier[MagicDrawUML]): Boolean =
-    StereotypesHelper.hasStereotype(
-      umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
-      blockSpecificTypeS)
+  def isRootBlockSpecificType(treeType: UMLClassifier[MagicDrawUML])
+  : NonEmptyList[UMLError.UException] \/ Boolean =
+    blockSpecificTypeS.map { _blockSpecificTypeS =>
+      StereotypesHelper.hasStereotype(
+        umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
+        _blockSpecificTypeS)
+    }
 
-  def isPartPropertySpecificType(treeType: UMLClassifier[MagicDrawUML]): Boolean =
-    StereotypesHelper.hasStereotype(
-      umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
-      sysmlPropertySpecificTypeS)
+  def isPartPropertySpecificType(treeType: UMLClassifier[MagicDrawUML])
+  : NonEmptyList[UMLError.UException] \/ Boolean =
+    sysmlPropertySpecificTypeS.map { _sysmlPropertySpecificTypeS =>
+      StereotypesHelper.hasStereotype(
+        umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
+        _sysmlPropertySpecificTypeS)
+    }
   
 }

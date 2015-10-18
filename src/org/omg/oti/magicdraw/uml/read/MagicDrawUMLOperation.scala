@@ -46,6 +46,7 @@ import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.language.postfixOps
 
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import java.lang.Integer
 
@@ -100,7 +101,7 @@ trait MagicDrawUMLOperation
     e.get_callOperationActionOfOperation.toSet[Uml#CallOperationAction]
   
   override def referred_protocolTransition: Set[UMLProtocolTransition[Uml]] =
-    ???
+    throw UMLError.umlAdaptationError(s"MagicDrawUMLOperation.referred_protocolTransition not available")
   
   override def operation_callEvent: Set[UMLCallEvent[Uml]] =
     e.get_callEventOfOperation.toSet[Uml#CallEvent]

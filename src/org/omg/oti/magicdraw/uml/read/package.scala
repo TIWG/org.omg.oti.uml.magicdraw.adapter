@@ -37,30 +37,14 @@
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.omg.oti.magicdraw.uml.read
+package org.omg.oti.magicdraw.uml
 
-import org.omg.oti.uml.read.api._
+import scala.collection.immutable.Seq
+import scalaz._
 
-import scala.Option
+package object read {
 
-trait MagicDrawUMLCreateObjectAction 
-  extends UMLCreateObjectAction[MagicDrawUML]
-  with MagicDrawUMLAction {
-
-  override protected def e: Uml#CreateObjectAction
-  def getMagicDrawCreateObjectAction = e
-  override implicit val umlOps = ops
-  import umlOps._
-
-	override def classifier
-  : Option[UMLClassifier[Uml]] =
-  Option.apply(e.getClassifier)
-  
-  override def result
-  : Option[UMLOutputPin[Uml]] =
-  Option.apply(e.getResult)
+  implicit def XMLElementSeqSemigroup: Semigroup[Seq[scala.xml.Elem]] =
+    Semigroup.instance(_ ++ _)
 
 }
-
-case class MagicDrawUMLCreateObjectActionImpl(val e: MagicDrawUML#CreateObjectAction, ops: MagicDrawUMLUtil)
-  extends MagicDrawUMLCreateObjectAction

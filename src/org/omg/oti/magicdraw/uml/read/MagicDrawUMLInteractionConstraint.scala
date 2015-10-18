@@ -41,7 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLInteractionConstraint 
   extends UMLInteractionConstraint[MagicDrawUML]
@@ -49,12 +48,18 @@ trait MagicDrawUMLInteractionConstraint
 
   override protected def e: Uml#InteractionConstraint
   def getMagicDrawInteractionConstraint = e
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 17.11
-	override def maxint: Option[UMLValueSpecification[Uml]] = ???
+	override def maxint
+  : Option[UMLValueSpecification[Uml]] =
+  Option.apply(e.getMaxint)
   
   // 17.11  
-	override def minint: Option[UMLValueSpecification[Uml]] = ???
+	override def minint
+  : Option[UMLValueSpecification[Uml]] =
+  Option.apply(e.getMinint)
   
 
 }

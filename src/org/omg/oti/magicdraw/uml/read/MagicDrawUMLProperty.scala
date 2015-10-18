@@ -43,7 +43,7 @@ import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.{Boolean,Option,None,Some,StringContext}
-import scala.Predef.{???,String}
+import scala.Predef.String
 
 import scala.language.postfixOps
 import org.omg.oti.uml.read.api._
@@ -96,28 +96,37 @@ trait MagicDrawUMLProperty
       a.memberEnd filter (_ != this) headOption
     }
     
-	override def qualifier: Seq[UMLProperty[Uml]] = 
+  override def qualifier: Seq[UMLProperty[Uml]] =
     e.getQualifier.to[Seq]
   
   override def subsettedProperty = e.getSubsettedProperty.toSet[Uml#Property]
   
-	override def returnValueRecipient_interactionUse: Set[UMLInteractionUse[Uml]] = ???
+  override def returnValueRecipient_interactionUse: Set[UMLInteractionUse[Uml]] =
+    e.get_interactionUseOfReturnValueRecipient().toSet[Uml#InteractionUse]
     
-	override def qualifier_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] = ???
+  override def qualifier_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] =
+    Option.apply(e.get_readLinkObjectEndQualifierActionOfQualifier().toList.headOption.getOrElse(null))
 
-	override def qualifier_qualifierValue: Set[UMLQualifierValue[Uml]] = ???
+  override def qualifier_qualifierValue: Set[UMLQualifierValue[Uml]] =
+    e.get_qualifierValueOfQualifier().toSet[Uml#QualifierValue]
     
-	override def part_structuredClassifier: Option[UMLStructuredClassifier[Uml]] = ???
+  override def part_structuredClassifier: Option[UMLStructuredClassifier[Uml]] =
+    Option.apply(e.get_structuredClassifierOfOwnedAttribute())
   
-	override def end_linkEndData: Set[UMLLinkEndData[Uml]] = ???
+  override def end_linkEndData: Set[UMLLinkEndData[Uml]] =
+    e.get_linkEndDataOfEnd().toSet[Uml#LinkEndData]
   
-	override def end_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] = ???
+  override def end_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] =
+    Option.apply(e.get_readLinkObjectEndActionOfEnd().toList.headOption.getOrElse(null))
 
-	override def partWithPort_connectorEnd: Set[UMLConnectorEnd[Uml]] = ???
+  override def partWithPort_connectorEnd: Set[UMLConnectorEnd[Uml]] =
+    e.get_connectorEndOfPartWithPort().toSet[Uml#ConnectorEnd]
   
-	override def definingEnd_connectorEnd: Set[UMLConnectorEnd[Uml]] = ???
+  override def definingEnd_connectorEnd: Set[UMLConnectorEnd[Uml]] =
+    e.getEnd().toSet[Uml#ConnectorEnd]
   
-	override def attribute_classifier: Option[UMLClassifier[Uml]] = ???
+  override def attribute_classifier: Option[UMLClassifier[Uml]] =
+    Option.apply(e.getClassifier())
   
   override def navigableOwnedEnd_association = Option.apply( e.get_associationOfNavigableOwnedEnd )
   

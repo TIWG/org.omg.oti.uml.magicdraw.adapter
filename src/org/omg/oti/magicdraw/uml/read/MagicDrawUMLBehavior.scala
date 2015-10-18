@@ -47,7 +47,6 @@ import org.omg.oti.uml.read.api._
 
 import scala.Boolean
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLBehavior 
   extends UMLBehavior[MagicDrawUML]
@@ -109,17 +108,21 @@ trait MagicDrawUMLBehavior
   override def contract_connector =
     e.get_connectorOfContract.toSet[Uml#Connector]
   
-  override def classifierBehavior_behavioredClassifier: Option[UMLBehavioredClassifier[Uml]] =
-    ???
+  override def classifierBehavior_behavioredClassifier
+  : Option[UMLBehavioredClassifier[Uml]] =
+    Option.apply(e.get_behavioredClassifierOfClassifierBehavior)
   
-  	override def ownedBehavior_behavioredClassifier: Option[UMLBehavioredClassifier[Uml]] =
-      ???
+  override def ownedBehavior_behavioredClassifier
+  : Option[UMLBehavioredClassifier[Uml]] =
+    Option.apply(e.get_behavioredClassifierOfOwnedBehavior)
     
-  override def doActivity_state: Option[UMLState[Uml]] =
-    ???
+  override def doActivity_state
+  : Option[UMLState[Uml]] =
+    Option.apply(e.get_stateOfDoActivity)
   
-  override def entry_state: Option[UMLState[Uml]] =
-    ???
+  override def entry_state
+  : Option[UMLState[Uml]] =
+    Option.apply(e.get_stateOfEntry)
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -128,7 +131,8 @@ trait MagicDrawUMLBehavior
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLState.exit
 	 */
-	override def exit_state: Option[UMLState[Uml]] =
-    ???
+	override def exit_state
+  : Option[UMLState[Uml]] =
+    Option.apply(e.get_stateOfExit)
   
 }

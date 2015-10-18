@@ -39,12 +39,13 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml._
 import org.omg.oti.uml.read.api._
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.Option
+import scalaz._, Scalaz._
 
 trait MagicDrawUMLElementValue 
   extends MagicDrawUMLValueSpecification {
@@ -70,9 +71,14 @@ trait MagicDrawUMLElementValue
     Seq( MetaPropertyReference[Uml, MagicDrawUMLElementValue, UMLElement[Uml]](
       "element", _.element, isComposite=false, isUnique=true, isOrdered=false, redefinedMetaProperties=Set()) )
     
-  override def asForwardReferencesToImportableOuterPackageableElements: Set[UMLPackageableElement[Uml]] = 
-    element.fold(Set[UMLPackageableElement[Uml]]())(_.asForwardReferencesToImportableOuterPackageableElements)
-
+  override def asForwardReferencesToImportableOuterPackageableElements
+  : NonEmptyList[UMLError.UException] \/ Set[UMLPackageableElement[Uml]] =
+    element
+    .fold[\/[NonEmptyList[UMLError.UException], Set[UMLPackageableElement[Uml]]]](
+      Set[UMLPackageableElement[Uml]]().right
+    ) { e =>
+      e.asForwardReferencesToImportableOuterPackageableElements
+    }
 
 }
 

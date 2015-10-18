@@ -41,7 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.{Boolean,Option}
-import scala.Predef.???
 
 trait MagicDrawUMLObjectFlow 
   extends UMLObjectFlow[MagicDrawUML]
@@ -50,21 +49,28 @@ trait MagicDrawUMLObjectFlow
   override protected def e: Uml#ObjectFlow
   def getMagicDrawObjectFlow = e
 
+  override implicit val umlOps = ops
+  import umlOps._
+
   // 15.1
-  override def isMulticast: Boolean = ???
+  override def isMulticast: Boolean =
+    e.isMulticast()
   
   // 15.1
-  override def isMultireceive: Boolean = ???
+  override def isMultireceive: Boolean =
+    e.isMultireceive()
   
   // 15.1
-  override def selection: Option[UMLBehavior[Uml]] = ???
+  override def selection: Option[UMLBehavior[Uml]] =
+    Option.apply(e.getSelection())
   
   // 15.1
-  override def transformation: Option[UMLBehavior[Uml]] = ???
+  override def transformation: Option[UMLBehavior[Uml]] =
+    Option.apply(e.getTransformation())
   
   // 15.1
-  override def decisionInputFlow_decisionNode: Option[UMLDecisionNode[Uml]] = ???
-  
+  override def decisionInputFlow_decisionNode: Option[UMLDecisionNode[Uml]] =
+    Option.apply(e.get_decisionNodeOfDecisionInputFlow())
 
 }
 

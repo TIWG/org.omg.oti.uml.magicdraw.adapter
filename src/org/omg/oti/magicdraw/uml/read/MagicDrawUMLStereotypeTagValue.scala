@@ -40,6 +40,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.uml2.ext.jmi.helpers.{ModelHelper, StereotypesHelper}
+
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.xmi._
@@ -51,7 +53,7 @@ import scala.collection.Iterable
 import scala.Predef._
 import scala.{Int,Option,None,Ordering,Some,StringContext,Tuple2}
 import scala.language.{implicitConversions, postfixOps}
-import scala.util.{Failure, Success, Try}
+import scalaz._, Scalaz._
 
 import java.lang.System
 
@@ -68,19 +70,19 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Try[Iterable[scala.xml.Elem]] =
-    Success(
-      Iterable(
-        scala.xml.Elem(
-          prefix = null,
-          label = stereotypeTagProperty.name.get,
-          attributes = new scala.xml.PrefixedAttribute(
-            pre = "xmi",
-            key = "idref",
-            value = extendedElement.toolSpecific_id.get,
-            next = scala.xml.Null),
-          scope = xmiScopes,
-          minimizeEmpty = true)))
+  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+    Iterable(
+      scala.xml.Elem(
+        prefix = null,
+        label = stereotypeTagProperty.name.get,
+        attributes = new scala.xml.PrefixedAttribute(
+          pre = "xmi",
+          key = "idref",
+          value = extendedElement.toolSpecific_id.get,
+          next = scala.xml.Null),
+        scope = xmiScopes,
+        minimizeEmpty = true))
+    .right
 
 }
 
@@ -95,9 +97,8 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Try[Iterable[scala.xml.Elem]] =
-    Success(
-      for {
+  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+    \/-(for {
         elit <- tagPropertyValueElementReferences
       } yield scala.xml.Elem(
         prefix = null,
@@ -134,8 +135,8 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Try[Iterable[scala.xml.Elem]] =
-    Success(
+  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+    \/-(
       for {
         (s, e) <- tagPropertyValueAppliedStereotypeAndElementReferences
       } yield scala.xml.Elem(
@@ -162,17 +163,12 @@ case class MagicDrawUMLStereotypeTagPropertyClassifierValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Try[Iterable[scala.xml.Elem]] = {
+  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] = {
 
-    val s0: Try[Seq[scala.xml.Elem]] = Try(Seq())
+    val s0: NonEmptyList[UMLError.UException] \/ Seq[scala.xml.Elem] = Seq().right
 
-    val sn = ( s0 /: values ) {
-      case ( Failure(f), _ ) => Failure(f)
-      case ( Success(i), value ) =>
-        value.serialize match {
-          case Failure(f) => Failure(f)
-          case Success(n) => Success(i :+ n)
-        }
+    val sn = ( s0 /: values ) { (si, value) =>
+      si +++ value.serialize.map(Seq(_))
     }
 
     sn
@@ -185,7 +181,7 @@ object MagicDrawUMLStereotypeTagValue {
   def getElementTagValues
   (e: MagicDrawUMLElement)
   (implicit ops: MagicDrawUMLUtil)
-  : Seq[MagicDrawUMLStereotypeTagValue] = {
+  : NonEmptyList[UMLError.UException] \/ Seq[MagicDrawUMLStereotypeTagValue] = {
 
     import ops._
 
@@ -239,7 +235,7 @@ object MagicDrawUMLStereotypeTagValue {
 
     Option.apply(e.getMagicDrawElement.getAppliedStereotypeInstance) match {
       case None =>
-        extendedMetaclassTagValues
+        extendedMetaclassTagValues.right
       case Some(is) =>
         val tagValues = for {
           s <- is.getSlot
@@ -506,7 +502,7 @@ object MagicDrawUMLStereotypeTagValue {
           }
         } yield v
 
-        extendedMetaclassTagValues ++ tagValues
+        (extendedMetaclassTagValues ++ tagValues).right
     }
   }
 

@@ -39,9 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.{Boolean,Option}
-import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
 
@@ -52,33 +52,44 @@ trait MagicDrawUMLLoopNode
   override protected def e: Uml#LoopNode
   def getMagicDrawLoopNode = e
 
-  // 16.45
-  override def bodyOutput: Seq[UMLOutputPin[Uml]] = ???
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 16.45
-  override def bodyPart: Set[UMLExecutableNode[Uml]] = ???
+  override def bodyOutput: Seq[UMLOutputPin[Uml]] =
+    e.getBodyOutput().to[Seq]
 
   // 16.45
-  override def decider: Option[UMLOutputPin[Uml]] = ???
+  override def bodyPart: Set[UMLExecutableNode[Uml]] =
+    e.getBodyPart().toSet[Uml#ExecutableNode]
 
   // 16.45
-  override def isTestedFirst: Boolean = ???
+  override def decider: Option[UMLOutputPin[Uml]] =
+    Option.apply(e.getDecider())
 
   // 16.45
-  override def loopVariable: Seq[UMLOutputPin[Uml]] = ???
+  override def isTestedFirst: Boolean =
+    e.isTestedFirst()
 
   // 16.45
-  override def loopVariableInput: Seq[UMLInputPin[Uml]] = ???
+  override def loopVariable: Seq[UMLOutputPin[Uml]] =
+    e.getLoopVariable().to[Seq]
 
   // 16.45
-  override def result: Seq[UMLOutputPin[Uml]] = ???
+  override def loopVariableInput: Seq[UMLInputPin[Uml]] =
+    e.getLoopVariableInput().to[Seq]
 
   // 16.45
-  override def setupPart: Set[UMLExecutableNode[Uml]] = ???
+  override def result: Seq[UMLOutputPin[Uml]] =
+    e.getResult().to[Seq]
 
   // 16.45
-  override def test: Set[UMLExecutableNode[Uml]] = ???
-  
+  override def setupPart: Set[UMLExecutableNode[Uml]] =
+    e.getSetupPart().toSet[Uml#ExecutableNode]
+
+  // 16.45
+  override def test: Set[UMLExecutableNode[Uml]] =
+    e.getTest().toSet[Uml#ExecutableNode]
 
 }
 

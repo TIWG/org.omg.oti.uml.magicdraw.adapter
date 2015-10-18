@@ -39,9 +39,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.StringContext
-import scala.Predef.{???,String}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -51,24 +52,28 @@ trait MagicDrawUMLSignal
 
   override protected def e: Uml#Signal
   def getMagicDrawSignal = e
-  //implicit val umlOps = ops
-  //import umlOps._
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 10.5
-  override def ownedAttribute: Seq[UMLProperty[Uml]] = ???
+  override def ownedAttribute: Seq[UMLProperty[Uml]] =
+    e.getOwnedAttribute().to[Seq]
   
   // 10.5
-  override def signal_reception: Set[UMLReception[Uml]] = ???
+  override def signal_reception: Set[UMLReception[Uml]] =
+    e.get_receptionOfSignal().toSet[Uml#Reception]
   
   // 16.13
-  override def signal_broadcastSignalAction: Set[UMLBroadcastSignalAction[Uml]] = ???
+  override def signal_broadcastSignalAction: Set[UMLBroadcastSignalAction[Uml]] =
+    e.get_broadcastSignalActionOfSignal().toSet[Uml#BroadcastSignalAction]
   
   // 16.13
-  override def signal_sendSignalAction: Set[UMLSendSignalAction[Uml]] = ???
+  override def signal_sendSignalAction: Set[UMLSendSignalAction[Uml]] =
+    e.get_sendSignalActionOfSignal().toSet[Uml#SendSignalAction]
   
   // 13.2
-  override def signal_signalEvent: Set[UMLSignalEvent[Uml]] = ???
-  
+  override def signal_signalEvent: Set[UMLSignalEvent[Uml]] =
+    e.get_signalEventOfSignal().toSet[Uml#SignalEvent]
 
 }
 

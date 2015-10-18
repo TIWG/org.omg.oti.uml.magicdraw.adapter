@@ -40,12 +40,15 @@
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
 import java.io.File
+import java.lang.IllegalArgumentException
+
 
 import com.nomagic.magicdraw.core.{ApplicationEnvironment, Application}
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
 
 import org.omg.oti.magicdraw.uml.read._
+import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.read.api._
@@ -56,9 +59,7 @@ import scala.{AnyRef, Boolean, Function1, Option, None, Some}
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.reflect.runtime.universe._
-import scala.util.{Failure, Success, Try}
-
-import java.lang.IllegalArgumentException
+import scalaz._
 
 /**
  * MagicDraw-specific OTI DocumentSet
@@ -81,13 +82,13 @@ object MagicDrawDocumentSet {
 
   def addDocument
   (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
-  : Try[MagicDrawDocumentSet] =
+  : NonEmptyList[UMLError.UException] \/ MagicDrawDocumentSet =
     (ds, d) match {
       case (pds: MagicDrawDocumentSet, pd: MagicDrawSerializableDocument) =>
-        Success(
+        \/-(
           pds
-            .copy(serializableDocuments = pds.serializableDocuments + pd)(
-              pds.ops, pds.otiCharacterizations, pds.documentOps, pds.nodeT, pds.edgeT)
+          .copy(serializableDocuments = pds.serializableDocuments + pd)(
+            pds.ops, pds.otiCharacterizations, pds.documentOps, pds.nodeT, pds.edgeT)
         )
     }
 
@@ -106,28 +107,21 @@ object MagicDrawDocumentSet {
   (implicit
    nodeT: TypeTag[Document[MagicDrawUML]],
    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
-  : Try[MagicDrawDocumentSetInfo] =
+  : NonEmptyList[UMLError.UException] \/ MagicDrawDocumentSetInfo =
 
     Option.apply(Application.getInstance().getProject)
-    .fold[Try[MagicDrawDocumentSetInfo]] {
-      Failure(
-        DocumentSetException(
-        "createMagicDrawProjectDocumentSet failed",
-        new IllegalArgumentException(
-        "Cannot construct a MagicDrawDocumentSet without an active MagicDraw project")))
+    .fold[\/[NonEmptyList[UMLError.UException], MagicDrawDocumentSetInfo]] {
+      -\/(
+        NonEmptyList(
+          new DocumentSetException(
+            "createMagicDrawProjectDocumentSet failed: Cannot construct a MagicDrawDocumentSet without an active MagicDraw project")))
     }{ p =>
 
       implicit val umlUtil = MagicDrawUMLUtil( p )
       import umlUtil._
 
       resolvedMagicDrawOTISymbols
-      .fold[Try[MagicDrawDocumentSetInfo]] {
-      Failure(
-        DocumentSetException(
-        "createMagicDrawProjectDocumentSet failed",
-        new IllegalArgumentException(
-        "Failed to resolve all the necessary OTI/MagicDraw profile stereotypes & properties")))
-      }{ mdOTISymbols =>
+      .flatMap{ mdOTISymbols =>
         val mdBuiltIns: Set[BuiltInDocument[Uml]] =
           Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
 
@@ -148,7 +142,7 @@ object MagicDrawDocumentSet {
         .flatMap { case (( resolved, unresolved )) =>
           resolved.ds match {
             case mdDS: MagicDrawDocumentSet =>
-              Success((mdOTISymbols, resolved, mdDS, unresolved))
+              \/-((mdOTISymbols, resolved, mdDS, unresolved))
           }
         }
       }

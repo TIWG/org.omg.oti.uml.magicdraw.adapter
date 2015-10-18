@@ -40,10 +40,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLReplyAction 
   extends UMLReplyAction[MagicDrawUML]
@@ -55,11 +55,12 @@ trait MagicDrawUMLReplyAction
   import umlOps._
 
   // 16.39
-	override def replyToCall: Option[UMLTrigger[Uml]] =
+  override def replyToCall: Option[UMLTrigger[Uml]] =
     Option.apply(e.getReplyToCall)
   
   // 16.39
-	override def replyValue: Seq[UMLInputPin[Uml]] = ???
+  override def replyValue: Seq[UMLInputPin[Uml]] =
+    e.getReplyValue().to[Seq]
   
   // 16.39
   override def returnInformation: Option[UMLInputPin[Uml]] =
