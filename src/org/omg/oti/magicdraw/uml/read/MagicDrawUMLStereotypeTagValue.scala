@@ -70,7 +70,7 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+  : NonEmptyList[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
     Iterable(
       scala.xml.Elem(
         prefix = null,
@@ -97,7 +97,7 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+  : NonEmptyList[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
     \/-(for {
         elit <- tagPropertyValueElementReferences
       } yield scala.xml.Elem(
@@ -135,7 +135,7 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] =
+  : NonEmptyList[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
     \/-(
       for {
         (s, e) <- tagPropertyValueAppliedStereotypeAndElementReferences
@@ -163,9 +163,9 @@ case class MagicDrawUMLStereotypeTagPropertyClassifierValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Iterable[scala.xml.Elem] = {
+  : NonEmptyList[java.lang.Throwable] \/ Iterable[scala.xml.Elem] = {
 
-    val s0: NonEmptyList[UMLError.UException] \/ Seq[scala.xml.Elem] = Seq().right
+    val s0: NonEmptyList[java.lang.Throwable] \/ Seq[scala.xml.Elem] = Seq().right
 
     val sn = ( s0 /: values ) { (si, value) =>
       si +++ value.serialize.map(Seq(_))
@@ -181,7 +181,7 @@ object MagicDrawUMLStereotypeTagValue {
   def getElementTagValues
   (e: MagicDrawUMLElement)
   (implicit ops: MagicDrawUMLUtil)
-  : NonEmptyList[UMLError.UException] \/ Seq[MagicDrawUMLStereotypeTagValue] = {
+  : NonEmptyList[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] = {
 
     import ops._
 

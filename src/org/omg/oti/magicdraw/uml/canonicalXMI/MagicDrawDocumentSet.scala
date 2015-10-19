@@ -82,7 +82,7 @@ object MagicDrawDocumentSet {
 
   def addDocument
   (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ MagicDrawDocumentSet =
+  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet =
     (ds, d) match {
       case (pds: MagicDrawDocumentSet, pd: MagicDrawSerializableDocument) =>
         \/-(
@@ -107,10 +107,10 @@ object MagicDrawDocumentSet {
   (implicit
    nodeT: TypeTag[Document[MagicDrawUML]],
    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
-  : NonEmptyList[UMLError.UException] \/ MagicDrawDocumentSetInfo =
+  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSetInfo =
 
     Option.apply(Application.getInstance().getProject)
-    .fold[\/[NonEmptyList[UMLError.UException], MagicDrawDocumentSetInfo]] {
+    .fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSetInfo] {
       -\/(
         NonEmptyList(
           new DocumentSetException(

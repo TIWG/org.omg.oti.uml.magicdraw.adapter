@@ -65,10 +65,10 @@ case class MagicDrawIDGenerator
   import umlOps._
   implicit val idg = this
 
-  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[UMLError.UException],String]]()
+  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[java.lang.Throwable],String]]()
 
   override def getMappedOrReferencedElement( ref: UMLElement[Uml] )
-  : NonEmptyList[UMLError.UException] \/ UMLElement[Uml] =
+  : NonEmptyList[java.lang.Throwable] \/ UMLElement[Uml] =
     ref
     .xmiID()
     .map {
@@ -87,7 +87,7 @@ case class MagicDrawIDGenerator
   val MD_crule1a0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, ev: MagicDrawUMLElementValue ) =>
       ev.element
-      .fold[\/[NonEmptyList[UMLError.UException],String]](
+      .fold[NonEmptyList[java.lang.Throwable] \/ String](
           NonEmptyList(
             UMLError
             .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue without Element is not supported", Iterable(owner, ev) ) )
@@ -96,10 +96,10 @@ case class MagicDrawIDGenerator
         case nev: UMLNamedElement[Uml] =>
           nev
           .name
-          .fold[\/[NonEmptyList[UMLError.UException],String]](
+          .fold[NonEmptyList[java.lang.Throwable] \/ String](
             NonEmptyList(
               UMLError
-                .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue must refer to a named NamedElement", Iterable(owner, ev, nev ) ) )
+              .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue must refer to a named NamedElement", Iterable(owner, ev, nev ) ) )
             .left
           ){ n =>
             (
@@ -110,7 +110,7 @@ case class MagicDrawIDGenerator
         case uev: UMLElement[Uml] =>
           NonEmptyList(
             UMLError
-              .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue refers to an Element that is not a NamedElement!", Iterable(owner, ev, uev ) ) )
+            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue refers to an Element that is not a NamedElement!", Iterable(owner, ev, uev ) ) )
           .left
       }
   }

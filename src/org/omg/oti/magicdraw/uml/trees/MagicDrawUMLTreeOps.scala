@@ -57,10 +57,10 @@ case class MagicDrawUMLTreeOps
 extends TreeOps[MagicDrawUML] {
 
   val blockSpecificTypePF
-  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
     Option
     .apply(StereotypesHelper.getProfile(umlUtil.project, blockSpecificTypeProfileName))
-    .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]](
+    .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
       NonEmptyList(
         new TreeOpsException(
           this,
@@ -69,11 +69,11 @@ extends TreeOps[MagicDrawUML] {
     ){ _.right }
 
   val blockSpecificTypeS
-  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
     blockSpecificTypePF.flatMap { _blockSpecificTypePF =>
       Option
         .apply(StereotypesHelper.getStereotype(umlUtil.project, blockSpecificTypeStereotypeName, _blockSpecificTypePF))
-        .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]](
+        .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
         NonEmptyList(
           new TreeOpsException(
             this,
@@ -85,10 +85,10 @@ extends TreeOps[MagicDrawUML] {
     }
 
   val sysmlPF
-  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
     Option
     .apply(StereotypesHelper.getProfile(umlUtil.project, "SysML"))
-    .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]](
+    .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
       NonEmptyList(
         new TreeOpsException(
           this,
@@ -98,11 +98,11 @@ extends TreeOps[MagicDrawUML] {
 
 
   val sysmlPropertySpecificTypeS
-  : NonEmptyList[UMLError.UException] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
     sysmlPF.flatMap { _sysmlPF =>
       Option
         .apply(StereotypesHelper.getStereotype(umlUtil.project, "PropertySpecificType", _sysmlPF))
-        .fold[\/[NonEmptyList[UMLError.UException], com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]](
+        .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
         NonEmptyList(
           new TreeOpsException(
             this,
@@ -115,7 +115,7 @@ extends TreeOps[MagicDrawUML] {
 
 
   def isRootBlockSpecificType(treeType: UMLClassifier[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Boolean =
+  : NonEmptyList[java.lang.Throwable] \/ Boolean =
     blockSpecificTypeS.map { _blockSpecificTypeS =>
       StereotypesHelper.hasStereotype(
         umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
@@ -123,7 +123,7 @@ extends TreeOps[MagicDrawUML] {
     }
 
   def isPartPropertySpecificType(treeType: UMLClassifier[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ Boolean =
+  : NonEmptyList[java.lang.Throwable] \/ Boolean =
     sysmlPropertySpecificTypeS.map { _sysmlPropertySpecificTypeS =>
       StereotypesHelper.hasStereotype(
         umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,

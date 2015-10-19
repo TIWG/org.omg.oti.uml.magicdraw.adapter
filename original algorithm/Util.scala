@@ -417,7 +417,7 @@ endif
       } ).stripPrefix( "OMG." ) )
 
   def getImageLocationURL( i: Image )
-  : NonEmptyList[UMLError.UException] \/ String =
+  : NonEmptyList[java.lang.Throwable] \/ String =
     i.getLocation match {
       case null =>
         Failure( new IllegalArgumentException( "An Image must have a non-null location URL" ) )

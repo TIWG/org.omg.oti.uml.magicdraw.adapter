@@ -79,12 +79,12 @@ class MagicDrawDocumentOps
 
   override def addDocument
   (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ DocumentSet[MagicDrawUML] =
+  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] =
     MagicDrawDocumentSet.addDocument(ds, d)
 
   override def createBuiltInDocumentFromBuiltInRootPackage
   (root: UMLPackage[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ BuiltInDocument[MagicDrawUML] =
+  : NonEmptyList[java.lang.Throwable] \/ BuiltInDocument[MagicDrawUML] =
   ???
 
   def initializeDocumentSet
@@ -92,7 +92,7 @@ class MagicDrawDocumentOps
   ( implicit
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[UMLError.UException] \/ DocumentSet[MagicDrawUML] = {
+  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
 
     val catalogManager: CatalogManager = new CatalogManager()
     catalogManager.setUseStaticCatalog(false)
@@ -112,7 +112,7 @@ class MagicDrawDocumentOps
       Seq(otiPath1, otiPath2)
         .flatMap { path => Option.apply(otiUMLCL.getResource(path)) }
         .headOption
-        .fold[\/[NonEmptyList[UMLError.UException], URI]] {
+        .fold[NonEmptyList[java.lang.Throwable] \/ URI] {
           -\/(
             NonEmptyList(
               documentOpsException(
@@ -121,7 +121,7 @@ class MagicDrawDocumentOps
         }{ url =>
           catching(nonFatalCatcher)
           .either(url.toURI)
-          .fold[\/[NonEmptyList[UMLError.UException], URI]](
+          .fold[NonEmptyList[java.lang.Throwable] \/ URI](
             (cause: java.lang.Throwable) =>
               -\/(
                 NonEmptyList(
@@ -141,7 +141,7 @@ class MagicDrawDocumentOps
       Seq(mdPath1, mdPath2)
         .flatMap { path => Option.apply(mdUMLCL.getResource(path)) }
         .headOption
-        .fold[\/[NonEmptyList[UMLError.UException], URI]] {
+        .fold[NonEmptyList[java.lang.Throwable] \/ URI] {
         -\/(
           NonEmptyList(
             documentOpsException(
@@ -150,7 +150,7 @@ class MagicDrawDocumentOps
         }{ url =>
           catching(nonFatalCatcher)
             .either(url.toURI)
-            .fold[\/[NonEmptyList[UMLError.UException], URI]](
+            .fold[NonEmptyList[java.lang.Throwable] \/ URI](
               (cause: java.lang.Throwable) =>
                 -\/(
                   NonEmptyList(
@@ -177,10 +177,10 @@ class MagicDrawDocumentOps
   ( implicit
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[UMLError.UException] \/ DocumentSet[MagicDrawUML] = {
+  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
 
     Option.apply(Application.getInstance.getProject)
-    .fold[\/[NonEmptyList[UMLError.UException], DocumentSet[MagicDrawUML]]]{
+    .fold[NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML]]{
       -\/(
         NonEmptyList(
           documentOpsException(
@@ -212,7 +212,7 @@ class MagicDrawDocumentOps
     ops: UMLOps[MagicDrawUML],
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[UMLError.UException] \/ DocumentSet[MagicDrawUML] = {
+  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
     \/-(
       MagicDrawDocumentSet(
         serializableDocuments, builtInDocuments, builtInDocumentEdges,
@@ -221,7 +221,7 @@ class MagicDrawDocumentOps
 
   override def createSerializableDocumentFromExistingRootPackage
   (root: UMLPackage[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ SerializableDocument[MagicDrawUML] =
+  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
     umlUtil
     .resolvedMagicDrawOTISymbols
     .flatMap { otiMDSymbols =>
@@ -237,7 +237,7 @@ class MagicDrawDocumentOps
               Iterable(root)).some))
         .left)
       .flatMap {
-        _.fold[\/[NonEmptyList[UMLError.UException], SerializableDocument[MagicDrawUML]]](
+        _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
           NonEmptyList(
             documentOpsException(
               docOps,
@@ -251,7 +251,7 @@ class MagicDrawDocumentOps
           root
             .oti_nsPrefix
             .flatMap {
-              _.fold[\/[NonEmptyList[UMLError.UException], SerializableDocument[MagicDrawUML]]](
+              _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
                 NonEmptyList(
                   documentOpsException(
                     docOps,
@@ -265,7 +265,7 @@ class MagicDrawDocumentOps
                 root
                   .oti_uuidPrefix
                   .flatMap {
-                    _.fold[\/[NonEmptyList[UMLError.UException], SerializableDocument[MagicDrawUML]]](
+                    _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
                       NonEmptyList(
                         documentOpsException(
                           docOps,
@@ -279,7 +279,7 @@ class MagicDrawDocumentOps
                       root
                         .getDocumentURL
                         .flatMap {
-                          _.fold[\/[NonEmptyList[UMLError.UException], SerializableDocument[MagicDrawUML]]](
+                          _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
                             NonEmptyList(
                               documentOpsException(
                                 docOps,
@@ -309,12 +309,12 @@ class MagicDrawDocumentOps
      nsPrefix: String,
      uuidPrefix: String,
      documentURL: String)
-    : NonEmptyList[UMLError.UException] \/ SerializableDocument[MagicDrawUML] = {
+    : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] = {
           val externalDocumentResourceURL = new URI(documentURL)
           val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
           import MagicDrawProjectAPIHelper._
           Option.apply(ProjectUtilities.getProject(mdPkg))
-            .fold[\/[NonEmptyList[UMLError.UException], Option[MagicDrawLoadURL]]](
+            .fold[NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawLoadURL]](
             NonEmptyList(
               documentOpsException(
                 docOps,
@@ -373,7 +373,7 @@ class MagicDrawDocumentOps
               Option.empty[MagicDrawLoadURL].right
           }
             .flatMap {
-              _.fold[ \/[NonEmptyList[UMLError.UException], SerializableDocument[MagicDrawUML]]](
+              _.fold[ \/[NonEmptyList[java.lang.Throwable], SerializableDocument[MagicDrawUML]]](
                 NonEmptyList(
                   documentOpsException(
                     docOps,
@@ -400,18 +400,18 @@ class MagicDrawDocumentOps
    documentURL: MagicDrawUML#LoadURL,
    scope: UMLPackage[MagicDrawUML])
   (implicit ds: DocumentSet[MagicDrawUML])
-  : NonEmptyList[UMLError.UException] \/ SerializableDocument[MagicDrawUML] =
+  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
   \/-(
     MagicDrawSerializableDocument(uri, nsPrefix, uuidPrefix, documentURL, scope)
   )
 
   override def getExternalDocumentURL(lurl: MagicDrawUML#LoadURL)
-  : NonEmptyList[UMLError.UException] \/ URI =
+  : NonEmptyList[java.lang.Throwable] \/ URI =
     lurl.externalDocumentResourceURL.right
 
   override def openExternalDocumentStreamForImport
   (lurl: MagicDrawUML#LoadURL)
-  : NonEmptyList[UMLError.UException] \/ java.io.InputStream =
+  : NonEmptyList[java.lang.Throwable] \/ java.io.InputStream =
     lurl.externalDocumentResourceURL.toURL.openStream().right
 
 }

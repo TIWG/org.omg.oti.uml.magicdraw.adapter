@@ -108,7 +108,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     StereotypesHelper.getBaseClass(e).getName
 
   override def tagValues
-  : NonEmptyList[UMLError.UException] \/ Seq[MagicDrawUMLStereotypeTagValue] =
+  : NonEmptyList[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] =
     MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
   override def toolSpecific_id: Option[String] =
@@ -118,11 +118,11 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     Some(UUIDRegistry.getUUID(e))
 
   override def hasStereotype(s: UMLStereotype[Uml])
-  : NonEmptyList[UMLError.UException] \/ Boolean =
+  : NonEmptyList[java.lang.Throwable] \/ Boolean =
     \/-(umlMagicDrawUMLStereotype(s).isStereotypeApplied(e))
 
   override def getAppliedStereotypesWithoutMetaclassProperties
-  : NonEmptyList[UMLError.UException] \/ Set[UMLStereotype[Uml]] = {
+  : NonEmptyList[java.lang.Throwable] \/ Set[UMLStereotype[Uml]] = {
     val eMetaclass = e.getClassType
     \/-(StereotypesHelper.getStereotypes(e).toSet[Uml#Stereotype] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
@@ -137,13 +137,13 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   }
 
   override def isAncestorOf(other: UMLElement[Uml])
-  : NonEmptyList[UMLError.UException] \/ Boolean =
+  : NonEmptyList[java.lang.Throwable] \/ Boolean =
     if (e == umlMagicDrawUMLElement(other).getMagicDrawElement)
       \/-(true)
     else
       other
       .owner
-      .fold[NonEmptyList[UMLError.UException] \/ Boolean](\/-(false)){ parent =>
+      .fold[NonEmptyList[java.lang.Throwable] \/ Boolean](\/-(false)){ parent =>
         isAncestorOf(parent)
       }
 
