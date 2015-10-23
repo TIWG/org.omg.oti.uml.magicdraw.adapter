@@ -62,10 +62,10 @@ extends TreeOps[MagicDrawUML] {
     .apply(StereotypesHelper.getProfile(umlUtil.project, blockSpecificTypeProfileName))
     .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
       NonEmptyList(
-        new TreeOpsException(
+        treeOpsException(
           this,
           s"MagicDrawUMLTreeOps initialization failed: No profile named '$blockSpecificTypeProfileName'"))
-      .left
+      .left[com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]
     ){ _.right }
 
   val blockSpecificTypeS
@@ -75,10 +75,10 @@ extends TreeOps[MagicDrawUML] {
         .apply(StereotypesHelper.getStereotype(umlUtil.project, blockSpecificTypeStereotypeName, _blockSpecificTypePF))
         .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
         NonEmptyList(
-          new TreeOpsException(
+          treeOpsException(
             this,
             s"MagicDrawUMLTreeOps initialization failed: No stereotype named '$blockSpecificTypeStereotypeName'"))
-          .left
+          .left[com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]
       ) {
         _.right
       }
@@ -90,10 +90,10 @@ extends TreeOps[MagicDrawUML] {
     .apply(StereotypesHelper.getProfile(umlUtil.project, "SysML"))
     .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
       NonEmptyList(
-        new TreeOpsException(
+        treeOpsException(
           this,
           "MagicDrawUMLTreeOps initialization failed: No profile named 'SysML'"))
-      .left
+      .left[com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile]
     ){ _.right }
 
 
@@ -104,10 +104,10 @@ extends TreeOps[MagicDrawUML] {
         .apply(StereotypesHelper.getStereotype(umlUtil.project, "PropertySpecificType", _sysmlPF))
         .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
         NonEmptyList(
-          new TreeOpsException(
+          treeOpsException(
             this,
             "MagicDrawUMLTreeOps initialization failed: No stereotype named 'PropertySpecificType'"))
-          .left
+          .left[com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype]
       ) {
         _.right
       }
