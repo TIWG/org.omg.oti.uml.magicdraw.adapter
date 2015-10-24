@@ -99,7 +99,8 @@ object MagicDrawDocumentSet {
     Iterable[UnresolvedElementCrossReference[MagicDrawUML]])
 
   def createMagicDrawProjectDocumentSet
-  (documentURIMapper: CatalogURIMapper,
+  (additionalSpecificationRootPackages: Set[UMLPackage[MagicDrawUML]] = Set(),
+   documentURIMapper: CatalogURIMapper,
    builtInURIMapper: CatalogURIMapper,
    otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
    ignoreCrossReferencedElementFilter: (UMLElement[MagicDrawUML] => Boolean),
@@ -107,11 +108,11 @@ object MagicDrawDocumentSet {
   (implicit
    nodeT: TypeTag[Document[MagicDrawUML]],
    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
-  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSetInfo =
+  : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSetInfo =
 
     Option.apply(Application.getInstance().getProject)
-    .fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSetInfo] {
-      -\/(
+    .fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSetInfo] {
+      \&/.This(
         NonEmptyList(
           new DocumentSetException(
             "createMagicDrawProjectDocumentSet failed: Cannot construct a MagicDrawDocumentSet without an active MagicDraw project")))
@@ -121,7 +122,12 @@ object MagicDrawDocumentSet {
       import umlUtil._
 
       resolvedMagicDrawOTISymbols
+      .toThese
       .flatMap{ mdOTISymbols =>
+
+        val allSpecificationRootPackages =
+          additionalSpecificationRootPackages ++ getAllOTISerializableDocumentPackages(mdOTISymbols)
+
         val mdBuiltIns: Set[BuiltInDocument[Uml]] =
           Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
 
@@ -132,7 +138,7 @@ object MagicDrawDocumentSet {
         implicit val otiC = otiCharacterizations
 
         DocumentSet.constructDocumentSetCrossReferenceGraph[Uml](
-          specificationRootPackages = getAllOTISerializableDocumentPackages(mdOTISymbols),
+          specificationRootPackages = allSpecificationRootPackages,
           documentURIMapper, builtInURIMapper,
           builtInDocuments = mdBuiltIns,
           builtInDocumentEdges = mdBuiltInEdges,
@@ -142,7 +148,7 @@ object MagicDrawDocumentSet {
         .flatMap { case (( resolved, unresolved )) =>
           resolved.ds match {
             case mdDS: MagicDrawDocumentSet =>
-              \/-((mdOTISymbols, resolved, mdDS, unresolved))
+              \&/.That((mdOTISymbols, resolved, mdDS, unresolved))
           }
         }
       }
