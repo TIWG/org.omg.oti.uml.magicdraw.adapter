@@ -34,7 +34,7 @@ object Versions {
   // OTI Trees version
     
   val oti_trees_prefix = version_prefix
-  val oti_trees_suffix = "445090"
+  val oti_trees_suffix = "445094"
   val oti_trees_version = oti_trees_prefix+"-"+oti_trees_suffix
 
   // OTI Canonical XMI version
