@@ -128,7 +128,7 @@ class MagicDrawDocumentOps
                   documentOpsException(
                     this,
                     s"initializeDocumentSet() failed: ${cause.getMessage}",
-                    cause.some))),
+                    cause))),
 
             (uri: java.net.URI) =>
               \/-(uri)
@@ -157,7 +157,7 @@ class MagicDrawDocumentOps
                     documentOpsException(
                       this,
                       s"initializeDocumentSet() failed: ${cause.getMessage}",
-                      cause.some))),
+                      cause))),
 
               (uri: java.net.URI) =>
                 \/-(uri)
@@ -219,179 +219,210 @@ class MagicDrawDocumentOps
         documentURIMapper, builtInURIMapper, aggregate))
   }
 
+  def getResultOrError
+  (message: String, e: UMLElement[MagicDrawUML]*)
+  (result: NonEmptyList[java.lang.Throwable] \/ Option[String])
+  : NonEmptyList[java.lang.Throwable] \/ String =
+  result.fold[NonEmptyList[java.lang.Throwable] \/ String](
+    l = (nels: NonEmptyList[java.lang.Throwable]) =>
+      NonEmptyList(
+        UMLError.illegalElementException[MagicDrawUML, UMLElement[MagicDrawUML]]("Error while evaluating the " + message, e, nels.head)
+      ).left,
+    r = (maybe: Option[String]) =>
+      maybe.fold[NonEmptyList[java.lang.Throwable] \/ String](
+        NonEmptyList(
+          UMLError.illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]("Error: missing value for the " + message, e)
+        ).left
+      ){ result =>
+        result.right
+      }
+  )
+
+  case class OTIInfo
+  (uri: String,
+   nsPrefix: String,
+   uuidPrefix: String,
+   documentURL: String)
+
   override def createSerializableDocumentFromExistingRootPackage
   (root: UMLPackage[MagicDrawUML])
   : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
     umlUtil
     .resolvedMagicDrawOTISymbols
     .flatMap { otiMDSymbols =>
-      root
-      .getEffectiveURI.orElse(
-        NonEmptyList(
-          documentOpsException(
-            docOps,
-            "No effective URI to serialize the package",
-            UMLError
-              .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-              "Needs an effective URI to serialize a package",
-              Iterable(root)).some))
-        .left)
-      .flatMap {
-        _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
-          NonEmptyList(
-            documentOpsException(
-              docOps,
-              "No effective URI to serialize the package",
-              UMLError
-                .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                "Needs an effective URI to serialize a package",
-                Iterable(root)).some))
-            .left
-        ) { uri =>
-          root
-            .oti_nsPrefix
-            .flatMap {
-              _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
-                NonEmptyList(
-                  documentOpsException(
-                    docOps,
-                    "No effective URI to serialize the package",
-                    UMLError
-                      .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      "Needs an effective URI to serialize a package",
-                      Iterable(root)).some))
-                  .left
-              ) { nsPrefix =>
-                root
-                  .oti_uuidPrefix
-                  .flatMap {
-                    _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
-                      NonEmptyList(
-                        documentOpsException(
-                          docOps,
-                          "No UUID prefix to serialize the package",
-                          UMLError
-                            .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                            "Needs a uuid prefix to serialize a package",
-                            Iterable(root)).some))
-                        .left
-                    ) { uuidPrefix =>
-                      root
-                        .getDocumentURL
-                        .flatMap {
-                          _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
-                            NonEmptyList(
-                              documentOpsException(
-                                docOps,
-                                "No document URL to serialize the package",
-                                UMLError
-                                  .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                                  "Needs a document URL serialize a package",
-                                  Iterable(root)).some))
-                              .left
-                          ) { documentURL =>
-                            createSerializableDocumentFromExistingRootPackage(
-                              otiMDSymbols, root, uri, nsPrefix, uuidPrefix, documentURL)
-                          }
-                        }
-                    }
-                  }
-              }
-            }
-        }
-      }
+
+      val otiInfo: Validation[NonEmptyList[java.lang.Throwable], OTIInfo] =
+        ( root.getEffectiveURI()
+            .validation
+            .disjunctioned(
+              getResultOrError(s"effective URI of '${root.qualifiedName.get}' as the root of an OTI SpecificationDocument", root))
+          |@|
+          root.oti_nsPrefix
+            .validation
+            .disjunctioned(
+              getResultOrError(s"OTI nsPrefix of '${root.qualifiedName.get}' as the root of an OTI SpecificationDocument", root))
+          |@|
+          root.oti_uuidPrefix
+            .validation
+            .disjunctioned(
+              getResultOrError(s"OTI uuidPrefix of '${root.qualifiedName.get}' as the root of an OTI SpecificationDocument", root))
+          |@|
+          root.getDocumentURL
+            .validation
+            .disjunctioned(
+              getResultOrError(s"OTI documentURL of '${root.qualifiedName.get}' as the root of an OTI SpecificationDocument", root))
+        )(OTIInfo.apply)
+
+      val result
+      : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
+        otiInfo
+        .disjunction
+        .flatMap(createSerializableDocumentFromExistingRootPackage(otiMDSymbols, root))
+
+      result
     }
 
     def createSerializableDocumentFromExistingRootPackage
     (otiMDSymbols: MagicDrawOTISymbols,
-     root: UMLPackage[MagicDrawUML],
-     uri: String,
-     nsPrefix: String,
-     uuidPrefix: String,
-     documentURL: String)
+     root: UMLPackage[MagicDrawUML])
+    (info: OTIInfo)
     : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] = {
-          val externalDocumentResourceURL = new URI(documentURL)
-          val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
-          import MagicDrawProjectAPIHelper._
-          Option.apply(ProjectUtilities.getProject(mdPkg))
-            .fold[NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawLoadURL]](
-            NonEmptyList(
-              documentOpsException(
-                docOps,
-                "No MagicDraw project for the selected package",
-                UMLError
-                  .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                  "Needs an active MagicDraw project package to serialize",
-                  Iterable(root)).some))
-              .left
-          ) {
-            case mdServerProject: TeamworkPrimaryProject =>
-              root.oti_artifactKind.flatMap {
+      val externalDocumentResourceURL = new URI(info.documentURL)
+      val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
+      import MagicDrawProjectAPIHelper._
+      val mdLoadURLOrError: NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL =
+        Option.apply(ProjectUtilities.getProject(mdPkg))
+          .fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
+          NonEmptyList(
+            documentOpsException(
+              docOps,
+              s"No MagicDraw project for package '${root.qualifiedName.get}'",
+              UMLError
+                .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                "No active MagicDraw project",
+                Iterable(root))))
+            .left
+        ) {
+          case mdServerProject: TeamworkPrimaryProject =>
+            root.oti_artifactKind.flatMap { k =>
+              k.fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
+                NonEmptyList(
+                  UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                    s"No OTI artifactKind for TeamworkPrimaryProject package ${root.qualifiedName.get}'",
+                    Iterable(root))
+                ).left
+              ){
                 case _@(otiMDSymbols.oti_artifact_kind_specified_profile |
                         otiMDSymbols.oti_artifact_kind_specified_model_library) =>
                   MagicDrawServerProjectLoadURL(
                     externalDocumentResourceURL,
                     magicDrawServerProjectResource = mdServerProject.getResourceURI
-                  ).some.right
-                case _ =>
-                  Option.empty[MagicDrawLoadURL].right
+                  ).right
+                case otherK =>
+                  NonEmptyList(
+                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                      s"artifactKind for TeamworkPrimaryProject package ${root.qualifiedName.get}' should be "+
+                      s"'${otiMDSymbols.oti_artifact_kind_specified_profile}' or "+
+                      s"'${otiMDSymbols.oti_artifact_kind_specified_model_library}', "+
+                      s"not $otherK",
+                      Iterable(root))
+                  ).left
               }
-            case mdServerModule: TeamworkAttachedProject =>
-              root.oti_artifactKind.flatMap {
+            }
+          case mdServerModule: TeamworkAttachedProject =>
+            root.oti_artifactKind.flatMap { k =>
+              k.fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
+                NonEmptyList(
+                  UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                    s"No OTI artifactKind for TeamworkAttachedProject package ${root.qualifiedName.get}'",
+                    Iterable(root))
+                ).left
+              ) {
                 case _@(otiMDSymbols.oti_artifact_kind_specified_profile |
                         otiMDSymbols.oti_artifact_kind_specified_model_library) =>
                   MagicDrawAttachedServerModuleSerializableDocumentLoadURL(
                     externalDocumentResourceURL,
                     magicDrawAttachedServerModuleResource = mdServerModule.getResourceURI
-                  ).some.right
-                case _ =>
-                  Option.empty[MagicDrawLoadURL].right
+                  ).right
+                case otherK =>
+                  NonEmptyList(
+                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                      s"artifactKind for TeamworkAttachedProject package ${root.qualifiedName.get}' should be "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_profile}' or "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_model_library}', "+
+                        s"not $otherK",
+                      Iterable(root))
+                  ).left
               }
-            case mdLocalProject: LocalPrimaryProject =>
-              root.oti_artifactKind.flatMap {
+            }
+          case mdLocalProject: LocalPrimaryProject =>
+            root.oti_artifactKind.flatMap { k =>
+              k.fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
+                NonEmptyList(
+                  UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                    s"No OTI artifactKind for LocalPrimaryProject package ${root.qualifiedName.get}'",
+                    Iterable(root))
+                ).left
+              ) {
                 case _@(otiMDSymbols.oti_artifact_kind_specified_profile |
                         otiMDSymbols.oti_artifact_kind_specified_model_library) =>
                   MagicDrawLocalProjectLoadURL(
                     externalDocumentResourceURL,
                     magicDrawLocalProjectResource = mdLocalProject.getResourceURI
-                  ).some.right
-                case _ =>
-                  Option.empty[MagicDrawLoadURL].right
+                  ).right
+                case otherK =>
+                  NonEmptyList(
+                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                      s"artifactKind for LocalPrimaryProject package ${root.qualifiedName.get}' should be "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_profile}' or "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_model_library}', "+
+                        s"not $otherK",
+                      Iterable(root))
+                  ).left
               }
-            case mdLocalModule: LocalAttachedProject =>
-              root.oti_artifactKind.flatMap {
+            }
+          case mdLocalModule: LocalAttachedProject =>
+            root.oti_artifactKind.flatMap { k =>
+              k.fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
+                NonEmptyList(
+                  UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                    s"No OTI artifactKind for LocalAttachedProject package ${root.qualifiedName.get}'",
+                    Iterable(root))
+                ).left
+              ) {
                 case _@(otiMDSymbols.oti_artifact_kind_specified_profile |
                         otiMDSymbols.oti_artifact_kind_specified_model_library) =>
                   MagicDrawAttachedLocalModuleSerializableDocumentLoadURL(
                     externalDocumentResourceURL,
                     magicDrawAttachedLocalModuleResource = mdLocalModule.getResourceURI
-                  ).some.right
-                case _ =>
-                  Option.empty[MagicDrawLoadURL].right
-              }
-            case _ =>
-              Option.empty[MagicDrawLoadURL].right
-          }
-            .flatMap {
-              _.fold[ \/[NonEmptyList[java.lang.Throwable], SerializableDocument[MagicDrawUML]]](
-                NonEmptyList(
-                  documentOpsException(
-                    docOps,
-                    "No OTI Document for this package",
-                    UMLError
-                      .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      "Needs an active MagicDraw project package to serialize",
-                      Iterable(root)).some))
-                  .left
-              ) { mdDocumentURL =>
-
-                System.out.println(s"mdDocumentURL: $mdDocumentURL")
-                MagicDrawSerializableDocument(
-                  new URI(uri), nsPrefix, uuidPrefix, mdDocumentURL, scope = root
-                ).right
+                  ).right
+                case otherK =>
+                  NonEmptyList(
+                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                      s"artifactKind for LocalAttachedProject package ${root.qualifiedName.get}' should be "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_profile}' or "+
+                        s"'${otiMDSymbols.oti_artifact_kind_specified_model_library}', "+
+                        s"not $otherK",
+                      Iterable(root))
+                  ).left
               }
             }
+          case iProject =>
+            NonEmptyList(
+              UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                s"package ${root.qualifiedName.get}' is in an unrecognized kind of MagicDraw IProject: $iProject ",
+                Iterable(root))
+            ).left
         }
+
+      mdLoadURLOrError
+      .flatMap { mdDocumentURL =>
+        System.out.println(s"mdDocumentURL: $mdDocumentURL")
+        MagicDrawSerializableDocument(
+          new URI(info.uri), info.nsPrefix, info.uuidPrefix, mdDocumentURL, scope = root
+        ).right
+      }
+    }
 
   override def createSerializableDocumentFromImportedRootPackage
   (uri: URI,
