@@ -39,6 +39,9 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
+import org.omg.oti.uml.read.api._
+
 import scala.collection.immutable._
 import scala.Option
 import scala.Predef.???
@@ -51,24 +54,32 @@ trait MagicDrawUMLLifeline
 
   override protected def e: Uml#Lifeline
   def getMagicDrawLifeline = e
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 17.6
-	override def coveredBy: Set[UMLInteractionFragment[Uml]] = ???
+	override def coveredBy: Set[UMLInteractionFragment[Uml]] =
+    e.getCoveredBy.toSet[Uml#InteractionFragment]
   
   // 17.6
-	override def decomposedAs: Option[UMLPartDecomposition[Uml]] = ???
+	override def decomposedAs: Option[UMLPartDecomposition[Uml]] =
+    Option.apply(e.getDecomposedAs)
   
   // 17.6  
-	override def represents: Option[UMLConnectableElement[Uml]] = ???
+	override def represents: Option[UMLConnectableElement[Uml]] =
+    Option.apply(e.getRepresents)
   
   // 17.6
-	override def selector: Option[UMLValueSpecification[Uml]] = ???
+	override def selector: Option[UMLValueSpecification[Uml]] =
+    Option.apply(e.getSelector)
   
   // 17.6
-	override def covered_events: Seq[UMLOccurrenceSpecification[Uml]] = ???
+	override def covered_events: Seq[UMLOccurrenceSpecification[Uml]] =
+    e.get_occurrenceSpecificationOfCovered.to[Seq]
   
   // 17.6
-	override def covered_stateInvariant: Set[UMLStateInvariant[Uml]] = ???
+	override def covered_stateInvariant: Set[UMLStateInvariant[Uml]] =
+    e.get_stateInvariantOfCovered.toSet[Uml#StateInvariant]
 
 }
 

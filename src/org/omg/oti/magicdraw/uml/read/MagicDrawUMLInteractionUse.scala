@@ -39,6 +39,7 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
@@ -51,18 +52,24 @@ trait MagicDrawUMLInteractionUse
 
   override protected def e: Uml#InteractionUse
   def getMagicDrawInteractionUse = e
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 17.18
-  override def argument: Seq[UMLValueSpecification[Uml]] = ???
+  override def argument: Seq[UMLValueSpecification[Uml]] =
+    e.getArgument.to[Seq]
   
   // 17.18
-  override def refersTo: Option[UMLInteraction[Uml]] = ???
+  override def refersTo: Option[UMLInteraction[Uml]] =
+    Option.apply(e.getRefersTo)
   
   // 17.18
-  override def returnValue: Option[UMLValueSpecification[Uml]] = ???
+  override def returnValue: Option[UMLValueSpecification[Uml]] =
+    Option.apply(e.getReturnValue)
   
   // BUG: NO FIGURE!
-  override def returnValueRecipient: Option[UMLProperty[Uml]] = ??? 
+  override def returnValueRecipient: Option[UMLProperty[Uml]] =
+    Option.apply(e.getReturnValueRecipient)
 
 }
 
