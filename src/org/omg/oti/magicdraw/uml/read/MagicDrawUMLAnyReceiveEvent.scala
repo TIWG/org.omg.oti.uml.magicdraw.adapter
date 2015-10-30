@@ -49,3 +49,6 @@ trait MagicDrawUMLAnyReceiveEvent
   def getMagicDrawAnyReceiveEvent = e
 
 }
+
+case class MagicDrawUMLAnyReceiveEventImpl(val e: MagicDrawUML#AnyReceiveEvent, ops: MagicDrawUMLUtil)
+  extends MagicDrawUMLAnyReceiveEvent

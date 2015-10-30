@@ -448,11 +448,8 @@ case class MagicDrawUMLUtil(project: Project)
     //      override val e = _e
     //      override val ops = self
     //    })
-    //    case _e: Uml#AnyReceiveEvent =>
-    //      cache.getOrElseUpdate(_e, new MagicDrawUMLAnyReceiveEvent() {
-    //      override val e = _e
-    //      override val ops = self
-    //    })
+    case _e: Uml#AnyReceiveEvent =>
+      cache.getOrElseUpdate(_e, MagicDrawUMLAnyReceiveEventImpl(_e, self))
     case _e: Uml#CallEvent   =>
       cache.getOrElseUpdate(_e, MagicDrawUMLCallEventImpl(_e, self))
     case _e: Uml#SignalEvent =>
@@ -464,11 +461,8 @@ case class MagicDrawUMLUtil(project: Project)
     //    })
     case _e: Uml#TimeEvent =>
       cache.getOrElseUpdate(_e, MagicDrawUMLTimeEventImpl(_e, self))
-    //    case _e: Uml#ChangeEvent =>
-    //      cache.getOrElseUpdate(_e, new MagicDrawUMLChangeEvent() {
-    //      override val e = _e
-    //      override val ops = self
-    //    })
+    case _e: Uml#ChangeEvent =>
+      cache.getOrElseUpdate(_e, MagicDrawUMLChangeEventImpl(_e, self))
     //    case _e: Uml#Event =>
     //      cache.getOrElseUpdate(_e, new MagicDrawUMLEvent() {
     //      override val e = _e
