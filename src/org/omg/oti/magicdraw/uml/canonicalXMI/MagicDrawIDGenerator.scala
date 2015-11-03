@@ -51,6 +51,7 @@ import scala.language.postfixOps
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._
+import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
@@ -64,6 +65,9 @@ case class MagicDrawIDGenerator
 
   import umlOps._
   implicit val idg = this
+
+  override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
+    documentOps.otiCharacteristicsProvider
 
   val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[java.lang.Throwable],String]]()
 

@@ -39,15 +39,12 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
-import java.net.URI
-
-import org.omg.oti.uml.xmi._
-
+import org.omg.oti.uml.characteristics.OTISpecificationRootCharacteristics
 import org.omg.oti.uml.read.api._
+import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
 
-import scala.Predef.String
 import scala.collection.immutable._
 
 
@@ -64,11 +61,9 @@ sealed abstract trait MagicDrawDocument extends Document[MagicDrawUML]
  * MagicDraw-specific adaptation of the OTI BuiltInDocument API
  */
 case class MagicDrawBuiltInDocument
-(uri: URI,
- nsPrefix: String,
- uuidPrefix: String,
+(info: OTISpecificationRootCharacteristics,
  documentURL: MagicDrawUML#LoadURL,
- scope: UMLElement[MagicDrawUML],
+ scope: UMLPackage[MagicDrawUML],
  builtInExtent: Set[UMLElement[MagicDrawUML]])
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with BuiltInDocument[MagicDrawUML]
@@ -77,10 +72,8 @@ case class MagicDrawBuiltInDocument
  * MagicDraw-specific adaptation of the OTI SerializableDocument API
  */
 case class MagicDrawSerializableDocument
-(uri: URI,
- nsPrefix: String,
- uuidPrefix: String,
+(info: OTISpecificationRootCharacteristics,
  documentURL: MagicDrawUML#LoadURL,
- scope: UMLElement[MagicDrawUML])
+ scope: UMLPackage[MagicDrawUML])
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableDocument[MagicDrawUML]

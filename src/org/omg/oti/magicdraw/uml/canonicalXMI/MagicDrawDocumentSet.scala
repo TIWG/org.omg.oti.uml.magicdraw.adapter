@@ -46,20 +46,23 @@ import java.lang.IllegalArgumentException
 import com.nomagic.magicdraw.core.{ApplicationEnvironment, Application}
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 import gov.nasa.jpl.dynamicScripts.magicdraw.DynamicScriptsPlugin
+import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTISymbols
 
-import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
-import org.omg.oti.magicdraw.uml.read._
+import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.read.operations._
 import org.omg.oti.uml.xmi._
 
+import org.omg.oti.magicdraw.uml.read._
+
 import scala.{AnyRef, Boolean, Function1, Option, None, Some}
+import scala.Predef.{Map => _, Set => _, _}
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.reflect.runtime.universe._
-import scalaz._
+import scalaz._, Scalaz._
 
 /**
  * MagicDraw-specific OTI DocumentSet
@@ -72,11 +75,15 @@ case class MagicDrawDocumentSet
  builtInURIMapper: CatalogURIMapper,
  override val aggregate: MagicDrawUML#DocumentSetAggregate)
 (override implicit val ops: UMLOps[MagicDrawUML],
- override implicit val otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
  override implicit val documentOps: MagicDrawDocumentOps,
  override implicit val nodeT: TypeTag[Document[MagicDrawUML]],
  override implicit val edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
-  extends DocumentSet[MagicDrawUML]
+  extends DocumentSet[MagicDrawUML] {
+
+  override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
+  documentOps.otiCharacteristicsProvider
+
+}
 
 object MagicDrawDocumentSet {
 
@@ -88,24 +95,27 @@ object MagicDrawDocumentSet {
         \/-(
           pds
           .copy(serializableDocuments = pds.serializableDocuments + pd)(
-            pds.ops, pds.otiCharacterizations, pds.documentOps, pds.nodeT, pds.edgeT)
+            pds.ops, pds.documentOps, pds.nodeT, pds.edgeT)
         )
     }
 
   type MagicDrawDocumentSetInfo =
-  (MagicDrawOTISymbols,
-    ResolvedDocumentSet[MagicDrawUML],
+  ( ResolvedDocumentSet[MagicDrawUML],
     MagicDrawDocumentSet,
     Iterable[UnresolvedElementCrossReference[MagicDrawUML]])
 
+  implicit def Package2OTISpecificationRootCharacteristicsMapSemigroup
+  : Semigroup[Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics]] =
+    Semigroup.instance(_ ++ _)
+
   def createMagicDrawProjectDocumentSet
-  (additionalSpecificationRootPackages: Set[UMLPackage[MagicDrawUML]] = Set(),
+  (additionalSpecificationRootPackages: Option[Set[UMLPackage[MagicDrawUML]]] = None,
    documentURIMapper: CatalogURIMapper,
    builtInURIMapper: CatalogURIMapper,
-   otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
    ignoreCrossReferencedElementFilter: (UMLElement[MagicDrawUML] => Boolean),
    unresolvedElementMapper: (UMLElement[MagicDrawUML] => Option[UMLElement[MagicDrawUML]]))
   (implicit
+   otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML],
    nodeT: TypeTag[Document[MagicDrawUML]],
    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
   : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSetInfo =
@@ -121,36 +131,55 @@ object MagicDrawDocumentSet {
       implicit val umlUtil = MagicDrawUMLUtil( p )
       import umlUtil._
 
-      resolvedMagicDrawOTISymbols
-      .toThese
-      .flatMap{ mdOTISymbols =>
+      val allSpecificationRootPackages
+      : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+        additionalSpecificationRootPackages
+        .fold[NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
+          otiCharacteristicsProvider.getAllOTISerializableDocumentPackages.toThese
+        ){ pkgs =>
+          val p0: NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+            \&/.That(Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]())
+          val pN: NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+            (p0 /: pkgs) { (pi, pkg) =>
+              pi append
+              otiCharacteristicsProvider.getSpecificationRootCharacteristics(pkg)
+              .toThese
+              .map {
+                _.fold[Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
+                  Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]()
+                ){ info =>
+                  Map[UMLPackage[Uml], OTISpecificationRootCharacteristics](pkg -> info)
+                }
+              }
+          }
 
-        val allSpecificationRootPackages =
-          additionalSpecificationRootPackages ++ getAllOTISerializableDocumentPackages(mdOTISymbols)
+          pN
+        }
 
-        val mdBuiltIns: Set[BuiltInDocument[Uml]] =
-          Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
+      val mdBuiltIns: Set[BuiltInDocument[Uml]] =
+        Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
 
-        val mdBuiltInEdges: Set[DocumentEdge[Document[Uml]]] =
-          Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML )
+      val mdBuiltInEdges: Set[DocumentEdge[Document[Uml]]] =
+        Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML )
 
-        implicit val mdDocOps = new MagicDrawDocumentOps()(umlUtil, otiCharacterizations)
-        implicit val otiC = otiCharacterizations
+      implicit val documentOps = new MagicDrawDocumentOps()(umlUtil, otiCharacteristicsProvider)
+
+      allSpecificationRootPackages.flatMap { pkg2info =>
 
         DocumentSet.constructDocumentSetCrossReferenceGraph[Uml](
-          specificationRootPackages = allSpecificationRootPackages,
+          specificationRootPackages=pkg2info,
           documentURIMapper, builtInURIMapper,
-          builtInDocuments = mdBuiltIns,
-          builtInDocumentEdges = mdBuiltInEdges,
+          mdBuiltIns,
+          mdBuiltInEdges,
           ignoreCrossReferencedElementFilter,
           unresolvedElementMapper,
-          aggregate = MagicDrawDocumentSetAggregate() )
-        .flatMap { case (( resolved, unresolved )) =>
-          resolved.ds match {
-            case mdDS: MagicDrawDocumentSet =>
-              \&/.That((mdOTISymbols, resolved, mdDS, unresolved))
+          MagicDrawDocumentSetAggregate())
+          .flatMap { case ((resolved, unresolved)) =>
+            resolved.ds match {
+              case mdDS: MagicDrawDocumentSet =>
+                \&/.That((resolved, mdDS, unresolved))
+            }
           }
-        }
       }
     }
 }
