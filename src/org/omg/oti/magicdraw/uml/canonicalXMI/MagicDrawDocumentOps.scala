@@ -261,8 +261,24 @@ class MagicDrawDocumentOps
   override def createSerializableDocumentFromExistingRootPackage
   (info: OTISpecificationRootCharacteristics,
    root: UMLPackage[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] = {
-    val externalDocumentResourceURL = new URI(info.documentURL)
+  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
+    \/.fromTryCatchNonFatal(new java.net.URI(info.documentURL.trim))
+      .fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
+      l = (t: java.lang.Throwable) =>
+        NonEmptyList(
+          UMLError.illegalElementException[MagicDrawUML, UMLPackage[MagicDrawUML]](
+          s"createSerializableDocumentFromExistingRootPackage $info failed",
+          Iterable(root), t)
+        ).left,
+      r = (externalDocumentResourceURL: java.net.URI) =>
+        createSerializableDocumentFromExistingRootPackage(externalDocumentResourceURL, info, root)
+    )
+
+  def createSerializableDocumentFromExistingRootPackage
+  (externalDocumentResourceURL: java.net.URI,
+   info: OTISpecificationRootCharacteristics,
+   root: UMLPackage[MagicDrawUML])
+  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] ={
     val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
     import MagicDrawProjectAPIHelper._
     val mdLoadURLOrError: NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL =
