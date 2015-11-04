@@ -122,14 +122,6 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagStereotypeInstanceValue[MagicDrawUML] {
 
-
-  System.out.println(
-    s"""### MagicDrawUMLStereotypeTagProfileLifecycleStereotypeInstanceValue
-        |(e: ${extendedElement.getMagicDrawElement.getHumanName},
-        | s=${appliedStereotype.getMagicDrawStereotype.getQualifiedName},
-        | pairs:=${tagPropertyValueAppliedStereotypeAndElementReferences.size}
-        |) ###""".stripMargin)
-
   override val tagPropertyValueElementReferences: Iterable[MagicDrawUMLElement] =
     tagPropertyValueAppliedStereotypeAndElementReferences.map(_._2)
 
@@ -268,13 +260,13 @@ object MagicDrawUMLStereotypeTagValue {
                   case None => None
                   case Some(_s) => Some(Tuple2(ops.umlMagicDrawUMLStereotype(_s), _mdE))
                 }
-                System.out.println(
-                  s"""### e: ${mdE.getHumanName} -
-                     |TS (fs=${fs.qualifiedName.get},t=${t.qualifiedName.get})
-                     |r0? ${r0.size}
-                     |r1? ${r1.isDefined}
-                     |r2? ${r2.isDefined}
-                     |###""".stripMargin)
+//                System.out.println(
+//                  s"""### e: ${mdE.getHumanName} -
+//                     |TS (fs=${fs.qualifiedName.get},t=${t.qualifiedName.get})
+//                     |r0? ${r0.size}
+//                     |r1? ${r1.isDefined}
+//                     |r2? ${r2.isDefined}
+//                     |###""".stripMargin)
                 r2
               }
 

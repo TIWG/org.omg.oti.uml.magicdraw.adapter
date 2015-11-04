@@ -182,7 +182,6 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     oti_identity_xmiid <- OTI_IDENTITY_xmiID
     oti_identity_xmiuuid <- OTI_IDENTITY_xmiUUID
   } yield {
-    System.out.println(s"resolvedMagicDrawOTISymbols...")
     MagicDrawOTISymbols(
       oti_specification_root_s,
       oti_specification_root_packageuri,

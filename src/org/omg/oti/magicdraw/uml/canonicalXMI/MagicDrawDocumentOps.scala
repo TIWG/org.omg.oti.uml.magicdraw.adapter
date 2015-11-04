@@ -360,7 +360,6 @@ class MagicDrawDocumentOps
 
     mdLoadURLOrError
     .flatMap { mdDocumentURL =>
-      System.out.println(s"mdDocumentURL: $mdDocumentURL")
       MagicDrawSerializableDocument(info, mdDocumentURL, scope = root).right
     }
   }
