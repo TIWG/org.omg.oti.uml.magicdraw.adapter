@@ -52,6 +52,7 @@ import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawBuiltInDocument
 
+import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._
@@ -2790,11 +2791,11 @@ case class MagicDrawUMLUtil(project: Project)
 
     MagicDrawBuiltInDocument(
       info=OTISpecificationRootCharacteristics(
-        packageURI="http://www.omg.org/spec/PrimitiveTypes/20100901",
-        documentURL="http://www.omg.org/spec/PrimitiveTypes/20100901/PrimitiveTypes.xmi",
+        packageURI=OTI_URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
+        documentURL=OTI_URL("http://www.omg.org/spec/PrimitiveTypes/20100901/PrimitiveTypes.xmi"),
         artifactKind=OTIBuiltInProfileArtifactKind(),
-        nsPrefix="PrimitiveTypes",
-        uuidPrefix="org.omg.uml.PrimitiveTypes"),
+        nsPrefix=OTI_NS_PREFIX("PrimitiveTypes"),
+        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.PrimitiveTypes")),
       scope=mdPrimitiveTypesPkg,
       documentURL=
         MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
@@ -2813,11 +2814,11 @@ case class MagicDrawUMLUtil(project: Project)
 
     MagicDrawBuiltInDocument(
       info=OTISpecificationRootCharacteristics(
-        packageURI="http://www.omg.org/spec/UML/20131001",
-        documentURL="http://www.omg.org/spec/UML/20131001/UML.xmi",
+        packageURI=OTI_URI("http://www.omg.org/spec/UML/20131001"),
+        documentURL=OTI_URL("http://www.omg.org/spec/UML/20131001/UML.xmi"),
         artifactKind=OTIBuiltInMetamodelArtifactKind(),
-        nsPrefix="uml",
-        uuidPrefix="org.omg.uml.UML"),
+        nsPrefix=OTI_NS_PREFIX("uml"),
+        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.UML")),
       scope=mdUMLPkg,
       documentURL=
         MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
@@ -2842,11 +2843,11 @@ case class MagicDrawUMLUtil(project: Project)
 
     MagicDrawBuiltInDocument(
       info=OTISpecificationRootCharacteristics(
-        packageURI="http://www.omg.org/spec/UML/20131001/StandardProfile",
-        documentURL="http://www.omg.org/spec/UML/20131001/StandardProfile.xmi",
+        packageURI=OTI_URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
+        documentURL=OTI_URL("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
         artifactKind=OTIBuiltInProfileArtifactKind(),
-        nsPrefix="StandardProfile",
-        uuidPrefix="org.omg.uml.StandardProfile"),
+        nsPrefix=OTI_NS_PREFIX("StandardProfile"),
+        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
       scope=mdStandardProfile,
       documentURL=
         MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(

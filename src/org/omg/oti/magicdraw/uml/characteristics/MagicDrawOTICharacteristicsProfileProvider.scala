@@ -200,8 +200,8 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
   }
 
   override def getAllOTIBuiltInDocumentPackages
-  : NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-    resolvedMagicDrawOTISymbols.flatMap { otiProfile =>
+  : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+    resolvedMagicDrawOTISymbols.toThese.flatMap { otiProfile =>
 
       type Package_OtionalOTICharacteristicsOrError_Tuple =
       (UMLPackage[MagicDrawUML], NonEmptyList[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
@@ -254,24 +254,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
           )
         }
 
-      val map_or_errors
-      : NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-      rN.b.fold[NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-        rN.a.fold[NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-          Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]().right
-        ){ nels =>
-          nels.left
-        }
-      ){ set =>
-        set.toMap.right
-      }
-
-      map_or_errors
+      rN.map(_.toMap)
     }
 
   override def getAllOTISerializableDocumentPackages
-  : NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-    resolvedMagicDrawOTISymbols.flatMap { otiProfile =>
+  : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+    resolvedMagicDrawOTISymbols.toThese.flatMap { otiProfile =>
 
       type Package_OtionalOTICharacteristicsOrError_Tuple =
       (UMLPackage[MagicDrawUML], NonEmptyList[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
@@ -324,19 +312,7 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
           )
         }
 
-      val map_or_errors
-      : NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-        rN.b.fold[NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-          rN.a.fold[NonEmptyList[java.lang.Throwable] \/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-            Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]().right
-          ){ nels =>
-            nels.left
-          }
-        ){ set =>
-          set.toMap.right
-        }
-
-      map_or_errors
+      rN.map(_.toMap)
     }
 
   override val OTI_PROFILE

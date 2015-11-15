@@ -48,6 +48,7 @@ import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.language.postfixOps
 
+import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._
@@ -69,12 +70,13 @@ case class MagicDrawIDGenerator
   override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
     documentOps.otiCharacteristicsProvider
 
-  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[java.lang.Throwable],String]]()
+  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[java.lang.Throwable], (String @@ OTI_ID)]]()
 
   override def getMappedOrReferencedElement( ref: UMLElement[Uml] )
   : NonEmptyList[java.lang.Throwable] \/ UMLElement[Uml] =
     ref
     .xmiID()
+    .map(OTI_ID.unwrap)
     .map {
       case "_UML_" => MDBuiltInUML.scope
       case "_StandardProfile_" => MDBuiltInStandardProfile.scope
@@ -85,13 +87,13 @@ case class MagicDrawIDGenerator
   val MD_crule0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification )
       if is.isMagicDrawUMLAppliedStereotypeInstance =>
-      ( ownerID + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" ).right
+      OTI_ID( OTI_ID.unwrap(ownerID) + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" ).right
   }
 
   val MD_crule1a0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, ev: MagicDrawUMLElementValue ) =>
       ev.element
-      .fold[NonEmptyList[java.lang.Throwable] \/ String](
+      .fold[NonEmptyList[java.lang.Throwable] \/ (String @@ OTI_ID)](
           NonEmptyList(
             UMLError
             .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue without Element is not supported", Iterable(owner, ev) ) )
@@ -100,14 +102,14 @@ case class MagicDrawIDGenerator
         case nev: UMLNamedElement[Uml] =>
           nev
           .name
-          .fold[NonEmptyList[java.lang.Throwable] \/ String](
+          .fold[NonEmptyList[java.lang.Throwable] \/ (String @@ OTI_ID)](
             NonEmptyList(
               UMLError
               .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue must refer to a named NamedElement", Iterable(owner, ev, nev ) ) )
             .left
           ){ n =>
-            (
-                ownerID + "_" +
+            OTI_ID(
+                OTI_ID.unwrap(ownerID) + "_" +
                 IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
             .right
           }

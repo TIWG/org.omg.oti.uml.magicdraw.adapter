@@ -51,6 +51,7 @@ import com.nomagic.magicdraw.teamwork.application.storage.{TeamworkAttachedProje
 
 import org.apache.xml.resolver.CatalogManager
 
+import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._
@@ -262,7 +263,7 @@ class MagicDrawDocumentOps
   (info: OTISpecificationRootCharacteristics,
    root: UMLPackage[MagicDrawUML])
   : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
-    \/.fromTryCatchNonFatal(new java.net.URI(info.documentURL.trim))
+    \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
       .fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
       l = (t: java.lang.Throwable) =>
         NonEmptyList(

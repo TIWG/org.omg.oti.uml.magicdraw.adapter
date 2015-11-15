@@ -41,6 +41,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.uml2.ext.jmi.helpers.{ModelHelper, StereotypesHelper}
 
+import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 import org.omg.oti.uml.read.api._
@@ -78,7 +79,7 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = extendedElement.toolSpecific_id.get,
+          value = OTI_ID.unwrap(extendedElement.toolSpecific_id.get),
           next = scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
@@ -106,7 +107,7 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = extendedElement.toolSpecific_id.get,
+          value = OTI_ID.unwrap(extendedElement.toolSpecific_id.get),
           next = scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
@@ -137,7 +138,7 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = IDGenerator.computeStereotypeApplicationID(e.toolSpecific_id.get, s.toolSpecific_id.get),
+          value = OTI_ID.unwrap(IDGenerator.computeStereotypeApplicationID(e.toolSpecific_id.get, s.toolSpecific_id.get)),
           scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))

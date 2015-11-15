@@ -135,7 +135,7 @@ object MagicDrawDocumentSet {
       : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
         additionalSpecificationRootPackages
         .fold[NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-          otiCharacteristicsProvider.getAllOTISerializableDocumentPackages.toThese
+          otiCharacteristicsProvider.getAllOTISerializableDocumentPackages
         ){ pkgs =>
           val p0: NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
             \&/.That(Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]())

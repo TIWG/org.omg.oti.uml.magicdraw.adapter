@@ -42,6 +42,8 @@ package org.omg.oti.magicdraw.uml.read
 import com.nomagic.magicdraw.uml.UUIDRegistry
 import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
+
+import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
@@ -56,7 +58,7 @@ import scala.collection.Iterable
 import java.lang.Runnable
 
 import scala.language.{implicitConversions, postfixOps}
-import scalaz.{\/, \/-, NonEmptyList}
+import scalaz.{@@, \/, \/-, NonEmptyList}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
@@ -111,11 +113,11 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   : NonEmptyList[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] =
     MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
-  override def toolSpecific_id: Option[String] =
-    Some(e.getID)
+  override def toolSpecific_id: Option[String @@ OTI_ID] =
+    Some(OTI_ID(e.getID))
 
-  override def toolSpecific_uuid: Option[String] =
-    Some(UUIDRegistry.getUUID(e))
+  override def toolSpecific_uuid: Option[String @@ OTI_UUID] =
+    Some(OTI_UUID(UUIDRegistry.getUUID(e)))
 
   override def hasStereotype(s: UMLStereotype[Uml])
   : NonEmptyList[java.lang.Throwable] \/ Boolean =
