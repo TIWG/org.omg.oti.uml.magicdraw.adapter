@@ -78,7 +78,6 @@ class MagicDrawDocumentOps
   extends DocumentOps[MagicDrawUML] {
 
   implicit val docOps = this
-  import otiCharacteristicsProvider._
 
   override def addDocument
   (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
@@ -88,7 +87,8 @@ class MagicDrawDocumentOps
   override def createBuiltInDocumentFromBuiltInRootPackage
   (info: OTISpecificationRootCharacteristics,
    documentURL: MagicDrawUML#LoadURL,
-   root: UMLPackage[MagicDrawUML])
+   root: UMLPackage[MagicDrawUML],
+   specificationRootPackages: Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics])
   : NonEmptyList[java.lang.Throwable] \/ BuiltInDocument[MagicDrawUML] =
   ???
 
@@ -243,25 +243,10 @@ class MagicDrawDocumentOps
       }
   )
 
-  def createSerializableDocumentFromExistingRootPackage
-  (root: UMLPackage[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
-    getSpecificationRootCharacteristics(root)
-      .flatMap {
-      _.fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
-        NonEmptyList(
-          UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-            s"Package ${root.qualifiedName.get} does not designate an OTI Specification Document artifact",
-            Iterable(root)))
-          .left
-      ){ otiCharacteristics =>
-        createSerializableDocumentFromExistingRootPackage(otiCharacteristics, root)
-      }
-    }
-
   override def createSerializableDocumentFromExistingRootPackage
   (info: OTISpecificationRootCharacteristics,
-   root: UMLPackage[MagicDrawUML])
+   root: UMLPackage[MagicDrawUML],
+   specificationRootPackages: Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics])
   : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
     \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
       .fold[NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML]](
@@ -272,13 +257,14 @@ class MagicDrawDocumentOps
           Iterable(root), t)
         ).left,
       r = (externalDocumentResourceURL: java.net.URI) =>
-        createSerializableDocumentFromExistingRootPackage(externalDocumentResourceURL, info, root)
+        createSerializableDocumentFromExistingRootPackage(externalDocumentResourceURL, info, root, specificationRootPackages)
     )
 
   def createSerializableDocumentFromExistingRootPackage
   (externalDocumentResourceURL: java.net.URI,
    info: OTISpecificationRootCharacteristics,
-   root: UMLPackage[MagicDrawUML])
+   root: UMLPackage[MagicDrawUML],
+   specificationRootPackages: Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics])
   : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] ={
     val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
     import MagicDrawProjectAPIHelper._
@@ -377,18 +363,18 @@ class MagicDrawDocumentOps
 
     mdLoadURLOrError
     .flatMap { mdDocumentURL =>
-      MagicDrawSerializableDocument(info, mdDocumentURL, scope = root).right
+      MagicDrawSerializableDocument(info, mdDocumentURL, scope = root, specificationRootPackages).right
     }
   }
 
   override def createSerializableDocumentFromImportedRootPackage
   (info: OTISpecificationRootCharacteristics,
    documentURL: MagicDrawUML#LoadURL,
-   scope: UMLPackage[MagicDrawUML])
+   root: UMLPackage[MagicDrawUML])
   (implicit ds: DocumentSet[MagicDrawUML])
   : NonEmptyList[java.lang.Throwable] \/ SerializableDocument[MagicDrawUML] =
   \/-(
-    MagicDrawSerializableDocument(info, documentURL, scope)
+    MagicDrawSerializableDocument(info, documentURL, root, Map())
   )
 
   override def getExternalDocumentURL(lurl: MagicDrawUML#LoadURL)

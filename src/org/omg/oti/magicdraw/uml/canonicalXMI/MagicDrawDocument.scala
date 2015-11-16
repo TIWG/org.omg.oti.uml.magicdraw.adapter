@@ -46,7 +46,7 @@ import org.omg.oti.uml.xmi._
 import org.omg.oti.magicdraw.uml.read._
 
 import scala.collection.immutable._
-
+import scala.{None,Some}
 
 /**
  * MagicDraw-specific adaptation of the OTI Document API
@@ -56,6 +56,30 @@ import scala.collection.immutable._
  * (see: com.nomagic.ci.persistence.{IProject, IAttachedProject, IPrimaryProject})
  */
 sealed abstract trait MagicDrawDocument extends Document[MagicDrawUML]
+
+object MagicDrawDocument {
+
+  def calculateLimitedScopeExtent
+  (scope: UMLPackage[MagicDrawUML],
+   specificationRootPackages: Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics])
+  : Set[UMLElement[MagicDrawUML]] = {
+
+    val scopeExtent = scope.allOwnedElements
+
+    val subRoots: Set[UMLPackage[MagicDrawUML]] = scopeExtent.flatMap {
+      case pkg: UMLPackage[MagicDrawUML] if specificationRootPackages.contains(pkg) =>
+        Some(pkg)
+      case _ =>
+        None
+    }
+
+    val specificExtent = ( scopeExtent /: subRoots ) { ( acc, sub ) =>
+      acc - sub -- sub.allOwnedElements
+    }
+
+    Set(scope) ++ specificExtent
+  }
+}
 
 /**
  * MagicDraw-specific adaptation of the OTI BuiltInDocument API
@@ -74,6 +98,12 @@ case class MagicDrawBuiltInDocument
 case class MagicDrawSerializableDocument
 (info: OTISpecificationRootCharacteristics,
  documentURL: MagicDrawUML#LoadURL,
- scope: UMLPackage[MagicDrawUML])
+ scope: UMLPackage[MagicDrawUML],
+ specificationRootPackages: Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics])
 (implicit val ops: MagicDrawUMLUtil)
-  extends MagicDrawDocument with SerializableDocument[MagicDrawUML]
+  extends MagicDrawDocument with SerializableDocument[MagicDrawUML] {
+
+  override lazy val extent: Set[UMLElement[MagicDrawUML]] =
+    MagicDrawDocument.calculateLimitedScopeExtent(scope, specificationRootPackages)
+
+}
