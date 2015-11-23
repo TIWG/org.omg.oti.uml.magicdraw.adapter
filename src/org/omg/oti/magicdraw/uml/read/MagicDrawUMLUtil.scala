@@ -57,6 +57,7 @@ import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.read.api._
+import org.omg.oti.uml.xmi._
 
 import scala.reflect.runtime.universe._
 import scala.language.implicitConversions
@@ -2856,7 +2857,7 @@ case class MagicDrawUMLUtil(project: Project)
       builtInExtent=mdStandardProfileExtent.toSet[UMLElement[MagicDrawUML]] )( this )
   }
 
-  lazy val MDBuiltInUML2PrimitiveTypes = DocumentEdge( MDBuiltInUML, MDBuiltInPrimitiveTypes )
-  lazy val MDBuiltInStandardProfile2UML = DocumentEdge( MDBuiltInStandardProfile, MDBuiltInUML )
+  lazy val MDBuiltInUML2PrimitiveTypes = DocumentEdge[Document[MagicDrawUML]]( MDBuiltInUML, MDBuiltInPrimitiveTypes, Seq() )
+  lazy val MDBuiltInStandardProfile2UML = DocumentEdge[Document[MagicDrawUML]]( MDBuiltInStandardProfile, MDBuiltInUML, Seq() )
 
 }

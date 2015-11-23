@@ -97,7 +97,7 @@ class MagicDrawDocumentOps
   ( implicit
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
+  : NonEmptyList[java.lang.Throwable] \&/ DocumentSet[MagicDrawUML] = {
 
     val catalogManager: CatalogManager = new CatalogManager()
     catalogManager.setUseStaticCatalog(false)
@@ -117,8 +117,8 @@ class MagicDrawDocumentOps
       Seq(otiPath1, otiPath2)
         .flatMap { path => Option.apply(otiUMLCL.getResource(path)) }
         .headOption
-        .fold[NonEmptyList[java.lang.Throwable] \/ URI] {
-          -\/(
+        .fold[NonEmptyList[java.lang.Throwable] \&/ URI] {
+          \&/.This(
             NonEmptyList(
               documentOpsException(
                 this,
@@ -126,9 +126,9 @@ class MagicDrawDocumentOps
         }{ url =>
           catching(nonFatalCatcher)
           .either(url.toURI)
-          .fold[NonEmptyList[java.lang.Throwable] \/ URI](
+          .fold[NonEmptyList[java.lang.Throwable] \&/ URI](
             (cause: java.lang.Throwable) =>
-              -\/(
+              \&/.This(
                 NonEmptyList(
                   documentOpsException(
                     this,
@@ -136,18 +136,18 @@ class MagicDrawDocumentOps
                     cause))),
 
             (uri: java.net.URI) =>
-              \/-(uri)
+              \&/.That(uri)
           )
         }
 
-      _ <- otiCatalog.parseCatalog(otiURI)
+      _ <- otiCatalog.parseCatalog(otiURI).toThese
 
       mdURI <-
       Seq(mdPath1, mdPath2)
         .flatMap { path => Option.apply(mdUMLCL.getResource(path)) }
         .headOption
-        .fold[NonEmptyList[java.lang.Throwable] \/ URI] {
-        -\/(
+        .fold[NonEmptyList[java.lang.Throwable] \&/ URI] {
+        \&/.This(
           NonEmptyList(
             documentOpsException(
               this,
@@ -155,9 +155,9 @@ class MagicDrawDocumentOps
         }{ url =>
           catching(nonFatalCatcher)
             .either(url.toURI)
-            .fold[NonEmptyList[java.lang.Throwable] \/ URI](
+            .fold[NonEmptyList[java.lang.Throwable] \&/ URI](
               (cause: java.lang.Throwable) =>
-                -\/(
+                \&/.This(
                   NonEmptyList(
                     documentOpsException(
                       this,
@@ -165,11 +165,11 @@ class MagicDrawDocumentOps
                       cause))),
 
               (uri: java.net.URI) =>
-                \/-(uri)
+                \&/.That(uri)
             )
         }
 
-      _ <- mdCatalog.parseCatalog(mdURI)
+      _ <- mdCatalog.parseCatalog(mdURI).toThese
 
       ds <- initializeDocumentSet(otiCatalog, mdCatalog)
     } yield ds
@@ -182,11 +182,11 @@ class MagicDrawDocumentOps
   ( implicit
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
+  : NonEmptyList[java.lang.Throwable] \&/ DocumentSet[MagicDrawUML] = {
 
     Option.apply(Application.getInstance.getProject)
-    .fold[NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML]]{
-      -\/(
+    .fold[NonEmptyList[java.lang.Throwable] \&/ DocumentSet[MagicDrawUML]]{
+      \&/.This(
         NonEmptyList(
           documentOpsException(
           this,
@@ -199,7 +199,7 @@ class MagicDrawDocumentOps
         createDocumentSet(
           serializableDocuments = Set(),
           builtInDocuments = Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile ),
-          builtInDocumentEdges = Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML ),
+          builtInDocumentEdges = Set[DocumentEdge[Document[MagicDrawUML]]]( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML ),
           documentURIMapper,
           builtInURIMapper,
           aggregate = MagicDrawDocumentSetAggregate())
@@ -217,8 +217,8 @@ class MagicDrawDocumentOps
     ops: UMLOps[MagicDrawUML],
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : NonEmptyList[java.lang.Throwable] \/ DocumentSet[MagicDrawUML] = {
-    \/-(
+  : NonEmptyList[java.lang.Throwable] \&/ DocumentSet[MagicDrawUML] = {
+    \&/.That(
       MagicDrawDocumentSet(
         serializableDocuments, builtInDocuments, builtInDocumentEdges,
         documentURIMapper, builtInURIMapper, aggregate))
