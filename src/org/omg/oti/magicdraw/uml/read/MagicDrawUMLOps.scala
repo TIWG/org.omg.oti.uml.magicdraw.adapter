@@ -40,7 +40,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.magicdraw.core.Project
-import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawBuiltInDocument
 
 import scala.collection.Iterable
 import scala.language.postfixOps

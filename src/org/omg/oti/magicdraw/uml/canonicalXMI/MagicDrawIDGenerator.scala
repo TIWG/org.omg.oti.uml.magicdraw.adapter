@@ -59,8 +59,9 @@ import org.omg.oti.magicdraw.uml.read._
 import scalaz._, Scalaz._
 
 case class MagicDrawIDGenerator
-( resolvedDocumentSet: ResolvedDocumentSet[MagicDrawUML] )
+(override protected val element2documentTable: Map[UMLElement[MagicDrawUML], Document[MagicDrawUML]])
 ( implicit val umlOps: MagicDrawUMLUtil,
+  override implicit val documentSet: DocumentSet[MagicDrawUML],
   override implicit val documentOps: MagicDrawDocumentOps )
   extends DocumentIDGenerator[MagicDrawUML] {
 
@@ -78,8 +79,9 @@ case class MagicDrawIDGenerator
     .xmiID()
     .map(OTI_ID.unwrap)
     .map {
-      case "_UML_" => MDBuiltInUML.scope
-      case "_StandardProfile_" => MDBuiltInStandardProfile.scope
+      // @todo needs update
+      //case "_UML_" => MDBuiltInUML.scope
+      //case "_StandardProfile_" => MDBuiltInStandardProfile.scope
       case _ => ref
     }
   

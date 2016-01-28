@@ -68,13 +68,15 @@ import scalaz._, Scalaz._
  * MagicDraw-specific OTI DocumentSet
  */
 case class MagicDrawDocumentSet
-(serializableDocuments: Set[SerializableDocument[MagicDrawUML]],
- builtInDocuments: Set[BuiltInDocument[MagicDrawUML]],
- builtInDocumentEdges: Set[DocumentEdge[Document[MagicDrawUML]]],
+(serializableImmutableDocuments: Set[SerializableImmutableDocument[MagicDrawUML]],
+ serializableMutableDocuments: Set[SerializableMutableDocument[MagicDrawUML]],
+ loadingMutableDocuments: Set[LoadingMutableDocument[MagicDrawUML]],
+ builtInImmutableDocuments: Set[BuiltInImmutableDocument[MagicDrawUML]],
+ builtInMutableDocuments: Set[BuiltInMutableDocument[MagicDrawUML]],
  documentURIMapper: CatalogURIMapper,
  builtInURIMapper: CatalogURIMapper,
  override val aggregate: MagicDrawUML#DocumentSetAggregate)
-(override implicit val ops: UMLOps[MagicDrawUML],
+(override implicit val ops: MagicDrawUMLUtil,
  override implicit val documentOps: MagicDrawDocumentOps,
  override implicit val nodeT: TypeTag[Document[MagicDrawUML]],
  override implicit val edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
@@ -83,20 +85,111 @@ case class MagicDrawDocumentSet
   override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
   documentOps.otiCharacteristicsProvider
 
+  override def asBuiltInMutableDocument
+  (d: LoadingMutableDocument[MagicDrawUML],
+   artifactKind: OTIArtifactKind)
+  : NonEmptyList[java.lang.Throwable] \/ 
+    (BuiltInMutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) = 
+  d match {
+    case lmD: MagicDrawLoadingMutableDocument if loadingMutableDocuments.contains(lmD) =>
+      val bmD = MagicDrawBuiltInMutableDocument(
+          info = lmD.info.copy(artifactKind = artifactKind),
+          documentURL = lmD.documentURL,
+          scope = lmD.scope,
+          builtInExtent = lmD.extent.toSet)
+      val ds = this.copy(
+          loadingMutableDocuments = this.loadingMutableDocuments - d,
+          builtInMutableDocuments = this.builtInMutableDocuments + bmD)
+      (bmD, ds).right
+    case _ =>
+      -\/(NonEmptyList(
+          UMLError.umlAdaptationError(
+              "asBuiltInMutableDocument: not in DocumentSet: "+d.info)))
+  }
+  
+  override def freezeBuiltInMutableDocument
+  (d: BuiltInMutableDocument[MagicDrawUML])
+  : NonEmptyList[java.lang.Throwable] \/ 
+    (BuiltInImmutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) =
+  d match {
+    case mD: MagicDrawBuiltInMutableDocument if builtInMutableDocuments.contains(mD) =>
+      val iD = MagicDrawBuiltInImmutableDocument(
+          info = mD.info,
+          documentURL = mD.documentURL,
+          scope = mD.scope,
+          builtInExtent = mD.extent.toSet)
+      val ds = this.copy(
+          builtInImmutableDocuments = this.builtInImmutableDocuments + iD,
+          builtInMutableDocuments = this.builtInMutableDocuments - mD)
+      (iD, ds).right
+    case _ =>
+      -\/(NonEmptyList(
+          UMLError.umlAdaptationError(
+              "freezeBuiltInMutableDocument: "+
+              "not in DocumentSet or not a MagicDrawBuiltInMutableDocument: "+
+              d.info)))
+  }
+  
+  override def asSerializableMutableDocument
+  (d: LoadingMutableDocument[MagicDrawUML],
+   artifactKind: OTIArtifactKind)
+  : NonEmptyList[java.lang.Throwable] \/ 
+    (SerializableMutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) = 
+  d match {
+    case lmD: MagicDrawLoadingMutableDocument if loadingMutableDocuments.contains(lmD) =>
+      val smD = MagicDrawSerializableMutableDocument(
+          info = lmD.info.copy(artifactKind = artifactKind),
+          documentURL = lmD.documentURL,
+          scope = lmD.scope,
+          serializableExtent = lmD.extent.toSet)
+      val ds = this.copy(
+          loadingMutableDocuments = this.loadingMutableDocuments - d,
+          serializableMutableDocuments = this.serializableMutableDocuments + smD)
+      (smD, ds).right
+    case _ =>
+      -\/(NonEmptyList(
+          UMLError.umlAdaptationError(
+              "asBuiltInMutableDocument: not in DocumentSet: "+d.info)))
+  }
+
+  override def freezeSerializableMutableDocument
+  (d: SerializableMutableDocument[MagicDrawUML])
+  : NonEmptyList[java.lang.Throwable] \/ 
+    (SerializableImmutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) =
+  d match {
+    case mD: MagicDrawSerializableMutableDocument if serializableMutableDocuments.contains(mD) =>
+      val iD = MagicDrawSerializableImmutableDocument(
+          info = mD.info,
+          documentURL = mD.documentURL,
+          scope = mD.scope,
+          serializableExtent = mD.serializableExtent)
+      val ds = this.copy(
+          serializableImmutableDocuments = this.serializableImmutableDocuments + iD,
+          serializableMutableDocuments = this.serializableMutableDocuments - mD)
+      (iD, ds).right
+    case _ =>
+      -\/(NonEmptyList(
+          UMLError.umlAdaptationError(
+              "freezeSerializableMutableDocument: "+
+              "not in DocumentSet or not a MagicDrawSerializableMutableDocument: "+
+              d.info)))
+  }
+
 }
 
 object MagicDrawDocumentSet {
 
   def addDocument
-  (ds: DocumentSet[MagicDrawUML], d: SerializableDocument[MagicDrawUML])
+  (ds: DocumentSet[MagicDrawUML], d: Document[MagicDrawUML])
   : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet =
     (ds, d) match {
-      case (pds: MagicDrawDocumentSet, pd: MagicDrawSerializableDocument) =>
+      case (mds: MagicDrawDocumentSet, md: MagicDrawSerializableImmutableDocument) =>
         \/-(
-          pds
-          .copy(serializableDocuments = pds.serializableDocuments + pd)(
-            pds.ops, pds.documentOps, pds.nodeT, pds.edgeT)
+          mds
+          .copy(serializableImmutableDocuments = mds.serializableImmutableDocuments + md)
+          (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
         )
+        // @todo Add other combinations of (s, b) x (m, im)...
     }
 
   type MagicDrawDocumentSetInfo =
@@ -108,6 +201,8 @@ object MagicDrawDocumentSet {
   : Semigroup[Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics]] =
     Semigroup.instance(_ ++ _)
 
+    /**
+    
   def createMagicDrawProjectDocumentSet
   (additionalSpecificationRootPackages: Option[Set[UMLPackage[MagicDrawUML]]] = None,
    documentURIMapper: CatalogURIMapper,
@@ -182,4 +277,6 @@ object MagicDrawDocumentSet {
           }
       }
     }
+    
+    */
 }

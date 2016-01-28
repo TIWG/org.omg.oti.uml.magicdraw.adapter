@@ -50,8 +50,6 @@ import com.nomagic.magicdraw.uml.ClassTypes
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
-import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawBuiltInDocument
-
 import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
@@ -2780,84 +2778,5 @@ case class MagicDrawUMLUtil(project: Project)
   implicit val DIAGRAM: TypeTag[MagicDrawUML#Diagram] = typeTag[MagicDrawUML#Diagram]
 
   implicit val ELEMENT_VALUE: TypeTag[MagicDrawUML#ElementValue] = typeTag[MagicDrawUML#ElementValue]
-
-  // val stdProfile = ModelHelper.getUMLStandardProfile(project)
-  lazy val MDBuiltInPrimitiveTypes = {
-
-    val mdPrimitiveTypesPkg =
-      umlPackage( project.getElementByID("_12_0EAPbeta_be00301_1157529392394_202602_1").asInstanceOf[MagicDrawUML#Package] )
-
-    val mdPrimitiveTypesExtent: Set[UMLElement[MagicDrawUML]] =
-      Set(mdPrimitiveTypesPkg) ++ mdPrimitiveTypesPkg.ownedType.toSet
-
-    MagicDrawBuiltInDocument(
-      info=OTISpecificationRootCharacteristics(
-        packageURI=OTI_URI("http://www.omg.org/spec/PrimitiveTypes/20100901"),
-        documentURL=OTI_URL("http://www.omg.org/spec/PrimitiveTypes/20100901/PrimitiveTypes.xmi"),
-        artifactKind=OTIBuiltInProfileArtifactKind(),
-        nsPrefix=OTI_NS_PREFIX("PrimitiveTypes"),
-        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.PrimitiveTypes")),
-      scope=mdPrimitiveTypesPkg,
-      documentURL=
-        MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-          new URI("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"),
-          "profiles/UML_Standard_Profile.mdzip"),
-      builtInExtent=mdPrimitiveTypesExtent )( this )
-  }
-
-  lazy val MDBuiltInUML = {
-
-    val mdUMLPkg =
-      umlPackage( project.getElementByID("_9_0_be00301_1108053761194_467635_11463").asInstanceOf[MagicDrawUML#Package] )
-
-    val mdUMLExtent: Set[UMLElement[MagicDrawUML]] =
-      Set(mdUMLPkg) ++ mdUMLPkg.ownedType.selectByKindOf { case mc: UMLClass[MagicDrawUML] => mc }
-
-    MagicDrawBuiltInDocument(
-      info=OTISpecificationRootCharacteristics(
-        packageURI=OTI_URI("http://www.omg.org/spec/UML/20131001"),
-        documentURL=OTI_URL("http://www.omg.org/spec/UML/20131001/UML.xmi"),
-        artifactKind=OTIBuiltInMetamodelArtifactKind(),
-        nsPrefix=OTI_NS_PREFIX("uml"),
-        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.UML")),
-      scope=mdUMLPkg,
-      documentURL=
-        MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-          new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
-          "profiles/UML_Standard_Profile.mdzip"),
-      builtInExtent=mdUMLExtent )( this )
-  }
-
-  lazy val MDBuiltInStandardProfile = {
-
-    val mdStandardProfile =
-      umlProfile( project.getElementByID("_9_0_be00301_1108050582343_527400_10847").asInstanceOf[MagicDrawUML#Profile] )
-
-    val mdStandardProfileExtensions = mdStandardProfile.ownedType.selectByKindOf { case e: UMLExtension[MagicDrawUML] => e }
-    val mdStandardProfileExtensionFeatures = mdStandardProfileExtensions flatMap (_.ownedEnd)
-    val mdStandardProfileStereotypes = mdStandardProfile.ownedType.selectByKindOf { case s: UMLStereotype[MagicDrawUML] => s }
-    val mdStandardProfileStereotypeFeatures = mdStandardProfileStereotypes flatMap (_.ownedAttribute)
-    val mdStandardProfileExtent: Set[UMLNamedElement[MagicDrawUML]] =
-      Set(mdStandardProfile) ++
-      mdStandardProfileExtensions ++ mdStandardProfileExtensionFeatures ++
-      mdStandardProfileStereotypes ++ mdStandardProfileStereotypeFeatures
-
-    MagicDrawBuiltInDocument(
-      info=OTISpecificationRootCharacteristics(
-        packageURI=OTI_URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
-        documentURL=OTI_URL("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
-        artifactKind=OTIBuiltInProfileArtifactKind(),
-        nsPrefix=OTI_NS_PREFIX("StandardProfile"),
-        uuidPrefix=OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
-      scope=mdStandardProfile,
-      documentURL=
-        MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-          new URI("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
-          "profiles/UML_Standard_Profile.mdzip"),
-      builtInExtent=mdStandardProfileExtent.toSet[UMLElement[MagicDrawUML]] )( this )
-  }
-
-  lazy val MDBuiltInUML2PrimitiveTypes = DocumentEdge[Document[MagicDrawUML]]( MDBuiltInUML, MDBuiltInPrimitiveTypes, Seq() )
-  lazy val MDBuiltInStandardProfile2UML = DocumentEdge[Document[MagicDrawUML]]( MDBuiltInStandardProfile, MDBuiltInUML, Seq() )
 
 }
