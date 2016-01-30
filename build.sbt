@@ -63,10 +63,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
 
     artifactZipFile := {
-      baseDirectory.value / "target" / "imce_md18_0_sp5_oti-uml-magicdraw-adapter_resource.zip"
+      baseDirectory.value / "target" / "universal" / "oti-uml-magicdraw-adapter_resource.zip"
     },
 
-    addArtifact(Artifact("imce_md18_0_sp5_oti-uml-magicdraw-adapter_resource", "zip", "zip"), artifactZipFile),
+    addArtifact(Artifact("oti-uml-magicdraw-adapter_resource", "zip", "zip"), artifactZipFile),
 
     mappings in (Compile, packageSrc) ++= {
       import Path.{flat, relativeTo}
@@ -225,7 +225,8 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
     },
 
     artifacts <+= (name in Universal) { n => Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) },
-    packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p, n) =>
+    packagedArtifacts <+= (packageBin in Universal, name in Universal, streams) map { (p, n, s) =>
+      s.log.info(s"packagedArtifacts: p=$p")
       Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) -> p
     }
   )
