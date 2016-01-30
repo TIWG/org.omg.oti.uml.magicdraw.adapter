@@ -29,17 +29,11 @@ cleanFiles <+=
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
 mdInstallDirectory in Global :=
-  baseDirectory.value / "imce.md.package" / ("imce.md18_0sp5.dynamic-scripts-" + Versions.version)
+  baseDirectory.value / "imce.md.package" / ("imce.md18_0sp5.oti-uml-magicdraw-adapter-" + Versions.version)
 
 lazy val artifactZipFile = taskKey[File]("Location of the zip artifact file")
 
 lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
-
-lazy val updateInstall = TaskKey[Unit]("update-install", "Update the MD Installation directory")
-
-lazy val md5Install = TaskKey[Unit]("md5-install", "Produce an MD5 report of the MD Installation directory")
-
-lazy val zipInstall = TaskKey[File]("zip-install", "Zip the MD Installation directory")
 
 lazy val buildUTCDate = SettingKey[String]("build-utc-date", "The UDC Date of the build")
 
@@ -100,26 +94,22 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     unmanagedClasspath in Compile <++= unmanagedJars in Compile,
     libraryDependencies ++= Seq (
       "org.omg.tiwg" %% "oti-uml-change_migration"
-        % Versions.oti_uml_change_migration % "compile" withSources() withJavadoc(),
+        % Versions.oti_uml_change_migration % "compile"
+        withSources() withJavadoc(),
 
       "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
-        % Versions.oti_uml_composite_structure_tree_analysis % "compile" withSources() withJavadoc(),
+        % Versions.oti_uml_composite_structure_tree_analysis % "compile"
+        withSources() withJavadoc(),
 
       "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
-        % Versions.oti_uml_canonical_xmi_loader % "compile" withSources() withJavadoc(),
+        % Versions.oti_uml_canonical_xmi_loader % "compile"
+        withSources() withJavadoc(),
 
       "gov.nasa.jpl.imce.magicdraw.packages" %% "imce_md18_0_sp5_dynamic-scripts" 
-        % Versions.dynamic_scripts_package % "compile" 
-	artifacts Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip")
+        % Versions.dynamic_scripts_package % "compile"
+        artifacts Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip")
 
     ),
-
-    IMCEKeys.nexusJavadocRepositoryRestAPIURL2RepositoryName := Map(
-       "https://oss.sonatype.org/service/local" -> "releases",
-       "https://cae-nexuspro.jpl.nasa.gov/nexus/service/local" -> "JPL",
-       "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.beta.group" -> "JPL Beta Group",
-       "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.public.group" -> "JPL Public Group"),
-    IMCEKeys.pomRepositoryPathRegex := """\<repositoryPath\>\s*([^\"]*)\s*\<\/repositoryPath\>""".r,
 
     extractArchives <<= (baseDirectory, libraryDependencies, update, streams,
       mdInstallDirectory in Global, scalaBinaryVersion) map {
@@ -176,154 +166,14 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
     compile <<= (compile in Compile) dependsOn extractArchives,
 
-    publish <<= publish dependsOn zipInstall,
-    PgpKeys.publishSigned <<= PgpKeys.publishSigned dependsOn zipInstall,
+    IMCEKeys.nexusJavadocRepositoryRestAPIURL2RepositoryName := Map(
+      "https://oss.sonatype.org/service/local" -> "releases",
+      "https://cae-nexuspro.jpl.nasa.gov/nexus/service/local" -> "JPL",
+      "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.beta.group" -> "JPL Beta Group",
+      "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.public.group" -> "JPL Public Group"),
+    IMCEKeys.pomRepositoryPathRegex := """\<repositoryPath\>\s*([^\"]*)\s*\<\/repositoryPath\>""".r
 
-    publishLocal <<= publishLocal dependsOn zipInstall,
-    PgpKeys.publishLocalSigned <<= PgpKeys.publishLocalSigned dependsOn zipInstall,
-
-    zipInstall <<=
-      (baseDirectory, update, streams,
-        mdInstallDirectory in Global,
-        artifactZipFile,
-        packageBin in Compile,
-        packageSrc in Compile,
-        packageDoc in Compile,
-        makePom, buildUTCDate,
-        scalaBinaryVersion
-        ) map {
-        (base, up, s, mdInstallDir, zip, libJar, libSrc, libDoc, pom, d, sbV) =>
-
-          import com.typesafe.sbt.packager.universal._
-
-          val root = base / "target" / "imce_md18_0_sp5_oti-uml-magicdraw-adapter_resource"
-          s.log.info(s"\n*** top: $root")
-
-          IO.copyDirectory(base / "profiles", root / "profiles/", overwrite=true, preserveLastModified=true)
-
-          val pluginDir = root / "plugins" / "gov.nasa.jpl.magicdraw.dynamicScripts"
-          IO.createDirectory(pluginDir)
-
-          IO.copyFile(libJar, pluginDir / "lib" / libJar.getName)
-          IO.copyFile(libSrc, pluginDir / "lib" / libSrc.getName)
-          IO.copyFile(libDoc, pluginDir / "lib" / libDoc.getName)
-
-          val lfilter: DependencyFilter = new DependencyFilter {
-            def apply(c: String, m: ModuleID, a: Artifact): Boolean = {
-              val ok1 = "compile" == c
-              val ok2 = a.`type` == "jar" && a.extension == "jar"
-              val ok3 =
-                "gov.nasa.jpl.imce.secae" == m.organization &&
-                  "jpl-dynamic-scripts-generic-dsl_" + sbV == m.name
-              ok1 && ok2 && ok3
-            }
-          }
-          val ls: Seq[File] = up.matching(lfilter)
-          ls.foreach { libJar: File =>
-            IO.copyFile(libJar, pluginDir / "lib" / libJar.getName)
-          }
-
-          val dfilter: DependencyFilter = new DependencyFilter {
-            def apply(c: String, m: ModuleID, a: Artifact): Boolean = {
-              val ok1 = "compile" == c
-              val ok2 = a.`type` == "doc" && a.extension == "jar"
-              val ok3 =
-                "gov.nasa.jpl.imce.secae" == m.organization &&
-                  "jpl-dynamic-scripts-generic-dsl_" + sbV == m.name
-              ok1 && ok2 && ok3
-            }
-          }
-          val ds: Seq[File] = up.matching(dfilter)
-          ds.foreach { libDoc: File =>
-            IO.copyFile(libDoc, pluginDir / "lib" / libDoc.getName)
-          }
-
-          val sfilter: DependencyFilter = new DependencyFilter {
-            def apply(c: String, m: ModuleID, a: Artifact): Boolean = {
-              val ok1 = "compile" == c
-              val ok2 = a.`type` == "src" && a.extension == "jar"
-              val ok3 =
-                "gov.nasa.jpl.imce.secae" == m.organization &&
-                  "jpl-dynamic-scripts-generic-dsl_" + sbV == m.name
-              ok1 && ok2 && ok3
-            }
-          }
-          val ss: Seq[File] = up.matching(sfilter)
-          ss.foreach { libSrc: File =>
-            IO.copyFile(libSrc, pluginDir / "lib" / libSrc.getName)
-          }
-
-          val resourceManager = root / "data" / "resourcemanager"
-          IO.createDirectory(resourceManager)
-          val resourceDescriptorFile = resourceManager / "MDR_Plugin_govnasajpldynamicScriptsmagicdraw_72516_descriptor.xml"
-          val resourceDescriptorInfo =
-            <resourceDescriptor critical="false" date={d}
-                                description="IMCE Dynamic Scripts Plugin"
-                                group="IMCE Resource"
-                                homePage="https://github.jpl.nasa.gov/imce/jpl-dynamicscripts-magicdraw-plugin"
-                                id="72516"
-                                mdVersionMax="higher"
-                                mdVersionMin="18.0"
-                                name="IMCE Dynamic Scripts Plugin"
-                                product="IMCE Dynamic Scripts Plugin"
-                                restartMagicdraw="false" type="Plugin">
-              <version human={Versions.version} internal={Versions.version} resource={Versions.version + "0"}/>
-              <provider email="nicolas.f.rouquette@jpl.nasa.gov"
-                        homePage="https://github.jpl.nasa.gov/imce/jpl-dynamicscripts-magicdraw-plugin"
-                        name="IMCE"/>
-              <edition>Reader</edition>
-              <edition>Community</edition>
-              <edition>Standard</edition>
-              <edition>Professional Java</edition>
-              <edition>Professional C++</edition>
-              <edition>Professional C#</edition>
-              <edition>Professional ArcStyler</edition>
-              <edition>Professional EFFS ArcStyler</edition>
-              <edition>OptimalJ</edition>
-              <edition>Professional</edition>
-              <edition>Architect</edition>
-              <edition>Enterprise</edition>
-              <requiredResource id="1440">
-                <minVersion human="17.0" internal="169010"/>
-              </requiredResource>
-              <installation>
-                <file from="plugins/gov.nasa.jpl.magicdraw.dynamicScripts/plugin.xml"
-                      to="plugins/gov.nasa.jpl.magicdraw.dynamicScripts/plugin.xml"/>
-
-                <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libJar.getName}
-                      to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libJar.getName}/>
-                <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libDoc.getName}
-                      to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libDoc.getName}/>
-                <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libSrc.getName}
-                      to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+libSrc.getName}/>
-                {ls.map { l =>
-                  <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}
-                        to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}/> }
-                }
-                {ds.map { l =>
-                  <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}
-                        to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}/> }
-                }
-                {ss.map { l =>
-                  <file from={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}
-                        to={"plugins/gov.nasa.jpl.magicdraw.dynamicScripts/lib/"+l.getName}/> }
-                }
-              </installation>
-            </resourceDescriptor>
-
-          xml.XML.save(
-            filename=resourceDescriptorFile.getAbsolutePath,
-            node=resourceDescriptorInfo,
-            enc="UTF-8")
-
-          val fileMappings = (root.*** --- root) pair relativeTo(root)
-          ZipHelper.zipNIO(fileMappings, zip)
-
-          s.log.info(s"\n*** Created the zip: $zip")
-          zip
-      }
   )
-  .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
 
 def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = None): Seq[Setting[_]] = {
@@ -365,6 +215,7 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
           ((dir ** "*.md") --- (dir / "sbt.staging" ***)).pair(relativeTo(dir)) ++
           (dir / "models" ** "*.mdzip").pair(relativeTo(dir)) ++
           com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
+          com.typesafe.sbt.packager.MappingsHelper.directory(dir / "profiles") ++
           addIfExists(bin, "lib/" + bin.name) ++
           addIfExists(binT, "lib/" + binT.name) ++
           addIfExists(src, "lib.sources/" + src.name) ++

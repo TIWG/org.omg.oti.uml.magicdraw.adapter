@@ -2,5 +2,6 @@
 .ensime*
 .idea
 .iml
+imce.md.package
 svn
 target
