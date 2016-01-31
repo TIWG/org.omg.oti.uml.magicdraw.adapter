@@ -63,7 +63,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
 
     artifactZipFile := {
-      baseDirectory.value / "target" / "universal" / "oti-uml-magicdraw-adapter_resource.zip"
+      baseDirectory.value /
+        "target" /
+        "universal" /
+        s"oti-uml-magicdraw-adapter_${scalaBinaryVersion.value}-${Versions.version}-resource.zip"
     },
 
     addArtifact(Artifact("oti-uml-magicdraw-adapter_resource", "zip", "zip"), artifactZipFile),
