@@ -31,8 +31,6 @@ lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDra
 mdInstallDirectory in Global :=
   baseDirectory.value / "imce.md.package" / ("imce.md18_0sp5.oti-uml-magicdraw-adapter-" + Versions.version)
 
-lazy val artifactZipFile = taskKey[File]("Location of the zip artifact file")
-
 lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
 
 lazy val buildUTCDate = SettingKey[String]("build-utc-date", "The UDC Date of the build")
@@ -61,15 +59,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
     buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
-
-    artifactZipFile := {
-      baseDirectory.value /
-        "target" /
-        "universal" /
-        s"oti-uml-magicdraw-adapter_${scalaBinaryVersion.value}-${Versions.version}-resource.zip"
-    },
-
-    addArtifact(Artifact("oti-uml-magicdraw-adapter_resource", "zip", "zip"), artifactZipFile),
 
     mappings in (Compile, packageSrc) ++= {
       import Path.{flat, relativeTo}
@@ -228,8 +217,7 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
     },
 
     artifacts <+= (name in Universal) { n => Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) },
-    packagedArtifacts <+= (packageBin in Universal, name in Universal, streams) map { (p, n, s) =>
-      s.log.info(s"packagedArtifacts: p=$p")
+    packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p, n) =>
       Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) -> p
     }
   )
