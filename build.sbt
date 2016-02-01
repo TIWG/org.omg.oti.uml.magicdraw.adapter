@@ -28,8 +28,7 @@ cleanFiles <+=
 
 lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
 
-mdInstallDirectory in Global :=
-  baseDirectory.value / "imce.md.package" / ("imce.md18_0sp5.oti-uml-magicdraw-adapter-" + Versions.version)
+mdInstallDirectory in Global := baseDirectory.value / "imce.md.package"
 
 lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
 
@@ -86,20 +85,20 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     unmanagedClasspath in Compile <++= unmanagedJars in Compile,
     libraryDependencies ++= Seq (
       "org.omg.tiwg" %% "oti-uml-change_migration"
-        % Versions.oti_uml_change_migration % "compile"
-        withSources() withJavadoc(),
+        % Versions.oti_uml_change_migration % "compile" artifacts
+        Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
-        % Versions.oti_uml_composite_structure_tree_analysis % "compile"
-        withSources() withJavadoc(),
+        % Versions.oti_uml_composite_structure_tree_analysis % "compile" artifacts
+        Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
-        % Versions.oti_uml_canonical_xmi_loader % "compile"
-        withSources() withJavadoc(),
+        % Versions.oti_uml_canonical_xmi_loader % "compile" artifacts
+        Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
-      "gov.nasa.jpl.imce.magicdraw.packages" %% "imce_md18_0_sp5_dynamic-scripts" 
-        % Versions.dynamic_scripts_package % "compile"
-        artifacts Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip")
+      "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
+        % Versions.dynamic_scripts_plugin % "compile" artifacts
+        Artifact("imce_md18_0_sp5_dynamic-scripts_resource", "zip", "zip")
 
     ),
 
@@ -111,11 +110,8 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
           val zfilter: DependencyFilter = new DependencyFilter {
             def apply(c: String, m: ModuleID, a: Artifact): Boolean = {
-              val ok1 = a.`type` == "zip" && a.extension == "zip"
-              val ok2 = libs.find { dep: ModuleID =>
-                ok1 && dep.organization == m.organization && m.name == dep.name + "_" + sbV
-              }
-              ok2.isDefined
+              if (c == "compile") s.log.info(s"m=$m\n $a")
+              (a.`type` == "zip" || a.`type` == "resource") && a.extension == "zip"
             }
           }
           val zs: Seq[File] = up.matching(zfilter)
@@ -125,18 +121,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
               s"=> created md.install.dir=$mdInstallDir with ${files.size} " +
                 s"files extracted from zip: ${zip.getName}")
           }
-          val mdRootFolder = mdInstallDir / s"imce.md18_0sp5.dynamic-scripts-${Versions.dynamic_scripts_package}"
-          require(
-            mdRootFolder.exists && mdRootFolder.canWrite,
-            s"mdRootFolder: $mdRootFolder")
-          IO.listFiles(mdRootFolder).foreach { f =>
-            val fp = f.toPath
-            Files.move(
-              fp,
-              mdInstallDir.toPath.resolve(fp.getFileName),
-              java.nio.file.StandardCopyOption.REPLACE_EXISTING)
-          }
-          IO.delete(mdRootFolder)
 
           val mdBinFolder = mdInstallDir / "bin"
           require(mdBinFolder.exists, "md bin: $mdBinFolder")
@@ -146,12 +130,15 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
             s"=> use existing md.install.dir=$mdInstallDir")
         }
 
-        val libPath = (mdInstallDir / "lib").toPath
-        val mdJars = for {
-          jar <- Files.walk(libPath).iterator().filter(_.toString.endsWith(".jar")).map(_.toFile)
-        } yield Attributed.blank(jar)
+        val libJars = ((mdInstallDir / "lib") ** "*.jar").get
+        s.log.info(s"jar libraries: ${libJars.size}")
 
-        mdJars.toSeq
+        val dsJars = ((mdInstallDir / "dynamicScripts") * "*" / "lib" ** "*.jar").get
+        s.log.info(s"jar dynamic script: ${dsJars.size}")
+
+        val mdJars = (libJars ++ dsJars).map { jar => Attributed.blank(jar) }
+
+        mdJars
     },
 
     unmanagedJars in Compile <++= extractArchives,
