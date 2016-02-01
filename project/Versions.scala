@@ -2,7 +2,7 @@
 object Versions {
 
   // this project
-  val version = "445390.4"
+  val version = "445390.5"
 
   // https://github.jpl.nasa.gov/imce/org.omg.oti.changeMigration
   val oti_uml_change_migration="445380.3"

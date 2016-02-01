@@ -85,19 +85,19 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     unmanagedClasspath in Compile <++= unmanagedJars in Compile,
     libraryDependencies ++= Seq (
       "org.omg.tiwg" %% "oti-uml-change_migration"
-        % Versions.oti_uml_change_migration % "compile" artifacts
+        % Versions.oti_uml_change_migration % "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
-        % Versions.oti_uml_composite_structure_tree_analysis % "compile" artifacts
+        % Versions.oti_uml_composite_structure_tree_analysis % "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
-        % Versions.oti_uml_canonical_xmi_loader % "compile" artifacts
+        % Versions.oti_uml_canonical_xmi_loader % "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
-        % Versions.dynamic_scripts_plugin % "compile" artifacts
+        % Versions.dynamic_scripts_plugin % "compile" withSources() withJavadoc() artifacts
         Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map())
 
     ),
@@ -109,10 +109,8 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         if (!mdInstallDir.exists) {
 
           val zfilter: DependencyFilter = new DependencyFilter {
-            def apply(c: String, m: ModuleID, a: Artifact): Boolean = {
-              if (c == "compile") s.log.info(s"m=$m\n $a")
+            def apply(c: String, m: ModuleID, a: Artifact): Boolean =
               (a.`type` == "zip" || a.`type` == "resource") && a.extension == "zip"
-            }
           }
           val zs: Seq[File] = up.matching(zfilter)
           zs.foreach { zip =>
