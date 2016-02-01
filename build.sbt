@@ -98,7 +98,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
       "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
         % Versions.dynamic_scripts_plugin % "compile" artifacts
-        Artifact("imce_md18_0_sp5_dynamic-scripts_resource", "zip", "zip")
+        Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map())
 
     ),
 
