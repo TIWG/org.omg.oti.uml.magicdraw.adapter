@@ -2,7 +2,7 @@
 object Versions {
 
   // this project
-  val version = "445390.5"
+  val version = "445390.6"
 
   // https://github.jpl.nasa.gov/imce/org.omg.oti.changeMigration
   val oti_uml_change_migration="445380.3"
@@ -14,5 +14,5 @@ object Versions {
   val oti_uml_canonical_xmi_loader="445386.2"
 
   // https://github.jpl.nasa.gov/imce/jpl-dynamicscripts-magicdraw-plugin
-  val dynamic_scripts_plugin="2.2"
+  val dynamic_scripts_plugin="2.3"
 }
