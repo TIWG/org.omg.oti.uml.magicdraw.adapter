@@ -1,41 +1,40 @@
 /*
  *
- *  License Terms
+ * License Terms
  *
- *  Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
- *  U.S. Government sponsorship acknowledged.
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
+ * U.S. Government sponsorship acknowledged.
  *
- *  All rights reserved.
+ * All rights reserved.
  *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are
- *  met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
+ * *   Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- *   *   Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
+ * *   Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
  *
- *   *   Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the
- *       distribution.
+ * *   Neither the name of Caltech nor its operating division, the Jet
+ *    Propulsion Laboratory, nor the names of its contributors may be
+ *    used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- *   *   Neither the name of Caltech nor its operating division, the Jet
- *       Propulsion Laboratory, nor the names of its contributors may be
- *       used to endorse or promote products derived from this software
- *       without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- *  IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- *  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
- *  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
- *  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- *  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.omg.oti.magicdraw.uml.read
 
@@ -49,8 +48,8 @@ import scala.Predef.???
 import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLLifeline 
-  extends UMLLifeline[MagicDrawUML]
-  with MagicDrawUMLNamedElement {
+  extends MagicDrawUMLNamedElement
+  with UMLLifeline[MagicDrawUML] {
 
   override protected def e: Uml#Lifeline
   def getMagicDrawLifeline = e
@@ -59,29 +58,26 @@ trait MagicDrawUMLLifeline
 
   // 17.6
 	override def coveredBy: Set[UMLInteractionFragment[Uml]] =
-    e.getCoveredBy.toSet[Uml#InteractionFragment]
+    e.getCoveredBy.to[Set]
   
   // 17.6
 	override def decomposedAs: Option[UMLPartDecomposition[Uml]] =
-    Option.apply(e.getDecomposedAs)
+    for { result <- Option(e.getDecomposedAs) } yield result
   
   // 17.6  
 	override def represents: Option[UMLConnectableElement[Uml]] =
-    Option.apply(e.getRepresents)
+    for { result <- Option(e.getRepresents) } yield result
   
   // 17.6
 	override def selector: Option[UMLValueSpecification[Uml]] =
-    Option.apply(e.getSelector)
+    for { result <- Option(e.getSelector) } yield result
   
   // 17.6
 	override def covered_events: Seq[UMLOccurrenceSpecification[Uml]] =
     e.get_occurrenceSpecificationOfCovered.to[Seq]
-  
-  // 17.6
-	override def covered_stateInvariant: Set[UMLStateInvariant[Uml]] =
-    e.get_stateInvariantOfCovered.toSet[Uml#StateInvariant]
 
 }
 
-case class MagicDrawUMLLifelineImpl(val e: MagicDrawUML#Lifeline, ops: MagicDrawUMLUtil)
+case class MagicDrawUMLLifelineImpl
+(e: MagicDrawUML#Lifeline, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLifeline

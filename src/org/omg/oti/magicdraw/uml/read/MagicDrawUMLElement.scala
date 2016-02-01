@@ -1,41 +1,40 @@
 /*
  *
- *  License Terms
+ * License Terms
  *
- *  Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
- *  U.S. Government sponsorship acknowledged.
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
+ * U.S. Government sponsorship acknowledged.
  *
- *  All rights reserved.
+ * All rights reserved.
  *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are
- *  met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
+ * *   Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- *   *   Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
+ * *   Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
  *
- *   *   Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the
- *       distribution.
+ * *   Neither the name of Caltech nor its operating division, the Jet
+ *    Propulsion Laboratory, nor the names of its contributors may be
+ *    used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- *   *   Neither the name of Caltech nor its operating division, the Jet
- *       Propulsion Laboratory, nor the names of its contributors may be
- *       used to endorse or promote products derived from this software
- *       without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- *  IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- *  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
- *  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
- *  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- *  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.omg.oti.magicdraw.uml.read
 
@@ -75,36 +74,30 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   // Element
 
   override def ownedElement: Set[UMLElement[Uml]] =
-    e.getOwnedElement.toSet[Uml#Element] - umlElement(e.getAppliedStereotypeInstance)
+    e.getOwnedElement.to[Set] - umlElement(e.getAppliedStereotypeInstance)
 
   override def owner: Option[UMLElement[Uml]] =
-    Option.apply(e.getOwner)
+    for { result <- Option.apply(e.getOwner) } yield result
 
   override def constrainedElement_constraint: Set[UMLConstraint[Uml]] =
-    e.get_constraintOfConstrainedElement.toSet[Uml#Constraint]
+    e.get_constraintOfConstrainedElement.to[Set]
 
   override def annotatedElement_comment: Set[UMLComment[Uml]] =
-    e.get_commentOfAnnotatedElement.toSet[Uml#Comment]
+    e.get_commentOfAnnotatedElement.to[Set]
 
   override def represents_activityPartition: Set[UMLActivityPartition[Uml]] =
-    e.get_activityPartitionOfRepresents.toSet[Uml#ActivityPartition]
+    e.get_activityPartitionOfRepresents.to[Set]
 
   override def relatedElement_relationship: Set[UMLRelationship[Uml]] =
-    e.get_relationshipOfRelatedElement.toSet[Uml#Relationship]
+    e.get_relationshipOfRelatedElement.to[Set]
 
   override def target_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
-    e.get_directedRelationshipOfTarget.toSet[Uml#DirectedRelationship]
+    e.get_directedRelationshipOfTarget.to[Set]
 
   override def source_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
-    e.get_directedRelationshipOfSource.toSet[Uml#DirectedRelationship]
+    e.get_directedRelationshipOfSource.to[Set]
 
   // ElementOps
-
-  /**
-   * @return The transitive closure of `ownedElement` without MagicDraw's AppliedStereotypeInstances.
-   */
-  override def allOwnedElements: Set[UMLElement[Uml]] =
-    closure[UMLElement[Uml], UMLElement[Uml]](this, _.ownedElement)
 
   override def mofMetaclassName: String =
     StereotypesHelper.getBaseClass(e).getName
@@ -126,7 +119,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   override def getAppliedStereotypesWithoutMetaclassProperties
   : NonEmptyList[java.lang.Throwable] \/ Set[UMLStereotype[Uml]] = {
     val eMetaclass = e.getClassType
-    \/-(StereotypesHelper.getStereotypes(e).toSet[Uml#Stereotype] flatMap { s =>
+    \/-(StereotypesHelper.getStereotypes(e).to[Set] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
         val pMetaclass = StereotypesHelper.getClassOfMetaClass(p.getType.asInstanceOf[Uml#Class])
         eMetaclass == pMetaclass || StereotypesHelper.isSubtypeOf(pMetaclass, eMetaclass)

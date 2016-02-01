@@ -1,41 +1,40 @@
 /*
  *
- *  License Terms
+ * License Terms
  *
- *  Copyright (c) 2014-2015, California Institute of Technology ("Caltech").
- *  U.S. Government sponsorship acknowledged.
+ * Copyright (c) 2014-2016, California Institute of Technology ("Caltech").
+ * U.S. Government sponsorship acknowledged.
  *
- *  All rights reserved.
+ * All rights reserved.
  *
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are
- *  met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
+ * *   Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
  *
- *   *   Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
+ * *   Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the
+ *    distribution.
  *
- *   *   Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the
- *       distribution.
+ * *   Neither the name of Caltech nor its operating division, the Jet
+ *    Propulsion Laboratory, nor the names of its contributors may be
+ *    used to endorse or promote products derived from this software
+ *    without specific prior written permission.
  *
- *   *   Neither the name of Caltech nor its operating division, the Jet
- *       Propulsion Laboratory, nor the names of its contributors may be
- *       used to endorse or promote products derived from this software
- *       without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- *  IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- *  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
- *  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
- *  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- *  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- *  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- *  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.omg.oti.magicdraw.uml.read
 
@@ -43,37 +42,41 @@ import org.omg.oti.uml.read.api._
 
 import scala.Option
 import scala.Predef.???
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
 
 trait MagicDrawUMLTemplateParameter 
-  extends UMLTemplateParameter[MagicDrawUML]
-  with MagicDrawUMLElement {
+  extends MagicDrawUMLElement
+  with UMLTemplateParameter[MagicDrawUML] {
 
   override protected def e: Uml#TemplateParameter
   def getMagicDrawTemplateParameter = e
   import ops._
 
   override def default: Option[UMLParameterableElement[Uml]] =
-    Option.apply( e.getDefault )
+    for { result <- Option( e.getDefault ) } yield result
   
   override def ownedParameteredElement: Option[UMLParameterableElement[Uml]] = 
-    Option.apply( e.getOwnedParameteredElement )
-  
-  override def ownedDefault: Option[UMLParameterableElement[Uml]] = ???
-  
-  override def parameteredElement: Option[UMLParameterableElement[Uml]] = ???
+    for { result <- Option( e.getOwnedParameteredElement ) } yield result
+
+  override def parameteredElement: Option[UMLParameterableElement[Uml]] =
+    for { result <- Option(e.getParameteredElement) } yield result
   
   // 7.3
-  override def parameter_templateSignature: Set[UMLTemplateSignature[Uml]] = ???
+  override def parameter_templateSignature: Set[UMLTemplateSignature[Uml]] =
+    e.get_templateSignatureOfParameter.to[Set]
   
   // 7.4
-  override def formal_templateParameterSubstitution: Set[UMLTemplateParameterSubstitution[Uml]] = ???
+  override def formal_templateParameterSubstitution: Set[UMLTemplateParameterSubstitution[Uml]] =
+    e.get_templateParameterSubstitutionOfFormal.to[Set]
    
   // 9.4
-  override def inheritedParameter_redefinableTemplateSignature: Set[UMLRedefinableTemplateSignature[Uml]] = ???
+  override def inheritedParameter_redefinableTemplateSignature: Set[UMLRedefinableTemplateSignature[Uml]] =
+    ???
 
 }
 
-case class MagicDrawUMLTemplateParameterImpl(val e: MagicDrawUML#TemplateParameter, ops: MagicDrawUMLUtil)
+case class MagicDrawUMLTemplateParameterImpl
+(e: MagicDrawUML#TemplateParameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTemplateParameter
