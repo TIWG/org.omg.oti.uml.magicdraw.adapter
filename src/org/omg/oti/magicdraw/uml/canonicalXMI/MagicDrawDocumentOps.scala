@@ -72,7 +72,7 @@
   * MagicDraw-specific adapter for the OTI Canonical XMI DocumentOps
   */
  class MagicDrawDocumentOps
- (otiInfo: MagicDrawOTIInfo)
+ (val otiInfo: MagicDrawOTIInfo)
      extends DocumentOps[MagicDrawUML] {
  
    override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
@@ -204,7 +204,7 @@
    ( implicit 
        nodeT: TypeTag[Document[MagicDrawUML]],
        edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-   : NonEmptyList[java.lang.Throwable] \&/ DocumentSet[MagicDrawUML] = {
+   : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet = {
  
      val catalogManager: CatalogManager = new CatalogManager()
      catalogManager.setUseStaticCatalog(false)

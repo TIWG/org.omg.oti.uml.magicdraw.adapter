@@ -44,12 +44,11 @@ import java.lang.IllegalArgumentException
 
 import com.nomagic.magicdraw.core.{ApplicationEnvironment, Application}
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
-import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTISymbols
+import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsProfileProvider, MagicDrawOTISymbols}
 
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._
-import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
@@ -188,92 +187,4 @@ object MagicDrawDocumentSet {
         // @todo Add other combinations of (s, b) x (m, im)...
     }
 
-  type MagicDrawDocumentSetInfo =
-  ( ResolvedDocumentSet[MagicDrawUML],
-    MagicDrawDocumentSet,
-    Iterable[UnresolvedElementCrossReference[MagicDrawUML]])
-
-  implicit def Package2OTISpecificationRootCharacteristicsMapSemigroup
-  : Semigroup[Map[UMLPackage[MagicDrawUML], OTISpecificationRootCharacteristics]] =
-    Semigroup.instance(_ ++ _)
-
-    /*
-     * to be updated...
-    
-  def createMagicDrawProjectDocumentSet
-  (additionalSpecificationRootPackages: Option[Set[UMLPackage[MagicDrawUML]]] = None,
-   documentURIMapper: CatalogURIMapper,
-   builtInURIMapper: CatalogURIMapper,
-   ignoreCrossReferencedElementFilter: (UMLElement[MagicDrawUML] => Boolean),
-   unresolvedElementMapper: (UMLElement[MagicDrawUML] => Option[UMLElement[MagicDrawUML]]))
-  (implicit
-   otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML],
-   nodeT: TypeTag[Document[MagicDrawUML]],
-   edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]])
-  : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSetInfo =
-
-    Option.apply(Application.getInstance().getProject)
-    .fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSetInfo] {
-      \&/.This(
-        NonEmptyList(
-          new DocumentSetException(
-            "createMagicDrawProjectDocumentSet failed: Cannot construct a MagicDrawDocumentSet without an active MagicDraw project")))
-    }{ p =>
-
-      implicit val umlUtil = MagicDrawUMLUtil( p )
-      import umlUtil._
-
-      val allSpecificationRootPackages
-      : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-        additionalSpecificationRootPackages
-        .fold[NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-          otiCharacteristicsProvider.getAllOTISerializableDocumentPackages
-        ){ pkgs =>
-          val p0: NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-            \&/.That(Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]())
-          val pN: NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
-            (p0 /: pkgs) { (pi, pkg) =>
-              pi append
-              otiCharacteristicsProvider.getSpecificationRootCharacteristics(pkg)
-              .toThese
-              .map {
-                _.fold[Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]](
-                  Map[UMLPackage[Uml], OTISpecificationRootCharacteristics]()
-                ){ info =>
-                  Map[UMLPackage[Uml], OTISpecificationRootCharacteristics](pkg -> info)
-                }
-              }
-          }
-
-          pN
-        }
-
-      val mdBuiltIns: Set[BuiltInDocument[Uml]] =
-        Set( MDBuiltInPrimitiveTypes, MDBuiltInUML, MDBuiltInStandardProfile )
-
-      val mdBuiltInEdges: Set[DocumentEdge[Document[Uml]]] =
-        Set( MDBuiltInUML2PrimitiveTypes, MDBuiltInStandardProfile2UML )
-
-      implicit val documentOps = new MagicDrawDocumentOps()(umlUtil, otiCharacteristicsProvider)
-
-      allSpecificationRootPackages.flatMap { pkg2info =>
-
-        DocumentSet.constructDocumentSetCrossReferenceGraph[Uml](
-          specificationRootPackages=pkg2info,
-          documentURIMapper, builtInURIMapper,
-          mdBuiltIns,
-          mdBuiltInEdges,
-          ignoreCrossReferencedElementFilter,
-          unresolvedElementMapper,
-          MagicDrawDocumentSetAggregate())
-          .flatMap { case ((resolved, unresolved)) =>
-            resolved.ds match {
-              case mdDS: MagicDrawDocumentSet =>
-                \&/.That((resolved, mdDS, unresolved))
-            }
-          }
-      }
-    }
-    
-    */
 }
