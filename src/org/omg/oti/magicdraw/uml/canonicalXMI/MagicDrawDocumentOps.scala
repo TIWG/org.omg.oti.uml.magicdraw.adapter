@@ -402,46 +402,49 @@
            (builtInStandardProfile, ds3) = step3    
                
            ds4 <- 
-           otiInfo.otiProfile
-           .fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](\&/.That(ds3)){ 
-             otiProfile =>
-                 
-               val otiResult =
-               for {
-                 step <-
-                 addBuiltInImmutableDocument(
-                     ds3,
-                     info = 
-                       OTISpecificationRootCharacteristics(
-                        packageURI = OTI_URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
-                        documentURL = OTI_URL("http://www.omg.org/TIWG/OTI/20160128/OTI.profile.xmi"),
-                        artifactKind=OTIBuiltInProfileArtifactKind,
-                        nsPrefix = OTI_NS_PREFIX("StandardProfile"),
-                        uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
-            
-                      documentURL = 
-                        MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-                          new URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
-                          "profiles/OMG/TIWG/OTI.profile.mdzip"),   
-                      root = otiProfile,
-                      builtInExtent = {
-                        val otiUMLStandardProfileClassifiers = 
-                          otiProfile.ownedType.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
-                        val otiUMLStandardProfileFeatures =
-                          otiUMLStandardProfileClassifiers flatMap (_.feature)
-                        val otiUMLStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
-                          Set[UMLElement[MagicDrawUML]](otiProfile) ++ 
-                          otiUMLStandardProfileClassifiers ++ 
-                          otiUMLStandardProfileFeatures
-                          otiUMLStandardProfileExtent
-                      }
-                    ).toThese
-          
-                 (_, ds) = step
-              } yield ds
-              
-              otiResult
-            }
+           otiInfo.otiProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](
+             l = (nels: NonEmptyList[java.lang.Throwable]) => \&/.This(nels),
+             r = (oProfile: Option[UMLProfile[MagicDrawUML]]) => {
+               oProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](\&/.That(ds3)) {
+                 otiProfile =>
+
+                   val otiResult =
+                     for {
+                       step <-
+                       addBuiltInImmutableDocument(
+                         ds3,
+                         info =
+                           OTISpecificationRootCharacteristics(
+                             packageURI = OTI_URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
+                             documentURL = OTI_URL("http://www.omg.org/TIWG/OTI/20160128/OTI.profile.xmi"),
+                             artifactKind = OTIBuiltInProfileArtifactKind,
+                             nsPrefix = OTI_NS_PREFIX("StandardProfile"),
+                             uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
+
+                         documentURL =
+                           MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+                             new URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
+                             "profiles/OMG/TIWG/OTI.profile.mdzip"),
+                         root = otiProfile,
+                         builtInExtent = {
+                           val otiUMLStandardProfileClassifiers =
+                             otiProfile.ownedType.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
+                           val otiUMLStandardProfileFeatures =
+                             otiUMLStandardProfileClassifiers flatMap (_.feature)
+                           val otiUMLStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
+                             Set[UMLElement[MagicDrawUML]](otiProfile) ++
+                               otiUMLStandardProfileClassifiers ++
+                               otiUMLStandardProfileFeatures
+                           otiUMLStandardProfileExtent
+                         }
+                       ).toThese
+
+                       (_, ds) = step
+                     } yield ds
+
+                   otiResult
+               }
+           })
        
          } yield ds4
        }
