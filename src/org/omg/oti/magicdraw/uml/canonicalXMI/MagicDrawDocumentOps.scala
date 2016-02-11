@@ -485,156 +485,169 @@ class MagicDrawDocumentOps
         }
     )
 
-  def createDocumentFromExistingRootPackage
-  ( root: UMLPackage[MagicDrawUML],
-    allRoots: Set[UMLPackage[MagicDrawUML]] )
-  : NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawDocument] =
-  otiInfo.otiCharacteristicsProvider.getSpecificationRootCharacteristics(root).flatMap { oinfo =>
-    oinfo.fold[NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawDocument]](
-      None.right
-    ) { info =>
-      createDocumentFromExistingRootPackageInfo(info, root, allRoots)
-    }
-  }
-
-  def createDocumentFromExistingRootPackageInfo
-  ( info: OTISpecificationRootCharacteristics,
-    root: UMLPackage[MagicDrawUML],
-    allRoots: Set[UMLPackage[MagicDrawUML]] )
-  : NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawDocument] =
-    \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
-      .fold[NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawDocument]](
-        l = (t: java.lang.Throwable) =>
-          NonEmptyList(
-            UMLError.illegalElementException[MagicDrawUML, UMLPackage[MagicDrawUML]](
-              s"createDocumentFromExistingRootPackageInfo $info failed",
-              Iterable(root), t)).left,
-        r = (externalDocumentResourceURL: java.net.URI) =>
-          createDocumentFromExistingRootPackageInfoURL(externalDocumentResourceURL, info, root, allRoots))
-
   def createDocumentFromExistingRootPackageInfoURL
   ( externalDocumentResourceURL: java.net.URI,
     info: OTISpecificationRootCharacteristics,
     root: UMLPackage[MagicDrawUML],
-    allRoots: Set[UMLPackage[MagicDrawUML]] )
-  : NonEmptyList[java.lang.Throwable] \/ Option[MagicDrawDocument] = {
+    rootScopes: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]] )
+  : NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
     val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
     import MagicDrawProjectAPIHelper._
     val mdLoadURLOrError: NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL =
       Option.apply(ProjectUtilities.getProject(mdPkg))
         .fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
-          NonEmptyList(
-            documentOpsException(
-              docOps,
-              s"No MagicDraw project for package '${root.qualifiedName.get}'",
-              UMLError
-                .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                  "No active MagicDraw project",
-                  Iterable(root))))
-            .left) {
-            case mdServerProject: TeamworkPrimaryProject =>
-              info.artifactKind match {
-                case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
-                  MagicDrawServerProjectLoadURL(
-                    externalDocumentResourceURL,
-                    magicDrawServerProjectResource = mdServerProject.getResourceURI).right
-                case otherK =>
-                  NonEmptyList(
-                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      s"artifactKind for TeamworkPrimaryProject package ${root.qualifiedName.get}' should be " +
-                        s"'${OTISerializableProfileArtifactKind}' or " +
-                        s"'${OTISerializableModelLibraryArtifactKind}', " +
-                        s"not $otherK",
-                      Iterable(root))).left
-              }
-            case mdServerModule: TeamworkAttachedProject =>
-              info.artifactKind match {
-                case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
-                  MagicDrawAttachedServerModuleSerializableDocumentLoadURL(
-                    externalDocumentResourceURL,
-                    magicDrawAttachedServerModuleResource = mdServerModule.getResourceURI).right
-                case otherK =>
-                  NonEmptyList(
-                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      s"artifactKind for TeamworkAttachedProject package ${root.qualifiedName.get}' should be " +
-                        s"'${OTISerializableProfileArtifactKind}' or " +
-                        s"'${OTISerializableModelLibraryArtifactKind}', " +
-                        s"not $otherK",
-                      Iterable(root))).left
-              }
-            case mdLocalProject: LocalPrimaryProject =>
-              info.artifactKind match {
-                case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
-                  MagicDrawLocalProjectLoadURL(
-                    externalDocumentResourceURL,
-                    magicDrawLocalProjectResource = mdLocalProject.getResourceURI).right
-                case otherK =>
-                  NonEmptyList(
-                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      s"artifactKind for LocalPrimaryProject package ${root.qualifiedName.get}' should be " +
-                        s"'${OTISerializableProfileArtifactKind}' or " +
-                        s"'${OTISerializableModelLibraryArtifactKind}', " +
-                        s"not $otherK",
-                      Iterable(root))).left
-              }
-            case mdLocalModule: LocalAttachedProject =>
-              info.artifactKind match {
-                case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
-                  MagicDrawAttachedLocalModuleSerializableDocumentLoadURL(
-                    externalDocumentResourceURL,
-                    magicDrawAttachedLocalModuleResource = mdLocalModule.getResourceURI).right
-                case otherK =>
-                  NonEmptyList(
-                    UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                      s"artifactKind for LocalAttachedProject package ${root.qualifiedName.get}' should be " +
-                        s"'${OTISerializableProfileArtifactKind}' or " +
-                        s"'${OTISerializableModelLibraryArtifactKind}', " +
-                        s"not $otherK",
-                      Iterable(root))).left
-              }
-            case iProject =>
+        NonEmptyList(
+          documentOpsException(
+            docOps,
+            s"No MagicDraw project for package '${root.qualifiedName.get}'",
+            UMLError
+              .illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+              "No active MagicDraw project",
+              Iterable(root)))).left
+      ) {
+        case mdServerProject: TeamworkPrimaryProject =>
+          info.artifactKind match {
+            case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
+              MagicDrawServerProjectLoadURL(
+                externalDocumentResourceURL,
+                magicDrawServerProjectResource = mdServerProject.getResourceURI).right
+            case otherK =>
               NonEmptyList(
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
-                  s"package ${root.qualifiedName.get}' is in an unrecognized kind of MagicDraw IProject: $iProject ",
+                  s"artifactKind for TeamworkPrimaryProject package ${root.qualifiedName.get}' should be " +
+                    s"'$OTISerializableProfileArtifactKind' or " +
+                    s"'$OTISerializableModelLibraryArtifactKind', " +
+                    s"not $otherK",
                   Iterable(root))).left
           }
-
-    mdLoadURLOrError.flatMap[NonEmptyList[java.lang.Throwable], Option[MagicDrawDocument]] { mdLoadURL =>
-
-      val subRoots: Map[UMLPackage[MagicDrawUML], Set[UMLPackage[MagicDrawUML]]] =
-        allRoots
-          .map { pkg1 =>
-            val subs = allRoots.filter { pkg2 => pkg1 != pkg2 && pkg2.allNestingPackagesTransitively.contains(pkg1) }
-            pkg1 -> subs
+        case mdServerModule: TeamworkAttachedProject =>
+          info.artifactKind match {
+            case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
+              MagicDrawAttachedServerModuleSerializableDocumentLoadURL(
+                externalDocumentResourceURL,
+                magicDrawAttachedServerModuleResource = mdServerModule.getResourceURI).right
+            case otherK =>
+              NonEmptyList(
+                UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                  s"artifactKind for TeamworkAttachedProject package ${root.qualifiedName.get}' should be " +
+                    s"'$OTISerializableProfileArtifactKind' or " +
+                    s"'$OTISerializableModelLibraryArtifactKind', " +
+                    s"not $otherK",
+                  Iterable(root))).left
           }
-          .toMap
-
-      val rootExtents: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
-        allRoots
-          .map { pkg => pkg -> pkg.allOwnedElements }
-          .toMap
-
-      val rootScopes: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
-        subRoots
-          .map { case (pkg, subPkgs) =>
-            val scope: Set[UMLElement[MagicDrawUML]] =
-              (rootExtents(pkg) /: subPkgs) { case (es, pkg) =>
-                es -- rootExtents(pkg)
-              }
-            pkg -> scope
+        case mdLocalProject: LocalPrimaryProject =>
+          info.artifactKind match {
+            case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
+              MagicDrawLocalProjectLoadURL(
+                externalDocumentResourceURL,
+                magicDrawLocalProjectResource = mdLocalProject.getResourceURI).right
+            case otherK =>
+              NonEmptyList(
+                UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                  s"artifactKind for LocalPrimaryProject package ${root.qualifiedName.get}' should be " +
+                    s"'$OTISerializableProfileArtifactKind' or " +
+                    s"'$OTISerializableModelLibraryArtifactKind', " +
+                    s"not $otherK",
+                  Iterable(root))).left
           }
-          .toMap
-
-      info.artifactKind match {
-        case _: OTIBuiltInArtifactKind =>
-          MagicDrawBuiltInImmutableDocument(info, mdLoadURL, root, rootScopes(root)).some.right
-        case _: OTISerializableArtifactKind =>
-          MagicDrawSerializableImmutableDocument(info, mdLoadURL, root, rootScopes(root)).some.right
-        case OTILoadingArtifactKind =>
-          MagicDrawSerializableMutableDocument(info, mdLoadURL, root, rootScopes(root)).some.right
-
+        case mdLocalModule: LocalAttachedProject =>
+          info.artifactKind match {
+            case _@ (OTISerializableProfileArtifactKind | OTISerializableModelLibraryArtifactKind) =>
+              MagicDrawAttachedLocalModuleSerializableDocumentLoadURL(
+                externalDocumentResourceURL,
+                magicDrawAttachedLocalModuleResource = mdLocalModule.getResourceURI).right
+            case otherK =>
+              NonEmptyList(
+                UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                  s"artifactKind for LocalAttachedProject package ${root.qualifiedName.get}' should be " +
+                    s"'$OTISerializableProfileArtifactKind' or " +
+                    s"'$OTISerializableModelLibraryArtifactKind', " +
+                    s"not $otherK",
+                  Iterable(root))).left
+          }
+        case iProject =>
+          NonEmptyList(
+            UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+              s"package ${root.qualifiedName.get}' is in an unrecognized kind of MagicDraw IProject: $iProject ",
+              Iterable(root))).left
       }
+
+    mdLoadURLOrError
+    .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+      l = (nels: NonEmptyList[java.lang.Throwable]) => \&/.This(nels),
+      r = (mdLoadURL: MagicDrawLoadURL) => {
+
+        val mdDoc = info.artifactKind match {
+          case _: OTIBuiltInArtifactKind =>
+            MagicDrawBuiltInImmutableDocument(info, mdLoadURL, root, rootScopes(root))
+          case _: OTISerializableArtifactKind =>
+            MagicDrawSerializableImmutableDocument(info, mdLoadURL, root, rootScopes(root))
+          case OTILoadingArtifactKind =>
+            MagicDrawSerializableMutableDocument(info, mdLoadURL, root, rootScopes(root))
+        }
+        \&/.That(Set(mdDoc))
+      }
+    )
+  }
+
+  def createDocumentsFromExistingRootPackages
+  ( allRoots: Set[UMLPackage[MagicDrawUML]] )
+  : NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
+
+    val subRoots: Map[UMLPackage[MagicDrawUML], Set[UMLPackage[MagicDrawUML]]] =
+      allRoots
+        .map { pkg1 =>
+          val subs = allRoots.filter { pkg2 => pkg1 != pkg2 && pkg2.allNestingPackagesTransitively.contains(pkg1) }
+          pkg1 -> subs
+        }
+        .toMap
+
+    val rootExtents: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
+      allRoots
+        .map { pkg => pkg -> pkg.allOwnedElements }
+        .toMap
+
+    val rootScopes: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
+      subRoots
+        .map { case (pkg, subPkgs) =>
+          val scope: Set[UMLElement[MagicDrawUML]] =
+            (rootExtents(pkg) /: subPkgs) { case (es, pkg) =>
+              es -- rootExtents(pkg)
+            }
+          pkg -> scope
+        }
+
+    val otiCharacteristicsInfoProvider = otiInfo.otiCharacteristicsProvider
+    val r0: NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = \&/.That(Set())
+    val rN: NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = ( r0 /: allRoots ) { case (acc, root) =>
+
+      otiCharacteristicsInfoProvider
+        .getSpecificationRootCharacteristics(root)
+        .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+        l = (nels: NonEmptyList[java.lang.Throwable]) =>
+            acc append \&/.This(nels),
+        r = (oInfo: Option[OTISpecificationRootCharacteristics]) =>
+          oInfo
+          .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](acc){ info =>
+            \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
+              .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+              l = (t: java.lang.Throwable) =>
+                acc append \&/.This(NonEmptyList(
+                  UMLError.illegalElementException[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                    s"createDocumentFromExistingRootPackageInfo $info failed",
+                    Iterable(root), t))),
+              r = (externalDocumentResourceURL: java.net.URI) => {
+                val ri =
+                  createDocumentFromExistingRootPackageInfoURL(externalDocumentResourceURL, info, root, rootScopes)
+                acc append ri
+              }
+            )
+          }
+      )
+
     }
+
+    rN
   }
 
 }
