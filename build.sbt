@@ -30,17 +30,6 @@ lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDra
 
 mdInstallDirectory in Global := baseDirectory.value / "imce.md.package"
 
-lazy val extractArchives = TaskKey[Seq[Attributed[File]]]("extract-archives", "Extracts ZIP files")
-
-lazy val buildUTCDate = SettingKey[String]("build-utc-date", "The UDC Date of the build")
-
-buildUTCDate in Global := {
-  import java.util.{ Date, TimeZone }
-  val formatter = new java.text.SimpleDateFormat("yyyy-MM-dd-HH:mm")
-  formatter.setTimeZone(TimeZone.getTimeZone("UTC"))
-  formatter.format(new Date)
-}
-
 lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
@@ -102,9 +91,9 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
     ),
 
-    extractArchives <<= (baseDirectory, libraryDependencies, update, streams,
-      mdInstallDirectory in Global, scalaBinaryVersion) map {
-      (base, libs, up, s, mdInstallDir, sbV) =>
+    extractArchives <<= (baseDirectory, update, streams,
+      mdInstallDirectory in ThisBuild) map {
+      (base, up, s, mdInstallDir) =>
 
         if (!mdInstallDir.exists) {
 
@@ -128,6 +117,13 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
             s"=> use existing md.install.dir=$mdInstallDir")
         }
 
+    },
+
+    unmanagedJars in Compile <++= (baseDirectory, update, streams,
+      mdInstallDirectory in ThisBuild,
+      extractArchives) map {
+      (base, up, s, mdInstallDir, _) =>
+
         val libJars = ((mdInstallDir / "lib") ** "*.jar").get
         s.log.info(s"jar libraries: ${libJars.size}")
 
@@ -138,8 +134,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
         mdJars
     },
-
-    unmanagedJars in Compile <++= extractArchives,
 
     compile <<= (compile in Compile) dependsOn extractArchives,
 
