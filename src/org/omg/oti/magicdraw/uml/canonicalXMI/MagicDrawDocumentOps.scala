@@ -490,13 +490,13 @@ class MagicDrawDocumentOps
     info: OTISpecificationRootCharacteristics,
     root: UMLPackage[MagicDrawUML],
     rootScopes: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]] )
-  : NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
+  : Set[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
     val mdPkg = umlUtil.umlMagicDrawUMLPackage(root).getMagicDrawPackage
     import MagicDrawProjectAPIHelper._
-    val mdLoadURLOrError: NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL =
+    val mdLoadURLOrError: Set[java.lang.Throwable] \/ MagicDrawLoadURL =
       Option.apply(ProjectUtilities.getProject(mdPkg))
-        .fold[NonEmptyList[java.lang.Throwable] \/ MagicDrawLoadURL](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ MagicDrawLoadURL](
+        Set[java.lang.Throwable](
           documentOpsException(
             docOps,
             s"No MagicDraw project for package '${root.qualifiedName.get}'",
@@ -512,7 +512,7 @@ class MagicDrawDocumentOps
                 externalDocumentResourceURL,
                 magicDrawServerProjectResource = mdServerProject.getResourceURI).right
             case otherK =>
-              NonEmptyList(
+              Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
                   s"artifactKind for TeamworkPrimaryProject package ${root.qualifiedName.get}' should be " +
                     s"'$OTISerializableProfileArtifactKind' or " +
@@ -527,7 +527,7 @@ class MagicDrawDocumentOps
                 externalDocumentResourceURL,
                 magicDrawAttachedServerModuleResource = mdServerModule.getResourceURI).right
             case otherK =>
-              NonEmptyList(
+              Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
                   s"artifactKind for TeamworkAttachedProject package ${root.qualifiedName.get}' should be " +
                     s"'$OTISerializableProfileArtifactKind' or " +
@@ -542,7 +542,7 @@ class MagicDrawDocumentOps
                 externalDocumentResourceURL,
                 magicDrawLocalProjectResource = mdLocalProject.getResourceURI).right
             case otherK =>
-              NonEmptyList(
+              Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
                   s"artifactKind for LocalPrimaryProject package ${root.qualifiedName.get}' should be " +
                     s"'$OTISerializableProfileArtifactKind' or " +
@@ -557,7 +557,7 @@ class MagicDrawDocumentOps
                 externalDocumentResourceURL,
                 magicDrawAttachedLocalModuleResource = mdLocalModule.getResourceURI).right
             case otherK =>
-              NonEmptyList(
+              Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
                   s"artifactKind for LocalAttachedProject package ${root.qualifiedName.get}' should be " +
                     s"'$OTISerializableProfileArtifactKind' or " +
@@ -566,15 +566,15 @@ class MagicDrawDocumentOps
                   Iterable(root))).left
           }
         case iProject =>
-          NonEmptyList(
+          Set[java.lang.Throwable](
             UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
               s"package ${root.qualifiedName.get}' is in an unrecognized kind of MagicDraw IProject: $iProject ",
               Iterable(root))).left
       }
 
     mdLoadURLOrError
-    .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
-      l = (nels: NonEmptyList[java.lang.Throwable]) => \&/.This(nels),
+    .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+      l = (nels: Set[java.lang.Throwable]) => \&/.This(nels),
       r = (mdLoadURL: MagicDrawLoadURL) => {
 
         val mdDoc = info.artifactKind match {
@@ -592,7 +592,7 @@ class MagicDrawDocumentOps
 
   def createDocumentsFromExistingRootPackages
   ( allRoots: Set[UMLPackage[MagicDrawUML]] )
-  : NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
+  : Set[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
 
     val subRoots: Map[UMLPackage[MagicDrawUML], Set[UMLPackage[MagicDrawUML]]] =
       allRoots
@@ -618,21 +618,21 @@ class MagicDrawDocumentOps
         }
 
     val otiCharacteristicsInfoProvider = otiInfo.otiCharacteristicsProvider
-    val r0: NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = \&/.That(Set())
-    val rN: NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument] = ( r0 /: allRoots ) { case (acc, root) =>
+    val r0: Set[java.lang.Throwable] \&/ Set[MagicDrawDocument] = \&/.That(Set())
+    val rN: Set[java.lang.Throwable] \&/ Set[MagicDrawDocument] = ( r0 /: allRoots ) { case (acc, root) =>
 
       otiCharacteristicsInfoProvider
         .getSpecificationRootCharacteristics(root)
-        .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+        .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
         l = (nels: NonEmptyList[java.lang.Throwable]) =>
-            acc append \&/.This(nels),
+            acc append \&/.This(nels.list.to[Set]),
         r = (oInfo: Option[OTISpecificationRootCharacteristics]) =>
           oInfo
-          .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](acc){ info =>
+          .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](acc){ info =>
             \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
-              .fold[NonEmptyList[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
+              .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
               l = (t: java.lang.Throwable) =>
-                acc append \&/.This(NonEmptyList(
+                acc append \&/.This(Set[java.lang.Throwable](
                   UMLError.illegalElementException[MagicDrawUML, UMLPackage[MagicDrawUML]](
                     s"createDocumentFromExistingRootPackageInfo $info failed",
                     Iterable(root), t))),
