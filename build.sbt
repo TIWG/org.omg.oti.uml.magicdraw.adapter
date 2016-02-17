@@ -106,18 +106,34 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
         if (!mdInstallDir.exists) {
 
-          val zfilter: DependencyFilter = new DependencyFilter {
+          val pfilter: DependencyFilter = new DependencyFilter {
             def apply(c: String, m: ModuleID, a: Artifact): Boolean =
               (a.`type` == "zip" || a.`type` == "resource") &&
                 a.extension == "zip" &&
                 m.organization == "gov.nasa.jpl.cae.magicdraw.packages"
           }
-          val zs: Seq[File] = up.matching(zfilter)
-          zs.foreach { zip =>
+          val ps: Seq[File] = up.matching(pfilter)
+          ps.foreach { zip =>
             val files = IO.unzip(zip, mdInstallDir)
             s.log.info(
               s"=> created md.install.dir=$mdInstallDir with ${files.size} " +
                 s"files extracted from zip: ${zip.getName}")
+          }
+
+          val mdDynamicScriptsDir = mdInstallDir / "dynamicScripts"
+          IO.createDirectory(mdDynamicScriptsDir)
+
+          val zfilter: DependencyFilter = new DependencyFilter {
+            def apply(c: String, m: ModuleID, a: Artifact): Boolean =
+              (a.`type` == "zip" || a.`type` == "resource") &&
+                a.extension == "zip" &&
+                m.organization == "org.omg.tiwg"
+          }
+          val zs: Seq[File] = up.matching(zfilter)
+          zs.foreach { zip =>
+            val files = IO.unzip(zip, mdDynamicScriptsDir)
+            s.log.info(
+              s"=> extracted ${files.size} DynamicScripts files from zip: ${zip.getName}")
           }
 
           val mdBinFolder = mdInstallDir / "bin"
@@ -183,7 +199,7 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       normalizedName.value + "_" + scalaBinaryVersion.value + "-" + version.value + "-resource",
 
     // contents of the '*-resource.zip' to be produced by 'universal:packageBin'
-    mappings in packageBin in Universal <++= (
+    mappings in Universal <++= (
       baseDirectory,
       packageBin in Compile,
       packageSrc in Compile,
@@ -211,7 +227,6 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
 
         file2name
     },
-
 
     artifacts <+= (name in Universal) { n => Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) },
     packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p, n) =>
