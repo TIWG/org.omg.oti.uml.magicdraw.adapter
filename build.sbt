@@ -52,18 +52,19 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     organizationHomepage :=
       Some(url("http://www.omg.org/members/sysml-rtf-wiki/doku.php?id=rtf5:groups:tools_infrastructure:index")),
 
-    buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
+    sourceGenerators in Compile <+= buildInfo,
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
+    buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
 
-    mappings in (Compile, packageSrc) ++= {
-      import Path.{flat, relativeTo}
-      val base = (sourceManaged in Compile).value
-      val srcs = (managedSources in Compile).value
-      srcs x (relativeTo(base) | flat)
-    },
+//    mappings in (Compile, packageSrc) ++= {
+//      import Path.{flat, relativeTo}
+//      val base = (sourceManaged in Compile).value
+//      val srcs = (managedSources in Compile).value
+//      srcs x (relativeTo(base) | flat)
+//    },
 
     // force updating the source code mappings before compilation
-    compile in Compile <<= (compile in Compile) dependsOn (mappings in packageSrc in Compile),
+    //compile in Compile <<= (compile in Compile) dependsOn (mappings in packageSrc in Compile),
 
     projectID := {
       val previous = projectID.value
