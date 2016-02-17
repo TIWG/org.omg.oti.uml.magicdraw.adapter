@@ -62,6 +62,9 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       srcs x (relativeTo(base) | flat)
     },
 
+    // make sure the source mappings are computed before compiling the sources.
+    packageBin in Compile <<= (packageBin in Compile) dependsOn (mappings in packageSrc in Compile),
+
     projectID := {
       val previous = projectID.value
       previous.extra(
