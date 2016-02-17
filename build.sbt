@@ -108,7 +108,9 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
           val zfilter: DependencyFilter = new DependencyFilter {
             def apply(c: String, m: ModuleID, a: Artifact): Boolean =
-              (a.`type` == "zip" || a.`type` == "resource") && a.extension == "zip"
+              (a.`type` == "zip" || a.`type` == "resource") &&
+                a.extension == "zip" &&
+                m.organization == "gov.nasa.jpl.cae.magicdraw.packages"
           }
           val zs: Seq[File] = up.matching(zfilter)
           zs.foreach { zip =>
@@ -181,17 +183,18 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       normalizedName.value + "_" + scalaBinaryVersion.value + "-" + version.value + "-resource",
 
     // contents of the '*-resource.zip' to be produced by 'universal:packageBin'
-    mappings in Universal <++= (
+    mappings in packageBin in Universal <++= (
       baseDirectory,
       packageBin in Compile,
       packageSrc in Compile,
       packageDoc in Compile,
       packageBin in Test,
       packageSrc in Test,
-      packageDoc in Test) map {
-      (base, bin, src, doc, binT, srcT, docT) =>
+      packageDoc in Test,
+      streams) map {
+      (base, bin, src, doc, binT, srcT, docT, s) =>
         val dir = base / "svn" / "org.omg.oti.magicdraw"
-        (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
+        val file2name = (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
           (dir ** "*.mdzip").pair(relativeTo(dir)) ++
           (dir / "resources" ***).pair(relativeTo(dir)) ++
           com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
@@ -202,7 +205,13 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
           addIfExists(srcT, "lib.sources/" + srcT.name) ++
           addIfExists(doc, "lib.javadoc/" + doc.name) ++
           addIfExists(docT, "lib.javadoc/" + docT.name)
+
+        s.log.info(s"file2name entries: ${file2name.size}")
+        s.log.info(file2name.mkString("\n"))
+
+        file2name
     },
+
 
     artifacts <+= (name in Universal) { n => Artifact(n, "zip", "zip", Some("resource"), Seq(), None, Map()) },
     packagedArtifacts <+= (packageBin in Universal, name in Universal) map { (p, n) =>
