@@ -192,8 +192,8 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       (base, bin, src, doc, binT, srcT, docT) =>
         val dir = base / "svn" / "org.omg.oti.magicdraw"
         (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
-          ((dir ** "*.md") --- (dir / "sbt.staging" ***)).pair(relativeTo(dir)) ++
-          (dir / "models" ** "*.mdzip").pair(relativeTo(dir)) ++
+          (dir ** "*.mdzip").pair(relativeTo(dir)) ++
+          (dir / "resources" ***).pair(relativeTo(dir)) ++
           com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
           com.typesafe.sbt.packager.MappingsHelper.directory(dir / "profiles") ++
           addIfExists(bin, "lib/" + bin.name) ++
