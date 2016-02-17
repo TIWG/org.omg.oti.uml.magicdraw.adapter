@@ -9,6 +9,12 @@ import gov.nasa.jpl.imce.sbt._
 
 useGpg := true
 
+ivyLoggingLevel := UpdateLogging.Full
+
+logLevel in Compile := Level.Debug
+
+persistLogLevel := Level.Debug
+
 developers := List(
   Developer(
     id="rouquett",
@@ -36,6 +42,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .settings(dynamicScriptsResourceSettings(Some("org.omg.oti.uml.magicdraw.adapter")))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.scalaDocSettings(diagrams=false))
+  .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
   .settings(
     IMCEKeys.licenseYearOrRange := "2014-2016",
     IMCEKeys.organizationInfo := IMCEPlugin.Organizations.oti,
@@ -72,6 +79,15 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     cleanFiles += (classDirectory in Compile).value,
 
     resourceDirectory in Compile := baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "resources",
+
+    // disable publishing the jar produced by `test:package`
+    publishArtifact in(Test, packageBin) := false,
+
+    // disable publishing the test API jar
+    publishArtifact in(Test, packageDoc) := false,
+
+    // disable publishing the test sources jar
+    publishArtifact in(Test, packageSrc) := false,
 
     unmanagedClasspath in Compile <++= unmanagedJars in Compile,
     libraryDependencies ++= Seq (
@@ -172,7 +188,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     IMCEKeys.pomRepositoryPathRegex := """\<repositoryPath\>\s*([^\"]*)\s*\<\/repositoryPath\>""".r
 
   )
-  .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
 
 def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = None): Seq[Setting[_]] = {
 
@@ -199,7 +214,7 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       normalizedName.value + "_" + scalaBinaryVersion.value + "-" + version.value + "-resource",
 
     packageBin in Universal <<= (packageBin in Universal) dependsOn (packageBin in Compile),
-    
+
     // contents of the '*-resource.zip' to be produced by 'universal:packageBin'
     mappings in Universal <++= (
       baseDirectory,
