@@ -6,12 +6,6 @@ import gov.nasa.jpl.imce.sbt._
 
 useGpg := true
 
-ivyLoggingLevel := UpdateLogging.Full
-
-logLevel in Compile := Level.Debug
-
-persistLogLevel := Level.Debug
-
 developers := List(
   Developer(
     id="rouquett",
