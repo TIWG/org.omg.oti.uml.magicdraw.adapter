@@ -1,9 +1,6 @@
 import java.io.File
-import java.nio.file.Files
 import sbt.Keys._
 import sbt._
-
-import scala.collection.JavaConversions._
 
 import gov.nasa.jpl.imce.sbt._
 
@@ -39,7 +36,6 @@ mdInstallDirectory in Global := baseDirectory.value / "imce.md.package"
 lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
-  .enablePlugins(BuildInfoPlugin)
   .settings(dynamicScriptsResourceSettings(Some("org.omg.oti.uml.magicdraw.adapter")))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.scalaDocSettings(diagrams=false))
@@ -56,15 +52,12 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
     buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
 
-//    mappings in (Compile, packageSrc) ++= {
-//      import Path.{flat, relativeTo}
-//      val base = (sourceManaged in Compile).value
-//      val srcs = (managedSources in Compile).value
-//      srcs x (relativeTo(base) | flat)
-//    },
-
-    // force updating the source code mappings before compilation
-    //compile in Compile <<= (compile in Compile) dependsOn (mappings in packageSrc in Compile),
+    mappings in (Compile, packageSrc) ++= {
+      import Path.{flat, relativeTo}
+      val base = (sourceManaged in Compile).value
+      val srcs = (managedSources in Compile).value
+      srcs x (relativeTo(base) | flat)
+    },
 
     projectID := {
       val previous = projectID.value
