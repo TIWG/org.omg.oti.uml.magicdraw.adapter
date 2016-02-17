@@ -62,9 +62,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       srcs x (relativeTo(base) | flat)
     },
 
-    // make sure the source mappings are computed before compiling the sources.
-    packageBin in Compile <<= (packageBin in Compile) dependsOn (mappings in packageSrc in Compile),
-
     projectID := {
       val previous = projectID.value
       previous.extra(
@@ -215,8 +212,6 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
     // name the '*-resource.zip' in the same way as other artifacts
     com.typesafe.sbt.packager.Keys.packageName in Universal :=
       normalizedName.value + "_" + scalaBinaryVersion.value + "-" + version.value + "-resource",
-
-    packageBin in Universal <<= (packageBin in Universal) dependsOn (packageBin in Compile),
 
     // contents of the '*-resource.zip' to be produced by 'universal:packageBin'
     mappings in Universal <++= (
