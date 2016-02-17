@@ -57,7 +57,9 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
     projectID := {
       val previous = projectID.value
-      previous.extra("build.date.utc" -> buildUTCDate.value)
+      previous.extra(
+        "build.date.utc" -> buildUTCDate.value,
+        "artifact.kind" -> "magicdraw.library")
     },
 
     git.baseVersion := Versions.version,
@@ -73,20 +75,27 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
     unmanagedClasspath in Compile <++= unmanagedJars in Compile,
     libraryDependencies ++= Seq (
+      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "oti-uml-change_migration"
-        % Versions_oti_uml_change_migration.version % "compile" withSources() withJavadoc() artifacts
+        % Versions_oti_uml_change_migration.version %
+        "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
+      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
-        % Versions_oti_uml_composite_structure_tree_analysis.version % "compile" withSources() withJavadoc() artifacts
+        % Versions_oti_uml_composite_structure_tree_analysis.version %
+        "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
+      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
-        % Versions_oti_uml_canonical_xmi_loader.version % "compile" withSources() withJavadoc() artifacts
+        % Versions_oti_uml_canonical_xmi_loader.version %
+        "compile" withSources() withJavadoc() artifacts
         Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
       "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
-        % Versions_imce_md18_0_sp5_dynamic_scripts.version % "compile" withSources() withJavadoc() artifacts
+        % Versions_imce_md18_0_sp5_dynamic_scripts.version %
+        "compile" withSources() withJavadoc() artifacts
         Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map())
 
     ),
@@ -164,7 +173,7 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       require(
         QUALIFIED_NAME.pattern.matcher(projectName).matches,
         s"The project name, '$projectName` is not a valid Java qualified name")
-      Some("dynamicScripts/" + projectName)
+      Some(projectName)
     },
 
     // name the '*-resource.zip' in the same way as other artifacts
