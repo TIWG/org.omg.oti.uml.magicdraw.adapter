@@ -198,6 +198,8 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
     com.typesafe.sbt.packager.Keys.packageName in Universal :=
       normalizedName.value + "_" + scalaBinaryVersion.value + "-" + version.value + "-resource",
 
+    packageBin in Universal <<= (packageBin in Universal) dependsOn (packageBin in Compile),
+    
     // contents of the '*-resource.zip' to be produced by 'universal:packageBin'
     mappings in Universal <++= (
       baseDirectory,
