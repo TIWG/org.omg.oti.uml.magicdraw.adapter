@@ -39,6 +39,7 @@ mdInstallDirectory in Global := baseDirectory.value / "imce.md.package"
 lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
+  .enablePlugins(BuildInfoPlugin)
   .settings(dynamicScriptsResourceSettings(Some("org.omg.oti.uml.magicdraw.adapter")))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(IMCEPlugin.scalaDocSettings(diagrams=false))
@@ -52,7 +53,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     organizationHomepage :=
       Some(url("http://www.omg.org/members/sysml-rtf-wiki/doku.php?id=rtf5:groups:tools_infrastructure:index")),
 
-    sourceGenerators in Compile <+= buildInfo,
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
     buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
 
