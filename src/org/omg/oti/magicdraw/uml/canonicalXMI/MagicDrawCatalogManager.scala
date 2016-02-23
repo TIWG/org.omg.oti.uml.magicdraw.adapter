@@ -115,8 +115,8 @@ object MagicDrawCatalogManager {
     val catalog: CatalogURIMapper = new CatalogURIMapper(catalogManager)
 
     val magicdrawUMLCL = classOf[MagicDrawUML].getClassLoader
-    val catalogPath1 = "resources/magicdrawCatalog/omg.magicdraw.catalog.xml"
-    val catalogPath2 = "magicdrawCatalog/omg.magicdraw.catalog.xml"
+    val catalogPath1 = "resources/md18Catalog/omg.magicdraw.catalog.xml"
+    val catalogPath2 = "md18Catalog/omg.magicdraw.catalog.xml"
 
     val catalogURLs = Seq(catalogPath1, catalogPath2)
       .flatMap { path => Option.apply(magicdrawUMLCL.getResource(path)) }

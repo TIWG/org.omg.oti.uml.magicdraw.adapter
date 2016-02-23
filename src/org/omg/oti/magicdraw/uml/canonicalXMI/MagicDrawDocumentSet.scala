@@ -184,7 +184,30 @@ object MagicDrawDocumentSet {
           .copy(serializableImmutableDocuments = mds.serializableImmutableDocuments + md)
           (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
         )
-        // @todo Add other combinations of (s, b) x (m, im)...
+      case (mds: MagicDrawDocumentSet, md: MagicDrawSerializableMutableDocument) =>
+        \/-(
+          mds
+            .copy(serializableMutableDocuments = mds.serializableMutableDocuments + md)
+            (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
+        )
+      case (mds: MagicDrawDocumentSet, md: MagicDrawBuiltInImmutableDocument) =>
+        \/-(
+          mds
+            .copy(builtInImmutableDocuments = mds.builtInImmutableDocuments + md)
+            (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
+        )
+      case (mds: MagicDrawDocumentSet, md: MagicDrawBuiltInMutableDocument) =>
+        \/-(
+          mds
+            .copy(builtInMutableDocuments = mds.builtInMutableDocuments + md)
+            (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
+        )
+      case (mds: MagicDrawDocumentSet, md: MagicDrawLoadingMutableDocument) =>
+        \/-(
+          mds
+            .copy(loadingMutableDocuments = mds.loadingMutableDocuments + md)
+            (mds.ops, mds.documentOps, mds.nodeT, mds.edgeT)
+        )
     }
 
 }
