@@ -58,7 +58,7 @@ import org.omg.oti.magicdraw.uml.read._
 import scalaz._, Scalaz._
 
 case class MagicDrawIDGenerator
-(override protected val element2documentTable: Map[UMLElement[MagicDrawUML], Document[MagicDrawUML]])
+()
 ( implicit val umlOps: MagicDrawUMLUtil,
   override implicit val documentSet: DocumentSet[MagicDrawUML],
   override implicit val documentOps: MagicDrawDocumentOps )

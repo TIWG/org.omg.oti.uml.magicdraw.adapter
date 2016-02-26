@@ -95,8 +95,14 @@ class MagicDrawDocumentOps
   override def addDocument
   (ds: DocumentSet[MagicDrawUML],
    d: Document[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet =
-    MagicDrawDocumentSet.addDocument(ds, d)
+  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet = {
+
+    val result
+    : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet
+    = MagicDrawDocumentSet.addDocument(ds, d)
+
+    result
+  }
  
   override def addBuiltInImmutableDocument
   ( ds: DocumentSet[MagicDrawUML],
@@ -110,6 +116,7 @@ class MagicDrawDocumentOps
     val result = for {
       ds2 <- addDocument(ds, iD)
     } yield (iD, ds2)
+
     result
   }
  
@@ -124,6 +131,7 @@ class MagicDrawDocumentOps
       mD = MagicDrawBuiltInMutableDocument(info, documentURL, root, extent)(umlUtil)
       ds2 <- addDocument(ds, mD)
     } yield (mD, ds2)
+
     result
   }
  
@@ -137,6 +145,7 @@ class MagicDrawDocumentOps
     val result = for {
       ds2 <- addDocument(ds, mD)
     } yield (mD, ds2)
+
     result
   }
  
@@ -151,6 +160,7 @@ class MagicDrawDocumentOps
       iD = MagicDrawSerializableImmutableDocument(info, documentURL, root, extent)(umlUtil)
       ds2 <- addDocument(ds, iD)
     } yield (iD, ds2)
+
     result
   }
 
@@ -165,6 +175,7 @@ class MagicDrawDocumentOps
       mD = MagicDrawSerializableMutableDocument(info, documentURL, root, extent)(umlUtil)
       ds2 <- addDocument(ds, mD)
     } yield (mD, ds2)
+
     result
    }
 
@@ -236,7 +247,9 @@ class MagicDrawDocumentOps
    val mdPath1 = "resources/md18Catalog/omg.magicdraw.catalog.xml"
    val mdPath2 = "md18Catalog/omg.magicdraw.catalog.xml"
 
-   for {
+   val result
+   : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet
+   = for {
      otiURI <- Seq(otiPath1, otiPath2)
        .flatMap { path => Option.apply(otiUMLCL.getResource(path)) }
        .headOption
@@ -294,6 +307,7 @@ class MagicDrawDocumentOps
      ds <- initializeDocumentSet(otiCatalog, mdCatalog)
    } yield ds
 
+   result
  }
 
  override def initializeDocumentSet
@@ -306,165 +320,173 @@ class MagicDrawDocumentOps
 
    Option.apply(Application.getInstance.getProject)
      .fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet] {
-       \&/.This(
-         NonEmptyList(
-           documentOpsException(
-             this,
-             "initializeDocumentSet(documentURIMapper, builtInURIMapper) failed: " +
-               "Cannot initialize a MagicDraw OTI DocumentSet without a current Project")))
-     } { p =>
-       implicit val umlUtil = MagicDrawUMLUtil(p)
-       import umlUtil._
+     \&/.This(
+       NonEmptyList(
+         documentOpsException(
+           this,
+           "initializeDocumentSet(documentURIMapper, builtInURIMapper) failed: " +
+             "Cannot initialize a MagicDraw OTI DocumentSet without a current Project")))
+   } { p =>
+     implicit val umlUtil = MagicDrawUMLUtil(p)
+     import umlUtil._
 
-         val mdPrimitiveTypesPkg =
-           umlPackage(
-             p
-               .getElementByID("_12_0EAPbeta_be00301_1157529392394_202602_1")
-               .asInstanceOf[MagicDrawUML#Package])
+     val mdPrimitiveTypesPkg
+     = umlPackage(
+       p
+         .getElementByID("_12_0EAPbeta_be00301_1157529392394_202602_1")
+         .asInstanceOf[MagicDrawUML#Package])
 
-         val mdPrimitiveTypesExtent: Set[UMLElement[MagicDrawUML]] =
-           Set(mdPrimitiveTypesPkg) ++ mdPrimitiveTypesPkg.ownedType.toSet
+     val mdPrimitiveTypesExtent: Set[UMLElement[MagicDrawUML]]
+     = Set(mdPrimitiveTypesPkg) ++ mdPrimitiveTypesPkg.ownedType.toSet
 
-         val mdUMLPkg =
-           umlPackage(
-             p
-               .getElementByID("_9_0_be00301_1108053761194_467635_11463")
-               .asInstanceOf[MagicDrawUML#Package])
+     val mdUMLPkg
+     = umlPackage(
+       p
+         .getElementByID("_9_0_be00301_1108053761194_467635_11463")
+         .asInstanceOf[MagicDrawUML#Package])
 
-         val mdUMLExtent: Set[UMLElement[MagicDrawUML]] =
-           Set(mdUMLPkg) ++ mdUMLPkg.ownedType.selectByKindOf { case mc: UMLClass[MagicDrawUML] => mc }
+     val mdUMLExtent: Set[UMLElement[MagicDrawUML]]
+     = Set(mdUMLPkg) ++ mdUMLPkg.ownedType.selectByKindOf { case mc: UMLClass[MagicDrawUML] => mc }
 
-         val mdStandardProfile =
-           umlProfile(
-             p
-               .getElementByID("_9_0_be00301_1108050582343_527400_10847")
-               .asInstanceOf[MagicDrawUML#Profile])
+     val mdStandardProfile
+     = umlProfile(
+       p
+         .getElementByID("_9_0_be00301_1108050582343_527400_10847")
+         .asInstanceOf[MagicDrawUML#Profile])
 
-         val mdStandardProfileExtensions =
-           mdStandardProfile.ownedType.selectByKindOf { case e: UMLExtension[MagicDrawUML] => e }
-         val mdStandardProfileExtensionFeatures =
-           mdStandardProfileExtensions flatMap (_.ownedEnd)
-         val mdStandardProfileStereotypes =
-           mdStandardProfile.ownedType.selectByKindOf { case s: UMLStereotype[MagicDrawUML] => s }
-         val mdStandardProfileStereotypeFeatures =
-           mdStandardProfileStereotypes flatMap (_.ownedAttribute)
-         val mdStandardProfileExtent: Set[UMLNamedElement[MagicDrawUML]] =
-           Set(mdStandardProfile) ++
-             mdStandardProfileExtensions ++ mdStandardProfileExtensionFeatures ++
-             mdStandardProfileStereotypes ++ mdStandardProfileStereotypeFeatures
+     val mdStandardProfileExtensions
+     = mdStandardProfile.ownedType.selectByKindOf { case e: UMLExtension[MagicDrawUML] => e }
 
-       for {
-         ds0 <-
-         createDocumentSet(
-             documents = Set[Document[MagicDrawUML]](),
-             documentURIMapper,
-             builtInURIMapper,
-             aggregate = MagicDrawDocumentSetAggregate())
+     val mdStandardProfileExtensionFeatures
+     = mdStandardProfileExtensions flatMap (_.ownedEnd)
 
-         step1 <-
-         addBuiltInImmutableDocument(
-             ds0,
-             info =
-               OTISpecificationRootCharacteristics(
-                 packageURI = OTI_URI("http://www.omg.org/spec/PrimitiveTypes/20131001"),
-                 documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"),
-                 artifactKind=OTIBuiltInProfileArtifactKind,
-                 nsPrefix = OTI_NS_PREFIX("PrimitiveTypes"),
-                 uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.PrimitiveTypes")),
-             documentURL =
-               MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-                 new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
-                 "profiles/UML_Standard_Profile.mdzip"),
-             root = mdPrimitiveTypesPkg,
-             builtInExtent = mdPrimitiveTypesExtent).toThese
+     val mdStandardProfileStereotypes
+     = mdStandardProfile.ownedType.selectByKindOf { case s: UMLStereotype[MagicDrawUML] => s }
 
-         (builtInPrimitiveTypes, ds1) = step1
+     val mdStandardProfileStereotypeFeatures
+     = mdStandardProfileStereotypes flatMap (_.ownedAttribute)
 
-         step2 <-
-         addBuiltInImmutableDocument(
-             ds1,
-             info =
-               OTISpecificationRootCharacteristics(
-                 packageURI = OTI_URI("http://www.omg.org/spec/UML/20131001"),
-                 documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/UML.xmi"),
-                 artifactKind = OTIBuiltInMetamodelArtifactKind,
-                 nsPrefix = OTI_NS_PREFIX("uml"),
-                 uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.UML")),
-             documentURL =
-               MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-                 new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
-                 "profiles/UML_Standard_Profile.mdzip"),
-             root = mdUMLPkg,
-             builtInExtent = mdUMLExtent).toThese
+     val mdStandardProfileExtent: Set[UMLNamedElement[MagicDrawUML]]
+     = Set(mdStandardProfile) ++
+       mdStandardProfileExtensions ++ mdStandardProfileExtensionFeatures ++
+       mdStandardProfileStereotypes ++ mdStandardProfileStereotypeFeatures
 
-         (builtInUMLMetamodel, ds2) = step2
+     val result
+     : NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet
+     = for {
+       ds0 <-
+       createDocumentSet(
+         documents = Set[Document[MagicDrawUML]](),
+         documentURIMapper,
+         builtInURIMapper,
+         aggregate = MagicDrawDocumentSetAggregate())
 
-         step3 <-
-         addBuiltInImmutableDocument(
-             ds2,
-             info =
-               OTISpecificationRootCharacteristics(
-                 packageURI = OTI_URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
-                 documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
-                 artifactKind = OTIBuiltInProfileArtifactKind,
-                 nsPrefix = OTI_NS_PREFIX("StandardProfile"),
-                 uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
-             documentURL =
-               MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-                 new URI("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
-                 "profiles/UML_Standard_Profile.mdzip"),
-             root = mdStandardProfile,
-             builtInExtent = mdStandardProfileExtent.toSet[UMLElement[MagicDrawUML]]).toThese
+       step1 <-
+       addBuiltInImmutableDocument(
+         ds0,
+         info =
+           OTISpecificationRootCharacteristics(
+             packageURI = OTI_URI("http://www.omg.org/spec/PrimitiveTypes/20131001"),
+             documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"),
+             artifactKind = OTIBuiltInProfileArtifactKind,
+             nsPrefix = OTI_NS_PREFIX("PrimitiveTypes"),
+             uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.PrimitiveTypes")),
+         documentURL =
+           MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+             new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
+             "profiles/UML_Standard_Profile.mdzip"),
+         root = mdPrimitiveTypesPkg,
+         builtInExtent = mdPrimitiveTypesExtent).toThese
 
-         (builtInStandardProfile, ds3) = step3
+       (builtInPrimitiveTypes, ds1) = step1
 
-         ds4 <-
-         otiInfo.otiProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](
-           l = (nels: NonEmptyList[java.lang.Throwable]) => \&/.This(nels),
-           r = (oProfile: Option[UMLProfile[MagicDrawUML]]) => {
-             oProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](\&/.That(ds3)) {
-               otiProfile =>
+       step2 <-
+       addBuiltInImmutableDocument(
+         ds1,
+         info =
+           OTISpecificationRootCharacteristics(
+             packageURI = OTI_URI("http://www.omg.org/spec/UML/20131001"),
+             documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/UML.xmi"),
+             artifactKind = OTIBuiltInMetamodelArtifactKind,
+             nsPrefix = OTI_NS_PREFIX("uml"),
+             uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.UML")),
+         documentURL =
+           MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+             new URI("http://www.omg.org/spec/UML/20131001/UML.xmi"),
+             "profiles/UML_Standard_Profile.mdzip"),
+         root = mdUMLPkg,
+         builtInExtent = mdUMLExtent).toThese
 
-                 val otiResult =
-                   for {
-                     step <-
-                     addBuiltInImmutableDocument(
-                       ds3,
-                       info =
-                         OTISpecificationRootCharacteristics(
-                           packageURI = OTI_URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
-                           documentURL = OTI_URL("http://www.omg.org/TIWG/OTI/20160128/OTI.profile.xmi"),
-                           artifactKind = OTIBuiltInProfileArtifactKind,
-                           nsPrefix = OTI_NS_PREFIX("StandardProfile"),
-                           uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
+       (builtInUMLMetamodel, ds2) = step2
 
-                       documentURL =
-                         MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
-                           new URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
-                           "profiles/OMG/TIWG/OTI.profile.mdzip"),
-                       root = otiProfile,
-                       builtInExtent = {
-                         val otiUMLStandardProfileClassifiers =
-                           otiProfile.ownedType.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
-                         val otiUMLStandardProfileFeatures =
-                           otiUMLStandardProfileClassifiers flatMap (_.feature)
-                         val otiUMLStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
-                           Set[UMLElement[MagicDrawUML]](otiProfile) ++
-                             otiUMLStandardProfileClassifiers ++
-                             otiUMLStandardProfileFeatures
-                         otiUMLStandardProfileExtent
-                       }
-                     ).toThese
+       step3 <-
+       addBuiltInImmutableDocument(
+         ds2,
+         info =
+           OTISpecificationRootCharacteristics(
+             packageURI = OTI_URI("http://www.omg.org/spec/UML/20131001/StandardProfile"),
+             documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
+             artifactKind = OTIBuiltInProfileArtifactKind,
+             nsPrefix = OTI_NS_PREFIX("StandardProfile"),
+             uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
+         documentURL =
+           MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+             new URI("http://www.omg.org/spec/UML/20131001/StandardProfile.xmi"),
+             "profiles/UML_Standard_Profile.mdzip"),
+         root = mdStandardProfile,
+         builtInExtent = mdStandardProfileExtent.toSet[UMLElement[MagicDrawUML]]).toThese
 
-                     (_, ds) = step
-                   } yield ds
+       (builtInStandardProfile, ds3) = step3
 
-                 otiResult
-             }
+       ds4 <-
+       otiInfo.otiProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](
+         l = (nels: NonEmptyList[java.lang.Throwable]) => \&/.This(nels),
+         r = (oProfile: Option[UMLProfile[MagicDrawUML]]) => {
+           oProfile.fold[NonEmptyList[java.lang.Throwable] \&/ MagicDrawDocumentSet](\&/.That(ds3)) {
+             otiProfile =>
+
+               val otiResult =
+                 for {
+                   step <-
+                   addBuiltInImmutableDocument(
+                     ds3,
+                     info =
+                       OTISpecificationRootCharacteristics(
+                         packageURI = OTI_URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
+                         documentURL = OTI_URL("http://www.omg.org/TIWG/OTI/20160128/OTI.profile.xmi"),
+                         artifactKind = OTIBuiltInProfileArtifactKind,
+                         nsPrefix = OTI_NS_PREFIX("StandardProfile"),
+                         uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
+
+                     documentURL =
+                       MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+                         new URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
+                         "profiles/OMG/TIWG/OTI.profile.mdzip"),
+                     root = otiProfile,
+                     builtInExtent = {
+                       val otiUMLStandardProfileClassifiers =
+                         otiProfile.ownedType.selectByKindOf { case cls: UMLClassifier[MagicDrawUML] => cls }
+                       val otiUMLStandardProfileFeatures =
+                         otiUMLStandardProfileClassifiers flatMap (_.feature)
+                       val otiUMLStandardProfileExtent: Set[UMLElement[MagicDrawUML]] =
+                         Set[UMLElement[MagicDrawUML]](otiProfile) ++
+                           otiUMLStandardProfileClassifiers ++
+                           otiUMLStandardProfileFeatures
+                       otiUMLStandardProfileExtent
+                     }
+                   ).toThese
+
+                   (_, ds) = step
+                 } yield ds
+
+               otiResult
+           }
          })
 
-       } yield ds4
-     }
+     } yield ds4
+
+     result
+   }
  }
 
   def getResultOrError
@@ -628,7 +650,14 @@ class MagicDrawDocumentOps
             acc append \&/.This(nels.list.to[Set]),
         r = (oInfo: Option[OTISpecificationRootCharacteristics]) =>
           oInfo
-          .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](acc){ info =>
+          .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]]({
+            acc append \&/.This(
+              Set[java.lang.Throwable](
+                UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
+                  s"No OTI CharacteristicsInfo available for ${root.qualifiedName.get}",
+                  Iterable(root))
+              ))
+          }){ info =>
             \/.fromTryCatchNonFatal(new java.net.URI(OTI_URL.unwrap(info.documentURL)))
               .fold[Set[java.lang.Throwable] \&/ Set[MagicDrawDocument]](
               l = (t: java.lang.Throwable) =>
