@@ -103,7 +103,7 @@ case class MagicDrawSerializableImmutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableImmutableDocument[MagicDrawUML] {
 
-  override lazy val extent: Set[UMLElement[MagicDrawUML]] =
+  override val extent: Set[UMLElement[MagicDrawUML]] =
     serializableExtent
 
 }
@@ -116,7 +116,7 @@ case class MagicDrawSerializableMutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableMutableDocument[MagicDrawUML] {
 
-  override lazy val extent: Set[UMLElement[MagicDrawUML]] =
+  override def extent: Set[UMLElement[MagicDrawUML]] =
     serializableExtent
 
 }
