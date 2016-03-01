@@ -3,6 +3,7 @@ import sbt.Keys._
 import sbt._
 
 import gov.nasa.jpl.imce.sbt._
+import gov.nasa.jpl.imce.sbt.ProjectHelper._
 
 useGpg := true
 
@@ -135,12 +136,11 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     organizationName := "JPL, Caltech, Airbus & Object Management Group",
     organizationHomepage := Some(url("http://solitaire.omg.org/browse/TIWG")),
 
-    scalaSource in Compile := baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "src",
+    scalaSource in Compile :=
+      baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "src",
 
-    classDirectory in Compile := baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "bin",
-    cleanFiles += (classDirectory in Compile).value,
-
-    resourceDirectory in Compile := baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "resources",
+    resourceDirectory in Compile :=
+      baseDirectory.value / "svn" / "org.omg.oti.magicdraw" / "resources",
 
     // disable publishing the jar produced by `test:package`
     publishArtifact in(Test, packageBin) := false,
@@ -151,32 +151,47 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     // disable publishing the test sources jar
     publishArtifact in(Test, packageSrc) := false,
 
-    unmanagedClasspath in Compile <++= unmanagedJars in Compile,
-    libraryDependencies ++= Seq (
-      //  extra("artifact.kind" -> "generic.library")
-      "org.omg.tiwg" %% "oti-uml-change_migration"
-        % Versions_oti_uml_change_migration.version %
-        "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map()),
-
-      //  extra("artifact.kind" -> "generic.library")
+    unmanagedClasspath in Compile <++= unmanagedJars in Compile
+  )
+  .dependsOnSourceProjectOrLibraryArtifacts(
+     "oti-uml-change_migration",
+     "org.omg.oti.uml.change_migration",
+     Seq(
+        //  extra("artifact.kind" -> "generic.library")
+       "org.omg.tiwg" %% "oti-uml-change_migration"
+       % Versions_oti_uml_change_migration.version %
+       "compile" withSources() withJavadoc() artifacts
+       Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map())
+    )
+  )
+  .dependsOnSourceProjectOrLibraryArtifacts(
+    "oti-uml-composite_structure_tree_analysis",
+    "org.omg.oti.uml.composite_structure_tree_analysis",
+    Seq(
+//      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
         % Versions_oti_uml_composite_structure_tree_analysis.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map()),
-
-      //  extra("artifact.kind" -> "generic.library")
+        Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map())
+    )
+  )
+  .dependsOnSourceProjectOrLibraryArtifacts(
+    "oti-uml-canonical_xmi-loader",
+    "org.omg.oti.uml.canonical_xmi.loader",
+    Seq(
+//      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
         % Versions_oti_uml_canonical_xmi_loader.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map()),
-
+        Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map())
+    )
+  )
+  .settings(
+    libraryDependencies +=
       "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
         % Versions_imce_md18_0_sp5_dynamic_scripts.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map())
-
-    ),
+        Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
     extractArchives <<= (baseDirectory, update, streams) map {
       (base, up, s) =>

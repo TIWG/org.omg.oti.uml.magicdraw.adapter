@@ -2,6 +2,6 @@
 .ensime*
 .idea
 .iml
-imce.md.package
+links.json
 svn
 target
