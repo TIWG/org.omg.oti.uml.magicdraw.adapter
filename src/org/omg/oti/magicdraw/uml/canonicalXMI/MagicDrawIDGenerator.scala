@@ -51,7 +51,6 @@ import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._
-import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
@@ -59,21 +58,18 @@ import scalaz._, Scalaz._
 
 case class MagicDrawIDGenerator
 ()
-( implicit val umlOps: MagicDrawUMLUtil,
-  override implicit val documentSet: DocumentSet[MagicDrawUML],
-  override implicit val documentOps: MagicDrawDocumentOps )
+( override implicit val documentSet: DocumentSet[MagicDrawUML] )
   extends DocumentIDGenerator[MagicDrawUML] {
 
   import umlOps._
   implicit val idg = this
 
-  override implicit val otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML] =
-    documentOps.otiCharacteristicsProvider
+  val element2id = scala.collection.mutable.HashMap[
+    UMLElement[MagicDrawUML],
+    \/[NonEmptyList[java.lang.Throwable], (String @@ OTI_ID)]]()
 
-  val element2id = scala.collection.mutable.HashMap[UMLElement[Uml], \/[NonEmptyList[java.lang.Throwable], (String @@ OTI_ID)]]()
-
-  override def getMappedOrReferencedElement( ref: UMLElement[Uml] )
-  : NonEmptyList[java.lang.Throwable] \/ UMLElement[Uml] =
+  override def getMappedOrReferencedElement( ref: UMLElement[MagicDrawUML] )
+  : NonEmptyList[java.lang.Throwable] \/ UMLElement[MagicDrawUML] =
     ref
     .xmiID()
     .map(OTI_ID.unwrap)
@@ -88,7 +84,8 @@ case class MagicDrawIDGenerator
   val MD_crule0: ContainedElement2IDRule = {
     case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification )
       if is.isMagicDrawUMLAppliedStereotypeInstance =>
-      OTI_ID( OTI_ID.unwrap(ownerID) + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance" ).right
+      val id = OTI_ID.unwrap(ownerID) + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance"
+      OTI_ID( id ).right
   }
 
   val MD_crule1a0: ContainedElement2IDRule = {
@@ -97,16 +94,20 @@ case class MagicDrawIDGenerator
       .fold[NonEmptyList[java.lang.Throwable] \/ (String @@ OTI_ID)](
           NonEmptyList(
             UMLError
-            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue without Element is not supported", Iterable(owner, ev) ) )
+            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]](
+              "ElementValue without Element is not supported",
+              Iterable(owner, ev) ) )
           .left
       ){
-        case nev: UMLNamedElement[Uml] =>
+        case nev: UMLNamedElement[MagicDrawUML] =>
           nev
           .name
           .fold[NonEmptyList[java.lang.Throwable] \/ (String @@ OTI_ID)](
             NonEmptyList(
               UMLError
-              .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue must refer to a named NamedElement", Iterable(owner, ev, nev ) ) )
+              .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]](
+                "ElementValue must refer to a named NamedElement",
+                Iterable(owner, ev, nev ) ) )
             .left
           ){ n =>
             OTI_ID(
@@ -114,10 +115,12 @@ case class MagicDrawIDGenerator
                 IDGenerator.xmlSafeID( cf.propertyName + "." + n ) )
             .right
           }
-        case uev: UMLElement[Uml] =>
+        case uev: UMLElement[MagicDrawUML] =>
           NonEmptyList(
             UMLError
-            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]]( "ElementValue refers to an Element that is not a NamedElement!", Iterable(owner, ev, uev ) ) )
+            .illegalElementError[MagicDrawUML, UMLElement[MagicDrawUML]](
+              "ElementValue refers to an Element that is not a NamedElement!",
+              Iterable(owner, ev, uev ) ) )
           .left
       }
   }

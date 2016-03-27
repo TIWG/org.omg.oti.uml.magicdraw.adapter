@@ -1963,6 +1963,18 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
        y: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property) => x.setPartWithPort(y),
       (x: MagicDrawUMLProperty) => x.getMagicDrawProperty)
 
+  override def links_ConnectorEnd_end_reference_role_ConnectableElement
+  (from: UMLConnectorEnd[MagicDrawUML],
+   to: Option[UMLConnectableElement[MagicDrawUML]])
+  : NonEmptyList[java.lang.Throwable] \/ Unit
+  = referencesOptionalLink(
+    from, ops.umlMagicDrawUMLConnectorEnd,
+    to, ops.umlMagicDrawUMLConnectableElement,
+    (x: MagicDrawUMLConnectorEnd) => x.getMagicDrawConnectorEnd,
+    (x: com.nomagic.uml2.ext.magicdraw.compositestructures.mdinternalstructures.ConnectorEnd,
+     y: com.nomagic.uml2.ext.magicdraw.compositestructures.mdinternalstructures.ConnectableElement) => x.setRole(y),
+    (x: MagicDrawUMLConnectableElement) => x.getMagicDrawConnectableElement)
+
   // ConsiderIgnoreFragment
 
   override def links_ConsiderIgnoreFragment_considerIgnoreFragment_reference_message_NamedElement
@@ -2112,6 +2124,16 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLObjectFlow) => x.getMagicDrawObjectFlow)
 
   // Dependency
+
+  override def links_Dependency_clientDependency_reference_client_NamedElement
+  (from: UMLDependency[MagicDrawUML],
+   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+    referencesUnorderedLinks(
+      from, ops.umlMagicDrawUMLDependency,
+      to, ops.umlMagicDrawUMLNamedElement,
+      (x: MagicDrawUMLDependency) => x.getMagicDrawDependency,
+      (x: com.nomagic.uml2.ext.magicdraw.classes.mddependencies.Dependency) => x.getClient,
+      (x: MagicDrawUMLNamedElement) => x.getMagicDrawNamedElement)
 
   override def links_Dependency_supplierDependency_reference_supplier_NamedElement
   (from: UMLDependency[MagicDrawUML],
@@ -5876,6 +5898,30 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   // Transition
+
+  override def links_Transition_incoming_reference_target_Vertex
+  (from: UMLTransition[MagicDrawUML],
+   to: Option[UMLVertex[MagicDrawUML]])
+  : NonEmptyList[java.lang.Throwable] \/ Unit
+  = referencesOptionalLink(
+    from, ops.umlMagicDrawUMLTransition,
+    to, ops.umlMagicDrawUMLVertex,
+    (x: MagicDrawUMLTransition) => x.getMagicDrawTransition,
+    (x: com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.Transition,
+     y: com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.Vertex) => x.setTarget(y),
+    (x: MagicDrawUMLVertex) => x.getMagicDrawVertex)
+
+  override def links_Transition_outgoing_reference_source_Vertex
+  (from: UMLTransition[MagicDrawUML],
+   to: Option[UMLVertex[MagicDrawUML]])
+  : NonEmptyList[java.lang.Throwable] \/ Unit
+  = referencesOptionalLink(
+    from, ops.umlMagicDrawUMLTransition,
+    to, ops.umlMagicDrawUMLVertex,
+    (x: MagicDrawUMLTransition) => x.getMagicDrawTransition,
+    (x: com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.Transition,
+     y: com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.Vertex) => x.setSource(y),
+    (x: MagicDrawUMLVertex) => x.getMagicDrawVertex)
 
   override def links_Transition_transition_compose_effect_Behavior
   (from: UMLTransition[MagicDrawUML],
