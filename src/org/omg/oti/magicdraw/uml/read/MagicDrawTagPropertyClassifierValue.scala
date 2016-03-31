@@ -54,7 +54,7 @@ sealed abstract class MagicDrawTagPropertyClassifierValue
 
   def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
 
 }
 
@@ -70,7 +70,7 @@ case class MagicDrawTagPropertyEnumerationLiteralValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(
       scala.xml.Elem(
         prefix = null,
@@ -90,7 +90,7 @@ case class MagicDrawTagPropertyInstanceSpecificationValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(
       scala.xml.Elem(
         prefix = null,
@@ -114,7 +114,7 @@ case class MagicDrawTagPropertyBooleanValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
@@ -133,7 +133,7 @@ case class MagicDrawTagPropertyIntegerValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
@@ -152,7 +152,7 @@ case class MagicDrawTagPropertyUnlimitedNaturalValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
@@ -171,7 +171,7 @@ case class MagicDrawTagPropertyRealValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
@@ -190,7 +190,7 @@ case class MagicDrawTagPropertyStringValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
@@ -235,7 +235,7 @@ with TagPropertyProfileLifecycleDependentClassifierValueReference[MagicDrawUML] 
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     ???
 
   override val tagPropertyValueElementReferences
@@ -252,7 +252,7 @@ with TagPropertyProfileLifecycleDependentClassifierValueObject[MagicDrawUML] {
 
   def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : NonEmptyList[java.lang.Throwable] \/ scala.xml.Elem =
+  : Set[java.lang.Throwable] \/ scala.xml.Elem =
     ???
 
   override val tagPropertyValueElementReferences

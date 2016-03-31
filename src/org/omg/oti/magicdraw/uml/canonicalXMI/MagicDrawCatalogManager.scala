@@ -57,14 +57,14 @@ case class MagicDrawCatalogManager(catalog: CatalogURIMapper) {
    * to be updated...
   
   def getResource(rs: ResourceSet, uri: String, loadOnDemand: Boolean)
-  : NonEmptyList[java.lang.Throwable] \/ Resource = 
+  : Set[java.lang.Throwable] \/ Resource =
     catalog.resolve(uri).flatMap { resolved: Option[String] =>
       val resolvedURI: String = resolved.getOrElse(uri)
       catching(nonFatalCatcher)
         .either(rs.getResource(EURI.createURI(resolvedURI), loadOnDemand))
-        .fold[NonEmptyList[java.lang.Throwable] \/ Resource](
+        .fold[Set[java.lang.Throwable] \/ Resource](
           (cause: java.lang.Throwable) =>
-            NonEmptyList(
+            Set(
               UMLError.UMLAdaptationException(
                 s"MagicDrawCatalogManager.getResource(uri=$resolvedURI) failed: ${cause.getMessage}",
                 cause)
@@ -77,19 +77,19 @@ case class MagicDrawCatalogManager(catalog: CatalogURIMapper) {
   def getResourceRootByType[MC <: EModelElement : ClassTag]
   (r: Resource,
    eMetaclass: EClassifier)
-  : NonEmptyList[java.lang.Throwable] \/ MC = 
+  : Set[java.lang.Throwable] \/ MC =
     catching(nonFatalCatcher)
         .either(Option.apply(EcoreUtil.getObjectByType(r.getContents(), eMetaclass)))
-        .fold[NonEmptyList[java.lang.Throwable] \/ MC](
+        .fold[Set[java.lang.Throwable] \/ MC](
           (cause: java.lang.Throwable) =>
-            NonEmptyList(
+            Set(
               UMLError.UMLAdaptationException(
                 s"MagicDrawCatalogManager.getResourceRootbyType(r=${r.getURI}, eMetaclass=${eMetaclass.getName}) failed: ${cause.getMessage}",
                 cause)
             ).left,
           (o) =>
-            o.fold[NonEmptyList[java.lang.Throwable] \/ MC](
-             NonEmptyList(
+            o.fold[Set[java.lang.Throwable] \/ MC](
+             Set(
                UMLError.umlAdaptationError(
                 s"MagicDrawCatalogManager.getResourceRootbyType(r=${r.getURI}, eMetaclass=${eMetaclass.getName}) failed: no such root")
              ).left
@@ -97,7 +97,7 @@ case class MagicDrawCatalogManager(catalog: CatalogURIMapper) {
               case root: MC =>
                 root.right
               case _ =>
-                NonEmptyList(
+                Set(
                   UMLError.umlAdaptationError(
                     s"MagicDrawCatalogManager.getResourceRootbyType(r=${r.getURI}, eMetaclass=${eMetaclass.getName}) failed: no such root")
                 ).left
@@ -109,7 +109,7 @@ case class MagicDrawCatalogManager(catalog: CatalogURIMapper) {
 
 object MagicDrawCatalogManager {
 
-  def createMagicDrawCatalogManager(): NonEmptyList[java.lang.Throwable] \/ MagicDrawCatalogManager = {
+  def createMagicDrawCatalogManager(): Set[java.lang.Throwable] \/ MagicDrawCatalogManager = {
 
     val catalogManager: CatalogManager = new CatalogManager()
     val catalog: CatalogURIMapper = new CatalogURIMapper(catalogManager)
@@ -121,11 +121,11 @@ object MagicDrawCatalogManager {
     val catalogURLs = Seq(catalogPath1, catalogPath2)
       .flatMap { path => Option.apply(magicdrawUMLCL.getResource(path)) }
 
-    val catalogURI: NonEmptyList[java.lang.Throwable] \/ java.net.URI =
+    val catalogURI: Set[java.lang.Throwable] \/ java.net.URI =
       catalogURLs
         .headOption
-        .fold[NonEmptyList[java.lang.Throwable] \/ java.net.URI](
-          NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ java.net.URI](
+          Set(
             UMLError.umlAdaptationError("Cannot find MagicDraw catalog file!")).left
         ) { url =>
             url.toURI.right

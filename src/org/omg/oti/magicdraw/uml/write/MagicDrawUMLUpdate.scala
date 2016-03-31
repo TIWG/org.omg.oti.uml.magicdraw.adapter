@@ -70,12 +70,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    * @return
    */
   def checkSession[M <: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element](e: M)
-  : NonEmptyList[java.lang.Throwable] \/ M =
+  : Set[java.lang.Throwable] \/ M =
     if (sm.isSessionCreated(ops.project))
       catching(classOf[ReadOnlyElementException],classOf[java.lang.IllegalArgumentException])
       .withApply{
         (cause: java.lang.Throwable) =>
-          NonEmptyList(
+          Set(
             UMLError
             .umlUpdateException[MagicDrawUML, UMLElement[MagicDrawUML]](
               this, Iterable(ops.umlElement(e)),
@@ -88,7 +88,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         \/-(e)
       })
     else
-      NonEmptyList(
+      Set(
         UMLError
         .umlUpdateException[MagicDrawUML, UMLElement[MagicDrawUML]](
           this, Iterable(ops.umlElement(e)),
@@ -107,9 +107,9 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    * @return
    */
   def checkElement[M <: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element](e: M)
-  : NonEmptyList[java.lang.Throwable] \/ M =
+  : Set[java.lang.Throwable] \/ M =
     if (e.isInvalid)
-      NonEmptyList(
+      Set(
         UMLError
         .umlUpdateException[MagicDrawUML, UMLElement[MagicDrawUML]](
           this, Iterable(ops.umlElement(e)),
@@ -154,10 +154,10 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: (M => java.util.Collection[N]),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m)))
     .flatMap { _from =>
-      val f0: NonEmptyList[java.lang.Throwable] \/ Set[N] = Set().right
+      val f0: Set[java.lang.Throwable] \/ Set[N] = Set().right
       val fN = (f0 /: ns) { (fi, n) =>
         (fi |@| checkSession(nAdaptee(nAdapter(n)))) { (_fi, _n) =>
           _fi + _n
@@ -168,7 +168,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
         nonFatalCatch[Unit]
           .withApply { (cause: java.lang.Throwable) =>
-            NonEmptyList(
+            Set(
               UMLError
                 .umlUpdateException(
                   this, Iterable(m),
@@ -231,10 +231,10 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: (M => java.util.Collection[N]),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m)))
     .flatMap { _from =>
-      val f0: NonEmptyList[java.lang.Throwable] \/ Seq[N] = Seq().right
+      val f0: Set[java.lang.Throwable] \/ Seq[N] = Seq().right
       val fN = (f0 /: ns) { (fi, n) =>
         (fi |@| checkSession(nAdaptee(nAdapter(n)))) { (_fi, _n) =>
           _fi :+ _n
@@ -245,7 +245,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
           nonFatalCatch[Unit]
             .withApply { (cause: java.lang.Throwable) =>
-              NonEmptyList(
+              Set(
                 UMLError
                   .umlUpdateException(
                     this, Iterable(m),
@@ -296,14 +296,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: ((M, N) => Unit),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m))) flatMap { _from =>
       n
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit](
+      .fold[Set[java.lang.Throwable] \/ Unit](
 
         nonFatalCatch[Unit]
           .withApply { (cause: java.lang.Throwable) =>
-            NonEmptyList(
+            Set(
               UMLError
                 .umlUpdateException(
                   this, Iterable(m),
@@ -320,7 +320,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         .flatMap { ve =>
             nonFatalCatch[Unit]
               .withApply { (cause: java.lang.Throwable) =>
-                NonEmptyList(
+                Set(
                   UMLError
                     .umlUpdateException(
                       this, Iterable(m),
@@ -367,10 +367,10 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: (M => java.util.Collection[N]),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m)))
       .flatMap { _from =>
-        val f0: NonEmptyList[java.lang.Throwable] \/ Set[N] = Set().right
+        val f0: Set[java.lang.Throwable] \/ Set[N] = Set().right
         val fN = (f0 /: ns) { (fi, n) =>
           (fi |@| checkSession(nAdaptee(nAdapter(n)))) { (_fi, _n) =>
             _fi + _n
@@ -381,7 +381,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
             nonFatalCatch[Unit]
               .withApply { (cause: java.lang.Throwable) =>
-                NonEmptyList(
+                Set(
                   UMLError
                     .umlUpdateException(
                       this, Iterable(m),
@@ -444,10 +444,10 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: (M => java.util.Collection[N]),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m)))
       .flatMap { _from =>
-        val f0: NonEmptyList[java.lang.Throwable] \/ Seq[N] = Seq().right
+        val f0: Set[java.lang.Throwable] \/ Seq[N] = Seq().right
         val fN = (f0 /: ns) { (fi, n) =>
           (fi |@| checkSession(nAdaptee(nAdapter(n)))) { (_fi, _n) =>
             _fi :+ _n
@@ -458,7 +458,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
             nonFatalCatch[Unit]
               .withApply { (cause: java.lang.Throwable) =>
-                NonEmptyList(
+                Set(
                   UMLError
                     .umlUpdateException(
                       this, Iterable(m),
@@ -506,12 +506,12 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
    mAdaptee: (MAdapt => M),
    m_n: ((M, N) => Unit),
    nAdaptee: (NAdapt => N))
-  : NonEmptyList[java.lang.Throwable] \/ Unit =
+  : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m))).flatMap { _from =>
-    n.fold[NonEmptyList[java.lang.Throwable] \/ Unit](
+    n.fold[Set[java.lang.Throwable] \/ Unit](
       nonFatalCatch[Unit]
         .withApply { (cause: java.lang.Throwable) =>
-          NonEmptyList(
+          Set(
             UMLError
               .umlUpdateException(
                 this, Iterable(m),
@@ -528,7 +528,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         .flatMap { ve =>
           nonFatalCatch[Unit]
             .withApply { (cause: java.lang.Throwable) =>
-              NonEmptyList(
+              Set(
                 UMLError
                   .umlUpdateException(
                     this, Iterable(m),
@@ -548,7 +548,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Abstraction_abstraction_compose_mapping_OpaqueExpression
   (from: UMLAbstraction[MagicDrawUML],
-   to: Option[UMLOpaqueExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOpaqueExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLAbstraction,
       to, ops.umlMagicDrawUMLOpaqueExpression,
@@ -561,7 +561,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_AcceptCallAction_acceptCallAction_compose_returnInformation_OutputPin
   (from: UMLAcceptCallAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLAcceptCallAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -574,7 +574,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_AcceptEventAction_acceptEventAction_compose_result_OutputPin
   (from: UMLAcceptEventAction[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLAcceptEventAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -584,7 +584,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_AcceptEventAction_acceptEventAction_compose_trigger_Trigger
   (from: UMLAcceptEventAction[MagicDrawUML],
-   to: Set[UMLTrigger[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTrigger[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLAcceptEventAction,
       to, ops.umlMagicDrawUMLTrigger,
@@ -593,7 +593,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLTrigger) => x.getMagicDrawTrigger)
 
   override def set_AcceptEventAction_isUnmarshall
-  (e: UMLAcceptEventAction[MagicDrawUML], isUnmarshall: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLAcceptEventAction[MagicDrawUML], isUnmarshall: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLAcceptEventAction(e).getMagicDrawAcceptEventAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_AcceptEventAction_isUnmarshall", { _e.setUnmarshall(isUnmarshall) })
@@ -603,7 +603,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Action_action_compose_localPostcondition_Constraint
   (from: UMLAction[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLAction,
       to, ops.umlMagicDrawUMLConstraint,
@@ -613,7 +613,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Action_action_compose_localPrecondition_Constraint
   (from: UMLAction[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLAction,
       to, ops.umlMagicDrawUMLConstraint,
@@ -622,7 +622,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLConstraint) => x.getMagicDrawConstraint)
 
   override def set_Action_isLocallyReentrant
-  (e: UMLAction[MagicDrawUML], isLocallyReentrant: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLAction[MagicDrawUML], isLocallyReentrant: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLAction(e).getMagicDrawAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setLocallyReentrant", { _e.setLocallyReentrant(isLocallyReentrant) })
@@ -632,7 +632,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActionExecutionSpecification_actionExecutionSpecification_reference_action_Action
   (from: UMLActionExecutionSpecification[MagicDrawUML],
-   to: Option[UMLAction[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLAction[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActionExecutionSpecification,
       to, ops.umlMagicDrawUMLAction,
@@ -645,7 +645,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActionInputPin_actionInputPin_compose_fromAction_Action
   (from: UMLActionInputPin[MagicDrawUML],
-   to: Option[UMLAction[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLAction[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLActionInputPin,
       to, ops.umlMagicDrawUMLAction,
@@ -658,7 +658,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_activity_compose_edge_ActivityEdge
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -668,7 +668,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_inActivity_compose_group_ActivityGroup
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLActivityGroup[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityGroup[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLActivityGroup,
@@ -678,7 +678,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_activity_compose_node_ActivityNode
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -688,7 +688,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_activity_reference_partition_ActivityPartition
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLActivityPartition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityPartition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLActivityPartition,
@@ -698,7 +698,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_activity_compose_structuredNode_StructuredActivityNode
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLStructuredActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLStructuredActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLStructuredActivityNode,
@@ -708,7 +708,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Activity_activityScope_compose_variable_Variable
   (from: UMLActivity[MagicDrawUML],
-   to: Set[UMLVariable[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLVariable[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivity,
       to, ops.umlMagicDrawUMLVariable,
@@ -717,14 +717,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLVariable) => x.getMagicDrawVariable)
 
   override def set_Activity_isReadOnly
-  (e: UMLActivity[MagicDrawUML], isReadOnly: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLActivity[MagicDrawUML], isReadOnly: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setReadOnly", { _e.setReadOnly(isReadOnly) })
     }
 
   override def set_Activity_isSingleExecution
-  (e: UMLActivity[MagicDrawUML], isSingleExecution: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLActivity[MagicDrawUML], isSingleExecution: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLActivity(e).getMagicDrawActivity)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setSingleExecution", { _e.setSingleExecution(isSingleExecution) })
@@ -734,7 +734,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_activityEdge_compose_guard_ValueSpecification
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -745,7 +745,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_edge_reference_inPartition_ActivityPartition
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Set[UMLActivityPartition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityPartition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLActivityPartition,
@@ -755,7 +755,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_interruptingEdge_reference_interrupts_InterruptibleActivityRegion
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Option[UMLInterruptibleActivityRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInterruptibleActivityRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLInterruptibleActivityRegion,
@@ -766,7 +766,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_activityEdge_reference_redefinedEdge_ActivityEdge
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -776,7 +776,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_outgoing_reference_source_ActivityNode
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Option[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -787,7 +787,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_incoming_reference_target_ActivityNode
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Option[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -798,7 +798,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityEdge_activityEdge_compose_weight_ValueSpecification
   (from: UMLActivityEdge[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLActivityEdge,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -817,7 +817,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityNode_node_reference_inInterruptibleRegion_InterruptibleActivityRegion
   (from: UMLActivityNode[MagicDrawUML],
-   to: Set[UMLInterruptibleActivityRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInterruptibleActivityRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityNode,
       to, ops.umlMagicDrawUMLInterruptibleActivityRegion,
@@ -827,7 +827,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityNode_node_reference_inPartition_ActivityPartition
   (from: UMLActivityNode[MagicDrawUML],
-   to: Set[UMLActivityPartition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityPartition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityNode,
       to, ops.umlMagicDrawUMLActivityPartition,
@@ -837,7 +837,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityNode_target_reference_incoming_ActivityEdge
   (from: UMLActivityNode[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityNode,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -847,7 +847,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityNode_source_reference_outgoing_ActivityEdge
   (from: UMLActivityNode[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityNode,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -857,7 +857,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityNode_activityNode_reference_redefinedNode_ActivityNode
   (from: UMLActivityNode[MagicDrawUML],
-   to: Set[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityNode,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -869,7 +869,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityParameterNode_activityParameterNode_reference_parameter_Parameter
   (from: UMLActivityParameterNode[MagicDrawUML],
-   to: Option[UMLParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActivityParameterNode,
       to, ops.umlMagicDrawUMLParameter,
@@ -882,7 +882,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityPartition_inPartition_reference_edge_ActivityEdge
   (from: UMLActivityPartition[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityPartition,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -892,7 +892,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityPartition_inPartition_reference_node_ActivityNode
   (from: UMLActivityPartition[MagicDrawUML],
-   to: Set[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityPartition,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -902,7 +902,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityPartition_activityPartition_reference_represents_Element
   (from: UMLActivityPartition[MagicDrawUML],
-   to: Option[UMLElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLActivityPartition,
       to, ops.umlMagicDrawUMLElement,
@@ -913,7 +913,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ActivityPartition_superPartition_compose_subpartition_ActivityPartition
   (from: UMLActivityPartition[MagicDrawUML],
-   to: Set[UMLActivityPartition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityPartition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLActivityPartition,
       to, ops.umlMagicDrawUMLActivityPartition,
@@ -922,14 +922,14 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLActivityPartition) => x.getMagicDrawActivityPartition)
 
   override def set_ActivityPartition_isDimension
-  (e: UMLActivityPartition[MagicDrawUML], isDimension: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLActivityPartition[MagicDrawUML], isDimension: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setDimension", { _e.setDimension(isDimension) })
     }
 
   override def set_ActivityPartition_isExternal
-  (e: UMLActivityPartition[MagicDrawUML], isExternal: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLActivityPartition[MagicDrawUML], isExternal: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLActivityPartition(e).getMagicDrawActivityPartition)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setExternal", { _e.setExternal(isExternal) })
@@ -943,7 +943,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_AddStructuralFeatureValueAction_addStructuralFeatureValueAction_compose_insertAt_InputPin
   (from: UMLAddStructuralFeatureValueAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLAddStructuralFeatureValueAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -953,7 +953,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_AddStructuralFeatureValueAction_isReplaceAll
-  (e: UMLAddStructuralFeatureValueAction[MagicDrawUML], isReplaceAll: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLAddStructuralFeatureValueAction[MagicDrawUML], isReplaceAll: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLAddStructuralFeatureValueAction(e).getMagicDrawAddStructuralFeatureValueAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setReplaceAll", { _e.setReplaceAll(isReplaceAll) })
@@ -963,7 +963,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_AddVariableValueAction_addVariableValueAction_compose_insertAt_InputPin
   (from: UMLAddVariableValueAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLAddVariableValueAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -973,7 +973,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_AddVariableValueAction_isReplaceAll
-  (e: UMLAddVariableValueAction[MagicDrawUML], isReplaceAll: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLAddVariableValueAction[MagicDrawUML], isReplaceAll: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLAddVariableValueAction(e).getMagicDrawAddVariableValueAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setReplaceAll", { _e.setReplaceAll(isReplaceAll) })
@@ -986,7 +986,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Artifact_artifact_compose_manifestation_Manifestation
   (from: UMLArtifact[MagicDrawUML],
-   to: Set[UMLManifestation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLManifestation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLArtifact,
       to, ops.umlMagicDrawUMLManifestation,
@@ -996,7 +996,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Artifact_artifact_compose_nestedArtifact_Artifact
   (from: UMLArtifact[MagicDrawUML],
-   to: Set[UMLArtifact[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLArtifact[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLArtifact,
       to, ops.umlMagicDrawUMLArtifact,
@@ -1006,7 +1006,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Artifact_artifact_compose_ownedAttribute_Property
   (from: UMLArtifact[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLArtifact,
       to, ops.umlMagicDrawUMLProperty,
@@ -1016,7 +1016,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Artifact_artifact_compose_ownedOperation_Operation
   (from: UMLArtifact[MagicDrawUML],
-   to: Seq[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLArtifact,
       to, ops.umlMagicDrawUMLOperation,
@@ -1025,11 +1025,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOperation) => x.getMagicDrawOperation)
 
   override def set_Artifact_fileName
-  (e: UMLArtifact[MagicDrawUML], fileName: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLArtifact[MagicDrawUML], fileName: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLArtifact(e).getMagicDrawArtifact)
     .flatMap { _e =>
       fileName
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setFileName", { _e.setFileName(null) })
       }{
         f => nonFatalCatchUMLException(e, "setFileName", { _e.setFileName(f) })
@@ -1041,7 +1041,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Association_association_reference_memberEnd_Property
   (from: UMLAssociation[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLAssociation,
       to, ops.umlMagicDrawUMLProperty,
@@ -1051,7 +1051,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Association_association_reference_navigableOwnedEnd_Property
   (from: UMLAssociation[MagicDrawUML],
-   to: Set[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLAssociation,
       to, ops.umlMagicDrawUMLProperty,
@@ -1061,7 +1061,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Association_owningAssociation_compose_ownedEnd_Property
   (from: UMLAssociation[MagicDrawUML],
-   to: Iterable[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLAssociation,
       to, ops.umlMagicDrawUMLProperty,
@@ -1070,7 +1070,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLProperty) => x.getMagicDrawProperty)
 
   override def set_Association_isDerived
-  (e: UMLAssociation[MagicDrawUML], isDerived: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLAssociation[MagicDrawUML], isDerived: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLAssociation(e).getMagicDrawAssociation).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDerived", { _e.setDerived(isDerived) })
     }
@@ -1083,7 +1083,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_behavior_compose_ownedParameter_Parameter
   (from: UMLBehavior[MagicDrawUML],
-   to: Seq[UMLParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLParameter,
@@ -1093,7 +1093,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_behavior_compose_ownedParameterSet_ParameterSet
   (from: UMLBehavior[MagicDrawUML],
-   to: Set[UMLParameterSet[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLParameterSet[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLParameterSet,
@@ -1103,7 +1103,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_behavior_compose_postcondition_Constraint
   (from: UMLBehavior[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLConstraint,
@@ -1113,7 +1113,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_behavior_compose_precondition_Constraint
   (from: UMLBehavior[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLConstraint,
@@ -1123,7 +1123,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_behavior_reference_redefinedBehavior_Behavior
   (from: UMLBehavior[MagicDrawUML],
-   to: Set[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1133,7 +1133,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Behavior_method_reference_specification_BehavioralFeature
   (from: UMLBehavior[MagicDrawUML],
-   to: Option[UMLBehavioralFeature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavioralFeature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLBehavior,
       to, ops.umlMagicDrawUMLBehavioralFeature,
@@ -1143,7 +1143,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLBehavioralFeature) => x.getMagicDrawBehavioralFeature)
 
   override def set_Behavior_isReentrant
-  (e: UMLBehavior[MagicDrawUML], isReentrant: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLBehavior[MagicDrawUML], isReentrant: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLBehavior(e).getMagicDrawBehavior).flatMap { _e =>
       nonFatalCatchUMLException(e, "setReentrant", { _e.setReentrant(isReentrant) })
     }
@@ -1153,7 +1153,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehaviorExecutionSpecification_behaviorExecutionSpecification_reference_behavior_Behavior
   (from: UMLBehaviorExecutionSpecification[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLBehaviorExecutionSpecification,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1166,7 +1166,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioralFeature_specification_reference_method_Behavior
   (from: UMLBehavioralFeature[MagicDrawUML],
-   to: Set[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavioralFeature,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1176,7 +1176,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioralFeature_ownerFormalParam_compose_ownedParameter_Parameter
   (from: UMLBehavioralFeature[MagicDrawUML],
-   to: Seq[UMLParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLBehavioralFeature,
       to, ops.umlMagicDrawUMLParameter,
@@ -1186,7 +1186,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioralFeature_behavioralFeature_compose_ownedParameterSet_ParameterSet
   (from: UMLBehavioralFeature[MagicDrawUML],
-   to: Set[UMLParameterSet[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLParameterSet[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavioralFeature,
       to, ops.umlMagicDrawUMLParameterSet,
@@ -1196,7 +1196,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioralFeature_behavioralFeature_reference_raisedException_Type
   (from: UMLBehavioralFeature[MagicDrawUML],
-   to: Set[UMLType[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLType[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavioralFeature,
       to, ops.umlMagicDrawUMLType,
@@ -1205,11 +1205,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLType) => x.getMagicDrawType)
 
   override def set_BehavioralFeature_concurrency
-  (e: UMLBehavioralFeature[MagicDrawUML], concurrency: Option[UMLCallConcurrencyKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLBehavioralFeature[MagicDrawUML], concurrency: Option[UMLCallConcurrencyKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature)
     .flatMap { _e =>
       concurrency
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setConcurrency", { _e.setConcurrency(null) })
       } {
         case UMLCallConcurrencyKind.concurrent =>
@@ -1222,7 +1222,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_BehavioralFeature_isAbstract
-  (e: UMLBehavioralFeature[MagicDrawUML], isAbstract: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLBehavioralFeature[MagicDrawUML], isAbstract: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLBehavioralFeature(e).getMagicDrawBehavioralFeature)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "setAbstract", { _e.setAbstract(isAbstract) })
@@ -1232,7 +1232,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioredClassifier_behavioredClassifier_reference_classifierBehavior_Behavior
   (from: UMLBehavioredClassifier[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLBehavioredClassifier,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1243,7 +1243,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioredClassifier_implementingClassifier_compose_interfaceRealization_InterfaceRealization
   (from: UMLBehavioredClassifier[MagicDrawUML],
-   to: Set[UMLInterfaceRealization[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInterfaceRealization[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavioredClassifier,
       to, ops.umlMagicDrawUMLInterfaceRealization,
@@ -1253,7 +1253,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BehavioredClassifier_behavioredClassifier_compose_ownedBehavior_Behavior
   (from: UMLBehavioredClassifier[MagicDrawUML],
-   to: Set[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLBehavioredClassifier,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1265,7 +1265,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_BroadcastSignalAction_broadcastSignalAction_reference_signal_Signal
   (from: UMLBroadcastSignalAction[MagicDrawUML],
-   to: Option[UMLSignal[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLSignal[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLBroadcastSignalAction,
       to, ops.umlMagicDrawUMLSignal,
@@ -1278,7 +1278,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CallAction_callAction_compose_result_OutputPin
   (from: UMLCallAction[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLCallAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -1287,7 +1287,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOutputPin) => x.getMagicDrawOutputPin)
 
   override def set_CallAction_isSynchronous
-  (e: UMLCallAction[MagicDrawUML], isSynchronous: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLCallAction[MagicDrawUML], isSynchronous: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLCallAction(e).getMagicDrawCallAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setSynchronous", { _e.setSynchronous(isSynchronous) })
     }
@@ -1296,7 +1296,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CallBehaviorAction_callBehaviorAction_reference_behavior_Behavior
   (from: UMLCallBehaviorAction[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLCallBehaviorAction,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1309,7 +1309,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CallEvent_callEvent_reference_operation_Operation
   (from: UMLCallEvent[MagicDrawUML],
-   to: Option[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLCallEvent,
       to, ops.umlMagicDrawUMLOperation,
@@ -1322,7 +1322,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CallOperationAction_callOperationAction_reference_operation_Operation
   (from: UMLCallOperationAction[MagicDrawUML],
-   to: Option[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLCallOperationAction,
       to, ops.umlMagicDrawUMLOperation,
@@ -1333,7 +1333,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CallOperationAction_callOperationAction_compose_target_InputPin
   (from: UMLCallOperationAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLCallOperationAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -1349,7 +1349,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ChangeEvent_changeEvent_compose_changeExpression_ValueSpecification
   (from: UMLChangeEvent[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLChangeEvent,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -1362,7 +1362,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Class_nestingClass_compose_nestedClassifier_Classifier
   (from: UMLClass[MagicDrawUML],
-   to: Seq[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLClass,
       to, ops.umlMagicDrawUMLClassifier,
@@ -1372,7 +1372,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Class_class_compose_ownedAttribute_Property
   (from: UMLClass[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLClass,
       to, ops.umlMagicDrawUMLProperty,
@@ -1382,7 +1382,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Class_class_compose_ownedOperation_Operation
   (from: UMLClass[MagicDrawUML],
-   to: Seq[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLClass,
       to, ops.umlMagicDrawUMLOperation,
@@ -1392,7 +1392,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Class_class_compose_ownedReception_Reception
   (from: UMLClass[MagicDrawUML],
-   to: Set[UMLReception[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLReception[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLClass,
       to, ops.umlMagicDrawUMLReception,
@@ -1401,13 +1401,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLReception) => x.getMagicDrawReception)
 
   override def set_Class_isAbstract
-  (e: UMLClass[MagicDrawUML], isAbstract: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLClass[MagicDrawUML], isAbstract: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass).flatMap { _e =>
       nonFatalCatchUMLException(e, "setAbstract", { _e.setAbstract(isAbstract) })
     }
 
   override def set_Class_isActive
-  (e: UMLClass[MagicDrawUML], isActive: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLClass[MagicDrawUML], isActive: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLClass(e).getMagicDrawClass).flatMap { _e =>
       nonFatalCatchUMLException(e, "setActive", { _e.setActive(isActive) })
     }
@@ -1416,7 +1416,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_classifier_compose_collaborationUse_CollaborationUse
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLCollaborationUse[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLCollaborationUse[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLCollaborationUse,
@@ -1426,7 +1426,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_specific_compose_generalization_Generalization
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLGeneralization[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralization[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLGeneralization,
@@ -1436,7 +1436,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_classifier_compose_ownedTemplateSignature_RedefinableTemplateSignature
   (from: UMLClassifier[MagicDrawUML],
-   to: Option[UMLRedefinableTemplateSignature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLRedefinableTemplateSignature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLRedefinableTemplateSignature,
@@ -1447,7 +1447,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_classifier_compose_ownedUseCase_UseCase
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLUseCase[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLUseCase[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLUseCase,
@@ -1457,7 +1457,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_powertype_reference_powertypeExtent_GeneralizationSet
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLGeneralizationSet[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralizationSet[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLGeneralizationSet,
@@ -1467,7 +1467,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_classifier_reference_redefinedClassifier_Classifier
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLClassifier,
@@ -1477,7 +1477,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_classifier_reference_representation_CollaborationUse
   (from: UMLClassifier[MagicDrawUML],
-   to: Option[UMLCollaborationUse[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLCollaborationUse[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLCollaborationUse,
@@ -1488,7 +1488,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_substitutingClassifier_compose_substitution_Substitution
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLSubstitution[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLSubstitution[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLSubstitution,
@@ -1498,7 +1498,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_parameteredElement_reference_templateParameter_ClassifierTemplateParameter
   (from: UMLClassifier[MagicDrawUML],
-   to: Option[UMLClassifierTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifierTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLClassifierTemplateParameter,
@@ -1509,7 +1509,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Classifier_subject_reference_useCase_UseCase
   (from: UMLClassifier[MagicDrawUML],
-   to: Set[UMLUseCase[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLUseCase[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifier,
       to, ops.umlMagicDrawUMLUseCase,
@@ -1518,13 +1518,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLUseCase) => x.getMagicDrawUseCase)
 
   override def set_Classifier_isAbstract
-  (e: UMLClassifier[MagicDrawUML], isAbstract: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLClassifier[MagicDrawUML], isAbstract: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier).flatMap { _e =>
       nonFatalCatchUMLException(e, "setAbstract", { _e.setAbstract(isAbstract) })
     }
 
   override def set_Classifier_isFinalSpecialization
-  (e: UMLClassifier[MagicDrawUML], isFinalSpecialization: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLClassifier[MagicDrawUML], isFinalSpecialization: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLClassifier(e).getMagicDrawClassifier).flatMap { _e =>
       nonFatalCatchUMLException(e, "setFinalSpecialization", { _e.setFinalSpecialization(isFinalSpecialization) })
     }
@@ -1533,7 +1533,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ClassifierTemplateParameter_classifierTemplateParameter_reference_constrainingClassifier_Classifier
   (from: UMLClassifierTemplateParameter[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClassifierTemplateParameter,
       to, ops.umlMagicDrawUMLClassifier,
@@ -1543,7 +1543,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ClassifierTemplateParameter_templateParameter_reference_parameteredElement_Classifier
   (from: UMLClassifierTemplateParameter[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLClassifierTemplateParameter,
       to, ops.umlMagicDrawUMLClassifier,
@@ -1553,7 +1553,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLClassifier) => x.getMagicDrawClassifier)
 
   override def set_ClassifierTemplateParameter_allowSubstitutable
-  (e: UMLClassifierTemplateParameter[MagicDrawUML], allowSubstitutable: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLClassifierTemplateParameter[MagicDrawUML], allowSubstitutable: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLClassifierTemplateParameter(e).getMagicDrawClassifierTemplateParameter).flatMap { _e =>
       nonFatalCatchUMLException(e, "setAllowSubstitutable", { _e.setAllowSubstitutable(allowSubstitutable) })
     }
@@ -1562,7 +1562,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_clause_reference_body_ExecutableNode
   (from: UMLClause[MagicDrawUML],
-   to: Set[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -1572,7 +1572,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_clause_reference_bodyOutput_OutputPin
   (from: UMLClause[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -1582,7 +1582,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_clause_reference_decider_OutputPin
   (from: UMLClause[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -1593,7 +1593,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_successorClause_reference_predecessorClause_Clause
   (from: UMLClause[MagicDrawUML],
-   to: Set[UMLClause[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClause[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLClause,
@@ -1603,7 +1603,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_predecessorClause_reference_successorClause_Clause
   (from: UMLClause[MagicDrawUML],
-   to: Set[UMLClause[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClause[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLClause,
@@ -1613,7 +1613,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Clause_clause_reference_test_ExecutableNode
   (from: UMLClause[MagicDrawUML],
-   to: Set[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLClause,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -1625,7 +1625,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ClearAssociationAction_clearAssociationAction_reference_association_Association
   (from: UMLClearAssociationAction[MagicDrawUML],
-   to: Option[UMLAssociation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLAssociation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLClearAssociationAction,
       to, ops.umlMagicDrawUMLAssociation,
@@ -1636,7 +1636,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ClearAssociationAction_clearAssociationAction_compose_object_InputPin
   (from: UMLClearAssociationAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLClearAssociationAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -1649,7 +1649,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ClearStructuralFeatureAction_clearStructuralFeatureAction_compose_result_OutputPin
   (from: UMLClearStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLClearStructuralFeatureAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -1665,7 +1665,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Collaboration_collaboration_reference_collaborationRole_ConnectableElement
   (from: UMLCollaboration[MagicDrawUML],
-   to: Set[UMLConnectableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConnectableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLCollaboration,
       to, ops.umlMagicDrawUMLConnectableElement,
@@ -1677,7 +1677,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CollaborationUse_collaborationUse_compose_roleBinding_Dependency
   (from: UMLCollaborationUse[MagicDrawUML],
-   to: Set[UMLDependency[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLDependency[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLCollaborationUse,
       to, ops.umlMagicDrawUMLDependency,
@@ -1687,7 +1687,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CollaborationUse_collaborationUse_reference_type_Collaboration
   (from: UMLCollaborationUse[MagicDrawUML],
-   to: Option[UMLCollaboration[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLCollaboration[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLCollaborationUse,
       to, ops.umlMagicDrawUMLCollaboration,
@@ -1700,7 +1700,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CombinedFragment_combinedFragment_compose_cfragmentGate_Gate
   (from: UMLCombinedFragment[MagicDrawUML],
-   to: Set[UMLGate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLCombinedFragment,
       to, ops.umlMagicDrawUMLGate,
@@ -1710,7 +1710,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CombinedFragment_combinedFragment_compose_operand_InteractionOperand
   (from: UMLCombinedFragment[MagicDrawUML],
-   to: Seq[UMLInteractionOperand[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInteractionOperand[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLCombinedFragment,
       to, ops.umlMagicDrawUMLInteractionOperand,
@@ -1719,11 +1719,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInteractionOperand) => x.getMagicDrawInteractionOperand)
 
   override def set_CombinedFragment_interactionOperator
-  (e: UMLCombinedFragment[MagicDrawUML], interactionOperator: Option[UMLInteractionOperatorKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLCombinedFragment[MagicDrawUML], interactionOperator: Option[UMLInteractionOperatorKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLCombinedFragment(e).getMagicDrawCombinedFragment)
     .flatMap { _e =>
       interactionOperator
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setInteractionOperator", { _e.setInteractionOperator(null) })
       }{ op =>
       val i = op match {
@@ -1760,7 +1760,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Comment_comment_reference_annotatedElement_Element
   (from: UMLComment[MagicDrawUML],
-   to: Set[UMLElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLComment,
       to, ops.umlMagicDrawUMLElement,
@@ -1771,11 +1771,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Comment_body
-  (e: UMLComment[MagicDrawUML], body: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLComment[MagicDrawUML], body: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLComment(e).getMagicDrawComment)
     .flatMap { _e =>
       body
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setBody", { _e.setBody(null) })
       }{ s =>
         nonFatalCatchUMLException(e, "setBody", { _e.setBody(s) })
@@ -1789,7 +1789,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Component_component_compose_packagedElement_PackageableElement
   (from: UMLComponent[MagicDrawUML],
-   to: Set[UMLPackageableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPackageableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLComponent,
       to, ops.umlMagicDrawUMLPackageableElement,
@@ -1799,7 +1799,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Component_abstraction_compose_realization_ComponentRealization
   (from: UMLComponent[MagicDrawUML],
-   to: Set[UMLComponentRealization[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLComponentRealization[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLComponent,
       to, ops.umlMagicDrawUMLComponentRealization,
@@ -1808,7 +1808,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLComponentRealization) => x.getMagicDrawComponentRealization)
 
   override def set_Component_isIndirectlyInstantiated
-  (e: UMLComponent[MagicDrawUML], isIndirectlyInstantiated: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLComponent[MagicDrawUML], isIndirectlyInstantiated: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLComponent(e).getMagicDrawComponent).flatMap { _e =>
       nonFatalCatchUMLException(e, "setIndirectlyInstantiated", { _e.setIndirectlyInstantiated(isIndirectlyInstantiated) })
     }
@@ -1817,7 +1817,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ComponentRealization_componentRealization_reference_realizingClassifier_Classifier
   (from: UMLComponentRealization[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLComponentRealization,
       to, ops.umlMagicDrawUMLClassifier,
@@ -1829,7 +1829,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConditionalNode_conditionalNode_compose_clause_Clause
   (from: UMLConditionalNode[MagicDrawUML],
-   to: Set[UMLClause[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClause[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLConditionalNode,
       to, ops.umlMagicDrawUMLClause,
@@ -1839,7 +1839,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConditionalNode_conditionalNode_compose_result_OutputPin
   (from: UMLConditionalNode[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLConditionalNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -1848,13 +1848,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOutputPin) => x.getMagicDrawOutputPin)
 
   override def set_ConditionalNode_isAssured
-  (e: UMLConditionalNode[MagicDrawUML], isAssured: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLConditionalNode[MagicDrawUML], isAssured: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setAssured", { _e.setAssured(isAssured) })
     }
 
   override def set_ConditionalNode_isDeterminate
-  (e: UMLConditionalNode[MagicDrawUML], isDeterminate: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLConditionalNode[MagicDrawUML], isDeterminate: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLConditionalNode(e).getMagicDrawConditionalNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDeterminate", { _e.setDeterminate(isDeterminate) })
     }
@@ -1863,7 +1863,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConnectableElement_parameteredElement_reference_templateParameter_ConnectableElementTemplateParameter
   (from: UMLConnectableElement[MagicDrawUML],
-   to: Option[UMLConnectableElementTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConnectableElementTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLConnectableElement,
       to, ops.umlMagicDrawUMLConnectableElementTemplateParameter,
@@ -1876,7 +1876,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConnectableElementTemplateParameter_templateParameter_reference_parameteredElement_ConnectableElement
   (from: UMLConnectableElementTemplateParameter[MagicDrawUML],
-   to: Option[UMLConnectableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConnectableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLConnectableElementTemplateParameter,
       to, ops.umlMagicDrawUMLConnectableElement,
@@ -1889,7 +1889,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConnectionPointReference_connectionPointReference_reference_entry_Pseudostate
   (from: UMLConnectionPointReference[MagicDrawUML],
-   to: Set[UMLPseudostate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPseudostate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLConnectionPointReference,
       to, ops.umlMagicDrawUMLPseudostate,
@@ -1899,7 +1899,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConnectionPointReference_connectionPointReference_reference_exit_Pseudostate
   (from: UMLConnectionPointReference[MagicDrawUML],
-   to: Set[UMLPseudostate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPseudostate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLConnectionPointReference,
       to, ops.umlMagicDrawUMLPseudostate,
@@ -1911,7 +1911,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Connector_connector_reference_contract_Behavior
   (from: UMLConnector[MagicDrawUML],
-   to: Set[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLConnector,
       to, ops.umlMagicDrawUMLBehavior,
@@ -1921,7 +1921,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Connector_connector_compose_end_ConnectorEnd
   (from: UMLConnector[MagicDrawUML],
-   to: Seq[UMLConnectorEnd[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLConnectorEnd[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLConnector,
       to, ops.umlMagicDrawUMLConnectorEnd,
@@ -1931,7 +1931,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Connector_connector_reference_redefinedConnector_Connector
   (from: UMLConnector[MagicDrawUML],
-   to: Set[UMLConnector[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConnector[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLConnector,
       to, ops.umlMagicDrawUMLConnector,
@@ -1941,7 +1941,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Connector_connector_reference_type_Association
   (from: UMLConnector[MagicDrawUML],
-   to: Option[UMLAssociation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLAssociation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLConnector,
       to, ops.umlMagicDrawUMLAssociation,
@@ -1954,7 +1954,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConnectorEnd_connectorEnd_reference_partWithPort_Property
   (from: UMLConnectorEnd[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLConnectorEnd,
       to, ops.umlMagicDrawUMLProperty,
@@ -1966,7 +1966,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   override def links_ConnectorEnd_end_reference_role_ConnectableElement
   (from: UMLConnectorEnd[MagicDrawUML],
    to: Option[UMLConnectableElement[MagicDrawUML]])
-  : NonEmptyList[java.lang.Throwable] \/ Unit
+  : Set[java.lang.Throwable] \/ Unit
   = referencesOptionalLink(
     from, ops.umlMagicDrawUMLConnectorEnd,
     to, ops.umlMagicDrawUMLConnectableElement,
@@ -1979,7 +1979,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ConsiderIgnoreFragment_considerIgnoreFragment_reference_message_NamedElement
   (from: UMLConsiderIgnoreFragment[MagicDrawUML],
-   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLConsiderIgnoreFragment,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -1991,7 +1991,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Constraint_constraint_reference_constrainedElement_Element
   (from: UMLConstraint[MagicDrawUML],
-   to: Seq[UMLElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLConstraint,
       to, ops.umlMagicDrawUMLElement,
@@ -2001,7 +2001,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Constraint_owningConstraint_compose_specification_ValueSpecification
   (from: UMLConstraint[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLConstraint,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -2014,7 +2014,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Continuation_setting
-  (e: UMLContinuation[MagicDrawUML], setting: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLContinuation[MagicDrawUML], setting: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLContinuation(e).getMagicDrawContinuation).flatMap { _e =>
       nonFatalCatchUMLException(e, "setSetting", { _e.setSetting(setting) })
     }
@@ -2029,7 +2029,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CreateLinkAction_createLinkAction_compose_endData_LinkEndCreationData
   (from: UMLCreateLinkAction[MagicDrawUML],
-   to: Iterable[UMLLinkEndCreationData[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLinkEndCreationData[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLCreateLinkAction,
       to, ops.umlMagicDrawUMLLinkEndCreationData,
@@ -2041,7 +2041,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CreateLinkObjectAction_createLinkObjectAction_compose_result_OutputPin
   (from: UMLCreateLinkObjectAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLCreateLinkObjectAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -2054,7 +2054,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CreateObjectAction_createObjectAction_reference_classifier_Classifier
   (from: UMLCreateObjectAction[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLCreateObjectAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2065,7 +2065,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_CreateObjectAction_createObjectAction_compose_result_OutputPin
   (from: UMLCreateObjectAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLCreateObjectAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -2081,7 +2081,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DataType_datatype_compose_ownedAttribute_Property
   (from: UMLDataType[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLDataType,
       to, ops.umlMagicDrawUMLProperty,
@@ -2091,7 +2091,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DataType_datatype_compose_ownedOperation_Operation
   (from: UMLDataType[MagicDrawUML],
-   to: Seq[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLDataType,
       to, ops.umlMagicDrawUMLOperation,
@@ -2103,7 +2103,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DecisionNode_decisionNode_reference_decisionInput_Behavior
   (from: UMLDecisionNode[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLDecisionNode,
       to, ops.umlMagicDrawUMLBehavior,
@@ -2114,7 +2114,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DecisionNode_decisionNode_reference_decisionInputFlow_ObjectFlow
   (from: UMLDecisionNode[MagicDrawUML],
-   to: Option[UMLObjectFlow[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLObjectFlow[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLDecisionNode,
       to, ops.umlMagicDrawUMLObjectFlow,
@@ -2127,7 +2127,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Dependency_clientDependency_reference_client_NamedElement
   (from: UMLDependency[MagicDrawUML],
-   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLDependency,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -2137,7 +2137,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Dependency_supplierDependency_reference_supplier_NamedElement
   (from: UMLDependency[MagicDrawUML],
-   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLDependency,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -2152,7 +2152,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Deployment_deployment_compose_configuration_DeploymentSpecification
   (from: UMLDeployment[MagicDrawUML],
-   to: Set[UMLDeploymentSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLDeploymentSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLDeployment,
       to, ops.umlMagicDrawUMLDeploymentSpecification,
@@ -2162,7 +2162,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Deployment_deploymentForArtifact_reference_deployedArtifact_DeployedArtifact
   (from: UMLDeployment[MagicDrawUML],
-   to: Set[UMLDeployedArtifact[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLDeployedArtifact[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLDeployment,
       to, ops.umlMagicDrawUMLDeployedArtifact,
@@ -2173,11 +2173,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   // DeploymentSpecification
 
   override def set_DeploymentSpecification_deploymentLocation
-  (e: UMLDeploymentSpecification[MagicDrawUML], deploymentLocation: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDeploymentSpecification[MagicDrawUML], deploymentLocation: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification)
     .flatMap { _e =>
       deploymentLocation
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit] {
+      .fold[Set[java.lang.Throwable] \/ Unit] {
         nonFatalCatchUMLException(e, "setDeploymentLocation", { _e.setDeploymentLocation(null) })
       }{ s =>
         nonFatalCatchUMLException(e, "setDeploymentLocation", { _e.setDeploymentLocation(s) })
@@ -2185,11 +2185,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_DeploymentSpecification_executionLocation
-  (e: UMLDeploymentSpecification[MagicDrawUML], executionLocation: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDeploymentSpecification[MagicDrawUML], executionLocation: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDeploymentSpecification(e).getMagicDrawDeploymentSpecification)
     .flatMap { _e =>
       executionLocation
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setExecutionLocation", { _e.setExecutionLocation(null) })
       }{s =>
         nonFatalCatchUMLException(e, "setExecutionLocation", { _e.setExecutionLocation(s) })
@@ -2200,7 +2200,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DeploymentTarget_location_compose_deployment_Deployment
   (from: UMLDeploymentTarget[MagicDrawUML],
-   to: Set[UMLDeployment[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLDeployment[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLDeploymentTarget,
       to, ops.umlMagicDrawUMLDeployment,
@@ -2212,7 +2212,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DestroyLinkAction_destroyLinkAction_compose_endData_LinkEndDestructionData
   (from: UMLDestroyLinkAction[MagicDrawUML],
-   to: Iterable[UMLLinkEndDestructionData[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLinkEndDestructionData[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLDestroyLinkAction,
       to, ops.umlMagicDrawUMLLinkEndDestructionData,
@@ -2224,7 +2224,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DestroyObjectAction_destroyObjectAction_compose_target_InputPin
   (from: UMLDestroyObjectAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLDestroyObjectAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -2234,13 +2234,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_DestroyObjectAction_isDestroyLinks
-  (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyLinks: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyLinks: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDestroyLinks", { _e.setDestroyLinks(isDestroyLinks) })
     }
 
   override def set_DestroyObjectAction_isDestroyOwnedObjects
-  (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyOwnedObjects: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDestroyObjectAction[MagicDrawUML], isDestroyOwnedObjects: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDestroyObjectAction(e).getMagicDrawDestroyObjectAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDestroyOwnedObjects", { _e.setDestroyOwnedObjects(isDestroyOwnedObjects) })
     }
@@ -2258,7 +2258,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Duration_duration_compose_expr_ValueSpecification
   (from: UMLDuration[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLDuration,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -2269,7 +2269,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Duration_duration_reference_observation_Observation
   (from: UMLDuration[MagicDrawUML],
-   to: Set[UMLObservation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLObservation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLDuration,
       to, ops.umlMagicDrawUMLObservation,
@@ -2281,7 +2281,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DurationConstraint_durationConstraint_compose_specification_DurationInterval
   (from: UMLDurationConstraint[MagicDrawUML],
-   to: Option[UMLDurationInterval[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLDurationInterval[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLDurationConstraint,
       to, ops.umlMagicDrawUMLDurationInterval,
@@ -2291,7 +2291,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLDurationInterval) => x.getMagicDrawDurationInterval)
 
   override def set_DurationConstraint_firstEvent
-  (e: UMLDurationConstraint[MagicDrawUML], firstEvent: Set[Boolean]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDurationConstraint[MagicDrawUML], firstEvent: Set[Boolean]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDurationConstraint(e).getMagicDrawDurationConstraint)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_DurationConstraint_firstEvent", {
@@ -2305,7 +2305,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DurationInterval_durationInterval_reference_max_Duration
   (from: UMLDurationInterval[MagicDrawUML],
-   to: Option[UMLDuration[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLDuration[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLDurationInterval,
       to, ops.umlMagicDrawUMLDuration,
@@ -2316,7 +2316,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DurationInterval_durationInterval_reference_min_Duration
   (from: UMLDurationInterval[MagicDrawUML],
-   to: Option[UMLDuration[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLDuration[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLDurationInterval,
       to, ops.umlMagicDrawUMLDuration,
@@ -2329,7 +2329,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_DurationObservation_durationObservation_reference_event_NamedElement
   (from: UMLDurationObservation[MagicDrawUML],
-   to: Seq[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLDurationObservation,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -2338,7 +2338,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLNamedElement) => x.getMagicDrawNamedElement)
 
   override def set_DurationObservation_firstEvent
-  (e: UMLDurationObservation[MagicDrawUML], firstEvent: Seq[Boolean]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLDurationObservation[MagicDrawUML], firstEvent: Seq[Boolean]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLDurationObservation(e).getMagicDrawDurationObservation)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_DurationObservation_firstEvent", {
@@ -2351,7 +2351,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Element_owningElement_compose_ownedComment_Comment
   (from: UMLElement[MagicDrawUML],
-   to: Set[UMLComment[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLComment[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLElement,
       to, ops.umlMagicDrawUMLComment,
@@ -2363,7 +2363,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ElementImport_import_reference_importedElement_PackageableElement
   (from: UMLElementImport[MagicDrawUML],
-   to: Option[UMLPackageableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPackageableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLElementImport,
       to, ops.umlMagicDrawUMLPackageableElement,
@@ -2373,11 +2373,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLPackageableElement) => x.getMagicDrawPackageableElement)
 
   override def set_ElementImport_alias
-  (e: UMLElementImport[MagicDrawUML], alias: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLElementImport[MagicDrawUML], alias: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport)
     .flatMap { _e =>
       alias
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit] {
+      .fold[Set[java.lang.Throwable] \/ Unit] {
         nonFatalCatchUMLException(e, "setAlias", { _e.setAlias(null) })
       }{ s =>
         nonFatalCatchUMLException(e, "setAlias", { _e.setAlias(s) })
@@ -2385,11 +2385,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_ElementImport_visibility
-  (e: UMLElementImport[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLElementImport[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLElementImport(e).getMagicDrawElementImport)
     .flatMap { _e =>
       visibility
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setVisibility", { _e.setVisibility(null) })
       }{ v =>
         val vv = v match {
@@ -2413,7 +2413,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Enumeration_enumeration_compose_ownedLiteral_EnumerationLiteral
   (from: UMLEnumeration[MagicDrawUML],
-   to: Seq[UMLEnumerationLiteral[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLEnumerationLiteral[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLEnumeration,
       to, ops.umlMagicDrawUMLEnumerationLiteral,
@@ -2431,7 +2431,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExceptionHandler_exceptionHandler_reference_exceptionInput_ObjectNode
   (from: UMLExceptionHandler[MagicDrawUML],
-   to: Option[UMLObjectNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLObjectNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExceptionHandler,
       to, ops.umlMagicDrawUMLObjectNode,
@@ -2442,7 +2442,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExceptionHandler_exceptionHandler_reference_exceptionType_Classifier
   (from: UMLExceptionHandler[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLExceptionHandler,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2452,7 +2452,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExceptionHandler_exceptionHandler_reference_handlerBody_ExecutableNode
   (from: UMLExceptionHandler[MagicDrawUML],
-   to: Option[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExceptionHandler,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -2465,7 +2465,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExecutableNode_protectedNode_compose_handler_ExceptionHandler
   (from: UMLExecutableNode[MagicDrawUML],
-   to: Set[UMLExceptionHandler[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExceptionHandler[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLExecutableNode,
       to, ops.umlMagicDrawUMLExceptionHandler,
@@ -2480,7 +2480,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExecutionOccurrenceSpecification_executionOccurrenceSpecification_reference_execution_ExecutionSpecification
   (from: UMLExecutionOccurrenceSpecification[MagicDrawUML],
-   to: Option[UMLExecutionSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLExecutionSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExecutionOccurrenceSpecification,
       to, ops.umlMagicDrawUMLExecutionSpecification,
@@ -2493,7 +2493,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExecutionSpecification_executionSpecification_reference_finish_OccurrenceSpecification
   (from: UMLExecutionSpecification[MagicDrawUML],
-   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExecutionSpecification,
       to, ops.umlMagicDrawUMLOccurrenceSpecification,
@@ -2504,7 +2504,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExecutionSpecification_executionSpecification_reference_start_OccurrenceSpecification
   (from: UMLExecutionSpecification[MagicDrawUML],
-   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExecutionSpecification,
       to, ops.umlMagicDrawUMLOccurrenceSpecification,
@@ -2517,7 +2517,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExpansionNode_inputElement_reference_regionAsInput_ExpansionRegion
   (from: UMLExpansionNode[MagicDrawUML],
-   to: Option[UMLExpansionRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLExpansionRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExpansionNode,
       to, ops.umlMagicDrawUMLExpansionRegion,
@@ -2528,7 +2528,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExpansionNode_outputElement_reference_regionAsOutput_ExpansionRegion
   (from: UMLExpansionNode[MagicDrawUML],
-   to: Option[UMLExpansionRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLExpansionRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExpansionNode,
       to, ops.umlMagicDrawUMLExpansionRegion,
@@ -2541,7 +2541,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExpansionRegion_regionAsInput_reference_inputElement_ExpansionNode
   (from: UMLExpansionRegion[MagicDrawUML],
-   to: Set[UMLExpansionNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExpansionNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLExpansionRegion,
       to, ops.umlMagicDrawUMLExpansionNode,
@@ -2551,7 +2551,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExpansionRegion_regionAsOutput_reference_outputElement_ExpansionNode
   (from: UMLExpansionRegion[MagicDrawUML],
-   to: Set[UMLExpansionNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExpansionNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLExpansionRegion,
       to, ops.umlMagicDrawUMLExpansionNode,
@@ -2560,11 +2560,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLExpansionNode) => x.getMagicDrawExpansionNode)
 
   override def set_ExpansionRegion_mode
-  (e: UMLExpansionRegion[MagicDrawUML], mode: Option[UMLExpansionKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLExpansionRegion[MagicDrawUML], mode: Option[UMLExpansionKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLExpansionRegion(e).getMagicDrawExpansionRegion)
     .flatMap { _e =>
       mode
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setMode", { _e.setMode(null) })
       }{ m =>
         val mm = m match {
@@ -2583,7 +2583,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Expression_expression_compose_operand_ValueSpecification
   (from: UMLExpression[MagicDrawUML],
-   to: Seq[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLExpression,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -2592,7 +2592,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLValueSpecification) => x.getMagicDrawValueSpecification)
 
   override def set_Expression_symbol
-  (e: UMLExpression[MagicDrawUML], symbol: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLExpression[MagicDrawUML], symbol: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLExpression(e).getMagicDrawExpression)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Expression_symbol", {
@@ -2609,7 +2609,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Extend_extend_compose_condition_Constraint
   (from: UMLExtend[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLExtend,
       to, ops.umlMagicDrawUMLConstraint,
@@ -2620,7 +2620,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Extend_extend_reference_extendedCase_UseCase
   (from: UMLExtend[MagicDrawUML],
-   to: Option[UMLUseCase[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLUseCase[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExtend,
       to, ops.umlMagicDrawUMLUseCase,
@@ -2631,7 +2631,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Extend_extension_reference_extensionLocation_ExtensionPoint
   (from: UMLExtend[MagicDrawUML],
-   to: Seq[UMLExtensionPoint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLExtensionPoint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLExtend,
       to, ops.umlMagicDrawUMLExtensionPoint,
@@ -2643,7 +2643,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Extension_extension_compose_ownedEnd_ExtensionEnd
   (from: UMLExtension[MagicDrawUML],
-   to: Iterable[UMLExtensionEnd[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLExtensionEnd[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLExtension,
       to, ops.umlMagicDrawUMLExtensionEnd,
@@ -2655,7 +2655,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ExtensionEnd_extensionEnd_reference_type_Stereotype
   (from: UMLExtensionEnd[MagicDrawUML],
-   to: Option[UMLStereotype[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLStereotype[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLExtensionEnd,
       to, ops.umlMagicDrawUMLStereotype,
@@ -2672,7 +2672,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Feature_isStatic
-  (e: UMLFeature[MagicDrawUML], isStatic: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLFeature[MagicDrawUML], isStatic: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLFeature(e).getMagicDrawFeature).flatMap { _e =>
       nonFatalCatchUMLException(e, "setStatic", { _e.setStatic(isStatic) })
     }
@@ -2699,7 +2699,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_GeneralOrdering_toBefore_reference_after_OccurrenceSpecification
   (from: UMLGeneralOrdering[MagicDrawUML],
-   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLGeneralOrdering,
       to, ops.umlMagicDrawUMLOccurrenceSpecification,
@@ -2710,7 +2710,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_GeneralOrdering_toAfter_reference_before_OccurrenceSpecification
   (from: UMLGeneralOrdering[MagicDrawUML],
-   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOccurrenceSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLGeneralOrdering,
       to, ops.umlMagicDrawUMLOccurrenceSpecification,
@@ -2723,7 +2723,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Generalization_generalization_reference_general_Classifier
   (from: UMLGeneralization[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLGeneralization,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2734,7 +2734,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Generalization_generalization_reference_generalizationSet_GeneralizationSet
   (from: UMLGeneralization[MagicDrawUML],
-   to: Set[UMLGeneralizationSet[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralizationSet[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLGeneralization,
       to, ops.umlMagicDrawUMLGeneralizationSet,
@@ -2743,7 +2743,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLGeneralizationSet) => x.getMagicDrawGeneralizationSet)
 
   override def set_Generalization_isSubstitutable
-  (e: UMLGeneralization[MagicDrawUML], isSubstitutable: Option[Boolean]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLGeneralization[MagicDrawUML], isSubstitutable: Option[Boolean]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLGeneralization(e).getMagicDrawGeneralization)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Generalization_isSubstitutable", {
@@ -2757,7 +2757,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_GeneralizationSet_generalizationSet_reference_generalization_Generalization
   (from: UMLGeneralizationSet[MagicDrawUML],
-   to: Set[UMLGeneralization[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralization[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLGeneralizationSet,
       to, ops.umlMagicDrawUMLGeneralization,
@@ -2767,7 +2767,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_GeneralizationSet_powertypeExtent_reference_powertype_Classifier
   (from: UMLGeneralizationSet[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLGeneralizationSet,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2777,13 +2777,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLClassifier) => x.getMagicDrawClassifier)
 
   override def set_GeneralizationSet_isCovering
-  (e: UMLGeneralizationSet[MagicDrawUML], isCovering: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLGeneralizationSet[MagicDrawUML], isCovering: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet).flatMap { _e =>
       nonFatalCatchUMLException(e, "setCovering", { _e.setCovering(isCovering) })
     }
 
   override def set_GeneralizationSet_isDisjoint
-  (e: UMLGeneralizationSet[MagicDrawUML], isDisjoint: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLGeneralizationSet[MagicDrawUML], isDisjoint: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLGeneralizationSet(e).getMagicDrawGeneralizationSet).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDisjoint", { _e.setDisjoint(isDisjoint) })
     }
@@ -2792,7 +2792,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Image_content
-  (e: UMLImage[MagicDrawUML], content: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLImage[MagicDrawUML], content: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Image_content", {
@@ -2806,7 +2806,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_Image_format
-  (e: UMLImage[MagicDrawUML], format: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLImage[MagicDrawUML], format: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Image_format", {
@@ -2820,7 +2820,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_Image_location
-  (e: UMLImage[MagicDrawUML], location: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLImage[MagicDrawUML], location: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLImage(e).getMagicDrawImage)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Image_location", {
@@ -2837,7 +2837,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Include_include_reference_addition_UseCase
   (from: UMLInclude[MagicDrawUML],
-   to: Option[UMLUseCase[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLUseCase[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInclude,
       to, ops.umlMagicDrawUMLUseCase,
@@ -2850,7 +2850,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_conveyingFlow_reference_conveyed_Classifier
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2860,7 +2860,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_informationFlow_reference_informationSource_NamedElement
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -2870,7 +2870,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_informationFlow_reference_informationTarget_NamedElement
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -2880,7 +2880,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_abstraction_reference_realization_Relationship
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLRelationship[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLRelationship[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLRelationship,
@@ -2890,7 +2890,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_informationFlow_reference_realizingActivityEdge_ActivityEdge
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -2900,7 +2900,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_informationFlow_reference_realizingConnector_Connector
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLConnector[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConnector[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLConnector,
@@ -2910,7 +2910,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationFlow_informationFlow_reference_realizingMessage_Message
   (from: UMLInformationFlow[MagicDrawUML],
-   to: Set[UMLMessage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLMessage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationFlow,
       to, ops.umlMagicDrawUMLMessage,
@@ -2922,7 +2922,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InformationItem_representation_reference_represented_Classifier
   (from: UMLInformationItem[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInformationItem,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2940,7 +2940,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InstanceSpecification_instanceSpecification_reference_classifier_Classifier
   (from: UMLInstanceSpecification[MagicDrawUML],
-   to: Iterable[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInstanceSpecification,
       to, ops.umlMagicDrawUMLClassifier,
@@ -2950,7 +2950,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InstanceSpecification_owningInstance_compose_slot_Slot
   (from: UMLInstanceSpecification[MagicDrawUML],
-   to: Set[UMLSlot[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLSlot[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInstanceSpecification,
       to, ops.umlMagicDrawUMLSlot,
@@ -2960,7 +2960,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InstanceSpecification_owningInstanceSpec_compose_specification_ValueSpecification
   (from: UMLInstanceSpecification[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInstanceSpecification,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -2973,7 +2973,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InstanceValue_instanceValue_reference_instance_InstanceSpecification
   (from: UMLInstanceValue[MagicDrawUML],
-   to: Option[UMLInstanceSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInstanceSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInstanceValue,
       to, ops.umlMagicDrawUMLInstanceSpecification,
@@ -2986,7 +2986,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interaction_interaction_compose_action_Action
   (from: UMLInteraction[MagicDrawUML],
-   to: Set[UMLAction[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLAction[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteraction,
       to, ops.umlMagicDrawUMLAction,
@@ -2996,7 +2996,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interaction_interaction_compose_formalGate_Gate
   (from: UMLInteraction[MagicDrawUML],
-   to: Set[UMLGate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteraction,
       to, ops.umlMagicDrawUMLGate,
@@ -3006,7 +3006,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interaction_enclosingInteraction_compose_fragment_InteractionFragment
   (from: UMLInteraction[MagicDrawUML],
-   to: Seq[UMLInteractionFragment[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInteractionFragment[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInteraction,
       to, ops.umlMagicDrawUMLInteractionFragment,
@@ -3016,7 +3016,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interaction_interaction_compose_lifeline_Lifeline
   (from: UMLInteraction[MagicDrawUML],
-   to: Set[UMLLifeline[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLLifeline[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteraction,
       to, ops.umlMagicDrawUMLLifeline,
@@ -3026,7 +3026,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interaction_interaction_compose_message_Message
   (from: UMLInteraction[MagicDrawUML],
-   to: Set[UMLMessage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLMessage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteraction,
       to, ops.umlMagicDrawUMLMessage,
@@ -3038,7 +3038,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionConstraint_interactionConstraint_compose_maxint_ValueSpecification
   (from: UMLInteractionConstraint[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionConstraint,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3049,7 +3049,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionConstraint_interactionConstraint_compose_minint_ValueSpecification
   (from: UMLInteractionConstraint[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionConstraint,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3062,7 +3062,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionFragment_coveredBy_reference_covered_Lifeline
   (from: UMLInteractionFragment[MagicDrawUML],
-   to: Iterable[UMLLifeline[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLifeline[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteractionFragment,
       to, ops.umlMagicDrawUMLLifeline,
@@ -3072,7 +3072,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionFragment_interactionFragment_compose_generalOrdering_GeneralOrdering
   (from: UMLInteractionFragment[MagicDrawUML],
-   to: Set[UMLGeneralOrdering[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralOrdering[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteractionFragment,
       to, ops.umlMagicDrawUMLGeneralOrdering,
@@ -3084,7 +3084,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionOperand_enclosingOperand_compose_fragment_InteractionFragment
   (from: UMLInteractionOperand[MagicDrawUML],
-   to: Seq[UMLInteractionFragment[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInteractionFragment[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInteractionOperand,
       to, ops.umlMagicDrawUMLInteractionFragment,
@@ -3094,7 +3094,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionOperand_interactionOperand_compose_guard_InteractionConstraint
   (from: UMLInteractionOperand[MagicDrawUML],
-   to: Option[UMLInteractionConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInteractionConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionOperand,
       to, ops.umlMagicDrawUMLInteractionConstraint,
@@ -3107,7 +3107,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionUse_interactionUse_compose_actualGate_Gate
   (from: UMLInteractionUse[MagicDrawUML],
-   to: Set[UMLGate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInteractionUse,
       to, ops.umlMagicDrawUMLGate,
@@ -3117,7 +3117,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionUse_interactionUse_compose_argument_ValueSpecification
   (from: UMLInteractionUse[MagicDrawUML],
-   to: Seq[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInteractionUse,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3127,7 +3127,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionUse_interactionUse_reference_refersTo_Interaction
   (from: UMLInteractionUse[MagicDrawUML],
-   to: Option[UMLInteraction[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInteraction[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionUse,
       to, ops.umlMagicDrawUMLInteraction,
@@ -3138,7 +3138,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionUse_interactionUse_compose_returnValue_ValueSpecification
   (from: UMLInteractionUse[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionUse,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3149,7 +3149,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InteractionUse_interactionUse_reference_returnValueRecipient_Property
   (from: UMLInteractionUse[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInteractionUse,
       to, ops.umlMagicDrawUMLProperty,
@@ -3162,7 +3162,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_compose_nestedClassifier_Classifier
   (from: UMLInterface[MagicDrawUML],
-   to: Seq[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLClassifier,
@@ -3172,7 +3172,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_compose_ownedAttribute_Property
   (from: UMLInterface[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLProperty,
@@ -3182,7 +3182,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_compose_ownedOperation_Operation
   (from: UMLInterface[MagicDrawUML],
-   to: Seq[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLOperation,
@@ -3192,7 +3192,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_compose_ownedReception_Reception
   (from: UMLInterface[MagicDrawUML],
-   to: Set[UMLReception[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLReception[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLReception,
@@ -3202,7 +3202,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_compose_protocol_ProtocolStateMachine
   (from: UMLInterface[MagicDrawUML],
-   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLProtocolStateMachine,
@@ -3213,7 +3213,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interface_interface_reference_redefinedInterface_Interface
   (from: UMLInterface[MagicDrawUML],
-   to: Set[UMLInterface[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInterface[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInterface,
       to, ops.umlMagicDrawUMLInterface,
@@ -3225,7 +3225,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InterfaceRealization_interfaceRealization_reference_contract_Interface
   (from: UMLInterfaceRealization[MagicDrawUML],
-   to: Option[UMLInterface[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInterface[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInterfaceRealization,
       to, ops.umlMagicDrawUMLInterface,
@@ -3238,7 +3238,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InterruptibleActivityRegion_interrupts_reference_interruptingEdge_ActivityEdge
   (from: UMLInterruptibleActivityRegion[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInterruptibleActivityRegion,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -3248,7 +3248,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InterruptibleActivityRegion_inInterruptibleRegion_reference_node_ActivityNode
   (from: UMLInterruptibleActivityRegion[MagicDrawUML],
-   to: Set[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLInterruptibleActivityRegion,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -3260,7 +3260,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interval_interval_reference_max_ValueSpecification
   (from: UMLInterval[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInterval,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3271,7 +3271,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Interval_interval_reference_min_ValueSpecification
   (from: UMLInterval[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInterval,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3284,7 +3284,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_IntervalConstraint_intervalConstraint_compose_specification_Interval
   (from: UMLIntervalConstraint[MagicDrawUML],
-   to: Option[UMLInterval[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInterval[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLIntervalConstraint,
       to, ops.umlMagicDrawUMLInterval,
@@ -3297,7 +3297,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InvocationAction_invocationAction_compose_argument_InputPin
   (from: UMLInvocationAction[MagicDrawUML],
-   to: Seq[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLInvocationAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3307,7 +3307,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_InvocationAction_invocationAction_reference_onPort_Port
   (from: UMLInvocationAction[MagicDrawUML],
-   to: Option[UMLPort[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPort[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLInvocationAction,
       to, ops.umlMagicDrawUMLPort,
@@ -3320,7 +3320,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_JoinNode_joinNode_compose_joinSpec_ValueSpecification
   (from: UMLJoinNode[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLJoinNode,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3330,7 +3330,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLValueSpecification) => x.getMagicDrawValueSpecification)
 
   override def set_JoinNode_isCombineDuplicate
-  (e: UMLJoinNode[MagicDrawUML], isCombineDuplicate: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLJoinNode[MagicDrawUML], isCombineDuplicate: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLJoinNode(e).getMagicDrawJoinNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setCombineDuplicate", { _e.setCombineDuplicate(isCombineDuplicate) })
     }
@@ -3339,7 +3339,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Lifeline_covered_reference_coveredBy_InteractionFragment
   (from: UMLLifeline[MagicDrawUML],
-   to: Set[UMLInteractionFragment[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInteractionFragment[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLLifeline,
       to, ops.umlMagicDrawUMLInteractionFragment,
@@ -3349,7 +3349,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Lifeline_lifeline_reference_decomposedAs_PartDecomposition
   (from: UMLLifeline[MagicDrawUML],
-   to: Option[UMLPartDecomposition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPartDecomposition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLifeline,
       to, ops.umlMagicDrawUMLPartDecomposition,
@@ -3360,7 +3360,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Lifeline_lifeline_reference_represents_ConnectableElement
   (from: UMLLifeline[MagicDrawUML],
-   to: Option[UMLConnectableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConnectableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLifeline,
       to, ops.umlMagicDrawUMLConnectableElement,
@@ -3371,7 +3371,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Lifeline_lifeline_compose_selector_ValueSpecification
   (from: UMLLifeline[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLLifeline,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3384,7 +3384,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkAction_linkAction_compose_endData_LinkEndData
   (from: UMLLinkAction[MagicDrawUML],
-   to: Iterable[UMLLinkEndData[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLinkEndData[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLLinkAction,
       to, ops.umlMagicDrawUMLLinkEndData,
@@ -3394,7 +3394,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkAction_linkAction_compose_inputValue_InputPin
   (from: UMLLinkAction[MagicDrawUML],
-   to: Set[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLLinkAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3406,7 +3406,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkEndCreationData_linkEndCreationData_reference_insertAt_InputPin
   (from: UMLLinkEndCreationData[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLinkEndCreationData,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3416,7 +3416,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_LinkEndCreationData_isReplaceAll
-  (e: UMLLinkEndCreationData[MagicDrawUML], isReplaceAll: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLinkEndCreationData[MagicDrawUML], isReplaceAll: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLinkEndCreationData(e).getMagicDrawLinkEndCreationData).flatMap { _e =>
       nonFatalCatchUMLException(e, "setReplaceAll", { _e.setReplaceAll(isReplaceAll) })
     }
@@ -3425,7 +3425,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkEndData_linkEndData_reference_end_Property
   (from: UMLLinkEndData[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLinkEndData,
       to, ops.umlMagicDrawUMLProperty,
@@ -3436,7 +3436,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkEndData_linkEndData_compose_qualifier_QualifierValue
   (from: UMLLinkEndData[MagicDrawUML],
-   to: Set[UMLQualifierValue[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLQualifierValue[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLLinkEndData,
       to, ops.umlMagicDrawUMLQualifierValue,
@@ -3446,7 +3446,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkEndData_linkEndData_reference_value_InputPin
   (from: UMLLinkEndData[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLinkEndData,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3459,7 +3459,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LinkEndDestructionData_linkEndDestructionData_reference_destroyAt_InputPin
   (from: UMLLinkEndDestructionData[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLinkEndDestructionData,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3469,7 +3469,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_LinkEndDestructionData_isDestroyDuplicates
-  (e: UMLLinkEndDestructionData[MagicDrawUML], isDestroyDuplicates: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLinkEndDestructionData[MagicDrawUML], isDestroyDuplicates: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLinkEndDestructionData(e).getMagicDrawLinkEndDestructionData).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDestroyDuplicates", { _e.setDestroyDuplicates(isDestroyDuplicates) })
     }
@@ -3478,7 +3478,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_LiteralBoolean_value
-  (e: UMLLiteralBoolean[MagicDrawUML], value: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLiteralBoolean[MagicDrawUML], value: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLiteralBoolean(e).getMagicDrawLiteralBoolean).flatMap { _e =>
       nonFatalCatchUMLException(e, "setValue", { _e.setValue(value) })
     }
@@ -3487,7 +3487,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_LiteralInteger_value
-  (e: UMLLiteralInteger[MagicDrawUML], value: Integer): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLiteralInteger[MagicDrawUML], value: Integer): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLiteralInteger(e).getMagicDrawLiteralInteger).flatMap { _e =>
       nonFatalCatchUMLException(e, "setValue", { _e.setValue(value) })
     }
@@ -3499,7 +3499,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_LiteralReal_value
-  (e: UMLLiteralReal[MagicDrawUML], value: Double): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLiteralReal[MagicDrawUML], value: Double): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLiteralReal(e).getMagicDrawLiteralReal).flatMap { _e =>
       nonFatalCatchUMLException(e, "setValue", { _e.setValue(value) })
     }
@@ -3511,7 +3511,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_LiteralString_value
-  (e: UMLLiteralString[MagicDrawUML], value: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLiteralString[MagicDrawUML], value: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLiteralString(e).getMagicDrawLiteralString)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_LiteralString_value", {
@@ -3528,7 +3528,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_LiteralUnlimitedNatural_value
-  (e: UMLLiteralUnlimitedNatural[MagicDrawUML], value: String): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLiteralUnlimitedNatural[MagicDrawUML], value: String): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLiteralUnlimitedNatural(e).getMagicDrawLiteralUnlimitedNatural).flatMap { _e =>
       nonFatalCatchUMLException(e, "setValue(Integer.parseInt", { _e.setValue(Integer.parseInt(value)) })
     }
@@ -3537,7 +3537,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_reference_bodyOutput_OutputPin
   (from: UMLLoopNode[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -3547,7 +3547,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_reference_bodyPart_ExecutableNode
   (from: UMLLoopNode[MagicDrawUML],
-   to: Set[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -3557,7 +3557,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_reference_decider_OutputPin
   (from: UMLLoopNode[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -3568,7 +3568,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_compose_loopVariable_OutputPin
   (from: UMLLoopNode[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -3578,7 +3578,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_compose_loopVariableInput_InputPin
   (from: UMLLoopNode[MagicDrawUML],
-   to: Seq[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLInputPin,
@@ -3588,7 +3588,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_compose_result_OutputPin
   (from: UMLLoopNode[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -3598,7 +3598,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_reference_setupPart_ExecutableNode
   (from: UMLLoopNode[MagicDrawUML],
-   to: Set[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -3608,7 +3608,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_LoopNode_loopNode_reference_test_ExecutableNode
   (from: UMLLoopNode[MagicDrawUML],
-   to: Set[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLLoopNode,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -3617,7 +3617,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLExecutableNode) => x.getMagicDrawExecutableNode)
 
   override def set_LoopNode_isTestedFirst
-  (e: UMLLoopNode[MagicDrawUML], isTestedFirst: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLLoopNode[MagicDrawUML], isTestedFirst: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLLoopNode(e).getMagicDrawLoopNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setTestedFirst", { _e.setTestedFirst(isTestedFirst) })
     }
@@ -3626,7 +3626,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Manifestation_manifestation_reference_utilizedElement_PackageableElement
   (from: UMLManifestation[MagicDrawUML],
-   to: Option[UMLPackageableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPackageableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLManifestation,
       to, ops.umlMagicDrawUMLPackageableElement,
@@ -3642,7 +3642,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Message_message_compose_argument_ValueSpecification
   (from: UMLMessage[MagicDrawUML],
-   to: Seq[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLMessage,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3652,7 +3652,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Message_message_reference_connector_Connector
   (from: UMLMessage[MagicDrawUML],
-   to: Option[UMLConnector[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConnector[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLMessage,
       to, ops.umlMagicDrawUMLConnector,
@@ -3663,7 +3663,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Message_endMessage_reference_receiveEvent_MessageEnd
   (from: UMLMessage[MagicDrawUML],
-   to: Option[UMLMessageEnd[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLMessageEnd[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLMessage,
       to, ops.umlMagicDrawUMLMessageEnd,
@@ -3674,7 +3674,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Message_endMessage_reference_sendEvent_MessageEnd
   (from: UMLMessage[MagicDrawUML],
-   to: Option[UMLMessageEnd[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLMessageEnd[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLMessage,
       to, ops.umlMagicDrawUMLMessageEnd,
@@ -3685,7 +3685,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Message_message_reference_signature_NamedElement
   (from: UMLMessage[MagicDrawUML],
-   to: Option[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLMessage,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -3695,11 +3695,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLNamedElement) => x.getMagicDrawNamedElement)
 
   override def set_Message_messageSort
-  (e: UMLMessage[MagicDrawUML], messageSort: Option[UMLMessageSort.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLMessage[MagicDrawUML], messageSort: Option[UMLMessageSort.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLMessage(e).getMagicDrawMessage)
     .flatMap { _e =>
       messageSort
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setMessageSort", { _e.setMessageSort(null) })
       }{ ms =>
         val mdMs = ms match {
@@ -3724,7 +3724,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_MessageEnd_messageEnd_reference_message_Message
   (from: UMLMessageEnd[MagicDrawUML],
-   to: Option[UMLMessage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLMessage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLMessageEnd,
       to, ops.umlMagicDrawUMLMessage,
@@ -3743,7 +3743,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Model_viewpoint
-  (e: UMLModel[MagicDrawUML], viewpoint: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLModel[MagicDrawUML], viewpoint: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLModel(e).getMagicDrawModel)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Model_viewpoint", {
@@ -3760,7 +3760,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_MultiplicityElement_owningLower_compose_lowerValue_ValueSpecification
   (from: UMLMultiplicityElement[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLMultiplicityElement,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3771,7 +3771,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_MultiplicityElement_owningUpper_compose_upperValue_ValueSpecification
   (from: UMLMultiplicityElement[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLMultiplicityElement,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3781,13 +3781,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLValueSpecification) => x.getMagicDrawValueSpecification)
 
   override def set_MultiplicityElement_isOrdered
-  (e: UMLMultiplicityElement[MagicDrawUML], isOrdered: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLMultiplicityElement[MagicDrawUML], isOrdered: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement).flatMap { _e =>
       nonFatalCatchUMLException(e, "setOrdered", { _e.setOrdered(isOrdered) })
     }
 
   override def set_MultiplicityElement_isUnique
-  (e: UMLMultiplicityElement[MagicDrawUML], isUnique: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLMultiplicityElement[MagicDrawUML], isUnique: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLMultiplicityElement(e).getMagicDrawMultiplicityElement).flatMap { _e =>
       nonFatalCatchUMLException(e, "setUnique", { _e.setUnique(isUnique) })
     }
@@ -3796,7 +3796,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_NamedElement_namedElement_compose_nameExpression_StringExpression
   (from: UMLNamedElement[MagicDrawUML],
-   to: Option[UMLStringExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLStringExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLNamedElement,
       to, ops.umlMagicDrawUMLStringExpression,
@@ -3806,7 +3806,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLStringExpression) => x.getMagicDrawStringExpression)
 
   override def set_NamedElement_name
-  (e: UMLNamedElement[MagicDrawUML], name: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLNamedElement[MagicDrawUML], name: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_NamedElement_name", {
@@ -3820,7 +3820,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_NamedElement_visibility
-  (e: UMLNamedElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLNamedElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLNamedElement(e).getMagicDrawNamedElement)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_NamedElement_visibility", {
@@ -3843,7 +3843,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Namespace_importingNamespace_compose_elementImport_ElementImport
   (from: UMLNamespace[MagicDrawUML],
-   to: Set[UMLElementImport[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLElementImport[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLNamespace,
       to, ops.umlMagicDrawUMLElementImport,
@@ -3853,7 +3853,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Namespace_context_compose_ownedRule_Constraint
   (from: UMLNamespace[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLNamespace,
       to, ops.umlMagicDrawUMLConstraint,
@@ -3863,7 +3863,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Namespace_importingNamespace_compose_packageImport_PackageImport
   (from: UMLNamespace[MagicDrawUML],
-   to: Set[UMLPackageImport[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPackageImport[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLNamespace,
       to, ops.umlMagicDrawUMLPackageImport,
@@ -3875,7 +3875,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Node_node_compose_nestedNode_Node
   (from: UMLNode[MagicDrawUML],
-   to: Set[UMLNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLNode,
       to, ops.umlMagicDrawUMLNode,
@@ -3887,7 +3887,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ObjectFlow_objectFlow_reference_selection_Behavior
   (from: UMLObjectFlow[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLObjectFlow,
       to, ops.umlMagicDrawUMLBehavior,
@@ -3898,7 +3898,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ObjectFlow_objectFlow_reference_transformation_Behavior
   (from: UMLObjectFlow[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLObjectFlow,
       to, ops.umlMagicDrawUMLBehavior,
@@ -3908,13 +3908,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLBehavior) => x.getMagicDrawBehavior)
 
   override def set_ObjectFlow_isMulticast
-  (e: UMLObjectFlow[MagicDrawUML], isMulticast: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLObjectFlow[MagicDrawUML], isMulticast: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow).flatMap { _e =>
       nonFatalCatchUMLException(e, "setMulticast", { _e.setMulticast(isMulticast) })
     }
 
   override def set_ObjectFlow_isMultireceive
-  (e: UMLObjectFlow[MagicDrawUML], isMultireceive: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLObjectFlow[MagicDrawUML], isMultireceive: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLObjectFlow(e).getMagicDrawObjectFlow).flatMap { _e =>
       nonFatalCatchUMLException(e, "setMultireceive", { _e.setMultireceive(isMultireceive) })
     }
@@ -3923,7 +3923,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ObjectNode_objectNode_reference_inState_State
   (from: UMLObjectNode[MagicDrawUML],
-   to: Set[UMLState[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLState[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLObjectNode,
       to, ops.umlMagicDrawUMLState,
@@ -3933,7 +3933,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ObjectNode_objectNode_reference_selection_Behavior
   (from: UMLObjectNode[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLObjectNode,
       to, ops.umlMagicDrawUMLBehavior,
@@ -3944,7 +3944,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ObjectNode_objectNode_compose_upperBound_ValueSpecification
   (from: UMLObjectNode[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLObjectNode,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -3954,17 +3954,17 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLValueSpecification) => x.getMagicDrawValueSpecification)
 
   override def set_ObjectNode_isControlType
-  (e: UMLObjectNode[MagicDrawUML], isControlType: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLObjectNode[MagicDrawUML], isControlType: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setControlType", { _e.setControlType(isControlType) })
     }
 
   override def set_ObjectNode_ordering
-  (e: UMLObjectNode[MagicDrawUML], ordering: Option[UMLObjectNodeOrderingKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLObjectNode[MagicDrawUML], ordering: Option[UMLObjectNodeOrderingKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLObjectNode(e).getMagicDrawObjectNode)
     .flatMap { _e =>
       ordering
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setOrdering", { _e.setOrdering(null) })
       }{ o =>
         val mdO = o match {
@@ -3988,7 +3988,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OccurrenceSpecification_events_reference_covered_Lifeline
   (from: UMLOccurrenceSpecification[MagicDrawUML],
-   to: Iterable[UMLLifeline[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLifeline[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLOccurrenceSpecification,
       to, ops.umlMagicDrawUMLLifeline,
@@ -3998,7 +3998,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OccurrenceSpecification_before_reference_toAfter_GeneralOrdering
   (from: UMLOccurrenceSpecification[MagicDrawUML],
-   to: Set[UMLGeneralOrdering[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralOrdering[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLOccurrenceSpecification,
       to, ops.umlMagicDrawUMLGeneralOrdering,
@@ -4008,7 +4008,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OccurrenceSpecification_after_reference_toBefore_GeneralOrdering
   (from: UMLOccurrenceSpecification[MagicDrawUML],
-   to: Set[UMLGeneralOrdering[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLGeneralOrdering[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLOccurrenceSpecification,
       to, ops.umlMagicDrawUMLGeneralOrdering,
@@ -4020,7 +4020,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OpaqueAction_opaqueAction_compose_inputValue_InputPin
   (from: UMLOpaqueAction[MagicDrawUML],
-   to: Set[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLOpaqueAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4030,7 +4030,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OpaqueAction_opaqueAction_compose_outputValue_OutputPin
   (from: UMLOpaqueAction[MagicDrawUML],
-   to: Set[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLOpaqueAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4039,7 +4039,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOutputPin) => x.getMagicDrawOutputPin)
 
   override def set_OpaqueAction_body
-  (e: UMLOpaqueAction[MagicDrawUML], body: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueAction[MagicDrawUML], body: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueAction_body", {
@@ -4049,7 +4049,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_OpaqueAction_language
-  (e: UMLOpaqueAction[MagicDrawUML], language: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueAction[MagicDrawUML], language: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueAction(e).getMagicDrawOpaqueAction)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueAction_language", {
@@ -4062,7 +4062,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_OpaqueBehavior_body
-  (e: UMLOpaqueBehavior[MagicDrawUML], body: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueBehavior[MagicDrawUML], body: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueBehavior_body", {
@@ -4072,7 +4072,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_OpaqueBehavior_language
-  (e: UMLOpaqueBehavior[MagicDrawUML], language: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueBehavior[MagicDrawUML], language: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueBehavior(e).getMagicDrawOpaqueBehavior)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueBehavior_language", {
@@ -4085,7 +4085,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OpaqueExpression_opaqueExpression_reference_behavior_Behavior
   (from: UMLOpaqueExpression[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLOpaqueExpression,
       to, ops.umlMagicDrawUMLBehavior,
@@ -4095,7 +4095,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLBehavior) => x.getMagicDrawBehavior)
 
   override def set_OpaqueExpression_body
-  (e: UMLOpaqueExpression[MagicDrawUML], body: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueExpression[MagicDrawUML], body: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueExpression_body", {
@@ -4105,7 +4105,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_OpaqueExpression_language
-  (e: UMLOpaqueExpression[MagicDrawUML], language: Seq[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOpaqueExpression[MagicDrawUML], language: Seq[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOpaqueExpression(e).getMagicDrawOpaqueExpression)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_OpaqueExpression_language", {
@@ -4118,7 +4118,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_bodyContext_compose_bodyCondition_Constraint
   (from: UMLOperation[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4129,7 +4129,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_operation_compose_ownedParameter_Parameter
   (from: UMLOperation[MagicDrawUML],
-   to: Seq[UMLParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLParameter,
@@ -4139,7 +4139,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_postContext_compose_postcondition_Constraint
   (from: UMLOperation[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4149,7 +4149,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_preContext_compose_precondition_Constraint
   (from: UMLOperation[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4159,7 +4159,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_operation_reference_raisedException_Type
   (from: UMLOperation[MagicDrawUML],
-   to: Set[UMLType[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLType[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLType,
@@ -4169,7 +4169,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_operation_reference_redefinedOperation_Operation
   (from: UMLOperation[MagicDrawUML],
-   to: Set[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLOperation,
@@ -4179,7 +4179,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Operation_parameteredElement_reference_templateParameter_OperationTemplateParameter
   (from: UMLOperation[MagicDrawUML],
-   to: Option[UMLOperationTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOperationTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLOperation,
       to, ops.umlMagicDrawUMLOperationTemplateParameter,
@@ -4189,7 +4189,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOperationTemplateParameter) => x.getMagicDrawOperationTemplateParameter)
 
   override def set_Operation_isQuery
-  (e: UMLOperation[MagicDrawUML], isQuery: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLOperation[MagicDrawUML], isQuery: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLOperation(e).getMagicDrawOperation).flatMap { _e =>
       nonFatalCatchUMLException(e, "setQuery", { _e.setQuery(isQuery) })
     }
@@ -4198,7 +4198,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_OperationTemplateParameter_templateParameter_reference_parameteredElement_Operation
   (from: UMLOperationTemplateParameter[MagicDrawUML],
-   to: Option[UMLOperation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOperation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLOperationTemplateParameter,
       to, ops.umlMagicDrawUMLOperation,
@@ -4214,7 +4214,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Package_receivingPackage_compose_packageMerge_PackageMerge
   (from: UMLPackage[MagicDrawUML],
-   to: Set[UMLPackageMerge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPackageMerge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLPackage,
       to, ops.umlMagicDrawUMLPackageMerge,
@@ -4224,7 +4224,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Package_owningPackage_compose_packagedElement_PackageableElement
   (from: UMLPackage[MagicDrawUML],
-   to: Set[UMLPackageableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPackageableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLPackage,
       to, ops.umlMagicDrawUMLPackageableElement,
@@ -4234,7 +4234,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Package_applyingPackage_compose_profileApplication_ProfileApplication
   (from: UMLPackage[MagicDrawUML],
-   to: Set[UMLProfileApplication[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLProfileApplication[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLPackage,
       to, ops.umlMagicDrawUMLProfileApplication,
@@ -4243,7 +4243,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLProfileApplication) => x.getMagicDrawProfileApplication)
 
   override def set_Package_URI
-  (e: UMLPackage[MagicDrawUML], URI: Option[String]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPackage[MagicDrawUML], URI: Option[String]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPackage(e).getMagicDrawPackage)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Package_URI", {
@@ -4259,7 +4259,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_PackageImport_packageImport_reference_importedPackage_Package
   (from: UMLPackageImport[MagicDrawUML],
-   to: Option[UMLPackage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPackage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLPackageImport,
       to, ops.umlMagicDrawUMLPackage,
@@ -4269,11 +4269,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLPackage) => x.getMagicDrawPackage)
 
   override def set_PackageImport_visibility
-  (e: UMLPackageImport[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPackageImport[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPackageImport(e).getMagicDrawPackageImport)
     .flatMap { _e =>
       visibility
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setVisibility", { _e.setVisibility(null) })
       }{ v =>
         val mdV = v match {
@@ -4294,7 +4294,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_PackageMerge_packageMerge_reference_mergedPackage_Package
   (from: UMLPackageMerge[MagicDrawUML],
-   to: Option[UMLPackage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLPackage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLPackageMerge,
       to, ops.umlMagicDrawUMLPackage,
@@ -4307,7 +4307,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_PackageableElement_visibility
-  (e: UMLPackageableElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPackageableElement[MagicDrawUML], visibility: Option[UMLVisibilityKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPackageableElement(e).getMagicDrawPackageableElement)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_PackageableElement_visibility", _e.setVisibility(
@@ -4324,7 +4324,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Parameter_owningParameter_compose_defaultValue_ValueSpecification
   (from: UMLParameter[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLParameter,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -4335,7 +4335,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Parameter_parameter_reference_parameterSet_ParameterSet
   (from: UMLParameter[MagicDrawUML],
-   to: Set[UMLParameterSet[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLParameterSet[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLParameter,
       to, ops.umlMagicDrawUMLParameterSet,
@@ -4344,11 +4344,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLParameterSet) => x.getMagicDrawParameterSet)
 
   override def set_Parameter_direction
-  (e: UMLParameter[MagicDrawUML], direction: Option[UMLParameterDirectionKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLParameter[MagicDrawUML], direction: Option[UMLParameterDirectionKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter)
     .flatMap { _e =>
       direction
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setDirection", { _e.setDirection(null) })
       }{ d =>
         val mdD = d match {
@@ -4366,7 +4366,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_Parameter_effect
-  (e: UMLParameter[MagicDrawUML], effect: Option[UMLParameterEffectKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLParameter[MagicDrawUML], effect: Option[UMLParameterEffectKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_Parameter_effect",
@@ -4382,13 +4382,13 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_Parameter_isException
-  (e: UMLParameter[MagicDrawUML], isException: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLParameter[MagicDrawUML], isException: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter).flatMap { _e =>
       nonFatalCatchUMLException(e, "setException", { _e.setException(isException) })
     }
 
   override def set_Parameter_isStream
-  (e: UMLParameter[MagicDrawUML], isStream: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLParameter[MagicDrawUML], isStream: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLParameter(e).getMagicDrawParameter).flatMap { _e =>
       nonFatalCatchUMLException(e, "setStream", { _e.setStream(isStream) })
     }
@@ -4397,7 +4397,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ParameterSet_parameterSet_compose_condition_Constraint
   (from: UMLParameterSet[MagicDrawUML],
-   to: Set[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLParameterSet,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4407,7 +4407,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ParameterSet_parameterSet_reference_parameter_Parameter
   (from: UMLParameterSet[MagicDrawUML],
-   to: Set[UMLParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLParameterSet,
       to, ops.umlMagicDrawUMLParameter,
@@ -4419,7 +4419,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ParameterableElement_parameteredElement_reference_templateParameter_TemplateParameter
   (from: UMLParameterableElement[MagicDrawUML],
-   to: Option[UMLTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLParameterableElement,
       to, ops.umlMagicDrawUMLTemplateParameter,
@@ -4435,7 +4435,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_Pin_isControl
-  (e: UMLPin[MagicDrawUML], isControl: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPin[MagicDrawUML], isControl: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPin(e).getMagicDrawPin).flatMap { _e =>
       nonFatalCatchUMLException(e, "setControl", { _e.setControl(isControl) })
     }
@@ -4444,7 +4444,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Port_port_reference_protocol_ProtocolStateMachine
   (from: UMLPort[MagicDrawUML],
-   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLPort,
       to, ops.umlMagicDrawUMLProtocolStateMachine,
@@ -4455,7 +4455,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Port_port_reference_redefinedPort_Port
   (from: UMLPort[MagicDrawUML],
-   to: Set[UMLPort[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPort[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLPort,
       to, ops.umlMagicDrawUMLPort,
@@ -4464,19 +4464,19 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLPort) => x.getMagicDrawPort)
 
   override def set_Port_isBehavior
-  (e: UMLPort[MagicDrawUML], isBehavior: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPort[MagicDrawUML], isBehavior: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
       nonFatalCatchUMLException(e, "setBehavior", { _e.setBehavior(isBehavior) })
     }
 
   override def set_Port_isConjugated
-  (e: UMLPort[MagicDrawUML], isConjugated: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPort[MagicDrawUML], isConjugated: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
       nonFatalCatchUMLException(e, "setConjugated", { _e.setConjugated(isConjugated) })
     }
 
   override def set_Port_isService
-  (e: UMLPort[MagicDrawUML], isService: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPort[MagicDrawUML], isService: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPort(e).getMagicDrawPort).flatMap { _e =>
       nonFatalCatchUMLException(e, "setService", { _e.setService(isService) })
     }
@@ -4488,7 +4488,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Profile_profile_compose_metaclassReference_ElementImport
   (from: UMLProfile[MagicDrawUML],
-   to: Set[UMLElementImport[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLElementImport[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLProfile,
       to, ops.umlMagicDrawUMLElementImport,
@@ -4498,7 +4498,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Profile_profile_compose_metamodelReference_PackageImport
   (from: UMLProfile[MagicDrawUML],
-   to: Set[UMLPackageImport[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPackageImport[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLProfile,
       to, ops.umlMagicDrawUMLPackageImport,
@@ -4510,7 +4510,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ProfileApplication_profileApplication_reference_appliedProfile_Profile
   (from: UMLProfileApplication[MagicDrawUML],
-   to: Option[UMLProfile[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProfile[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLProfileApplication,
       to, ops.umlMagicDrawUMLProfile,
@@ -4520,7 +4520,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLProfile) => x.getMagicDrawProfile)
 
   override def set_ProfileApplication_isStrict
-  (e: UMLProfileApplication[MagicDrawUML], isStrict: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLProfileApplication[MagicDrawUML], isStrict: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLProfileApplication(e).getMagicDrawProfileApplication).flatMap { _e =>
       nonFatalCatchUMLException(e, "setStrict", { _e.setStrict(isStrict) })
     }
@@ -4529,7 +4529,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Property_memberEnd_reference_association_Association
   (from: UMLProperty[MagicDrawUML],
-   to: Option[UMLAssociation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLAssociation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLProperty,
       to, ops.umlMagicDrawUMLAssociation,
@@ -4540,7 +4540,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Property_owningProperty_compose_defaultValue_ValueSpecification
   (from: UMLProperty[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLProperty,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -4551,7 +4551,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Property_associationEnd_compose_qualifier_Property
   (from: UMLProperty[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLProperty,
       to, ops.umlMagicDrawUMLProperty,
@@ -4561,7 +4561,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Property_property_reference_redefinedProperty_Property
   (from: UMLProperty[MagicDrawUML],
-   to: Set[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLProperty,
       to, ops.umlMagicDrawUMLProperty,
@@ -4571,7 +4571,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Property_property_reference_subsettedProperty_Property
   (from: UMLProperty[MagicDrawUML],
-   to: Set[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLProperty,
       to, ops.umlMagicDrawUMLProperty,
@@ -4580,11 +4580,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLProperty) => x.getMagicDrawProperty)
 
   override def set_Property_aggregation
-  (e: UMLProperty[MagicDrawUML], aggregation: Option[UMLAggregationKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLProperty[MagicDrawUML], aggregation: Option[UMLAggregationKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty)
     .flatMap { _e =>
       aggregation
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
          nonFatalCatchUMLException(e, "setAggregation", { _e.setAggregation(null) })
       }{ a =>
         val mdA = a match {
@@ -4600,19 +4600,19 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
     }
 
   override def set_Property_isDerived
-  (e: UMLProperty[MagicDrawUML], isDerived: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLProperty[MagicDrawUML], isDerived: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDerived", { _e.setDerived(isDerived) })
     }
 
   override def set_Property_isDerivedUnion
-  (e: UMLProperty[MagicDrawUML], isDerivedUnion: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLProperty[MagicDrawUML], isDerivedUnion: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDerivedUnion", { _e.setDerivedUnion(isDerivedUnion) })
     }
 
   override def set_Property_isID
-  (e: UMLProperty[MagicDrawUML], isID: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLProperty[MagicDrawUML], isID: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLProperty(e).getMagicDrawProperty).flatMap { _e =>
       nonFatalCatchUMLException(e, "setID", { _e.setID(isID) })
     }
@@ -4621,7 +4621,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ProtocolConformance_protocolConformance_reference_generalMachine_ProtocolStateMachine
   (from: UMLProtocolConformance[MagicDrawUML],
-   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProtocolStateMachine[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLProtocolConformance,
       to, ops.umlMagicDrawUMLProtocolStateMachine,
@@ -4634,7 +4634,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ProtocolStateMachine_specificMachine_compose_conformance_ProtocolConformance
   (from: UMLProtocolStateMachine[MagicDrawUML],
-   to: Set[UMLProtocolConformance[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLProtocolConformance[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLProtocolStateMachine,
       to, ops.umlMagicDrawUMLProtocolConformance,
@@ -4646,7 +4646,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ProtocolTransition_owningTransition_compose_postCondition_Constraint
   (from: UMLProtocolTransition[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLProtocolTransition,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4657,7 +4657,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ProtocolTransition_protocolTransition_compose_preCondition_Constraint
   (from: UMLProtocolTransition[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLProtocolTransition,
       to, ops.umlMagicDrawUMLConstraint,
@@ -4669,11 +4669,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   // Pseudostate
 
   override def set_Pseudostate_kind
-  (e: UMLPseudostate[MagicDrawUML], kind: Option[UMLPseudostateKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLPseudostate[MagicDrawUML], kind: Option[UMLPseudostateKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLPseudostate(e).getMagicDrawPseudostate)
     .flatMap { _e =>
       kind
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setKind", { _e.setKind(null) })
       }{ k =>
         val mdK = k match {
@@ -4706,7 +4706,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_QualifierValue_qualifierValue_reference_qualifier_Property
   (from: UMLQualifierValue[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLQualifierValue,
       to, ops.umlMagicDrawUMLProperty,
@@ -4717,7 +4717,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_QualifierValue_qualifierValue_reference_value_InputPin
   (from: UMLQualifierValue[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLQualifierValue,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4730,7 +4730,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_RaiseExceptionAction_raiseExceptionAction_compose_exception_InputPin
   (from: UMLRaiseExceptionAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLRaiseExceptionAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4743,7 +4743,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadExtentAction_readExtentAction_reference_classifier_Classifier
   (from: UMLReadExtentAction[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReadExtentAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -4754,7 +4754,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadExtentAction_readExtentAction_compose_result_OutputPin
   (from: UMLReadExtentAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadExtentAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4767,7 +4767,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadIsClassifiedObjectAction_readIsClassifiedObjectAction_reference_classifier_Classifier
   (from: UMLReadIsClassifiedObjectAction[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReadIsClassifiedObjectAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -4778,7 +4778,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadIsClassifiedObjectAction_readIsClassifiedObjectAction_compose_object_InputPin
   (from: UMLReadIsClassifiedObjectAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadIsClassifiedObjectAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4789,7 +4789,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadIsClassifiedObjectAction_readIsClassifiedObjectAction_compose_result_OutputPin
   (from: UMLReadIsClassifiedObjectAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadIsClassifiedObjectAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4799,7 +4799,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOutputPin) => x.getMagicDrawOutputPin)
 
   override def set_ReadIsClassifiedObjectAction_isDirect
-  (e: UMLReadIsClassifiedObjectAction[MagicDrawUML], isDirect: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLReadIsClassifiedObjectAction[MagicDrawUML], isDirect: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLReadIsClassifiedObjectAction(e).getMagicDrawReadIsClassifiedObjectAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setDirect", { _e.setDirect(isDirect) })
     }
@@ -4808,7 +4808,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkAction_readLinkAction_compose_result_OutputPin
   (from: UMLReadLinkAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4821,7 +4821,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndAction_readLinkObjectEndAction_reference_end_Property
   (from: UMLReadLinkObjectEndAction[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndAction,
       to, ops.umlMagicDrawUMLProperty,
@@ -4832,7 +4832,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndAction_readLinkObjectEndAction_compose_object_InputPin
   (from: UMLReadLinkObjectEndAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4843,7 +4843,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndAction_readLinkObjectEndAction_compose_result_OutputPin
   (from: UMLReadLinkObjectEndAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4856,7 +4856,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndQualifierAction_readLinkObjectEndQualifierAction_compose_object_InputPin
   (from: UMLReadLinkObjectEndQualifierAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndQualifierAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4867,7 +4867,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndQualifierAction_readLinkObjectEndQualifierAction_reference_qualifier_Property
   (from: UMLReadLinkObjectEndQualifierAction[MagicDrawUML],
-   to: Option[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndQualifierAction,
       to, ops.umlMagicDrawUMLProperty,
@@ -4878,7 +4878,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadLinkObjectEndQualifierAction_readLinkObjectEndQualifierAction_compose_result_OutputPin
   (from: UMLReadLinkObjectEndQualifierAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadLinkObjectEndQualifierAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4891,7 +4891,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadSelfAction_readSelfAction_compose_result_OutputPin
   (from: UMLReadSelfAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadSelfAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4904,7 +4904,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadStructuralFeatureAction_readStructuralFeatureAction_compose_result_OutputPin
   (from: UMLReadStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadStructuralFeatureAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4917,7 +4917,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReadVariableAction_readVariableAction_compose_result_OutputPin
   (from: UMLReadVariableAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReadVariableAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -4933,7 +4933,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Reception_reception_reference_signal_Signal
   (from: UMLReception[MagicDrawUML],
-   to: Option[UMLSignal[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLSignal[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReception,
       to, ops.umlMagicDrawUMLSignal,
@@ -4946,7 +4946,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReclassifyObjectAction_reclassifyObjectAction_reference_newClassifier_Classifier
   (from: UMLReclassifyObjectAction[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLReclassifyObjectAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -4956,7 +4956,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReclassifyObjectAction_reclassifyObjectAction_compose_object_InputPin
   (from: UMLReclassifyObjectAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReclassifyObjectAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -4967,7 +4967,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReclassifyObjectAction_reclassifyObjectAction_reference_oldClassifier_Classifier
   (from: UMLReclassifyObjectAction[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLReclassifyObjectAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -4976,7 +4976,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLClassifier) => x.getMagicDrawClassifier)
 
   override def set_ReclassifyObjectAction_isReplaceAll
-  (e: UMLReclassifyObjectAction[MagicDrawUML], isReplaceAll: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLReclassifyObjectAction[MagicDrawUML], isReplaceAll: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLReclassifyObjectAction(e).getMagicDrawReclassifyObjectAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setReplaceAll", { _e.setReplaceAll(isReplaceAll) })
     }
@@ -4985,7 +4985,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_RedefinableElement_isLeaf
-  (e: UMLRedefinableElement[MagicDrawUML], isLeaf: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLRedefinableElement[MagicDrawUML], isLeaf: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLRedefinableElement(e).getMagicDrawRedefinableElement).flatMap { _e =>
       nonFatalCatchUMLException(e, "setLeaf", { _e.setLeaf(isLeaf) })
     }
@@ -4994,7 +4994,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_RedefinableTemplateSignature_redefinableTemplateSignature_reference_extendedSignature_RedefinableTemplateSignature
   (from: UMLRedefinableTemplateSignature[MagicDrawUML],
-   to: Set[UMLRedefinableTemplateSignature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLRedefinableTemplateSignature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLRedefinableTemplateSignature,
       to, ops.umlMagicDrawUMLRedefinableTemplateSignature,
@@ -5006,7 +5006,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReduceAction_reduceAction_compose_collection_InputPin
   (from: UMLReduceAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReduceAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5017,7 +5017,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReduceAction_reduceAction_reference_reducer_Behavior
   (from: UMLReduceAction[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReduceAction,
       to, ops.umlMagicDrawUMLBehavior,
@@ -5028,7 +5028,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReduceAction_reduceAction_compose_result_OutputPin
   (from: UMLReduceAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReduceAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -5038,7 +5038,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLOutputPin) => x.getMagicDrawOutputPin)
 
   override def set_ReduceAction_isOrdered
-  (e: UMLReduceAction[MagicDrawUML], isOrdered: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLReduceAction[MagicDrawUML], isOrdered: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLReduceAction(e).getMagicDrawReduceAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setOrdered", { _e.setOrdered(isOrdered) })
     }
@@ -5047,7 +5047,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Region_region_reference_extendedRegion_Region
   (from: UMLRegion[MagicDrawUML],
-   to: Option[UMLRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLRegion,
       to, ops.umlMagicDrawUMLRegion,
@@ -5058,7 +5058,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Region_container_compose_subvertex_Vertex
   (from: UMLRegion[MagicDrawUML],
-   to: Set[UMLVertex[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLVertex[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLRegion,
       to, ops.umlMagicDrawUMLVertex,
@@ -5068,7 +5068,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Region_container_compose_transition_Transition
   (from: UMLRegion[MagicDrawUML],
-   to: Set[UMLTransition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTransition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLRegion,
       to, ops.umlMagicDrawUMLTransition,
@@ -5083,7 +5083,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_RemoveStructuralFeatureValueAction_removeStructuralFeatureValueAction_compose_removeAt_InputPin
   (from: UMLRemoveStructuralFeatureValueAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLRemoveStructuralFeatureValueAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5093,7 +5093,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_RemoveStructuralFeatureValueAction_isRemoveDuplicates
-  (e: UMLRemoveStructuralFeatureValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLRemoveStructuralFeatureValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLRemoveStructuralFeatureValueAction(e).getMagicDrawRemoveStructuralFeatureValueAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setRemoveDuplicates", { _e.setRemoveDuplicates(isRemoveDuplicates) })
     }
@@ -5102,7 +5102,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_RemoveVariableValueAction_removeVariableValueAction_compose_removeAt_InputPin
   (from: UMLRemoveVariableValueAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLRemoveVariableValueAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5112,7 +5112,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLInputPin) => x.getMagicDrawInputPin)
 
   override def set_RemoveVariableValueAction_isRemoveDuplicates
-  (e: UMLRemoveVariableValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLRemoveVariableValueAction[MagicDrawUML], isRemoveDuplicates: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLRemoveVariableValueAction(e).getMagicDrawRemoveVariableValueAction).flatMap { _e =>
       nonFatalCatchUMLException(e, "setRemoveDuplicates", { _e.setRemoveDuplicates(isRemoveDuplicates) })
     }
@@ -5121,7 +5121,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReplyAction_replyAction_reference_replyToCall_Trigger
   (from: UMLReplyAction[MagicDrawUML],
-   to: Option[UMLTrigger[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTrigger[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLReplyAction,
       to, ops.umlMagicDrawUMLTrigger,
@@ -5132,7 +5132,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReplyAction_replyAction_compose_replyValue_InputPin
   (from: UMLReplyAction[MagicDrawUML],
-   to: Seq[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLReplyAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5142,7 +5142,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ReplyAction_replyAction_compose_returnInformation_InputPin
   (from: UMLReplyAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLReplyAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5155,7 +5155,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SendObjectAction_sendObjectAction_compose_request_InputPin
   (from: UMLSendObjectAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLSendObjectAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5166,7 +5166,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SendObjectAction_sendObjectAction_compose_target_InputPin
   (from: UMLSendObjectAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLSendObjectAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5179,7 +5179,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SendSignalAction_sendSignalAction_reference_signal_Signal
   (from: UMLSendSignalAction[MagicDrawUML],
-   to: Option[UMLSignal[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLSignal[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLSendSignalAction,
       to, ops.umlMagicDrawUMLSignal,
@@ -5190,7 +5190,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SendSignalAction_sendSignalAction_compose_target_InputPin
   (from: UMLSendSignalAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLSendSignalAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5203,7 +5203,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SequenceNode_sequenceNode_compose_executableNode_ExecutableNode
   (from: UMLSequenceNode[MagicDrawUML],
-   to: Seq[UMLExecutableNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLExecutableNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLSequenceNode,
       to, ops.umlMagicDrawUMLExecutableNode,
@@ -5215,7 +5215,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Signal_owningSignal_compose_ownedAttribute_Property
   (from: UMLSignal[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLSignal,
       to, ops.umlMagicDrawUMLProperty,
@@ -5227,7 +5227,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_SignalEvent_signalEvent_reference_signal_Signal
   (from: UMLSignalEvent[MagicDrawUML],
-   to: Option[UMLSignal[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLSignal[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLSignalEvent,
       to, ops.umlMagicDrawUMLSignal,
@@ -5240,7 +5240,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Slot_slot_reference_definingFeature_StructuralFeature
   (from: UMLSlot[MagicDrawUML],
-   to: Option[UMLStructuralFeature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLStructuralFeature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLSlot,
       to, ops.umlMagicDrawUMLStructuralFeature,
@@ -5251,7 +5251,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Slot_owningSlot_compose_value_ValueSpecification
   (from: UMLSlot[MagicDrawUML],
-   to: Seq[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLSlot,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -5263,7 +5263,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StartClassifierBehaviorAction_startClassifierBehaviorAction_compose_object_InputPin
   (from: UMLStartClassifierBehaviorAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLStartClassifierBehaviorAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5276,7 +5276,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StartObjectBehaviorAction_startObjectBehaviorAction_compose_object_InputPin
   (from: UMLStartObjectBehaviorAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLStartObjectBehaviorAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5289,7 +5289,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_connection_ConnectionPointReference
   (from: UMLState[MagicDrawUML],
-   to: Set[UMLConnectionPointReference[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConnectionPointReference[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLConnectionPointReference,
@@ -5299,7 +5299,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_connectionPoint_Pseudostate
   (from: UMLState[MagicDrawUML],
-   to: Set[UMLPseudostate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPseudostate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLPseudostate,
@@ -5309,7 +5309,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_deferrableTrigger_Trigger
   (from: UMLState[MagicDrawUML],
-   to: Set[UMLTrigger[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTrigger[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLTrigger,
@@ -5319,7 +5319,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_doActivity_Behavior
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLBehavior,
@@ -5330,7 +5330,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_entry_Behavior
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLBehavior,
@@ -5341,7 +5341,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_exit_Behavior
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLBehavior,
@@ -5352,7 +5352,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_reference_redefinedState_State
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLState[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLState[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLState,
@@ -5363,7 +5363,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_state_compose_region_Region
   (from: UMLState[MagicDrawUML],
-   to: Set[UMLRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLRegion,
@@ -5373,7 +5373,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_owningState_compose_stateInvariant_Constraint
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLConstraint,
@@ -5384,7 +5384,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_State_submachineState_reference_submachine_StateMachine
   (from: UMLState[MagicDrawUML],
-   to: Option[UMLStateMachine[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLStateMachine[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLState,
       to, ops.umlMagicDrawUMLStateMachine,
@@ -5397,7 +5397,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateInvariant_stateInvariant_reference_covered_Lifeline
   (from: UMLStateInvariant[MagicDrawUML],
-   to: Iterable[UMLLifeline[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Iterable[UMLLifeline[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLStateInvariant,
       to, ops.umlMagicDrawUMLLifeline,
@@ -5407,7 +5407,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateInvariant_stateInvariant_compose_invariant_Constraint
   (from: UMLStateInvariant[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLStateInvariant,
       to, ops.umlMagicDrawUMLConstraint,
@@ -5420,7 +5420,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateMachine_stateMachine_compose_connectionPoint_Pseudostate
   (from: UMLStateMachine[MagicDrawUML],
-   to: Set[UMLPseudostate[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPseudostate[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStateMachine,
       to, ops.umlMagicDrawUMLPseudostate,
@@ -5430,7 +5430,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateMachine_stateMachine_reference_extendedStateMachine_StateMachine
   (from: UMLStateMachine[MagicDrawUML],
-   to: Set[UMLStateMachine[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLStateMachine[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLStateMachine,
       to, ops.umlMagicDrawUMLStateMachine,
@@ -5440,7 +5440,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateMachine_stateMachine_compose_region_Region
   (from: UMLStateMachine[MagicDrawUML],
-   to: Set[UMLRegion[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLRegion[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStateMachine,
       to, ops.umlMagicDrawUMLRegion,
@@ -5450,7 +5450,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StateMachine_submachine_reference_submachineState_State
   (from: UMLStateMachine[MagicDrawUML],
-   to: Set[UMLState[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLState[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLStateMachine,
       to, ops.umlMagicDrawUMLState,
@@ -5462,7 +5462,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Stereotype_stereotype_compose_icon_Image
   (from: UMLStereotype[MagicDrawUML],
-   to: Set[UMLImage[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLImage[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStereotype,
       to, ops.umlMagicDrawUMLImage,
@@ -5474,7 +5474,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StringExpression_owningExpression_compose_subExpression_StringExpression
   (from: UMLStringExpression[MagicDrawUML],
-   to: Seq[UMLStringExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLStringExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLStringExpression,
       to, ops.umlMagicDrawUMLStringExpression,
@@ -5486,7 +5486,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
 
   override def set_StructuralFeature_isReadOnly
-  (e: UMLStructuralFeature[MagicDrawUML], isReadOnly: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLStructuralFeature[MagicDrawUML], isReadOnly: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLStructuralFeature(e).getMagicDrawStructuralFeature).flatMap { _e =>
       nonFatalCatchUMLException(e, "setReadOnly", { _e.setReadOnly(isReadOnly) })
     }
@@ -5495,7 +5495,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuralFeatureAction_structuralFeatureAction_compose_object_InputPin
   (from: UMLStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLStructuralFeatureAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5506,7 +5506,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuralFeatureAction_structuralFeatureAction_reference_structuralFeature_StructuralFeature
   (from: UMLStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLStructuralFeature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLStructuralFeature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLStructuralFeatureAction,
       to, ops.umlMagicDrawUMLStructuralFeature,
@@ -5519,7 +5519,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredActivityNode_inStructuredNode_compose_edge_ActivityEdge
   (from: UMLStructuredActivityNode[MagicDrawUML],
-   to: Set[UMLActivityEdge[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityEdge[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredActivityNode,
       to, ops.umlMagicDrawUMLActivityEdge,
@@ -5529,7 +5529,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredActivityNode_inStructuredNode_compose_node_ActivityNode
   (from: UMLStructuredActivityNode[MagicDrawUML],
-   to: Set[UMLActivityNode[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLActivityNode[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredActivityNode,
       to, ops.umlMagicDrawUMLActivityNode,
@@ -5539,7 +5539,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredActivityNode_structuredActivityNode_compose_structuredNodeInput_InputPin
   (from: UMLStructuredActivityNode[MagicDrawUML],
-   to: Set[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredActivityNode,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5549,7 +5549,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredActivityNode_structuredActivityNode_compose_structuredNodeOutput_OutputPin
   (from: UMLStructuredActivityNode[MagicDrawUML],
-   to: Set[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredActivityNode,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -5559,7 +5559,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredActivityNode_scope_compose_variable_Variable
   (from: UMLStructuredActivityNode[MagicDrawUML],
-   to: Set[UMLVariable[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLVariable[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredActivityNode,
       to, ops.umlMagicDrawUMLVariable,
@@ -5568,7 +5568,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLVariable) => x.getMagicDrawVariable)
 
   override def set_StructuredActivityNode_mustIsolate
-  (e: UMLStructuredActivityNode[MagicDrawUML], mustIsolate: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLStructuredActivityNode[MagicDrawUML], mustIsolate: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLStructuredActivityNode(e).getMagicDrawStructuredActivityNode).flatMap { _e =>
       nonFatalCatchUMLException(e, "setMustIsolate", { _e.setMustIsolate(mustIsolate) })
     }
@@ -5577,7 +5577,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredClassifier_structuredClassifier_compose_ownedAttribute_Property
   (from: UMLStructuredClassifier[MagicDrawUML],
-   to: Seq[UMLProperty[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLProperty[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLStructuredClassifier,
       to, ops.umlMagicDrawUMLProperty,
@@ -5587,7 +5587,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_StructuredClassifier_structuredClassifier_compose_ownedConnector_Connector
   (from: UMLStructuredClassifier[MagicDrawUML],
-   to: Set[UMLConnector[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLConnector[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLStructuredClassifier,
       to, ops.umlMagicDrawUMLConnector,
@@ -5599,7 +5599,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Substitution_substitution_reference_contract_Classifier
   (from: UMLSubstitution[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLSubstitution,
       to, ops.umlMagicDrawUMLClassifier,
@@ -5612,7 +5612,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateBinding_templateBinding_compose_parameterSubstitution_TemplateParameterSubstitution
   (from: UMLTemplateBinding[MagicDrawUML],
-   to: Set[UMLTemplateParameterSubstitution[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTemplateParameterSubstitution[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLTemplateBinding,
       to, ops.umlMagicDrawUMLTemplateParameterSubstitution,
@@ -5622,7 +5622,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateBinding_templateBinding_reference_signature_TemplateSignature
   (from: UMLTemplateBinding[MagicDrawUML],
-   to: Option[UMLTemplateSignature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTemplateSignature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateBinding,
       to, ops.umlMagicDrawUMLTemplateSignature,
@@ -5635,7 +5635,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameter_templateParameter_reference_default_ParameterableElement
   (from: UMLTemplateParameter[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameter,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5646,7 +5646,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameter_templateParameter_compose_ownedDefault_ParameterableElement
   (from: UMLTemplateParameter[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameter,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5657,7 +5657,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameter_owningTemplateParameter_compose_ownedParameteredElement_ParameterableElement
   (from: UMLTemplateParameter[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameter,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5668,7 +5668,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameter_templateParameter_reference_parameteredElement_ParameterableElement
   (from: UMLTemplateParameter[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameter,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5681,7 +5681,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameterSubstitution_templateParameterSubstitution_reference_actual_ParameterableElement
   (from: UMLTemplateParameterSubstitution[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameterSubstitution,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5692,7 +5692,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameterSubstitution_templateParameterSubstitution_reference_formal_TemplateParameter
   (from: UMLTemplateParameterSubstitution[MagicDrawUML],
-   to: Option[UMLTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameterSubstitution,
       to, ops.umlMagicDrawUMLTemplateParameter,
@@ -5703,7 +5703,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateParameterSubstitution_owningTemplateParameterSubstitution_compose_ownedActual_ParameterableElement
   (from: UMLTemplateParameterSubstitution[MagicDrawUML],
-   to: Option[UMLParameterableElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLParameterableElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateParameterSubstitution,
       to, ops.umlMagicDrawUMLParameterableElement,
@@ -5716,7 +5716,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateSignature_signature_compose_ownedParameter_TemplateParameter
   (from: UMLTemplateSignature[MagicDrawUML],
-   to: Seq[UMLTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLTemplateSignature,
       to, ops.umlMagicDrawUMLTemplateParameter,
@@ -5726,7 +5726,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateSignature_templateSignature_reference_parameter_TemplateParameter
   (from: UMLTemplateSignature[MagicDrawUML],
-   to: Seq[UMLTemplateParameter[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLTemplateParameter[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOrderedLinks(
       from, ops.umlMagicDrawUMLTemplateSignature,
       to, ops.umlMagicDrawUMLTemplateParameter,
@@ -5738,7 +5738,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateableElement_template_compose_ownedTemplateSignature_TemplateSignature
   (from: UMLTemplateableElement[MagicDrawUML],
-   to: Option[UMLTemplateSignature[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTemplateSignature[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTemplateableElement,
       to, ops.umlMagicDrawUMLTemplateSignature,
@@ -5749,7 +5749,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TemplateableElement_boundElement_compose_templateBinding_TemplateBinding
   (from: UMLTemplateableElement[MagicDrawUML],
-   to: Set[UMLTemplateBinding[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTemplateBinding[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLTemplateableElement,
       to, ops.umlMagicDrawUMLTemplateBinding,
@@ -5761,7 +5761,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TestIdentityAction_testIdentityAction_compose_first_InputPin
   (from: UMLTestIdentityAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTestIdentityAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5772,7 +5772,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TestIdentityAction_testIdentityAction_compose_result_OutputPin
   (from: UMLTestIdentityAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTestIdentityAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -5783,7 +5783,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TestIdentityAction_testIdentityAction_compose_second_InputPin
   (from: UMLTestIdentityAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTestIdentityAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -5796,7 +5796,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeConstraint_timeConstraint_compose_specification_TimeInterval
   (from: UMLTimeConstraint[MagicDrawUML],
-   to: Option[UMLTimeInterval[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTimeInterval[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTimeConstraint,
       to, ops.umlMagicDrawUMLTimeInterval,
@@ -5806,7 +5806,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLTimeInterval) => x.getMagicDrawTimeInterval)
 
   override def set_TimeConstraint_firstEvent
-  (e: UMLTimeConstraint[MagicDrawUML], firstEvent: Option[Boolean]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLTimeConstraint[MagicDrawUML], firstEvent: Option[Boolean]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLTimeConstraint(e).getMagicDrawTimeConstraint)
     .flatMap { _e =>
       nonFatalCatchUMLException(e, "set_TimeConstraint_firstEvent", { _e.setFirstEvent(firstEvent.getOrElse(true)) } )
@@ -5816,7 +5816,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeEvent_timeEvent_compose_when_TimeExpression
   (from: UMLTimeEvent[MagicDrawUML],
-   to: Option[UMLTimeExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTimeExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTimeEvent,
       to, ops.umlMagicDrawUMLTimeExpression,
@@ -5826,7 +5826,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLTimeExpression) => x.getMagicDrawTimeExpression)
 
   override def set_TimeEvent_isRelative
-  (e: UMLTimeEvent[MagicDrawUML], isRelative: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLTimeEvent[MagicDrawUML], isRelative: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLTimeEvent(e).getMagicDrawTimeEvent).flatMap { _e =>
       nonFatalCatchUMLException(e, "setRelative", { _e.setRelative(isRelative) })
     }
@@ -5835,7 +5835,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeExpression_timeExpression_compose_expr_ValueSpecification
   (from: UMLTimeExpression[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTimeExpression,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -5846,7 +5846,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeExpression_timeExpression_reference_observation_Observation
   (from: UMLTimeExpression[MagicDrawUML],
-   to: Set[UMLObservation[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLObservation[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLTimeExpression,
       to, ops.umlMagicDrawUMLObservation,
@@ -5858,7 +5858,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeInterval_timeInterval_reference_max_TimeExpression
   (from: UMLTimeInterval[MagicDrawUML],
-   to: Option[UMLTimeExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTimeExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTimeInterval,
       to, ops.umlMagicDrawUMLTimeExpression,
@@ -5869,7 +5869,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeInterval_timeInterval_reference_min_TimeExpression
   (from: UMLTimeInterval[MagicDrawUML],
-   to: Option[UMLTimeExpression[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTimeExpression[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTimeInterval,
       to, ops.umlMagicDrawUMLTimeExpression,
@@ -5882,7 +5882,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TimeObservation_timeObservation_reference_event_NamedElement
   (from: UMLTimeObservation[MagicDrawUML],
-   to: Option[UMLNamedElement[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLNamedElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTimeObservation,
       to, ops.umlMagicDrawUMLNamedElement,
@@ -5892,7 +5892,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLNamedElement) => x.getMagicDrawNamedElement)
 
   override def set_TimeObservation_firstEvent
-  (e: UMLTimeObservation[MagicDrawUML], firstEvent: Boolean): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLTimeObservation[MagicDrawUML], firstEvent: Boolean): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLTimeObservation(e).getMagicDrawTimeObservation).flatMap { _e =>
       nonFatalCatchUMLException(e, "setFirstEvent", { _e.setFirstEvent(firstEvent) })
     }
@@ -5902,7 +5902,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   override def links_Transition_incoming_reference_target_Vertex
   (from: UMLTransition[MagicDrawUML],
    to: Option[UMLVertex[MagicDrawUML]])
-  : NonEmptyList[java.lang.Throwable] \/ Unit
+  : Set[java.lang.Throwable] \/ Unit
   = referencesOptionalLink(
     from, ops.umlMagicDrawUMLTransition,
     to, ops.umlMagicDrawUMLVertex,
@@ -5914,7 +5914,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   override def links_Transition_outgoing_reference_source_Vertex
   (from: UMLTransition[MagicDrawUML],
    to: Option[UMLVertex[MagicDrawUML]])
-  : NonEmptyList[java.lang.Throwable] \/ Unit
+  : Set[java.lang.Throwable] \/ Unit
   = referencesOptionalLink(
     from, ops.umlMagicDrawUMLTransition,
     to, ops.umlMagicDrawUMLVertex,
@@ -5925,7 +5925,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Transition_transition_compose_effect_Behavior
   (from: UMLTransition[MagicDrawUML],
-   to: Option[UMLBehavior[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLBehavior[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTransition,
       to, ops.umlMagicDrawUMLBehavior,
@@ -5936,7 +5936,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Transition_transition_compose_guard_Constraint
   (from: UMLTransition[MagicDrawUML],
-   to: Option[UMLConstraint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLConstraint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLTransition,
       to, ops.umlMagicDrawUMLConstraint,
@@ -5947,7 +5947,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Transition_transition_reference_redefinedTransition_Transition
   (from: UMLTransition[MagicDrawUML],
-   to: Option[UMLTransition[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLTransition[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTransition,
       to, ops.umlMagicDrawUMLTransition,
@@ -5958,7 +5958,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Transition_transition_compose_trigger_Trigger
   (from: UMLTransition[MagicDrawUML],
-   to: Set[UMLTrigger[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLTrigger[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLTransition,
       to, ops.umlMagicDrawUMLTrigger,
@@ -5967,11 +5967,11 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLTrigger) => x.getMagicDrawTrigger)
 
   override def set_Transition_kind
-  (e: UMLTransition[MagicDrawUML], kind: Option[UMLTransitionKind.Value]): NonEmptyList[java.lang.Throwable] \/ Unit =
+  (e: UMLTransition[MagicDrawUML], kind: Option[UMLTransitionKind.Value]): Set[java.lang.Throwable] \/ Unit =
     checkSession(ops.umlMagicDrawUMLTransition(e).getMagicDrawTransition)
     .flatMap { _e =>
       kind
-      .fold[NonEmptyList[java.lang.Throwable] \/ Unit]{
+      .fold[Set[java.lang.Throwable] \/ Unit]{
         nonFatalCatchUMLException(e, "setKind", { _e.setKind(null) })
       }{ k =>
         val mdK = k match {
@@ -5990,7 +5990,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Trigger_trigger_reference_event_Event
   (from: UMLTrigger[MagicDrawUML],
-   to: Option[UMLEvent[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLEvent[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTrigger,
       to, ops.umlMagicDrawUMLEvent,
@@ -6001,7 +6001,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_Trigger_trigger_reference_port_Port
   (from: UMLTrigger[MagicDrawUML],
-   to: Set[UMLPort[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLPort[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLTrigger,
       to, ops.umlMagicDrawUMLPort,
@@ -6016,7 +6016,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_TypedElement_typedElement_reference_type_Type
   (from: UMLTypedElement[MagicDrawUML],
-   to: Option[UMLType[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLType[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLTypedElement,
       to, ops.umlMagicDrawUMLType,
@@ -6029,7 +6029,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UnmarshallAction_unmarshallAction_compose_object_InputPin
   (from: UMLUnmarshallAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLUnmarshallAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -6040,7 +6040,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UnmarshallAction_unmarshallAction_compose_result_OutputPin
   (from: UMLUnmarshallAction[MagicDrawUML],
-   to: Seq[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Seq[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOrderedLinks(
       from, ops.umlMagicDrawUMLUnmarshallAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -6050,7 +6050,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UnmarshallAction_unmarshallAction_reference_unmarshallType_Classifier
   (from: UMLUnmarshallAction[MagicDrawUML],
-   to: Option[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLUnmarshallAction,
       to, ops.umlMagicDrawUMLClassifier,
@@ -6066,7 +6066,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UseCase_extension_compose_extend_Extend
   (from: UMLUseCase[MagicDrawUML],
-   to: Set[UMLExtend[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExtend[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLUseCase,
       to, ops.umlMagicDrawUMLExtend,
@@ -6076,7 +6076,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UseCase_useCase_compose_extensionPoint_ExtensionPoint
   (from: UMLUseCase[MagicDrawUML],
-   to: Set[UMLExtensionPoint[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLExtensionPoint[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLUseCase,
       to, ops.umlMagicDrawUMLExtensionPoint,
@@ -6086,7 +6086,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UseCase_includingCase_compose_include_Include
   (from: UMLUseCase[MagicDrawUML],
-   to: Set[UMLInclude[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLInclude[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesUnorderedLinks(
       from, ops.umlMagicDrawUMLUseCase,
       to, ops.umlMagicDrawUMLInclude,
@@ -6096,7 +6096,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_UseCase_useCase_reference_subject_Classifier
   (from: UMLUseCase[MagicDrawUML],
-   to: Set[UMLClassifier[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Set[UMLClassifier[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesUnorderedLinks(
       from, ops.umlMagicDrawUMLUseCase,
       to, ops.umlMagicDrawUMLClassifier,
@@ -6108,7 +6108,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ValuePin_valuePin_compose_value_ValueSpecification
   (from: UMLValuePin[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLValuePin,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -6124,7 +6124,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ValueSpecificationAction_valueSpecificationAction_compose_result_OutputPin
   (from: UMLValueSpecificationAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLValueSpecificationAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -6135,7 +6135,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_ValueSpecificationAction_valueSpecificationAction_compose_value_ValueSpecification
   (from: UMLValueSpecificationAction[MagicDrawUML],
-   to: Option[UMLValueSpecification[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLValueSpecification[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLValueSpecificationAction,
       to, ops.umlMagicDrawUMLValueSpecification,
@@ -6151,7 +6151,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_VariableAction_variableAction_reference_variable_Variable
   (from: UMLVariableAction[MagicDrawUML],
-   to: Option[UMLVariable[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLVariable[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     referencesOptionalLink(
       from, ops.umlMagicDrawUMLVariableAction,
       to, ops.umlMagicDrawUMLVariable,
@@ -6170,7 +6170,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_WriteStructuralFeatureAction_writeStructuralFeatureAction_compose_result_OutputPin
   (from: UMLWriteStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLOutputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLOutputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLWriteStructuralFeatureAction,
       to, ops.umlMagicDrawUMLOutputPin,
@@ -6181,7 +6181,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_WriteStructuralFeatureAction_writeStructuralFeatureAction_compose_value_InputPin
   (from: UMLWriteStructuralFeatureAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLWriteStructuralFeatureAction,
       to, ops.umlMagicDrawUMLInputPin,
@@ -6194,7 +6194,7 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   override def links_WriteVariableAction_writeVariableAction_compose_value_InputPin
   (from: UMLWriteVariableAction[MagicDrawUML],
-   to: Option[UMLInputPin[MagicDrawUML]]): NonEmptyList[java.lang.Throwable] \/ Unit =
+   to: Option[UMLInputPin[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
     composesOptionalLink(
       from, ops.umlMagicDrawUMLWriteVariableAction,
       to, ops.umlMagicDrawUMLInputPin,

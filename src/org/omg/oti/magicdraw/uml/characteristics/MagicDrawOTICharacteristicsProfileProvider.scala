@@ -164,7 +164,7 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
   import umlOps._
 
   lazy val resolvedMagicDrawOTISymbols
-  : NonEmptyList[java.lang.Throwable] \/ MagicDrawOTISymbols
+  : Set[java.lang.Throwable] \/ MagicDrawOTISymbols
   = for {
     oti_specification_root_s <- OTI_SPECIFICATION_ROOT_S
     oti_specification_root_packageuri <- OTI_SPECIFICATION_ROOT_packageURI
@@ -199,11 +199,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
   }
 
   override def getAllOTIBuiltInDocumentPackages
-  : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+  : Set[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
     resolvedMagicDrawOTISymbols.toThese.flatMap { otiProfile =>
 
       type Package_OtionalOTICharacteristicsOrError_Tuple =
-      (UMLPackage[MagicDrawUML], NonEmptyList[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
+      (UMLPackage[MagicDrawUML], Set[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
 
       val results: Set[Package_OtionalOTICharacteristicsOrError_Tuple] =
         StereotypesHelper
@@ -234,18 +234,18 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
             }
         }
 
-      val r0: NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
+      val r0: Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
         \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]())
 
-      val rN: NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
+      val rN: Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
         (r0 /: results) { case (ri, (pkg, characteristicsOrError)) =>
           characteristicsOrError
-            .fold[NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
-            l = (nels: NonEmptyList[java.lang.Throwable]) =>
+            .fold[Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
+            l = (nels: Set[java.lang.Throwable]) =>
               \&/.This(nels),
             r = (ch: Option[OTISpecificationRootCharacteristics]) =>
               ch
-              .fold[NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
+              .fold[Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
                 \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]())
               ){ _ch =>
                 \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]((pkg, _ch)))
@@ -257,11 +257,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override def getAllOTISerializableDocumentPackages
-  : NonEmptyList[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
+  : Set[java.lang.Throwable] \&/ Map[UMLPackage[Uml], OTISpecificationRootCharacteristics] =
     resolvedMagicDrawOTISymbols.toThese.flatMap { otiProfile =>
 
       type Package_OtionalOTICharacteristicsOrError_Tuple =
-      (UMLPackage[MagicDrawUML], NonEmptyList[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
+      (UMLPackage[MagicDrawUML], Set[java.lang.Throwable] \/ Option[OTISpecificationRootCharacteristics])
 
       val results: Set[Package_OtionalOTICharacteristicsOrError_Tuple] =
         StereotypesHelper
@@ -292,18 +292,18 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
               }
           }
 
-      val r0: NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
+      val r0: Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
         \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]())
 
-      val rN: NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
+      val rN: Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)] =
         (r0 /: results) { case (ri, (pkg, characteristicsOrError)) =>
           characteristicsOrError
-            .fold[NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
-            l = (nels: NonEmptyList[java.lang.Throwable]) =>
+            .fold[Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
+            l = (nels: Set[java.lang.Throwable]) =>
               \&/.This(nels),
             r = (ch: Option[OTISpecificationRootCharacteristics]) =>
               ch
-                .fold[NonEmptyList[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
+                .fold[Set[java.lang.Throwable] \&/ Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]](
                 \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]())
               ){ _ch =>
                 \&/.That(Set[(UMLPackage[Uml], OTISpecificationRootCharacteristics)]((pkg, _ch)))
@@ -315,10 +315,10 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_PROFILE
-  : NonEmptyList[java.lang.Throwable] \/ UMLProfile[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProfile[MagicDrawUML] =
     Option.apply(StereotypesHelper.getProfile(project, "OTI"))
-      .fold[NonEmptyList[java.lang.Throwable] \/ UMLProfile[MagicDrawUML]](
-      NonEmptyList(
+      .fold[Set[java.lang.Throwable] \/ UMLProfile[MagicDrawUML]](
+      Set(
         UMLError
           .umlOpsError(umlOps, s"Cannot find the MD adaptation of the OMG OTI profile")
       ).left
@@ -327,13 +327,13 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_S
-  : NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
     OTI_PROFILE
       .flatMap { pf =>
         Option.apply(
           StereotypesHelper.getStereotype(project, "SpecificationRoot", umlMagicDrawUMLProfile(pf).getMagicDrawProfile))
-          .fold[NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
-          NonEmptyList(
+          .fold[Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
+          Set(
             UMLError
               .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot stereotype in the MD adaptation of the OMG OTI profile")
           ).left
@@ -343,12 +343,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
       }
 
   override val OTI_SPECIFICATION_ROOT_packageURI
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot::packageURI stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -358,12 +358,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_documentURL
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot::documentURL stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -373,12 +373,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_nsPrefix
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "nsPrefix"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot::nsPrefix stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -388,12 +388,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_uuidPrefix
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot::uuidPrefix stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -403,12 +403,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_artifactKind
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRoot::artifactKind stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -418,13 +418,13 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S
-  : NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
     OTI_PROFILE
       .flatMap { pf =>
         Option.apply(
           StereotypesHelper.getStereotype(project, "SpecificationRootCharacteristics", umlMagicDrawUMLProfile(pf).getMagicDrawProfile))
-          .fold[NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
-          NonEmptyList(
+          .fold[Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
+          Set(
             UMLError
               .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics stereotype in the MD adaptation of the OMG OTI profile")
           ).left
@@ -434,12 +434,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
       }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_packageURI
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "packageURI"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics::packageURI stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -449,12 +449,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_documentURL
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "documentURL"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics::documentURL stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -464,12 +464,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_nsPrefix
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "nsPrefix"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics::nsPrefix stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -479,12 +479,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_uuidPrefix
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "uuidPrefix"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics::uuidPrefix stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -494,12 +494,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_SPECIFICATION_ROOT_CHARACTERIZATION_artifactKind
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_SPECIFICATION_ROOT_CHARACTERIZATION_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "artifactKind"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::SpecificationRootCharacteristics::artifactKind stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -509,14 +509,14 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumeration[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumeration[MagicDrawUML] =
     OTI_PROFILE
       .flatMap { pf =>
         val enums = pf.ownedType.selectByKindOf { case e: UMLEnumeration[MagicDrawUML] => e }
         enums
           .find { e => e.name.get == "OMG ArtifactKind" }
-          .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumeration[MagicDrawUML]](
-          NonEmptyList(
+          .fold[Set[java.lang.Throwable] \/ UMLEnumeration[MagicDrawUML]](
+          Set(
             UMLError
               .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind enum in the MD adaptation of the OMG OTI profile")
           ).left
@@ -526,12 +526,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
       }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_METAMODEL
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral
         .find (_.name.get == "SPECIFIED_METAMODEL")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::SPECIFIED_METAMODEL enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -541,11 +541,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_PROFILE
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral.find (_.name.get == "SPECIFIED_PROFILE")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::SPECIFIED_PROFILE enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -555,11 +555,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND_SPECIFIED_MODEL_LIBRARY
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral.find (_.name.get == "SPECIFIED_MODEL_LIBRARY")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::SPECIFIED_MODEL_LIBRARY enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -569,11 +569,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_METAMODEL
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral.find (_.name.get == "IMPLEMENTED_METAMODEL")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::IMPLEMENTED_METAMODEL enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -583,11 +583,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_PROFILE
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral.find (_.name.get == "IMPLEMENTED_PROFILE")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::IMPLEMENTED_PROFILE enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -597,11 +597,11 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_ARTIFACT_KIND_IMPLEMENTED_MODEL_LIBRARY
-  : NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML] =
     OTI_ARTIFACT_KIND.flatMap { k =>
       k.ownedLiteral.find (_.name.get == "IMPLEMENTED_MODEL_LIBRARY")
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLEnumerationLiteral[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::OMG ArtifactKind::IMPLEMENTED_MODEL_LIBRARY enumeration literal in the MD adaptation of the OMG OTI profile")
         ).left
@@ -611,13 +611,13 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_IDENTITY_S
-  : NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML] =
     OTI_PROFILE
       .flatMap { pf =>
         Option.apply(
           StereotypesHelper.getStereotype(project, "Identity", umlMagicDrawUMLProfile(pf).getMagicDrawProfile))
-          .fold[NonEmptyList[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
-          NonEmptyList(
+          .fold[Set[java.lang.Throwable] \/ UMLStereotype[MagicDrawUML]](
+          Set(
             UMLError
               .umlOpsError(umlOps, s"Cannot find the OTI::Identity stereotype in the MD adaptation of the OMG OTI profile")
           ).left
@@ -627,12 +627,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
       }
 
   override val OTI_IDENTITY_xmiID
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_IDENTITY_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiID"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::Identity::xmiID stereotype property in the MD adaptation of the OMG OTI profile")
         ).left
@@ -642,12 +642,12 @@ extends OTICharacteristicsProfileProvider[MagicDrawUML] {
     }
 
   override val OTI_IDENTITY_xmiUUID
-  : NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
+  : Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML] =
     OTI_IDENTITY_S.flatMap { s =>
       Option.apply(
         StereotypesHelper.getPropertyByName(umlMagicDrawUMLStereotype(s).getMagicDrawStereotype, "xmiUUID"))
-        .fold[NonEmptyList[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ UMLProperty[MagicDrawUML]](
+        Set(
           UMLError
             .umlOpsError(umlOps, s"Cannot find the OTI::Identity::xmiUUID stereotype property in the MD adaptation of the OMG OTI profile")
         ).left

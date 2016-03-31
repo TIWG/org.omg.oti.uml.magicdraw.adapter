@@ -57,7 +57,7 @@ import scala.collection.Iterable
 import java.lang.Runnable
 
 import scala.language.{implicitConversions, postfixOps}
-import scalaz.{@@, \/, \/-, NonEmptyList}
+import scalaz.{@@, \/, \/-}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
@@ -103,7 +103,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     StereotypesHelper.getBaseClass(e).getName
 
   override def tagValues
-  : NonEmptyList[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] =
+  : Set[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] =
     MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
   override def toolSpecific_id: Option[String @@ OTI_ID] =
@@ -113,11 +113,11 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     Some(OTI_UUID(UUIDRegistry.getUUID(e)))
 
   override def hasStereotype(s: UMLStereotype[Uml])
-  : NonEmptyList[java.lang.Throwable] \/ Boolean =
+  : Set[java.lang.Throwable] \/ Boolean =
     \/-(umlMagicDrawUMLStereotype(s).isStereotypeApplied(e))
 
   override def getAppliedStereotypesWithoutMetaclassProperties
-  : NonEmptyList[java.lang.Throwable] \/ Set[UMLStereotype[Uml]] = {
+  : Set[java.lang.Throwable] \/ Set[UMLStereotype[Uml]] = {
     val eMetaclass = e.getClassType
     \/-(StereotypesHelper.getStereotypes(e).to[Set] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
@@ -132,13 +132,13 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   }
 
   override def isAncestorOf(other: UMLElement[Uml])
-  : NonEmptyList[java.lang.Throwable] \/ Boolean =
+  : Set[java.lang.Throwable] \/ Boolean =
     if (e == umlMagicDrawUMLElement(other).getMagicDrawElement)
       \/-(true)
     else
       other
       .owner
-      .fold[NonEmptyList[java.lang.Throwable] \/ Boolean](\/-(false)){ parent =>
+      .fold[Set[java.lang.Throwable] \/ Boolean](\/-(false)){ parent =>
         isAncestorOf(parent)
       }
 

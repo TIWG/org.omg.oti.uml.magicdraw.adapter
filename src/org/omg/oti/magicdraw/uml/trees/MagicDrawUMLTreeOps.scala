@@ -46,6 +46,7 @@ import org.omg.oti.uml.read.api.UMLClassifier
 import org.omg.oti.uml.trees._
 
 import scala.{Boolean,Option,None,Some,StringContext}
+import scala.collection.immutable.Set
 import scala.Predef.String
 import scalaz._, Scalaz._
 
@@ -56,11 +57,11 @@ case class MagicDrawUMLTreeOps
 extends TreeOps[MagicDrawUML] {
 
   val blockSpecificTypePF
-  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+  : Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
     Option
     .apply(StereotypesHelper.getProfile(umlUtil.project, blockSpecificTypeProfileName))
-    .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
-      NonEmptyList(
+    .fold[Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
+      Set(
         treeOpsException(
           this,
           s"MagicDrawUMLTreeOps initialization failed: No profile named '$blockSpecificTypeProfileName'"))
@@ -68,12 +69,12 @@ extends TreeOps[MagicDrawUML] {
     ){ _.right }
 
   val blockSpecificTypeS
-  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+  : Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
     blockSpecificTypePF.flatMap { _blockSpecificTypePF =>
       Option
         .apply(StereotypesHelper.getStereotype(umlUtil.project, blockSpecificTypeStereotypeName, _blockSpecificTypePF))
-        .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
+        Set(
           treeOpsException(
             this,
             s"MagicDrawUMLTreeOps initialization failed: No stereotype named '$blockSpecificTypeStereotypeName'"))
@@ -84,11 +85,11 @@ extends TreeOps[MagicDrawUML] {
     }
 
   val sysmlPF
-  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
+  : Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile =
     Option
     .apply(StereotypesHelper.getProfile(umlUtil.project, "SysML"))
-    .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
-      NonEmptyList(
+    .fold[Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile](
+      Set(
         treeOpsException(
           this,
           "MagicDrawUMLTreeOps initialization failed: No profile named 'SysML'"))
@@ -97,12 +98,12 @@ extends TreeOps[MagicDrawUML] {
 
 
   val sysmlPropertySpecificTypeS
-  : NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
+  : Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype =
     sysmlPF.flatMap { _sysmlPF =>
       Option
         .apply(StereotypesHelper.getStereotype(umlUtil.project, "PropertySpecificType", _sysmlPF))
-        .fold[NonEmptyList[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
-        NonEmptyList(
+        .fold[Set[java.lang.Throwable] \/ com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype](
+        Set(
           treeOpsException(
             this,
             "MagicDrawUMLTreeOps initialization failed: No stereotype named 'PropertySpecificType'"))
@@ -114,7 +115,7 @@ extends TreeOps[MagicDrawUML] {
 
 
   def isRootBlockSpecificType(treeType: UMLClassifier[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ Boolean =
+  : Set[java.lang.Throwable] \/ Boolean =
     blockSpecificTypeS.map { _blockSpecificTypeS =>
       StereotypesHelper.hasStereotype(
         umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,
@@ -122,7 +123,7 @@ extends TreeOps[MagicDrawUML] {
     }
 
   def isPartPropertySpecificType(treeType: UMLClassifier[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ Boolean =
+  : Set[java.lang.Throwable] \/ Boolean =
     sysmlPropertySpecificTypeS.map { _sysmlPropertySpecificTypeS =>
       StereotypesHelper.hasStereotype(
         umlUtil.umlMagicDrawUMLClassifier(treeType).getMagicDrawClassifier,

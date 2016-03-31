@@ -74,9 +74,9 @@ trait MagicDrawUMLElementValue
       subsettingMetaProperties=Set()) )
     
   override def asForwardReferencesToImportableOuterPackageableElements
-  : NonEmptyList[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]] =
+  : Set[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]] =
     element
-    .fold[NonEmptyList[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]]](
+    .fold[Set[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]]](
       Set[UMLPackageableElement[Uml]]().right
     ) { e =>
       e.asForwardReferencesToImportableOuterPackageableElements

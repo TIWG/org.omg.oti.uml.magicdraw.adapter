@@ -83,7 +83,7 @@ case class MagicDrawDocumentSet
   override def asBuiltInMutableDocument
   (d: LoadingMutableDocument[MagicDrawUML],
    artifactKind: OTIArtifactKind)
-  : NonEmptyList[java.lang.Throwable] \/ 
+  : Set[java.lang.Throwable] \/
     (BuiltInMutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) = 
   d match {
     case lmD: MagicDrawLoadingMutableDocument if loadingMutableDocuments.contains(lmD) =>
@@ -97,14 +97,14 @@ case class MagicDrawDocumentSet
           builtInMutableDocuments = this.builtInMutableDocuments + bmD)
       (bmD, ds).right
     case _ =>
-      -\/(NonEmptyList(
+      -\/(Set(
           UMLError.umlAdaptationError(
               "asBuiltInMutableDocument: not in DocumentSet: "+d.info)))
   }
   
   override def freezeBuiltInMutableDocument
   (d: BuiltInMutableDocument[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ 
+  : Set[java.lang.Throwable] \/
     (BuiltInImmutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) =
   d match {
     case mD: MagicDrawBuiltInMutableDocument if builtInMutableDocuments.contains(mD) =>
@@ -118,7 +118,7 @@ case class MagicDrawDocumentSet
           builtInMutableDocuments = this.builtInMutableDocuments - mD)
       (iD, ds).right
     case _ =>
-      -\/(NonEmptyList(
+      -\/(Set(
           UMLError.umlAdaptationError(
               "freezeBuiltInMutableDocument: "+
               "not in DocumentSet or not a MagicDrawBuiltInMutableDocument: "+
@@ -128,7 +128,7 @@ case class MagicDrawDocumentSet
   override def asSerializableMutableDocument
   (d: LoadingMutableDocument[MagicDrawUML],
    artifactKind: OTIArtifactKind)
-  : NonEmptyList[java.lang.Throwable] \/ 
+  : Set[java.lang.Throwable] \/
     (SerializableMutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) = 
   d match {
     case lmD: MagicDrawLoadingMutableDocument if loadingMutableDocuments.contains(lmD) =>
@@ -142,14 +142,14 @@ case class MagicDrawDocumentSet
           serializableMutableDocuments = this.serializableMutableDocuments + smD)
       (smD, ds).right
     case _ =>
-      -\/(NonEmptyList(
+      -\/(Set(
           UMLError.umlAdaptationError(
               "asBuiltInMutableDocument: not in DocumentSet: "+d.info)))
   }
 
   override def freezeSerializableMutableDocument
   (d: SerializableMutableDocument[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ 
+  : Set[java.lang.Throwable] \/
     (SerializableImmutableDocument[MagicDrawUML], DocumentSet[MagicDrawUML]) =
   d match {
     case mD: MagicDrawSerializableMutableDocument if serializableMutableDocuments.contains(mD) =>
@@ -163,7 +163,7 @@ case class MagicDrawDocumentSet
           serializableMutableDocuments = this.serializableMutableDocuments - mD)
       (iD, ds).right
     case _ =>
-      -\/(NonEmptyList(
+      -\/(Set(
           UMLError.umlAdaptationError(
               "freezeSerializableMutableDocument: "+
               "not in DocumentSet or not a MagicDrawSerializableMutableDocument: "+
@@ -176,7 +176,7 @@ object MagicDrawDocumentSet {
 
   def addDocument
   (ds: DocumentSet[MagicDrawUML], d: Document[MagicDrawUML])
-  : NonEmptyList[java.lang.Throwable] \/ MagicDrawDocumentSet =
+  : Set[java.lang.Throwable] \/ MagicDrawDocumentSet =
     (ds, d) match {
       case (mds: MagicDrawDocumentSet, md: MagicDrawSerializableImmutableDocument) =>
         \/-(
