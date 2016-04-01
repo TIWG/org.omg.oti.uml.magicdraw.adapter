@@ -43,6 +43,7 @@ import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.read.api._
 
+import scala.collection.immutable.Set
 import scala.{Option,None}
 import scalaz._, Scalaz._
 
@@ -51,11 +52,11 @@ case class MagicDrawOTIInfo
  umlOps: MagicDrawUMLUtil,
  otiCharacteristicsProvider: OTICharacteristicsProvider[MagicDrawUML]) {
 
-  def otiProfile: NonEmptyList[java.lang.Throwable] \/ Option[UMLProfile[MagicDrawUML]] =
+  def otiProfile: Set[java.lang.Throwable] \/ Option[UMLProfile[MagicDrawUML]] =
   otiCharacteristicsProvider match {
     case pp: OTICharacteristicsProfileProvider[MagicDrawUML] =>
-      pp.OTI_PROFILE.fold[NonEmptyList[java.lang.Throwable] \/ Option[UMLProfile[MagicDrawUML]]](
-        l = (nels: NonEmptyList[java.lang.Throwable]) => nels.left,
+      pp.OTI_PROFILE.fold[Set[java.lang.Throwable] \/ Option[UMLProfile[MagicDrawUML]]](
+        l = (nels: Set[java.lang.Throwable]) => nels.left,
         r = (pf: UMLProfile[MagicDrawUML]) => pf.some.right
       )
     case _ =>
