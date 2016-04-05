@@ -453,8 +453,8 @@ class MagicDrawDocumentOps
                        packageURI = OTI_URI("http://www.omg.org/TIWG/OTI/20160128/OTI.profile"),
                        documentURL = OTI_URL("http://www.omg.org/TIWG/OTI/20160128/OTI.profile.xmi"),
                        artifactKind = OTIBuiltInProfileArtifactKind,
-                       nsPrefix = OTI_NS_PREFIX("StandardProfile"),
-                       uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.StandardProfile")),
+                       nsPrefix = OTI_NS_PREFIX("OTIProfile"),
+                       uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.OTIProfile")),
 
                    documentURL =
                      MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
