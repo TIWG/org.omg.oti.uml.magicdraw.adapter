@@ -1,5 +1,6 @@
 package org.omg.oti.magicdraw.uml.canonicalXMI.helper
 
+import java.lang.System
 import java.util.concurrent.TimeUnit
 
 import com.nomagic.magicdraw.core.Project
@@ -11,7 +12,8 @@ import org.omg.oti.uml._
 import org.omg.oti.uml.read.api.{UML, UMLComment, UMLElement, UMLPackage}
 import org.omg.oti.uml.xmi.Document
 
-import scala.collection.immutable.Set
+import scala.collection.immutable.{Map,Set}
+import scala.{Boolean,Long,Option,None,StringContext}
 import scalaz._
 
 object MagicDrawOTIHelper {
