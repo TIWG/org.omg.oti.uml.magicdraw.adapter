@@ -43,7 +43,6 @@ import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
 
 import org.omg.oti.uml.canonicalXMI.helper.{OTIAdapter, OTIDocumentSetAdapter, OTIResolvedDocumentSetAdapter, OTIResolvedDocumentSetGeneratorAdapter}
-import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 
 package object helper {
 
