@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: OTI MagicDraw Adapter
+Bundle-SymbolicName: org.omg.oti.magicdraw;singleton:=true
+Bundle-Version: 0.19.0.qualifier
+Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="2.11.0";visibility:=reexport,
+ org.eclipse.emf.ecore.edit;bundle-version="2.9.0";visibility:=reexport,
+ org.eclipse.emf.edit;bundle-version="2.11.0";visibility:=reexport,
+ org.eclipse.uml2.uml.resources;bundle-version="5.1.0";visibility:=reexport,
+ org.eclipse.emf.transaction;bundle-version="1.9.0";visibility:=reexport,
+ org.omg.oti.uml.loader;bundle-version="0.19.0";visibility:=reexport,
+ org.omg.oti.trees;bundle-version="0.19.0";visibility:=reexport,
+ org.omg.oti.changeMigration;bundle-version="0.19.0";visibility:=reexport
+Export-Package: org.omg.oti.magicdraw.uml.canonicalXMI,
+ org.omg.oti.magicdraw.uml.canonicalXMI.helper,
+ org.omg.oti.magicdraw.uml.characteristics,
+ org.omg.oti.magicdraw.uml.read,
+ org.omg.oti.magicdraw.uml.trees,
+ org.omg.oti.magicdraw.uml.write
+Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

@@ -157,7 +157,7 @@ case class MagicDrawOTISymbols
 
 case class MagicDrawOTICharacteristicsProfileProvider
 ()
-(override implicit val otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]] = None,
+(override implicit val otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
  implicit val umlOps: MagicDrawUMLUtil)
 extends OTICharacteristicsProfileProvider[MagicDrawUML] {
 
