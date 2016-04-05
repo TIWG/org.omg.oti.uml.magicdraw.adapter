@@ -38,6 +38,7 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
+import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTICharacteristicsProfileProvider
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
 
@@ -50,7 +51,7 @@ package object helper {
   OTIAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawOTICharacteristicsProfileProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate ]
 
@@ -58,7 +59,7 @@ package object helper {
   OTIDocumentSetAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawOTICharacteristicsProfileProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,
@@ -68,7 +69,7 @@ package object helper {
   OTIResolvedDocumentSetAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawOTICharacteristicsProfileProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,
@@ -78,7 +79,7 @@ package object helper {
   OTIResolvedDocumentSetGeneratorAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawOTICharacteristicsProfileProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,
@@ -89,7 +90,7 @@ package object helper {
   OTIResolvedDocumentSetGeneratorAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawOTICharacteristicsProfileProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,

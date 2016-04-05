@@ -83,7 +83,7 @@ object MagicDrawOTIAdapters {
   def magicDrawOTIProfileCharacteristicsCreator
   (otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]])
   (umlOps: MagicDrawUMLUtil)
-  : Set[java.lang.Throwable] \/ OTICharacteristicsProvider[MagicDrawUML]
+  : Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsProfileProvider
   = \/-(MagicDrawOTICharacteristicsProfileProvider()(otiCharacterizations, umlOps))
 
   def magicDrawUMLFactoryCreator
@@ -103,7 +103,7 @@ object MagicDrawOTIAdapters {
    : => Set[java.lang.Throwable] \/ MagicDrawUMLUtil
    = magicDrawUMLOpsCreator(p),
    otiCharacteristicsCreator
-   : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ OTICharacteristicsProvider[MagicDrawUML]
+   : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsProfileProvider
    = magicDrawOTIProfileCharacteristicsCreator(otiCharacterizations),
    factoryCreator
    : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawUMLFactory
