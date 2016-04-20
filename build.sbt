@@ -197,6 +197,17 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         Artifact("oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
+  .dependsOnSourceProjectOrLibraryArtifacts(
+    "oti-uml-json-serialization",
+    "org.omg.oti.uml.json.serialization",
+    Seq(
+      //      //  extra("artifact.kind" -> "generic.library")
+      "org.omg.tiwg" %% "oti-uml-json-serialization"
+        % Versions_oti_uml_json_serialization.version %
+        "compile" withSources() withJavadoc() artifacts
+        Artifact("oti-uml-json-serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
+    )
+  )
   .settings(
     libraryDependencies +=
       "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
