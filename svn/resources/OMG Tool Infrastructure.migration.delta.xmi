@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<migration:Old2NewIDMapping xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:migration="http://www.omg.org/ToolInfrastructure/20141225/Migration" modelIdentifier="../../MD/dynamicScripts/org.omg.oti.magicdraw/resources/OMG%20Tool%20Infrastructure.mdzip">
+  <entries oldID="_18_0_4_ff3038a_1447871419851_111862_5149" newID="OTI._profileApplication.OTI"/>
+</migration:Old2NewIDMapping>

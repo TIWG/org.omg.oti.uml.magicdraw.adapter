@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="org.omg.oti.magicdraw" basedir=".">
+
+    <property name="memorySize" 		value="-Xmx3076M"/>
+    <property name="maxPermGenSize"	value="-XX:MaxPermSize=1024M" />
+
+    <import file="${md.install.dir}/data/eclipse/zip.xml"/>
+
+    <property name="md.build.tools.dir" location="${md.install.dir}/data/eclipse/resource/SMDP-PackageB" />
+    <import file="${md.build.tools.dir}/build.md.scala.dynamicScripts.xml"/>
+
+    <property name="scripts.dir" 		location="."/>
+    <property name="project.dir" 		location="."/>
+    <property name="scripts.name" 		value="${ant.project.name}" />
+    <property name="scripts.archive" 	value="${ant.project.name}" />
+    <property name="scripts.version" 	value="${THIS_INFO.version}" />
+    <property name="scripts.resource"	value="data/resourcemanager/MDR_org_omg_oti_magicdraw_descriptor.xml"/>
+
+    <echoproperties prefix="md"/>
+    <echoproperties/>
+
+    <target name="all" depends="all.error,all.ok"/>
+
+    <target name="all.error" unless="all.precondition.scala">
+        <echo message="Check the environment variables tested in the target 'all.precondition.scala'"/>
+        <fail/>
+    </target>
+
+    <target name="all.ok" if="all.precondition.scala" depends="publish">
+        <save.script.properties/>
+    </target>
+
+    <target name="publish">
+        <echoproperties prefix="env"/>
+        <exec executable="${env.JENKINS_HOME}/tools/SBT/sbt"
+              failifexecutionfails="true"
+              failonerror="true"
+              logerror="true"
+              dir=".">
+            <arg value="-java-home"/>
+            <arg value="${env.JAVA8_HOME}"/>
+            <arg value="-DOTI_LOCAL_REPOSITORY=${env.JPL_MBEE_LOCAL_REPOSITORY}"/>
+            <arg value="-DMD_INSTALL_DIR=${md.install.dir}"/>
+            <arg value="-batch"/>
+            <arg value="-no-colors"/>
+            <arg value="publish"/>
+        </exec>
+    </target>
+
+</project>
