@@ -38,24 +38,27 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api.{UMLDiagram, UMLElement, UMLNamespace}
+import scala.Option
+
 trait MagicDrawUMLDiagram 
-  extends MagicDrawUMLNamedElement {
+  extends MagicDrawUMLNamedElement
+  with UMLDiagram[MagicDrawUML] {
   
   override protected def e: Uml#Diagram
   def getMagicDrawDiagram = e
-    
-  override def metaAttributes: MetaAttributeFunctions =
-    namedElement_metaAttributes
-    
-  override def forwardReferencesFromMetamodelAssociations = 
-    namedElement_forwardReferencesFromMetamodelAssociations
-    
-  override def compositeMetaProperties: MetaPropertyFunctions =
-    namedElement_compositeMetaProperties
-    
-  override def referenceMetaProperties: MetaPropertyFunctions =
-    namedElement_referenceMetaProperties
-    
+
+  override implicit val umlOps = ops
+  import umlOps._
+
+  override def context
+  : Option[UMLElement[Uml]]
+  = for { result <- Option.apply(e.getContext) } yield result
+
+  override def ownedDiagram_diagramOwner
+  : Option[UMLNamespace[Uml]]
+  = for { result <- Option.apply(e.getOwnerOfDiagram) } yield result
+
 }
 
 case class MagicDrawUMLDiagramImpl( val e: MagicDrawUML#Diagram, ops: MagicDrawUMLUtil )

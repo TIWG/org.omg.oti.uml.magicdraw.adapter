@@ -38,7 +38,7 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
-import org.omg.oti.uml.characteristics.OTISpecificationRootCharacteristics
+import org.omg.oti.json.common.OTISpecificationRootCharacteristics
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.xmi._
 

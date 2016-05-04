@@ -39,7 +39,7 @@
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
 import org.omg.oti.magicdraw.uml.read._
-import org.omg.oti.uml.OTIPrimitiveTypes._
+import org.omg.oti.json.common.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.read.api._

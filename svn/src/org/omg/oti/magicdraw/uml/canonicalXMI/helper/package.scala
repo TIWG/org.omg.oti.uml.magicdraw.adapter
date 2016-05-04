@@ -38,10 +38,11 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
-import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTICharacteristicsProfileProvider
+import org.omg.oti.json.uml.serialization.OTIJsonElementHelper
+import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsDataProvider, MagicDrawOTICharacteristicsProfileProvider}
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
-
+import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 import org.omg.oti.uml.canonicalXMI.helper.{OTIAdapter, OTIDocumentSetAdapter, OTIResolvedDocumentSetAdapter, OTIResolvedDocumentSetGeneratorAdapter}
 
 package object helper {
@@ -50,7 +51,32 @@ package object helper {
   OTIAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
+      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate ]
+
+  type MagicDrawOTIProfileAdapter =
+  OTIAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
       MagicDrawOTICharacteristicsProfileProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate ]
+
+  type MagicDrawOTIJsonElementHelperForProfileAdapter =
+  OTIJsonElementHelper
+  [ MagicDrawUML,
+    MagicDrawUMLUtil,
+    MagicDrawOTICharacteristicsProfileProvider,
+    MagicDrawUMLFactory,
+    MagicDrawUMLUpdate,
+    MagicDrawDocumentSet ]
+
+  type MagicDrawOTIDataAdapter =
+  OTIAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsDataProvider,
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate ]
 
@@ -58,13 +84,33 @@ package object helper {
   OTIDocumentSetAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      MagicDrawOTICharacteristicsProfileProvider,
+      OTICharacteristicsProvider[MagicDrawUML],
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,
       MagicDrawDocumentSet]
 
-  type MagicDrawOTIResolvedDocumentSetAdapter =
+  type MagicDrawOTIDocumentSetAdapterForProfileProvider =
+  OTIDocumentSetAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsProfileProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate,
+      MagicDrawDocumentOps,
+      MagicDrawDocumentSet ]
+
+  type MagicDrawOTIDocumentSetAdapterForDataProvider =
+  OTIDocumentSetAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsDataProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate,
+      MagicDrawDocumentOps,
+      MagicDrawDocumentSet]
+
+  type MagicDrawOTIResolvedDocumentSetAdapterForProfileProvider =
   OTIResolvedDocumentSetAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
@@ -74,11 +120,31 @@ package object helper {
       MagicDrawDocumentOps,
       MagicDrawDocumentSet]
 
+  type MagicDrawOTIResolvedDocumentSetAdapterForDataProvider =
+  OTIResolvedDocumentSetAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsDataProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate,
+      MagicDrawDocumentOps,
+      MagicDrawDocumentSet]
+
+  type MagicDrawOTIResolvedDocumentSetAdapter =
+  OTIResolvedDocumentSetAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      OTICharacteristicsProvider[MagicDrawUML],
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate,
+      MagicDrawDocumentOps,
+      MagicDrawDocumentSet]
+
   type MagicDrawOTIResolvedDocumentSetIDGeneratorAdapter =
   OTIResolvedDocumentSetGeneratorAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      MagicDrawOTICharacteristicsProfileProvider,
+      OTICharacteristicsProvider[MagicDrawUML],
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,
@@ -89,7 +155,7 @@ package object helper {
   OTIResolvedDocumentSetGeneratorAdapter
     [ MagicDrawUML,
       MagicDrawUMLUtil,
-      MagicDrawOTICharacteristicsProfileProvider,
+      OTICharacteristicsProvider[MagicDrawUML],
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate,
       MagicDrawDocumentOps,

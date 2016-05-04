@@ -40,7 +40,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.uml2.ext.jmi.helpers.{ModelHelper, StereotypesHelper}
 
-import org.omg.oti.uml.OTIPrimitiveTypes._
+import org.omg.oti.json.common.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 import org.omg.oti.uml.read.api._
@@ -70,15 +70,15 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Set[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
-    Iterable(
+  : Set[java.lang.Throwable] \/ Iterable[scala.xml.Elem]
+  = Iterable(
       scala.xml.Elem(
         prefix = null,
         label = stereotypeTagProperty.name.get,
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = OTI_ID.unwrap(extendedElement.toolSpecific_id.get),
+          value = TOOL_SPECIFIC_ID.unwrap(extendedElement.toolSpecific_id),
           next = scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
@@ -106,7 +106,7 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
         attributes = new scala.xml.PrefixedAttribute(
           pre = "xmi",
           key = "idref",
-          value = OTI_ID.unwrap(extendedElement.toolSpecific_id.get),
+          value = TOOL_SPECIFIC_ID.unwrap(extendedElement.toolSpecific_id),
           next = scala.xml.Null),
         scope = xmiScopes,
         minimizeEmpty = true))
@@ -118,7 +118,7 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
  override val appliedStereotype: MagicDrawUMLStereotype,
  override val stereotypeTagProperty: MagicDrawUMLProperty,
  override val stereotypeTagPropertyType: MagicDrawUMLStereotype,
- val tagPropertyValueAppliedStereotypeAndElementReferences: Iterable[(MagicDrawUMLStereotype, MagicDrawUMLElement)])
+ tagPropertyValueAppliedStereotypeAndElementReferences: Iterable[(MagicDrawUMLStereotype, MagicDrawUMLElement)])
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagStereotypeInstanceValue[MagicDrawUML] {
 
@@ -127,20 +127,32 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
-  : Set[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
-    \/-(
+  : Set[java.lang.Throwable] \/ Iterable[scala.xml.Elem]
+  = {
+    val s0: Set[java.lang.Throwable] \/ Vector[scala.xml.Elem] = Vector[scala.xml.Elem]().right
+    val sN
+    : Set[java.lang.Throwable] \/ Vector[scala.xml.Elem]
+    = (s0 /: tagPropertyValueAppliedStereotypeAndElementReferences) { case (si, (s, e)) =>
+
       for {
-        (s, e) <- tagPropertyValueAppliedStereotypeAndElementReferences
-      } yield scala.xml.Elem(
-        prefix = null,
-        label = stereotypeTagProperty.name.get,
-        attributes = new scala.xml.PrefixedAttribute(
-          pre = "xmi",
-          key = "idref",
-          value = OTI_ID.unwrap(IDGenerator.computeStereotypeApplicationID(e.toolSpecific_id.get, s.toolSpecific_id.get)),
-          scala.xml.Null),
-        scope = xmiScopes,
-        minimizeEmpty = true))
+        vi <- si
+        eID <- e.xmiID()
+        sID <- e.xmiID()
+      } yield
+        vi :+
+          scala.xml.Elem(
+            prefix = null,
+            label = stereotypeTagProperty.name.get,
+            attributes = new scala.xml.PrefixedAttribute(
+              pre = "xmi",
+              key = "idref",
+              value = OTI_ID.unwrap(IDGenerator.computeStereotypeApplicationOTI_ID(eID, sID)),
+              scala.xml.Null),
+            scope = xmiScopes,
+            minimizeEmpty = true)
+    }
+    sN
+  }
 
 }
 

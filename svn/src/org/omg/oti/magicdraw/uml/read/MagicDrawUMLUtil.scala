@@ -1037,6 +1037,9 @@ case class MagicDrawUMLUtil(project: Project)
   implicit def umlElementImport(_e: Uml#ElementImport): UMLElementImport[Uml] =
     cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLElementImport]
 
+  implicit def umlElementValue(_e: Uml#ElementValue): UMLElementValue[Uml] =
+    cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLElementValue]
+
   implicit def umlEncapsulatedClassifier(_e: Uml#EncapsulatedClassifier): UMLEncapsulatedClassifier[Uml] =
     cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLEncapsulatedClassifier]
 
@@ -1531,11 +1534,8 @@ case class MagicDrawUMLUtil(project: Project)
 
   // MagicDraw-specific
 
-  implicit def umlDiagram(_e: Uml#Diagram): MagicDrawUMLDiagram =
+  implicit def umlDiagram(_e: Uml#Diagram): UMLDiagram[Uml] =
     cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLDiagram]
-
-  implicit def umlElementValue(_e: Uml#ElementValue): MagicDrawUMLElementValue =
-    cacheLookupOrUpdate(_e).asInstanceOf[MagicDrawUMLElementValue]
 
   // caution: these implicit conversions can lead to circularities if used improperly!
 
@@ -1894,6 +1894,11 @@ case class MagicDrawUMLUtil(project: Project)
       case mdE: MagicDrawUMLDevice => mdE
     }
 
+  def umlMagicDrawUMLDiagram(_e: UMLDiagram[Uml]): MagicDrawUMLDiagram =
+    _e match {
+      case mdE: MagicDrawUMLDiagram => mdE
+    }
+
   def umlMagicDrawUMLDirectedRelationship(_e: UMLDirectedRelationship[Uml]): MagicDrawUMLDirectedRelationship =
     _e match {
       case mdE: MagicDrawUMLDirectedRelationship => mdE
@@ -1927,6 +1932,11 @@ case class MagicDrawUMLUtil(project: Project)
   def umlMagicDrawUMLElementImport(_e: UMLElementImport[Uml]): MagicDrawUMLElementImport =
     _e match {
       case mdE: MagicDrawUMLElementImport => mdE
+    }
+
+  def umlMagicDrawUMLElementValue(_e: UMLElementValue[Uml]): MagicDrawUMLElementValue =
+    _e match {
+      case mdE: MagicDrawUMLElementValue => mdE
     }
 
   def umlMagicDrawUMLEncapsulatedClassifier(_e: UMLEncapsulatedClassifier[Uml]): MagicDrawUMLEncapsulatedClassifier =

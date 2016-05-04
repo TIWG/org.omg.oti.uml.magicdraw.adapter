@@ -47,7 +47,7 @@ import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.language.postfixOps
 
-import org.omg.oti.uml.OTIPrimitiveTypes._
+import org.omg.oti.json.common.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.canonicalXMI._

@@ -2250,6 +2250,19 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
 
   // Device
 
+  // Diagram
+
+  override def links_Diagram_diagram_reference_context_Element
+  (from: UMLDiagram[MagicDrawUML],
+   to: Option[UMLElement[MagicDrawUML]])
+  : Set[java.lang.Throwable] \/ Unit
+  = referencesOptionalLink(
+    from, ops.umlMagicDrawUMLDiagram,
+    to, ops.umlMagicDrawUMLElement,
+    (x: MagicDrawUMLDiagram) => x.getMagicDrawDiagram,
+    (x: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Diagram,
+     y: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element) => x.setContext(y),
+    (x: MagicDrawUMLElement) => x.getMagicDrawElement)
 
   // DirectedRelationship
 
@@ -2405,6 +2418,19 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
         nonFatalCatchUMLException(e, "setVisibility", { _e.setVisibility(vv) })
       }
     }
+
+  // ElementValue
+
+  override def links_ElementValue_elementValue_reference_element_Element
+  (from: UMLElementValue[MagicDrawUML],
+   to: Option[UMLElement[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
+    referencesOptionalLink(
+      from, ops.umlMagicDrawUMLElementValue,
+      to, ops.umlMagicDrawUMLElement,
+      (x: MagicDrawUMLElementValue) => x.getMagicDrawElementValue,
+      (x: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ElementValue,
+       y: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element) => x.setElement(y),
+      (x: MagicDrawUMLElement) => x.getMagicDrawElement)
 
   // EncapsulatedClassifier
 
@@ -3860,6 +3886,17 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
       (x: MagicDrawUMLNamespace) => x.getMagicDrawNamespace,
       (x: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace) => x.getOwnedRule,
       (x: MagicDrawUMLConstraint) => x.getMagicDrawConstraint)
+
+  override def links_Namespace_diagramOwner_compose_ownedDiagram_Diagram
+  (from: UMLNamespace[MagicDrawUML],
+   to: Set[UMLDiagram[MagicDrawUML]]): Set[java.lang.Throwable] \/ Unit =
+    composesUnorderedLinks(
+      from, ops.umlMagicDrawUMLNamespace,
+      to, ops.umlMagicDrawUMLDiagram,
+      (x: MagicDrawUMLNamespace) => x.getMagicDrawNamespace,
+      (x: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Namespace) => x.getOwnedDiagram,
+      (x: MagicDrawUMLDiagram) => x.getMagicDrawDiagram)
+
 
   override def links_Namespace_importingNamespace_compose_packageImport_PackageImport
   (from: UMLNamespace[MagicDrawUML],

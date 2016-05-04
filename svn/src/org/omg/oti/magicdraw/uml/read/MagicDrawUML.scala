@@ -134,7 +134,7 @@ trait MagicDrawUML extends org.omg.oti.uml.read.api.UML {
   // MagicDraw-specific
   
   type Diagram = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Diagram
-  type ElementValue = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ElementValue
+  override type ElementValue = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ElementValue
   
   
   override type Abstraction = com.nomagic.uml2.ext.magicdraw.classes.mddependencies.Abstraction

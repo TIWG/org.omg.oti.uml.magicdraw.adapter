@@ -49,8 +49,9 @@ import com.nomagic.ci.persistence.IProject
 import com.nomagic.ci.persistence.local.spi.localproject.{LocalAttachedProject, LocalPrimaryProject}
 import com.nomagic.magicdraw.teamwork.application.storage.{TeamworkAttachedProject, TeamworkPrimaryProject}
 import org.apache.xml.resolver.CatalogManager
+import org.omg.oti.json.common.OTIPrimitiveTypes._
+import org.omg.oti.json.common._
 import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTICharacteristicsProfileProvider
-import org.omg.oti.uml.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._

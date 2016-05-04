@@ -41,23 +41,21 @@ package org.omg.oti.magicdraw.uml.canonicalXMI
 import java.io.File
 import java.lang.IllegalArgumentException
 
-
-import com.nomagic.magicdraw.core.{ApplicationEnvironment, Application}
+import com.nomagic.magicdraw.core.{Application, ApplicationEnvironment}
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
-import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsProfileProvider, MagicDrawOTISymbols}
-
+import org.omg.oti.json.common.OTIArtifactKind
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.characteristics._
 import org.omg.oti.uml.xmi._
-
 import org.omg.oti.magicdraw.uml.read._
 
-import scala.{AnyRef, Boolean, Function1, Option, None, Some}
+import scala.{AnyRef, Boolean, Function1, None, Option, Some}
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.reflect.runtime.universe._
-import scalaz._, Scalaz._
+import scalaz._
+import Scalaz._
 
 /**
  * MagicDraw-specific OTI DocumentSet

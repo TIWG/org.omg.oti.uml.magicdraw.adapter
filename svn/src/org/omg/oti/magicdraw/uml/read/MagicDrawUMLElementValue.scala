@@ -39,15 +39,13 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.UMLError
-import org.omg.oti.uml._
 import org.omg.oti.uml.read.api._
-import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.Option
-import scalaz._, Scalaz._
 
 trait MagicDrawUMLElementValue 
-  extends MagicDrawUMLValueSpecification {
+  extends MagicDrawUMLValueSpecification
+  with UMLElementValue[MagicDrawUML] {
   
   override protected def e: Uml#ElementValue
   def getMagicDrawElementValue = e
@@ -55,32 +53,6 @@ trait MagicDrawUMLElementValue
   
   def element: Option[UMLElement[Uml]] =
     for { result <- Option.apply( e.getElement ) } yield result
-    
-  override def metaAttributes: MetaAttributeFunctions =
-    valueSpecification_metaAttributes
-    
-  override def forwardReferencesFromMetamodelAssociations = 
-    element_forwardReferencesFromMetamodelAssociations ++
-    element
-    
-  override def compositeMetaProperties: MetaPropertyFunctions =
-    valueSpecification_compositeMetaProperties
-    
-  override def referenceMetaProperties: MetaPropertyFunctions =
-    valueSpecification_referenceMetaProperties ++
-    Seq( MetaPropertyReference[Uml, MagicDrawUMLElementValue, UMLElement[Uml]](
-      "element", _.element, isComposite=false, isUnique=true, isOrdered=false,
-      redefinedMetaProperties=Set(),
-      subsettingMetaProperties=Set()) )
-    
-  override def asForwardReferencesToImportableOuterPackageableElements
-  : Set[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]] =
-    element
-    .fold[Set[java.lang.Throwable] \/ Set[UMLPackageableElement[Uml]]](
-      Set[UMLPackageableElement[Uml]]().right
-    ) { e =>
-      e.asForwardReferencesToImportableOuterPackageableElements
-    }
 
 }
 

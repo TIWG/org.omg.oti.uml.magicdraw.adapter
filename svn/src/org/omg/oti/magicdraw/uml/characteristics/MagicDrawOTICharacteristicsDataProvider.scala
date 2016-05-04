@@ -36,20 +36,21 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package org.omg.oti.magicdraw.uml.read
+package org.omg.oti.magicdraw.uml.characteristics
 
-import org.omg.oti.uml.read.api._
+import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
+import org.omg.oti.json.common.OTIDocumentSetConfiguration
+import org.omg.oti.uml.characteristics.OTICharacteristicsDataProvider
+import org.omg.oti.uml.read.api.UMLPackage
+import org.omg.oti.uml.read.operations.UMLOps
 
-trait MagicDrawUMLAbstraction 
-  extends MagicDrawUMLDependency
-  with UMLAbstraction[MagicDrawUML] {
+import scala.reflect.runtime.universe._
 
-  override protected def e: Uml#Abstraction
-  def getMagicDrawAbstraction = e
-
-
+case class MagicDrawOTICharacteristicsDataProvider
+(override val data: OTIDocumentSetConfiguration)
+(override val umlOps: MagicDrawUMLUtil)
+(override implicit val umlTag: TypeTag[MagicDrawUML],
+ override implicit val umlPackageTag: TypeTag[UMLPackage[MagicDrawUML]],
+ override implicit val opsTag: TypeTag[UMLOps[MagicDrawUML]])
+extends OTICharacteristicsDataProvider[MagicDrawUML] {
 }
-
-case class MagicDrawUMLAbstractionImpl
-(e: MagicDrawUML#Abstraction, ops: MagicDrawUMLUtil)
-  extends MagicDrawUMLAbstraction

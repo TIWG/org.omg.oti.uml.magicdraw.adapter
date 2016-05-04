@@ -227,6 +227,9 @@ case class MagicDrawUMLFactory(mdUMLUtils: MagicDrawUMLUtil)
   override def createUMLDevice: Set[java.lang.Throwable] \/ UMLDevice[MagicDrawUML] =
     \/-(f.createDeviceInstance())
 
+  override def createUMLDiagram: Set[java.lang.Throwable] \/ UMLDiagram[MagicDrawUML] =
+    \/-(f.createDiagramInstance())
+
   override def createUMLDuration: Set[java.lang.Throwable] \/ UMLDuration[MagicDrawUML] =
     \/-(f.createDurationInstance())
 
@@ -241,6 +244,9 @@ case class MagicDrawUMLFactory(mdUMLUtils: MagicDrawUMLUtil)
 
   override def createUMLElementImport: Set[java.lang.Throwable] \/ UMLElementImport[MagicDrawUML] =
     \/-(f.createElementImportInstance())
+
+  override def createUMLElementValue: Set[java.lang.Throwable] \/ UMLElementValue[MagicDrawUML]
+  = \/-(f.createElementValueInstance())
 
   override def createUMLEnumeration: Set[java.lang.Throwable] \/ UMLEnumeration[MagicDrawUML] =
     \/-(f.createEnumerationInstance())

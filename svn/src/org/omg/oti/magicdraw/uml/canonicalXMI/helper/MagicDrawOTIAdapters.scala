@@ -42,9 +42,10 @@ import java.io.File
 
 import com.nomagic.magicdraw.core.Project
 import org.omg.oti.magicdraw.uml.canonicalXMI.{MagicDrawDocumentOps, MagicDrawDocumentSet, MagicDrawHashIDGenerator, MagicDrawIDGenerator}
-import org.omg.oti.magicdraw.uml.characteristics.MagicDrawOTICharacteristicsProfileProvider
+import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsDataProvider, MagicDrawOTICharacteristicsProfileProvider}
 import org.omg.oti.magicdraw.uml.read.{MagicDrawFileChooser, MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
+import org.omg.oti.json.common._
 import org.omg.oti.uml.{RelationTriple, UMLError}
 import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.canonicalXMI.helper.OTIAdapter
@@ -57,7 +58,7 @@ import org.omg.oti.uml.xmi.{Document, IDGenerator}
 import scala.collection.immutable._
 import scala.reflect.runtime.universe._
 import scala.util.control.Exception._
-import scala.{Boolean, Option, None, StringContext}
+import scala.{Boolean, None, Option, StringContext}
 import scala.Predef.{String, classOf}
 import scalaz._
 import Scalaz._
@@ -86,6 +87,12 @@ object MagicDrawOTIAdapters {
   : Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsProfileProvider
   = \/-(MagicDrawOTICharacteristicsProfileProvider()(otiCharacterizations, umlOps))
 
+  def magicDrawOTIDataCharacteristicsCreator
+  (data: OTIDocumentSetConfiguration)
+  (umlOps: MagicDrawUMLUtil)
+  : Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsDataProvider
+  = \/-(MagicDrawOTICharacteristicsDataProvider(data)(umlOps))
+
   def magicDrawUMLFactoryCreator
   (umlOps: MagicDrawUMLUtil)
   : Set[java.lang.Throwable] \/ MagicDrawUMLFactory
@@ -96,7 +103,7 @@ object MagicDrawOTIAdapters {
   : Set[java.lang.Throwable] \/ MagicDrawUMLUpdate
   = \/-(MagicDrawUMLUpdate(umlOps))
 
-  def initialize
+  def initializeWithProfileCharacterizations
   (p: Project,
    otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]])
   (umlOpsCreator
@@ -111,13 +118,44 @@ object MagicDrawOTIAdapters {
    updateCreator
    : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawUMLUpdate
    = magicDrawUMLUpdateCreator)
-  : Set[java.lang.Throwable] \/ MagicDrawOTIAdapter
+  : Set[java.lang.Throwable] \/ MagicDrawOTIProfileAdapter
+  = {
+
+    val result
+    : Set[java.lang.Throwable] \/ MagicDrawOTIProfileAdapter
+    = OTIAdapter.initialize[ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsProfileProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate ](umlOpsCreator, otiCharacteristicsCreator, factoryCreator, updateCreator)
+
+    result
+  }
+
+  def initializeWithDataCharacterizations
+  (p: Project,
+   data: OTIDocumentSetConfiguration)
+  (umlOpsCreator
+   : => Set[java.lang.Throwable] \/ MagicDrawUMLUtil
+   = magicDrawUMLOpsCreator(p),
+   otiCharacteristicsCreator
+   : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsDataProvider
+   = magicDrawOTIDataCharacteristicsCreator(data),
+   factoryCreator
+   : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawUMLFactory
+   = magicDrawUMLFactoryCreator,
+   updateCreator
+   : MagicDrawUMLUtil => Set[java.lang.Throwable] \/ MagicDrawUMLUpdate
+   = magicDrawUMLUpdateCreator)
+  : Set[java.lang.Throwable] \/ MagicDrawOTIDataAdapter
   = OTIAdapter.initialize(umlOpsCreator, otiCharacteristicsCreator, factoryCreator, updateCreator)
 
   // =================================================================================================================
 
   def magicDrawDocumentOpsCreator
-  (oa: MagicDrawOTIAdapter)
+  [OCP <: OTICharacteristicsProvider[MagicDrawUML],
+   OA <: OTIAdapter[ MagicDrawUML, MagicDrawUMLUtil, OCP, MagicDrawUMLFactory, MagicDrawUMLUpdate ]]
+  (oa: OA)
   : Set[java.lang.Throwable] \/ MagicDrawDocumentOps
   = \/-(new MagicDrawDocumentOps()(oa.umlOps, oa.otiCharacteristicsProvider, oa.umlF, oa.umlU))
 
@@ -166,24 +204,48 @@ object MagicDrawOTIAdapters {
   = dOps
     .initializeDocumentSet(documentURIMapper, builtInURIMapper)
 
-  def withInitialDocumentSet
-  (oa: MagicDrawOTIAdapter,
+  def withInitialDocumentSetForProfileAdapter
+  (oa: MagicDrawOTIProfileAdapter,
    catalogsInitializer
    : () => Set[java.lang.Throwable] \/ (CatalogURIMapper, CatalogURIMapper)
    = () => getMDCatalogs(),
    documentOpsCreator
-   : MagicDrawOTIAdapter => Set[java.lang.Throwable] \/ MagicDrawDocumentOps
-   = magicDrawDocumentOpsCreator,
+   : MagicDrawOTIProfileAdapter => Set[java.lang.Throwable] \/ MagicDrawDocumentOps
+   = magicDrawDocumentOpsCreator[MagicDrawOTICharacteristicsProfileProvider, MagicDrawOTIProfileAdapter] _,
    documentSetInitializer
    : (CatalogURIMapper, CatalogURIMapper) => MagicDrawDocumentOps => Set[java.lang.Throwable] \&/ MagicDrawDocumentSet
    = magicDrawDocumentSetInitializer)
   ( implicit
     nodeT: TypeTag[Document[MagicDrawUML]],
     edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
-  : Set[java.lang.Throwable] \&/ MagicDrawOTIDocumentSetAdapter
+  : Set[java.lang.Throwable] \&/ MagicDrawOTIDocumentSetAdapterForProfileProvider
   = catalogsInitializer().toThese.flatMap { case (builtInCatalog, mdCatalog) =>
-    oa.withInitialDocumentSet(documentOpsCreator, documentSetInitializer(builtInCatalog, mdCatalog))
+      oa.withInitialDocumentSet(
+        documentOpsCreator,
+        documentSetInitializer(builtInCatalog, mdCatalog))
   }
+
+
+  def withInitialDocumentSetForDataAdapter
+  (oa: MagicDrawOTIDataAdapter,
+   catalogsInitializer
+   : () => Set[java.lang.Throwable] \/ (CatalogURIMapper, CatalogURIMapper)
+   = () => getMDCatalogs(),
+   documentOpsCreator
+   : MagicDrawOTIDataAdapter => Set[java.lang.Throwable] \/ MagicDrawDocumentOps
+   = magicDrawDocumentOpsCreator[MagicDrawOTICharacteristicsDataProvider, MagicDrawOTIDataAdapter] _,
+   documentSetInitializer
+   : (CatalogURIMapper, CatalogURIMapper) => MagicDrawDocumentOps => Set[java.lang.Throwable] \&/ MagicDrawDocumentSet
+   = magicDrawDocumentSetInitializer)
+  ( implicit
+    nodeT: TypeTag[Document[MagicDrawUML]],
+    edgeT: TypeTag[DocumentEdge[Document[MagicDrawUML]]] )
+  : Set[java.lang.Throwable] \&/ MagicDrawOTIDocumentSetAdapterForDataProvider
+  = catalogsInitializer().toThese.flatMap { case (builtInCatalog, mdCatalog) =>
+      oa.withInitialDocumentSet(
+        documentOpsCreator,
+        documentSetInitializer(builtInCatalog, mdCatalog))
+    }
 
   // =================================================================================================================
 

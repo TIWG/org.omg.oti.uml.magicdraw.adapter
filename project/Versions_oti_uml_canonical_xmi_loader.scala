@@ -1,5 +1,5 @@
 object Versions_oti_uml_canonical_xmi_loader {
 
   // https://github.jpl.nasa.gov/imce/org.omg.oti.uml.canonical_xmi.loader
-  val version="445393.13"
+  val version = "2.1.0"
 }

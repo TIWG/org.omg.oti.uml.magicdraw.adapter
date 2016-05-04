@@ -42,19 +42,20 @@ import com.nomagic.magicdraw.uml.UUIDRegistry
 import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
-import org.omg.oti.uml.OTIPrimitiveTypes._
+import org.omg.oti.json.common.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 import scala.annotation
 import scala.deprecated
-import scala.{Boolean,Option,None,Some,StringBuilder}
+import scala.{Boolean, None, Option, Some, StringBuilder}
 import scala.Predef.String
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
-
 import java.lang.Runnable
+
+import com.nomagic.magicdraw.hyperlinks.HyperlinkUtils
 
 import scala.language.{implicitConversions, postfixOps}
 import scalaz.{@@, \/, \/-}
@@ -73,29 +74,45 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   // Element
 
-  override def ownedElement: Set[UMLElement[Uml]] =
-    e.getOwnedElement.to[Set] - umlElement(e.getAppliedStereotypeInstance)
+  override def context_diagram
+  : Set[UMLDiagram[Uml]]
+  = e.get_diagramOfContext().to[Set]
 
-  override def owner: Option[UMLElement[Uml]] =
-    for { result <- Option.apply(e.getOwner) } yield result
+  override def element_elementValue
+  : Set[UMLElementValue[Uml]]
+  = e.get_elementValueOfElement().to[Set]
 
-  override def constrainedElement_constraint: Set[UMLConstraint[Uml]] =
-    e.get_constraintOfConstrainedElement.to[Set]
+  override def ownedElement
+  : Set[UMLElement[Uml]]
+  = e.getOwnedElement.to[Set] - umlElement(e.getAppliedStereotypeInstance)
 
-  override def annotatedElement_comment: Set[UMLComment[Uml]] =
-    e.get_commentOfAnnotatedElement.to[Set]
+  override def owner
+  : Option[UMLElement[Uml]]
+  = for { result <- Option.apply(e.getOwner) } yield result
 
-  override def represents_activityPartition: Set[UMLActivityPartition[Uml]] =
-    e.get_activityPartitionOfRepresents.to[Set]
+  override def constrainedElement_constraint
+  : Set[UMLConstraint[Uml]]
+  = e.get_constraintOfConstrainedElement.to[Set]
 
-  override def relatedElement_relationship: Set[UMLRelationship[Uml]] =
-    e.get_relationshipOfRelatedElement.to[Set]
+  override def annotatedElement_comment
+  : Set[UMLComment[Uml]]
+  = e.get_commentOfAnnotatedElement.to[Set]
 
-  override def target_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
-    e.get_directedRelationshipOfTarget.to[Set]
+  override def represents_activityPartition
+  : Set[UMLActivityPartition[Uml]]
+  = e.get_activityPartitionOfRepresents.to[Set]
 
-  override def source_directedRelationship: Set[UMLDirectedRelationship[Uml]] =
-    e.get_directedRelationshipOfSource.to[Set]
+  override def relatedElement_relationship
+  : Set[UMLRelationship[Uml]]
+  = e.get_relationshipOfRelatedElement.to[Set]
+
+  override def target_directedRelationship
+  : Set[UMLDirectedRelationship[Uml]]
+  = e.get_directedRelationshipOfTarget.to[Set]
+
+  override def source_directedRelationship
+  : Set[UMLDirectedRelationship[Uml]]
+  = e.get_directedRelationshipOfSource.to[Set]
 
   // ElementOps
 
@@ -103,21 +120,25 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
     StereotypesHelper.getBaseClass(e).getName
 
   override def tagValues
-  : Set[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue] =
-    MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
+  : Set[java.lang.Throwable] \/ Seq[MagicDrawUMLStereotypeTagValue]
+  = MagicDrawUMLStereotypeTagValue.getElementTagValues(this)
 
-  override def toolSpecific_id: Option[String @@ OTI_ID] =
-    Some(OTI_ID(e.getID))
+  override def toolSpecific_id: String @@ TOOL_SPECIFIC_ID
+  = TOOL_SPECIFIC_ID(e.getID)
 
-  override def toolSpecific_uuid: Option[String @@ OTI_UUID] =
-    Some(OTI_UUID(UUIDRegistry.getUUID(e)))
+  override def toolSpecific_uuid: Option[String @@ TOOL_SPECIFIC_UUID]
+  = Some(TOOL_SPECIFIC_UUID(UUIDRegistry.getUUID(e)))
+
+  override def toolSpecific_url: String @@ TOOL_SPECIFIC_URL
+  = TOOL_SPECIFIC_URL(HyperlinkUtils.getURLWithVersion(e))
 
   override def hasStereotype(s: UMLStereotype[Uml])
-  : Set[java.lang.Throwable] \/ Boolean =
-    \/-(umlMagicDrawUMLStereotype(s).isStereotypeApplied(e))
+  : Set[java.lang.Throwable] \/ Boolean
+  = \/-(umlMagicDrawUMLStereotype(s).isStereotypeApplied(e))
 
   override def getAppliedStereotypesWithoutMetaclassProperties
-  : Set[java.lang.Throwable] \/ Set[UMLStereotype[Uml]] = {
+  : Set[java.lang.Throwable] \/ Set[UMLStereotype[Uml]]
+  = {
     val eMetaclass = e.getClassType
     \/-(StereotypesHelper.getStereotypes(e).to[Set] flatMap { s =>
       val metaProperties = StereotypesHelper.getExtensionMetaProperty(s, true) filter { p =>
@@ -132,8 +153,8 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
   }
 
   override def isAncestorOf(other: UMLElement[Uml])
-  : Set[java.lang.Throwable] \/ Boolean =
-    if (e == umlMagicDrawUMLElement(other).getMagicDrawElement)
+  : Set[java.lang.Throwable] \/ Boolean
+  = if (e == umlMagicDrawUMLElement(other).getMagicDrawElement)
       \/-(true)
     else
       other
