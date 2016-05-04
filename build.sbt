@@ -194,7 +194,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "org.omg.tiwg" %% "org-omg-oti-uml-json"
         % Versions_oti_uml_json.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org-omg-oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -205,7 +205,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "org.omg.tiwg" %% "org-omg-oti-uml-json-serialization"
         % Versions_oti_uml_json_serialization.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-json-serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org-omg-oti-uml-json-serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .settings(
