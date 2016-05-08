@@ -198,7 +198,7 @@ object MagicDrawOTIHelper {
 
       documents <- odsa1.documentOps.createDocumentsFromExistingRootPackages(specificationRootPackages)
 
-      odsa2 <- odsa1.documentOps.addDocuments(odsa1.ds, documents).flatMap {
+      odsa2 <- odsa1.addDocuments(documents).flatMap {
         case mdSet: MagicDrawDocumentSet =>
           \&/.That(odsa1.copy(ds=mdSet))
         case dSet =>

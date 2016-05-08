@@ -389,7 +389,7 @@ class MagicDrawDocumentOps
            OTISpecificationRootCharacteristics(
              packageURI = OTI_URI("http://www.omg.org/spec/PrimitiveTypes/20131001"),
              documentURL = OTI_URL("http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"),
-             artifactKind = OTIBuiltInProfileArtifactKind,
+             artifactKind = OTIBuiltInModelLibraryArtifactKind,
              nsPrefix = OTI_NS_PREFIX("PrimitiveTypes"),
              uuidPrefix = OTI_UUID_PREFIX("org.omg.uml.PrimitiveTypes")),
          documentURL =
@@ -564,6 +564,10 @@ class MagicDrawDocumentOps
               MagicDrawLocalProjectLoadURL(
                 externalDocumentResourceURL,
                 magicDrawLocalProjectResource = mdLocalProject.getResourceURI).right
+            case _@ (OTIBuiltInModelLibraryArtifactKind | OTIBuiltInMetamodelArtifactKind | OTIBuiltInProfileArtifactKind) =>
+              MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+                externalDocumentResourceURL,
+                magicDrawStandardSystemProfileResourceRelativePath = mdLocalProject.getResourceURI.toString).right
             case otherK =>
               Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
@@ -579,6 +583,10 @@ class MagicDrawDocumentOps
               MagicDrawAttachedLocalModuleSerializableDocumentLoadURL(
                 externalDocumentResourceURL,
                 magicDrawAttachedLocalModuleResource = mdLocalModule.getResourceURI).right
+            case _@ (OTIBuiltInModelLibraryArtifactKind | OTIBuiltInMetamodelArtifactKind | OTIBuiltInProfileArtifactKind) =>
+              MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL(
+                externalDocumentResourceURL,
+                magicDrawStandardSystemProfileResourceRelativePath = mdLocalModule.getResourceURI.toString).right
             case otherK =>
               Set[java.lang.Throwable](
                 UMLError.illegalElementError[MagicDrawUML, UMLPackage[MagicDrawUML]](
