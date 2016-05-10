@@ -88,7 +88,7 @@ object MagicDrawOTIAdapters {
   = \/-(MagicDrawOTICharacteristicsProfileProvider()(otiCharacterizations, umlOps))
 
   def magicDrawOTIDataCharacteristicsCreator
-  (data: OTIDocumentSetConfiguration)
+  (data: Vector[OTIDocumentSetConfiguration])
   (umlOps: MagicDrawUMLUtil)
   : Set[java.lang.Throwable] \/ MagicDrawOTICharacteristicsDataProvider
   = \/-(MagicDrawOTICharacteristicsDataProvider(data)(umlOps))
@@ -134,7 +134,7 @@ object MagicDrawOTIAdapters {
 
   def initializeWithDataCharacterizations
   (p: Project,
-   data: OTIDocumentSetConfiguration)
+   data: Vector[OTIDocumentSetConfiguration])
   (umlOpsCreator
    : => Set[java.lang.Throwable] \/ MagicDrawUMLUtil
    = magicDrawUMLOpsCreator(p),

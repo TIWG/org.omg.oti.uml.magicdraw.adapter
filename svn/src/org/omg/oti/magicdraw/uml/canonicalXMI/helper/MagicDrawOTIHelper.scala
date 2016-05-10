@@ -53,7 +53,7 @@ import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 import org.omg.oti.uml.read.api.{UML, UMLComment, UMLElement, UMLPackage}
 import org.omg.oti.uml.xmi.Document
 
-import scala.collection.immutable.{Map, Set}
+import scala.collection.immutable.{Map, Set, Vector}
 import scala.{Boolean, Long, None, Option, StringContext}
 import scalaz._
 
@@ -72,14 +72,14 @@ object MagicDrawOTIHelper {
 
   def getOTIMagicDrawDataAdapter
   (p: Project,
-   data: OTIDocumentSetConfiguration)
+   data: Vector[OTIDocumentSetConfiguration])
   : Set[java.lang.Throwable] \/ MagicDrawOTIDataAdapter
   = MagicDrawOTIAdapters.initializeWithDataCharacterizations(p, data)()
 
   def getOTIMagicDrawAdapterForDataCharacteristics
   (p: Project)
   : Set[java.lang.Throwable] \/ MagicDrawOTIDataAdapter
-  = getOTIMagicDrawDataAdapter(p, data=OTIDocumentSetConfiguration.empty)
+  = getOTIMagicDrawDataAdapter(p, data=Vector.empty[OTIDocumentSetConfiguration])
 
   def getOTIMagicDrawProfileInfo
   (p: Project,
@@ -165,7 +165,7 @@ object MagicDrawOTIHelper {
 
   def getOTIMagicDrawDataInfo
   (p: Project,
-   data: OTIDocumentSetConfiguration,
+   data: Vector[OTIDocumentSetConfiguration],
    specificationRootPackages: Set[UMLPackage[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForDataProvider
   = getOTIMagicDrawDataAdapter(p, data).toThese.flatMap { oa =>
@@ -177,7 +177,7 @@ object MagicDrawOTIHelper {
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForDataProvider
   = getOTIMagicDrawDataInfo(
     p,
-    data=OTIDocumentSetConfiguration.empty,
+    data=Vector.empty[OTIDocumentSetConfiguration],
     specificationRootPackages=Set[UMLPackage[MagicDrawUML]]())
 
   def getOTIMagicDrawDataDocumentSetAdapter

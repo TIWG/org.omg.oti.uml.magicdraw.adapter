@@ -44,13 +44,13 @@ import org.omg.oti.uml.characteristics.OTICharacteristicsDataProvider
 import org.omg.oti.uml.read.api.UMLPackage
 import org.omg.oti.uml.read.operations.UMLOps
 
+import scala.collection.immutable.Vector
 import scala.reflect.runtime.universe._
 
 case class MagicDrawOTICharacteristicsDataProvider
-(override val data: OTIDocumentSetConfiguration)
+(override val data: Vector[OTIDocumentSetConfiguration])
 (override val umlOps: MagicDrawUMLUtil)
 (override implicit val umlTag: TypeTag[MagicDrawUML],
  override implicit val umlPackageTag: TypeTag[UMLPackage[MagicDrawUML]],
  override implicit val opsTag: TypeTag[UMLOps[MagicDrawUML]])
-extends OTICharacteristicsDataProvider[MagicDrawUML] {
-}
+extends OTICharacteristicsDataProvider[MagicDrawUML]
