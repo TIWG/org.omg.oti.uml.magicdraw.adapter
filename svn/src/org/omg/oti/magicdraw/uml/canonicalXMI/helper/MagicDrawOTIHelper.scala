@@ -42,19 +42,22 @@ import java.lang.System
 import java.util.concurrent.TimeUnit
 
 import com.nomagic.magicdraw.core.Project
+import com.nomagic.task.ProgressStatus
 import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.json.common._
 import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet
 import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsDataProvider, MagicDrawOTICharacteristicsProfileProvider}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
 import org.omg.oti.uml._
+import org.omg.oti.uml.canonicalXMI.DocumentResolverProgressTelemetry
 import org.omg.oti.uml.canonicalXMI.helper.OTIAdapter
 import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 import org.omg.oti.uml.read.api.{UML, UMLComment, UMLElement, UMLPackage}
 import org.omg.oti.uml.xmi.Document
 
 import scala.collection.immutable.{Map, Set, Vector}
-import scala.{Boolean, Long, None, Option, StringContext}
+import scala.{Boolean, Int, Long, None, Option, StringContext, Unit}
+import scala.Predef.String
 import scalaz._
 
 object MagicDrawOTIHelper {
@@ -147,13 +150,15 @@ object MagicDrawOTIHelper {
    = MagicDrawOTIAdapters.magicDrawUnresolvedElementMapper,
    includeAllForwardRelationTriple
    : (Document[MagicDrawUML], RelationTriple[MagicDrawUML], Document[MagicDrawUML]) => Boolean
-   = MagicDrawOTIAdapters.magicDrawIncludeAllForwardRelationTriple)
+   = MagicDrawOTIAdapters.magicDrawIncludeAllForwardRelationTriple,
+   progressTelemetry: DocumentResolverProgressTelemetry
+   = DocumentResolverProgressTelemetry.printTelemetry)
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForProfileProvider
   = for {
     odsa <- getOTIMagicDrawProfileDocumentSetAdapter(oa, specificationRootPackages)
 
     t0 = java.lang.System.currentTimeMillis()
-    ordsa <- odsa.resolve(ignoreCrossReferencedElementFilter, unresolvedElementMapper, includeAllForwardRelationTriple)
+    ordsa <- odsa.resolve(ignoreCrossReferencedElementFilter, unresolvedElementMapper, includeAllForwardRelationTriple, progressTelemetry)
 
     t1 = java.lang.System.currentTimeMillis()
     _ =
@@ -229,14 +234,16 @@ object MagicDrawOTIHelper {
    = MagicDrawOTIAdapters.magicDrawUnresolvedElementMapper,
    includeAllForwardRelationTriple
    : (Document[MagicDrawUML], RelationTriple[MagicDrawUML], Document[MagicDrawUML]) => Boolean
-   = MagicDrawOTIAdapters.magicDrawIncludeAllForwardRelationTriple)
+   = MagicDrawOTIAdapters.magicDrawIncludeAllForwardRelationTriple,
+   progressTelemetry: DocumentResolverProgressTelemetry
+   = DocumentResolverProgressTelemetry.printTelemetry)
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForDataProvider
   = for {
     odsa <- getOTIMagicDrawDataDocumentSetAdapter(oa, specificationRootPackages)
 
     t0 = java.lang.System.currentTimeMillis()
 
-    ordsa <- odsa.resolve(ignoreCrossReferencedElementFilter, unresolvedElementMapper, includeAllForwardRelationTriple)
+    ordsa <- odsa.resolve(ignoreCrossReferencedElementFilter, unresolvedElementMapper, includeAllForwardRelationTriple, progressTelemetry)
 
     t1 = java.lang.System.currentTimeMillis()
     _ =
@@ -246,4 +253,120 @@ object MagicDrawOTIHelper {
 
   } yield ordsa
 
+  def progressTelemetry(p: ProgressStatus)
+  : DocumentResolverProgressTelemetry
+  = {
+    import DocumentResolverProgressTelemetry.{NumberOfElements, NumberOfDocuments, DocumentURL}
+    import DocumentResolverProgressTelemetry.{NumberOfHyperEdges, NumberOfTriples}
+    import DocumentResolverProgressTelemetry.{Duration, NumberOfUnresolvedCrossReferences}
+
+    def scanStarted
+    (nd: Int @@ NumberOfDocuments)
+    : Unit
+    = {
+      val s = NumberOfDocuments.unwrap(nd)
+      p.setDescription(s"Begin scanning $s documents...")
+      p.setMax(s.toLong)
+      p.setCurrent(0)
+      DocumentResolverProgressTelemetry.scanStarted(nd)
+    }
+
+    def scanDocumentStarted
+    (url: String @@ DocumentURL)
+    : Unit
+    = {
+      p.setDescription(s"Begin scanning document: $url")
+      DocumentResolverProgressTelemetry.scanDocumentStarted(url)
+    }
+
+    def scanDocumentEnded
+    (ne: Int @@ NumberOfElements, d: String @@ Duration)
+    : Unit
+    = {
+      p.setDescription(s"=> Scanned $ne elements in $d")
+      p.increase()
+      DocumentResolverProgressTelemetry.scanDocumentEnded(ne, d)
+    }
+
+    def scanEnded
+    (nd: Int @@ NumberOfDocuments,
+     ne: Int @@ NumberOfElements,
+     d: String @@ Duration)
+    : Unit
+    = {
+      p.setDescription(s"Found $ne elements scanning all $nd documents.")
+      DocumentResolverProgressTelemetry.scanEnded(nd, ne, d)
+    }
+
+    def resolveStarted
+    (nd: Int @@ NumberOfDocuments)
+    : Unit
+    = {
+      val s = NumberOfDocuments.unwrap(nd)
+      p.setDescription(s"\n# Begin resolving $nd documents...")
+      p.setMax(s.toLong)
+      p.setCurrent(0)
+      DocumentResolverProgressTelemetry.resolveStarted(nd)
+    }
+
+    def resolveDocumentStarted
+    (url: String @@ DocumentURL,
+     ne: Int @@ NumberOfElements)
+    : Unit
+    = {
+      p.setDescription(s"# Begin resolving $ne elements in document $url")
+      DocumentResolverProgressTelemetry.resolveDocumentStarted(url, ne)
+    }
+
+    def resolveDocumentStepped
+    (ne: Int @@ NumberOfElements,
+     neTotal: Int @@ NumberOfElements,
+     nt: Int @@ NumberOfTriples,
+     d: String @@ Duration)
+    : Unit
+    = {
+      p.init(
+        s"# $ne / $neTotal document elements, $nt total triples => $d",
+        0,
+        NumberOfElements.unwrap(neTotal).toLong,
+        NumberOfElements.unwrap(ne).toLong)
+      DocumentResolverProgressTelemetry.resolveDocumentStepped(ne, neTotal, nt, d)
+    }
+
+    def resolveDocumentEnded
+    (ne: Int @@ NumberOfElements,
+     nt: Int @@ NumberOfTriples,
+     d: String @@ Duration)
+    : Unit
+    = {
+      p.setDescription(s"# Finished resolving $ne document elements, cummulative triple count: $nt in $d")
+      DocumentResolverProgressTelemetry.resolveDocumentEnded(ne, nt, d)
+    }
+
+    def resolveEnded
+    (nd: Int @@ NumberOfDocuments,
+     ne: Int @@ NumberOfElements,
+     nt: Int @@ NumberOfTriples,
+     nh: Int @@ NumberOfHyperEdges,
+     nu: Int @@ NumberOfUnresolvedCrossReferences,
+     d: String @@ Duration)
+    : Unit
+    = {
+      p.setDescription(
+        s"# Created $nh hyper edges ($nt triples) among $nd document hyper nodes ($ne elements) " +
+          s"with $nu unresolved cross-reference triples")
+      DocumentResolverProgressTelemetry.resolveEnded(nd, ne, nt, nh, nu, d)
+    }
+
+    DocumentResolverProgressTelemetry(
+      scanStarted _,
+      scanDocumentStarted _,
+      scanDocumentEnded _,
+      scanEnded _,
+      resolveStarted _,
+      resolveDocumentStarted _,
+      resolveDocumentStepped _,
+      resolveDocumentEnded _,
+      resolveEnded _)
+  }
 }
