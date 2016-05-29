@@ -157,47 +157,41 @@ case class MagicDrawUMLUpdate(override val ops: MagicDrawUMLUtil)
   : Set[java.lang.Throwable] \/ Unit =
     checkSession(mAdaptee(mAdapter(m)))
     .flatMap { _from =>
-      val f0: Set[java.lang.Throwable] \/ Set[N] = Set().right
-      val fN = (f0 /: ns) { (fi, n) =>
-        (fi |@| checkSession(nAdaptee(nAdapter(n)))) { (_fi, _n) =>
-          _fi + _n
+
+      nonFatalCatch[Unit]
+        .withApply { (cause: java.lang.Throwable) =>
+          Set(
+            UMLError
+              .umlUpdateException(
+                this, Iterable(m),
+                s"composesUnorderedLinks(${m.xmiElementLabel}) failed: ${cause.getMessage}",
+                cause))
+            .left
         }
-      }
-      fN
-      .flatMap { _tos =>
+        .apply({
+          val _current: Set[N] = m_n(_from).to[Set]
+          val _tos: Set[N] = ns.map { n => nAdaptee(nAdapter(n)) }.to[Set]
 
-        nonFatalCatch[Unit]
-          .withApply { (cause: java.lang.Throwable) =>
-            Set(
-              UMLError
-                .umlUpdateException(
-                  this, Iterable(m),
-                  s"composesUnorderedLinks(${m.xmiElementLabel}) failed: ${cause.getMessage}",
-                  cause))
-              .left
-          }
-          .apply({
-            val _current: Set[N] = m_n(_from).to[Set]
+          val _toAdd: Set[N] = for {
+            _add <- _tos
+            if !_current.contains(_add)
+            _ = checkSession(_add)
+          } yield _add
 
-            val _toAdd: Set[N] = for {
-              _add <- _tos
-              if !_current.contains(_add)
-            } yield _add
+          val _toRemove: Set[N] = for {
+            _rem <- _current
+            if !_tos.contains(_rem)
+            _ = checkSession(_rem)
+          } yield _rem
 
-            val _toRemove: Set[N] = for {
-              _rem <- _current
-              if !_tos.contains(_rem)
-            } yield _rem
+          for {_rem <- _toRemove}
+            m_n(_from).remove(_rem)
 
-            for {_rem <- _toRemove}
-              m_n(_from).remove(_rem)
+          for {_add <- _toAdd}
+            m_n(_from).add(_add)
 
-            for {_add <- _toAdd}
-              m_n(_from).add(_add)
-
-            \/-(())
-          })
-      }
+          \/-(())
+        })
     }
 
   /**
