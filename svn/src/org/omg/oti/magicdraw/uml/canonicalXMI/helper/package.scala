@@ -63,6 +63,14 @@ package object helper {
       MagicDrawUMLFactory,
       MagicDrawUMLUpdate ]
 
+  type MagicDrawOTIDataAdapter =
+  OTIAdapter
+    [ MagicDrawUML,
+      MagicDrawUMLUtil,
+      MagicDrawOTICharacteristicsDataProvider,
+      MagicDrawUMLFactory,
+      MagicDrawUMLUpdate ]
+
   type MagicDrawOTIJsonElementHelperForProfileAdapter =
   OTIJsonElementHelper
   [ MagicDrawUML,
@@ -72,13 +80,14 @@ package object helper {
     MagicDrawUMLUpdate,
     MagicDrawDocumentSet ]
 
-  type MagicDrawOTIDataAdapter =
-  OTIAdapter
+  type MagicDrawOTIJsonElementHelperForDataAdapter =
+  OTIJsonElementHelper
     [ MagicDrawUML,
       MagicDrawUMLUtil,
       MagicDrawOTICharacteristicsDataProvider,
       MagicDrawUMLFactory,
-      MagicDrawUMLUpdate ]
+      MagicDrawUMLUpdate,
+      MagicDrawDocumentSet ]
 
   type MagicDrawOTIDocumentSetAdapter =
   OTIDocumentSetAdapter
