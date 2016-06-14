@@ -621,8 +621,15 @@ class MagicDrawDocumentOps
     )
   }
 
+  /**
+    *
+    * @param allRoots
+    * @param extentOfPkg
+    * @return
+    */
   def createDocumentsFromExistingRootPackages
-  ( allRoots: Set[UMLPackage[MagicDrawUML]] )
+  ( allRoots: Set[UMLPackage[MagicDrawUML]],
+    extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ Set[MagicDrawDocument] = {
 
     val subRoots: Map[UMLPackage[MagicDrawUML], Set[UMLPackage[MagicDrawUML]]] =
@@ -635,15 +642,15 @@ class MagicDrawDocumentOps
 
     val rootExtents: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
       allRoots
-        .map { pkg => pkg -> pkg.allOwnedElements }
+        .map { pkg => pkg -> extentOfPkg(pkg) }
         .toMap
 
     val rootScopes: Map[UMLPackage[MagicDrawUML], Set[UMLElement[MagicDrawUML]]] =
       subRoots
         .map { case (pkg, subPkgs) =>
           val scope: Set[UMLElement[MagicDrawUML]] =
-            (rootExtents(pkg) /: subPkgs) { case (es, pkg) =>
-              es -- rootExtents(pkg)
+            (rootExtents(pkg) /: subPkgs) { case (es, p) =>
+              es -- rootExtents(p)
             }
           pkg -> scope
         }

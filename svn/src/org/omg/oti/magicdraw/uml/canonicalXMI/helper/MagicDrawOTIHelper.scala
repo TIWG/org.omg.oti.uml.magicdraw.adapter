@@ -61,7 +61,12 @@ import scala.Predef.String
 import scalaz._
 
 object MagicDrawOTIHelper {
-  
+
+  def defaultExtentOfPkg
+  (pkg: UMLPackage[MagicDrawUML])
+  : Set[UMLElement[MagicDrawUML]]
+  = pkg.allOwnedElements
+
   def getOTIMagicDrawProfileAdapter
   (p: Project,
    otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]])
@@ -87,10 +92,11 @@ object MagicDrawOTIHelper {
   def getOTIMagicDrawProfileInfo
   (p: Project,
    otiCharacterizations: Option[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
-   specificationRootPackages: Set[UMLPackage[MagicDrawUML]])
+   specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForProfileProvider
   = getOTIMagicDrawProfileAdapter(p, otiCharacterizations).toThese.flatMap { oa =>
-    getOTIMagicDrawProfileResolvedDocumentSetAdapter(oa, specificationRootPackages)
+    getOTIMagicDrawProfileResolvedDocumentSetAdapter(oa, specificationRootPackages, extentOfPkg)
   }
 
   def getOTIMagicDrawInfoForProfileCharacteristics
@@ -99,11 +105,13 @@ object MagicDrawOTIHelper {
   = getOTIMagicDrawProfileInfo(
     p,
     otiCharacterizations=Option.empty[Map[UMLPackage[MagicDrawUML], UMLComment[MagicDrawUML]]],
-    specificationRootPackages=Set[UMLPackage[MagicDrawUML]]())
+    specificationRootPackages=Set[UMLPackage[MagicDrawUML]](),
+    extentOfPkg = defaultExtentOfPkg)
 
   def getOTIMagicDrawProfileDocumentSetAdapter
   (oa: MagicDrawOTIProfileAdapter,
-   specificationRootPackages: Set[UMLPackage[MagicDrawUML]])
+   specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ MagicDrawOTIDocumentSetAdapterForProfileProvider
   = {
     val t0: Long = java.lang.System.currentTimeMillis()
@@ -117,7 +125,7 @@ object MagicDrawOTIHelper {
             s"in ${prettyFiniteDuration(t1 - t0, TimeUnit.MILLISECONDS)}")
       }
 
-      documents <- odsa1.documentOps.createDocumentsFromExistingRootPackages(specificationRootPackages)
+      documents <- odsa1.documentOps.createDocumentsFromExistingRootPackages(specificationRootPackages, extentOfPkg)
 
       odsa2 <- odsa1.documentOps.addDocuments(odsa1.ds, documents).flatMap {
         case mdSet: MagicDrawDocumentSet =>
@@ -142,6 +150,7 @@ object MagicDrawOTIHelper {
   def getOTIMagicDrawProfileResolvedDocumentSetAdapter
   (oa: MagicDrawOTIProfileAdapter,
    specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]],
    ignoreCrossReferencedElementFilter
    : UMLElement[MagicDrawUML] => Boolean
    = MagicDrawOTIAdapters.magicDrawIgnoreCrossReferencedElementFilter,
@@ -155,7 +164,7 @@ object MagicDrawOTIHelper {
    = DocumentResolverProgressTelemetry.printTelemetry)
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForProfileProvider
   = for {
-    odsa <- getOTIMagicDrawProfileDocumentSetAdapter(oa, specificationRootPackages)
+    odsa <- getOTIMagicDrawProfileDocumentSetAdapter(oa, specificationRootPackages, extentOfPkg)
 
     t0 = java.lang.System.currentTimeMillis()
     ordsa <- odsa.resolve(ignoreCrossReferencedElementFilter, unresolvedElementMapper, includeAllForwardRelationTriple, progressTelemetry)
@@ -171,10 +180,11 @@ object MagicDrawOTIHelper {
   def getOTIMagicDrawDataInfo
   (p: Project,
    data: Vector[OTIDocumentSetConfiguration],
-   specificationRootPackages: Set[UMLPackage[MagicDrawUML]])
+   specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForDataProvider
   = getOTIMagicDrawDataAdapter(p, data).toThese.flatMap { oa =>
-    getOTIMagicDrawDataResolvedDocumentSetAdapter(oa, specificationRootPackages)
+    getOTIMagicDrawDataResolvedDocumentSetAdapter(oa, specificationRootPackages, extentOfPkg)
   }
 
   def getOTIMagicDrawInfoForDataCharacteristics
@@ -183,11 +193,13 @@ object MagicDrawOTIHelper {
   = getOTIMagicDrawDataInfo(
     p,
     data=Vector.empty[OTIDocumentSetConfiguration],
-    specificationRootPackages=Set[UMLPackage[MagicDrawUML]]())
+    specificationRootPackages=Set[UMLPackage[MagicDrawUML]](),
+    extentOfPkg = defaultExtentOfPkg)
 
   def getOTIMagicDrawDataDocumentSetAdapter
   (oa: MagicDrawOTIDataAdapter,
-   specificationRootPackages: Set[UMLPackage[MagicDrawUML]])
+   specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]])
   : Set[java.lang.Throwable] \&/ MagicDrawOTIDocumentSetAdapterForDataProvider
   = {
     val t0: Long = java.lang.System.currentTimeMillis()
@@ -201,7 +213,7 @@ object MagicDrawOTIHelper {
             s"in ${prettyFiniteDuration(t1 - t0, TimeUnit.MILLISECONDS)}")
       }
 
-      documents <- odsa1.documentOps.createDocumentsFromExistingRootPackages(specificationRootPackages)
+      documents <- odsa1.documentOps.createDocumentsFromExistingRootPackages(specificationRootPackages, extentOfPkg)
 
       odsa2 <- odsa1.addDocuments(documents).flatMap {
         case mdSet: MagicDrawDocumentSet =>
@@ -226,6 +238,7 @@ object MagicDrawOTIHelper {
   def getOTIMagicDrawDataResolvedDocumentSetAdapter
   (oa: MagicDrawOTIDataAdapter,
    specificationRootPackages: Set[UMLPackage[MagicDrawUML]],
+   extentOfPkg: UMLPackage[MagicDrawUML] => Set[UMLElement[MagicDrawUML]],
    ignoreCrossReferencedElementFilter
    : UMLElement[MagicDrawUML] => Boolean
    = MagicDrawOTIAdapters.magicDrawIgnoreCrossReferencedElementFilter,
@@ -239,7 +252,7 @@ object MagicDrawOTIHelper {
    = DocumentResolverProgressTelemetry.printTelemetry)
   : Set[java.lang.Throwable] \&/ MagicDrawOTIResolvedDocumentSetAdapterForDataProvider
   = for {
-    odsa <- getOTIMagicDrawDataDocumentSetAdapter(oa, specificationRootPackages)
+    odsa <- getOTIMagicDrawDataDocumentSetAdapter(oa, specificationRootPackages, extentOfPkg)
 
     t0 = java.lang.System.currentTimeMillis()
 
