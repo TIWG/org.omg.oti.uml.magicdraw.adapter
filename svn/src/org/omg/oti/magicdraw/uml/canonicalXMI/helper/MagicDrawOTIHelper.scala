@@ -48,8 +48,7 @@ import org.omg.oti.json.common._
 import org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet
 import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsDataProvider, MagicDrawOTICharacteristicsProfileProvider}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
-import org.omg.oti.uml._
-import org.omg.oti.uml.canonicalXMI.DocumentResolverProgressTelemetry
+iimport org.omg.oti.uml.canonicalXMI.DocumentResolverProgressTelemetry
 import org.omg.oti.uml.canonicalXMI.helper.OTIAdapter
 import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 import org.omg.oti.uml.read.api.{UML, UMLComment, UMLElement, UMLPackage}
