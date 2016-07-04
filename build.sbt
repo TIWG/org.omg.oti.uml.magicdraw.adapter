@@ -102,7 +102,7 @@ shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project
 lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
-  .settings(dynamicScriptsResourceSettings(Some("org.omg.oti.uml.magicdraw.adapter")))
+  .settings(dynamicScriptsResourceSettings("org.omg.oti.uml.magicdraw.adapter"))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
   .settings(docSettings(diagrams=false))
   .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
@@ -291,7 +291,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
   )
 
-def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = None): Seq[Setting[_]] = {
+def dynamicScriptsResourceSettings(projectName: String): Seq[Setting[_]] = {
 
   import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
 
@@ -302,14 +302,8 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
   val QUALIFIED_NAME = "^[a-zA-Z][\\w_]*(\\.[a-zA-Z][\\w_]*)*$".r
 
   Seq(
-    // the '*-resource.zip' archive will start from: 'dynamicScripts/<dynamicScriptsProjectName>'
-    com.typesafe.sbt.packager.Keys.topLevelDirectory in Universal := {
-      val projectName = dynamicScriptsProjectName.getOrElse(baseDirectory.value.getName)
-      require(
-        QUALIFIED_NAME.pattern.matcher(projectName).matches,
-        s"The project name, '$projectName` is not a valid Java qualified name")
-      Some(projectName)
-    },
+    // the '*-resource.zip' archive will start from: 'dynamicScripts'
+    com.typesafe.sbt.packager.Keys.topLevelDirectory in Universal := None,
 
     // name the '*-resource.zip' in the same way as other artifacts
     com.typesafe.sbt.packager.Keys.packageName in Universal :=
@@ -327,16 +321,15 @@ def dynamicScriptsResourceSettings(dynamicScriptsProjectName: Option[String] = N
       streams) map {
       (base, bin, src, doc, binT, srcT, docT, s) =>
         val dir = base / "svn"
-        val file2name = (dir ** "*.dynamicScripts").pair(relativeTo(dir)) ++
-          (dir ** "*.mdzip").pair(relativeTo(dir)) ++
-          com.typesafe.sbt.packager.MappingsHelper.directory(dir / "resources") ++
-          com.typesafe.sbt.packager.MappingsHelper.directory(dir / "profiles") ++
-          addIfExists(bin, "lib/" + bin.name) ++
-          addIfExists(binT, "lib/" + binT.name) ++
-          addIfExists(src, "lib.sources/" + src.name) ++
-          addIfExists(srcT, "lib.sources/" + srcT.name) ++
-          addIfExists(doc, "lib.javadoc/" + doc.name) ++
-          addIfExists(docT, "lib.javadoc/" + docT.name)
+        val file2name = (dir ** "*.dynamicScripts").pair(rebase(dir, projectName)) ++
+          (dir / "profiles" ** "*.mdzip").pair(rebase(dir, "..")) ++
+          (dir / "resources" ***).pair(rebase(dir, projectName)) ++
+          addIfExists(bin, projectName + "/lib/" + bin.name) ++
+          addIfExists(binT, projectName + "/lib/" + binT.name) ++
+          addIfExists(src, projectName + "/lib.sources/" + src.name) ++
+          addIfExists(srcT, projectName + "/lib.sources/" + srcT.name) ++
+          addIfExists(doc, projectName + "/lib.javadoc/" + doc.name) ++
+          addIfExists(docT, projectName + "/lib.javadoc/" + docT.name)
 
         s.log.info(s"file2name entries: ${file2name.size}")
         s.log.info(file2name.mkString("\n"))
