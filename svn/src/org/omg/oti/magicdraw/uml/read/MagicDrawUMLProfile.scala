@@ -42,8 +42,6 @@ import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.StringContext
 import scala.Predef.String
-import scala.language.implicitConversions
-import scala.language.postfixOps
 import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLProfile 

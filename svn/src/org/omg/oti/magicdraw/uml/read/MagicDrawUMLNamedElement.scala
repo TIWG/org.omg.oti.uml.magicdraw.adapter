@@ -44,7 +44,6 @@ import org.omg.oti.uml.read.api._
 import scala.{Option,None,Some}
 import scala.Predef.String
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLNamedElement 
   extends MagicDrawUMLElement

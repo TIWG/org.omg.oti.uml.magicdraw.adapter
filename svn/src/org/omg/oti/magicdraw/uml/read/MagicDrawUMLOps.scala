@@ -40,12 +40,9 @@ package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.magicdraw.core.Project
 
-import scala.collection.Iterable
-import scala.language.postfixOps
 import scala.reflect.runtime.universe._
 
 import org.omg.oti.uml.read.operations._
-import java.net.URI
 
 trait MagicDrawUMLOps extends EarlyInit[MagicDrawUMLOps] with UMLOps[MagicDrawUML] {
 

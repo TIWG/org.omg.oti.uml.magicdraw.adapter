@@ -38,14 +38,9 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI
 
-import java.net.URL
-import java.net.MalformedURLException
-
-import scala.{Option}
 import scala.Predef.String
 import scala.collection.immutable._
 import scala.collection.Iterable
-import scala.language.postfixOps
 
 import org.omg.oti.json.common.OTIPrimitiveTypes._
 import org.omg.oti.uml.UMLError

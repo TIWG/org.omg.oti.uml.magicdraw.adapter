@@ -42,7 +42,6 @@ import scala.{Option,StringContext}
 import scala.Predef.String
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
 

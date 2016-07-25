@@ -40,7 +40,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.language.postfixOps
 import scala.{Boolean,Option,StringContext}
 import scala.Predef.String
 

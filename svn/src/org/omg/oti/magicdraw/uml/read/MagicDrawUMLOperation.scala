@@ -38,12 +38,10 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import scala.{Boolean,Int,Option,StringContext}
+import scala.{Boolean,Option,StringContext}
 import scala.Predef.{Set=>_,Map=>_,_}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
-import scala.language.postfixOps
 
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._

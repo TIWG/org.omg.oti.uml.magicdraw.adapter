@@ -38,9 +38,7 @@
  */
 package org.omg.oti.magicdraw.uml.read
 
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
-import scala.collection.Iterable
 import scala.Option
 
 trait MagicDrawUMLElementValue 

@@ -40,12 +40,11 @@ package org.omg.oti.magicdraw.uml.trees
 
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
-import org.omg.oti.uml.UMLError
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.uml.read.api.UMLClassifier
 import org.omg.oti.uml.trees._
 
-import scala.{Boolean,Option,None,Some,StringContext}
+import scala.{Boolean,Option,StringContext}
 import scala.collection.immutable.Set
 import scala.Predef.String
 import scalaz._, Scalaz._

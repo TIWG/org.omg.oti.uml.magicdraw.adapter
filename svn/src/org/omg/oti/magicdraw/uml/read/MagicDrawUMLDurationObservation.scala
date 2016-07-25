@@ -41,8 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 import scala.StringContext
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
-import scala.language.postfixOps
 
 import org.omg.oti.uml.read.api._
 import scala.Predef.{Set=>_,Map=>_,_}

@@ -7,6 +7,8 @@ import gov.nasa.jpl.imce.sbt.ProjectHelper._
 
 useGpg := true
 
+updateOptions := updateOptions.value.withCachedResolution(true)
+
 developers := List(
   Developer(
     id="rouquett",
@@ -186,17 +188,17 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
-  .dependsOnSourceProjectOrLibraryArtifacts(
-    "org-omg-oti-uml-json",
-    "org.omg.oti.uml.json",
-    Seq(
-      //      //  extra("artifact.kind" -> "generic.library")
-      "org.omg.tiwg" %% "org-omg-oti-uml-json"
-        % Versions_oti_uml_json.version %
-        "compile" withSources() withJavadoc() artifacts
-        Artifact("org-omg-oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
-    )
-  )
+//  .dependsOnSourceProjectOrLibraryArtifacts(
+//    "org-omg-oti-uml-json",
+//    "org.omg.oti.uml.json",
+//    Seq(
+//      //      //  extra("artifact.kind" -> "generic.library")
+//      "org.omg.tiwg" %% "org-omg-oti-uml-json"
+//        % Versions_oti_uml_json.version %
+//        "compile" withSources() withJavadoc() artifacts
+//        Artifact("org-omg-oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
+//    )
+//  )
   .dependsOnSourceProjectOrLibraryArtifacts(
     "org-omg-oti-uml-json-serialization",
     "org.omg.oti.uml.json.serialization",
@@ -210,10 +212,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   )
   .settings(
     libraryDependencies +=
-      "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp5_dynamic-scripts"
-        % Versions_imce_md18_0_sp5_dynamic_scripts.version %
+      "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp6_dynamic-scripts"
+        % Versions_imce_md18_0_sp6_dynamic_scripts.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("imce_md18_0_sp5_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map()),
+        Artifact("imce_md18_0_sp6_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
     extractArchives <<= (baseDirectory, update, streams) map {
       (base, up, s) =>

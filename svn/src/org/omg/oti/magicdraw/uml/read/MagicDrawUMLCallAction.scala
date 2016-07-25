@@ -44,7 +44,6 @@ import org.omg.oti.uml.read.api._
 
 import scala.Boolean
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLCallAction 
   extends MagicDrawUMLInvocationAction

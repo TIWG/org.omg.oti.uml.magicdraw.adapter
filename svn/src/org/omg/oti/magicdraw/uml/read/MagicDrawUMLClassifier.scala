@@ -40,11 +40,10 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,Option,None,Some}
+import scala.{Boolean,Option}
 import scala.Predef.{???,require}
 
 trait MagicDrawUMLClassifier 

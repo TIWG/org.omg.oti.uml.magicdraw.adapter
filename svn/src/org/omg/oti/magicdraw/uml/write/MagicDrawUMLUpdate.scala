@@ -44,7 +44,7 @@ import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.write.api._
 
-import scala.{Boolean,Double,Option,None,Some,StringContext,Tuple2,Unit}
+import scala.{Boolean,Double,Option,StringContext,Unit}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable

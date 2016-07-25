@@ -43,7 +43,6 @@ import org.omg.oti.uml.read.api._
 import scala.{Boolean,Option,None,Some}
 
 import scala.collection.immutable._
-import scala.collection.Iterable
 import scala.collection.JavaConversions._
 
 trait MagicDrawUMLBehavioralFeature 

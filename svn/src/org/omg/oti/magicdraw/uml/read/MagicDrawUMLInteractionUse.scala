@@ -43,7 +43,6 @@ import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLInteractionUse 
   extends MagicDrawUMLInteractionFragment

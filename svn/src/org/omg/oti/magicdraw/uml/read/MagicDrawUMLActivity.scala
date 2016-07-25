@@ -45,7 +45,6 @@ import org.omg.oti.uml.read.api._
 import scala.{Boolean,StringContext}
 import scala.Predef.String
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLActivity 
   extends MagicDrawUMLBehavior

@@ -44,7 +44,6 @@ import scala.{Option,None,Some,StringContext}
 import scala.Predef.{require,String}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLAssociation 
   extends MagicDrawUMLClassifier

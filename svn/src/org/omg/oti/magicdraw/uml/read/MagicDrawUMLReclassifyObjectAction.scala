@@ -39,10 +39,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.Boolean
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Predef.???
 
 trait MagicDrawUMLReclassifyObjectAction 
   extends MagicDrawUMLAction

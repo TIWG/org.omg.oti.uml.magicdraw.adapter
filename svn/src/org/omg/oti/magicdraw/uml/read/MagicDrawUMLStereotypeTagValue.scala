@@ -41,7 +41,6 @@ package org.omg.oti.magicdraw.uml.read
 import com.nomagic.uml2.ext.jmi.helpers.{ModelHelper, StereotypesHelper}
 
 import org.omg.oti.json.common.OTIPrimitiveTypes._
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.xmi._
@@ -51,11 +50,8 @@ import scala.collection.immutable._
 import scala.collection.Iterable
 
 import scala.Predef.{Map => _, Set => _, _}
-import scala.{Int,Option,None,Ordering,Some,StringContext,Tuple2}
-import scala.language.{implicitConversions, postfixOps}
+import scala.{Int,Option,None,Ordering,Some,Tuple2}
 import scalaz._, Scalaz._
-
-import java.lang.System
 
 sealed abstract class MagicDrawUMLStereotypeTagValue
   extends UMLStereotypeTagValue[MagicDrawUML]

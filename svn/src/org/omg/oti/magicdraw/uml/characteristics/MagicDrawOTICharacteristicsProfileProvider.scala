@@ -38,8 +38,6 @@
  */
 package org.omg.oti.magicdraw.uml.characteristics
 
-import java.lang.System
-
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.json.common.OTISpecificationRootCharacteristics

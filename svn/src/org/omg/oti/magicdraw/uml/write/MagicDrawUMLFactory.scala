@@ -40,7 +40,6 @@ package org.omg.oti.magicdraw.uml.write
 
 import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 import org.omg.oti.uml.write.api.UMLFactory
 import scala.collection.immutable.Set

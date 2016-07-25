@@ -39,9 +39,10 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
-import scala.Predef.???
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Boolean,Option}
 
 trait MagicDrawUMLGeneralizationSet 
   extends MagicDrawUMLPackageableElement
@@ -49,19 +50,24 @@ trait MagicDrawUMLGeneralizationSet
 
   override protected def e: Uml#GeneralizationSet
   def getMagicDrawGeneralizationSet = e
+  override implicit val umlOps = ops
+  import umlOps._
 
   // 9.14
-  override def generalization: Set[UMLGeneralization[Uml]] = ??? 
+  override def generalization
+  : Set[UMLGeneralization[Uml]]
+  = e.getGeneralization.to[Set]
   
   // 9.14
-  override def isCovering: Boolean = ???
+  override def isCovering: Boolean = e.isCovering
   
   // 9.14
-  override def isDisjoint: Boolean = ???
+  override def isDisjoint: Boolean = e.isDisjoint
   
   // 9.14
-  override def powertype: Option[UMLClassifier[Uml]] = ???
-  
+  override def powertype
+  : Option[UMLClassifier[Uml]]
+  =  for { result <- Option( e.getPowertype ) } yield result
 
 }
 

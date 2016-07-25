@@ -43,7 +43,6 @@ import org.omg.oti.uml.read.api._
 
 import scala.collection.immutable._
 import scala.Option
-import scala.Predef.???
 
 import org.omg.oti.uml.read.api._
 

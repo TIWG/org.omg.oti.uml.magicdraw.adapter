@@ -37,14 +37,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.omg.oti.magicdraw.uml.read
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read._
 
 import scala.{Boolean,Double,Int}
 import scala.Predef.{???,String}
 import scala.collection.immutable._
 import scala.collection.Iterable
-import scala.language.{implicitConversions, postfixOps}
 import scalaz._
 
 sealed abstract class MagicDrawTagPropertyClassifierValue

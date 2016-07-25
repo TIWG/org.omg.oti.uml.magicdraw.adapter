@@ -38,12 +38,10 @@
  */
 package org.omg.oti.magicdraw.uml.canonicalXMI.helper
 
-import java.io.File
-
 import com.nomagic.magicdraw.core.Project
 import org.omg.oti.magicdraw.uml.canonicalXMI.{MagicDrawDocumentOps, MagicDrawDocumentSet, MagicDrawHashIDGenerator, MagicDrawIDGenerator}
 import org.omg.oti.magicdraw.uml.characteristics.{MagicDrawOTICharacteristicsDataProvider, MagicDrawOTICharacteristicsProfileProvider}
-import org.omg.oti.magicdraw.uml.read.{MagicDrawFileChooser, MagicDrawUML, MagicDrawUMLUtil}
+import org.omg.oti.magicdraw.uml.read.{MagicDrawUML, MagicDrawUMLUtil}
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
 import org.omg.oti.json.common._
 import org.omg.oti.uml.{RelationTriple, UMLError}
@@ -51,9 +49,7 @@ import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.uml.canonicalXMI.helper.OTIAdapter
 import org.omg.oti.uml.characteristics.OTICharacteristicsProvider
 import org.omg.oti.uml.read.api.{UML, UMLComment, UMLElement, UMLPackage}
-import org.omg.oti.uml.read.operations.UMLOps
-import org.omg.oti.uml.write.api.{UMLFactory, UMLUpdate}
-import org.omg.oti.uml.xmi.{Document, IDGenerator}
+import org.omg.oti.uml.xmi.Document
 
 import scala.collection.immutable._
 import scala.reflect.runtime.universe._

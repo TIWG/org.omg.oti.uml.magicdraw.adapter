@@ -39,8 +39,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import java.io.File
-import java.lang.{Object, Runnable, System}
-import java.net.URI
+import java.lang.Runnable
 import javax.swing.filechooser.FileFilter
 import javax.swing.{JFileChooser, SwingUtilities}
 
@@ -49,7 +48,6 @@ import com.nomagic.magicdraw.uml.ClassTypes
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 import scala.reflect.runtime.universe._
@@ -57,7 +55,7 @@ import scala.language.implicitConversions
 import scala.deprecated
 import scala.collection.immutable._
 import scala.collection.JavaConversions._
-import scala.{AnyRef, Array,Boolean,Int,Option,None,Some,StringContext,Unit}
+import scala.{Array,Boolean,Int,Option,None,Some,Unit}
 import scala.Predef.String
 import scalaz._, Scalaz._
 

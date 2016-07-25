@@ -43,7 +43,6 @@ import scala.collection.JavaConversions._
 
 import scala.Option
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLComponentRealization 
   extends MagicDrawUMLRealization

@@ -40,7 +40,6 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.{Boolean,Option}
-import scala.Predef.???
 
 trait MagicDrawUMLReduceAction 
   extends MagicDrawUMLAction

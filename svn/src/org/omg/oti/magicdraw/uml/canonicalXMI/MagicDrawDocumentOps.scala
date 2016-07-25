@@ -38,13 +38,10 @@
  */
 
 package org.omg.oti.magicdraw.uml.canonicalXMI
- 
-import java.lang.IllegalArgumentException
-import java.lang.System
-import java.net.{URI, URL}
-import java.io.InputStream
 
-import com.nomagic.magicdraw.core.{Application, Project, ProjectUtilities}
+import java.net.URI
+
+import com.nomagic.magicdraw.core.{Application, ProjectUtilities}
 import com.nomagic.ci.persistence.IProject
 import com.nomagic.ci.persistence.local.spi.localproject.{LocalAttachedProject, LocalPrimaryProject}
 import com.nomagic.magicdraw.teamwork.application.storage.{TeamworkAttachedProject, TeamworkPrimaryProject}
@@ -61,7 +58,7 @@ import org.omg.oti.uml.xmi._
 import org.omg.oti.magicdraw.uml.read._
 import org.omg.oti.magicdraw.uml.write.{MagicDrawUMLFactory, MagicDrawUMLUpdate}
 
-import scala.{AnyVal, None, Option, Some, StringContext, deprecated}
+import scala.{AnyVal, None, Option, StringContext, deprecated}
 import scala.collection.immutable._
 import scala.util.control.Exception._
 import scala.Predef.{Map => _, Set => _, _}

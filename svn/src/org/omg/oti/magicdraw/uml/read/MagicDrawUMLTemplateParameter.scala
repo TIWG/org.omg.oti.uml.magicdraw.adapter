@@ -44,7 +44,6 @@ import scala.Option
 import scala.Predef.???
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLTemplateParameter 
   extends MagicDrawUMLElement

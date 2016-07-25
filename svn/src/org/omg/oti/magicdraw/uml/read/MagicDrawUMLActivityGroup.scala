@@ -43,7 +43,6 @@ import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
 
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLActivityGroup 
   extends MagicDrawUMLNamedElement

@@ -39,7 +39,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Int,Option}
+import scala.Option
 import scala.Predef._
 import java.lang.Integer
 

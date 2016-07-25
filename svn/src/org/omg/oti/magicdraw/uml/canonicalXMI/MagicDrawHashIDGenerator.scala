@@ -47,7 +47,6 @@ import org.omg.oti.uml.xmi._
 
 import scala.collection.Iterable
 import scala.collection.immutable._
-import scala.language.postfixOps
 import scala.Predef.String
 import scalaz.Scalaz._
 import scalaz._

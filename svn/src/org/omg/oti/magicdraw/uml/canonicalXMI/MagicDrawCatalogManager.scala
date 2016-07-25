@@ -46,7 +46,6 @@ import org.omg.oti.uml.canonicalXMI._
 import org.omg.oti.magicdraw.uml.read._
 
 import scala.collection.immutable._
-import scala.reflect.ClassTag
 import scala.Option
 import scala.Predef.{classOf}
 import scalaz._, Scalaz._

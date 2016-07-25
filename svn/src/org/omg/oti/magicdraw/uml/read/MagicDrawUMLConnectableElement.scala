@@ -44,7 +44,6 @@ import org.omg.oti.uml.read.api._
 
 import scala.Option
 import scala.collection.immutable._
-import scala.collection.Iterable
 
 trait MagicDrawUMLConnectableElement 
   extends MagicDrawUMLTypedElement

@@ -43,7 +43,6 @@ import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.json.common.OTIPrimitiveTypes._
-import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
 
 import scala.annotation
@@ -52,12 +51,10 @@ import scala.{Boolean, None, Option, Some, StringBuilder}
 import scala.Predef.String
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.collection.Iterable
 import java.lang.Runnable
 
 import com.nomagic.magicdraw.hyperlinks.HyperlinkUtils
 
-import scala.language.{implicitConversions, postfixOps}
 import scalaz.{@@, \/, \/-}
 
 trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {

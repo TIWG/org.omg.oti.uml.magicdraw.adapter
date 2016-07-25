@@ -44,8 +44,6 @@ import scala.{Boolean,Option,None,Some,StringContext}
 import scala.Predef.String
 import org.omg.oti.uml.read.api._
 
-import scala.reflect.runtime.universe
-
 trait MagicDrawUMLPort 
   extends MagicDrawUMLProperty
   with UMLPort[MagicDrawUML] {
