@@ -188,17 +188,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
-//  .dependsOnSourceProjectOrLibraryArtifacts(
-//    "org-omg-oti-uml-json",
-//    "org.omg.oti.uml.json",
-//    Seq(
-//      //      //  extra("artifact.kind" -> "generic.library")
-//      "org.omg.tiwg" %% "org-omg-oti-uml-json"
-//        % Versions_oti_uml_json.version %
-//        "compile" withSources() withJavadoc() artifacts
-//        Artifact("org-omg-oti-uml-json", "zip", "zip", Some("resource"), Seq(), None, Map())
-//    )
-//  )
   .dependsOnSourceProjectOrLibraryArtifacts(
     "org-omg-oti-uml-json-serialization",
     "org.omg.oti.uml.json.serialization",
