@@ -138,11 +138,8 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     organizationName := "JPL, Caltech, Airbus & Object Management Group",
     organizationHomepage := Some(url("http://solitaire.omg.org/browse/TIWG")),
 
-    scalaSource in Compile :=
-      baseDirectory.value / "svn" / "src",
-
     resourceDirectory in Compile :=
-      baseDirectory.value / "svn" / "resources",
+      baseDirectory.value / "resources",
 
     // disable publishing the jar produced by `test:package`
     publishArtifact in(Test, packageBin) := false,
@@ -311,7 +308,7 @@ def dynamicScriptsResourceSettings(projectName: String): Seq[Setting[_]] = {
       packageDoc in Test,
       streams) map {
       (base, bin, src, doc, binT, srcT, docT, s) =>
-        val dir = base / "svn"
+        val dir = base
         val file2name = (dir ** "*.dynamicScripts").pair(rebase(dir, projectName)) ++
           (dir / "profiles" ** "*.mdzip").pair(rebase(dir, "..")) ++
           (dir / "resources" ***).pair(rebase(dir, projectName)) ++
