@@ -1,0 +1,1198 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>MagicDrawDocumentSet - org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet</title>
+          <meta name="description" content="MagicDrawDocumentSet - org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet" />
+          <meta name="keywords" content="MagicDrawDocumentSet org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../../index.html';
+            var hash = 'org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="MagicDrawDocumentSet$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="org">org</a>.<a href="../../../../package.html" class="extype" name="org.omg">omg</a>.<a href="../../../package.html" class="extype" name="org.omg.oti">oti</a>.<a href="../../package.html" class="extype" name="org.omg.oti.magicdraw">magicdraw</a>.<a href="../package.html" class="extype" name="org.omg.oti.magicdraw.uml">uml</a>.<a href="package.html" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI">canonicalXMI</a></p>
+        <h1><a href="MagicDrawDocumentSet$.html" title="See companion object">MagicDrawDocumentSet</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="MagicDrawDocumentSet$.html" title="See companion object">object MagicDrawDocumentSet</a>
+            | <a href="package.html" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI">package canonicalXMI</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MagicDrawDocumentSet</span><span class="params">(<span name="serializableImmutableDocuments">serializableImmutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableImmutableDocument">SerializableImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="serializableMutableDocuments">serializableMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableMutableDocument">SerializableMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="loadingMutableDocuments">loadingMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.LoadingMutableDocument">LoadingMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="builtInImmutableDocuments">builtInImmutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInImmutableDocument">BuiltInImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="builtInMutableDocuments">builtInMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInMutableDocument">BuiltInMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="documentURIMapper">documentURIMapper: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>, <span name="builtInURIMapper">builtInURIMapper: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>, <span name="aggregate">aggregate: <a href="../read/MagicDrawDocumentSetAggregate.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate">MagicDrawDocumentSetAggregate</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ops">ops: <a href="../read/MagicDrawUMLUtil.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil">MagicDrawUMLUtil</a></span>, <span name="documentOps">documentOps: <a href="MagicDrawDocumentOps.html" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps">MagicDrawDocumentOps</a></span>, <span name="nodeT">nodeT: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="edgeT">edgeT: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentEdge">DocumentEdge</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>)</span><span class="result"> extends <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>] with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>MagicDraw-specific OTI DocumentSet
+</p></div><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.Product">Product</span>, <span class="extype" name="scala.Equals">Equals</span>, <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet"><span>MagicDrawDocumentSet</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.Product"><span>Product</span></li><li class="in" name="scala.Equals"><span>Equals</span></li><li class="in" name="org.omg.oti.uml.canonicalXMI.DocumentSet"><span>DocumentSet</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(serializableImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],serializableMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],loadingMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],builtInImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],builtInMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],documentURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper,builtInURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper,aggregate:org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate)(implicitops:org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil,implicitdocumentOps:org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps,implicitnodeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],implicitedgeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.canonicalXMI.DocumentEdge[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]]):org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet"></a>
+      <a id="&lt;init&gt;:MagicDrawDocumentSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MagicDrawDocumentSet</span><span class="params">(<span name="serializableImmutableDocuments">serializableImmutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableImmutableDocument">SerializableImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="serializableMutableDocuments">serializableMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableMutableDocument">SerializableMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="loadingMutableDocuments">loadingMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.LoadingMutableDocument">LoadingMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="builtInImmutableDocuments">builtInImmutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInImmutableDocument">BuiltInImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="builtInMutableDocuments">builtInMutableDocuments: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInMutableDocument">BuiltInMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="documentURIMapper">documentURIMapper: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>, <span name="builtInURIMapper">builtInURIMapper: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>, <span name="aggregate">aggregate: <a href="../read/MagicDrawDocumentSetAggregate.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate">MagicDrawDocumentSetAggregate</a></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ops">ops: <a href="../read/MagicDrawUMLUtil.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil">MagicDrawUMLUtil</a></span>, <span name="documentOps">documentOps: <a href="MagicDrawDocumentOps.html" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps">MagicDrawDocumentOps</a></span>, <span name="nodeT">nodeT: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="edgeT">edgeT: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentEdge">DocumentEdge</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@&lt;init&gt;(serializableImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],serializableMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],loadingMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],builtInImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],builtInMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],documentURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper,builtInURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper,aggregate:org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate)(implicitops:org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil,implicitdocumentOps:org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps,implicitnodeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]],implicitedgeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.canonicalXMI.DocumentEdge[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]]):org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
+
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="org.omg.oti.uml.canonicalXMI.DocumentSet.IMemo" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="IMemoextendsProductwithSerializable"></a>
+      <a id="IMemo:IMemo"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">IMemo</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@IMemoextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet.ImmutableDocumentSetGraph" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ImmutableDocumentSetGraph=scalax.collection.constrained.immutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]"></a>
+      <a id="ImmutableDocumentSetGraph:ImmutableDocumentSetGraph"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ImmutableDocumentSetGraph</span><span class="result"> = <span class="extype" name="scalax.collection.constrained.immutable.Graph">Graph</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentEdge">DocumentEdge</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@ImmutableDocumentSetGraph=scalax.collection.constrained.immutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet.MMemo" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="MMemoextendsProductwithSerializable"></a>
+      <a id="MMemo:MMemo"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MMemo</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@MMemoextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet.MutableDocumentSetGraph" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="MutableDocumentSetGraph=scalax.collection.constrained.mutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]"></a>
+      <a id="MutableDocumentSetGraph:MutableDocumentSetGraph"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">type</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MutableDocumentSetGraph</span><span class="result"> = <span class="extype" name="scalax.collection.constrained.mutable.Graph">Graph</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentEdge">DocumentEdge</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@MutableDocumentSetGraph=scalax.collection.constrained.mutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="TConnected[CC&lt;:&lt;?&gt;]extendsAnyRef"></a>
+      <a id="TConnected[CC[N,E[X]&lt;:EdgeLikeIn[X]]&lt;:Graph[N,E[X]]withGraphLike[N,E[X],CC]]:TConnected[CC]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">TConnected</span><span class="tparams">[<span name="CC">CC<span class="tparams">[<span name="N">N</span>, <span name="E">E<span class="tparams">[<span name="X">X</span>]</span> &lt;: <span class="extype" name="scalax.collection.GraphPredef.EdgeLikeIn">EdgeLikeIn</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.E.X">X</span>]</span>]</span> &lt;: <span class="extype" name="scalax.collection.constrained.Graph">Graph</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.N">N</span>, <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.E">E</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.E.X">X</span>]] with <span class="extype" name="scalax.collection.constrained.GraphLike">GraphLike</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.N">N</span>, <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.E">E</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC.E.X">X</span>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet.TConnected.CC">CC</span>]</span>]</span><span class="result"> extends <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@TConnected[CC[N,E[X]&lt;:scalax.collection.GraphPredef.EdgeLikeIn[X]]&lt;:scalax.collection.constrained.Graph[N,E]withscalax.collection.constrained.GraphLike[N,E,CC]]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#aggregate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="aggregate:org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate"></a>
+      <a id="aggregate:MagicDrawDocumentSetAggregate"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">aggregate</span><span class="result">: <a href="../read/MagicDrawDocumentSetAggregate.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate">MagicDrawDocumentSetAggregate</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@aggregate:org.omg.oti.magicdraw.uml.read.MagicDrawDocumentSetAggregate" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allBuiltInDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allBuiltInDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]withorg.omg.oti.uml.xmi.BuiltInDocument]"></a>
+      <a id="allBuiltInDocuments:Set[Document[MagicDrawUML]withBuiltInDocument]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allBuiltInDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>] with <span class="extype" name="org.omg.oti.uml.xmi.BuiltInDocument">BuiltInDocument</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allBuiltInDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]withorg.omg.oti.uml.xmi.BuiltInDocument]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]]"></a>
+      <a id="allDocuments:Set[Document[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allImmutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.ImmutableDocument[Uml]]"></a>
+      <a id="allImmutableDocuments:Set[ImmutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allImmutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.ImmutableDocument">ImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.ImmutableDocument[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allMutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.MutableDocument[Uml]]"></a>
+      <a id="allMutableDocuments:Set[MutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allMutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.MutableDocument">MutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.MutableDocument[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allOwnedElementsExcludingAllDocumentScopes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allOwnedElementsExcludingAllDocumentScopes(p:org.omg.oti.uml.read.api.UMLPackage[Uml]):scalaz.\/[scala.collection.immutable.Set[Throwable],scala.collection.immutable.Set[org.omg.oti.uml.read.api.UMLElement[Uml]]]"></a>
+      <a id="allOwnedElementsExcludingAllDocumentScopes(UMLPackage[MagicDrawUML]):\/[Set[Throwable],Set[UMLElement[MagicDrawUML]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allOwnedElementsExcludingAllDocumentScopes</span><span class="params">(<span name="p">p: <span class="extype" name="org.omg.oti.uml.read.api.UMLPackage">UMLPackage</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>)</span><span class="result">: <span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allOwnedElementsExcludingAllDocumentScopes(p:org.omg.oti.uml.read.api.UMLPackage[Uml]):scalaz.\/[scala.collection.immutable.Set[Throwable],scala.collection.immutable.Set[org.omg.oti.uml.read.api.UMLElement[Uml]]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#allSerializableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="allSerializableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]withorg.omg.oti.uml.xmi.SerializableDocument]"></a>
+      <a id="allSerializableDocuments:Set[Document[MagicDrawUML]withSerializableDocument]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">allSerializableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>] with <span class="extype" name="org.omg.oti.uml.xmi.SerializableDocument">SerializableDocument</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@allSerializableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.Document[Uml]withorg.omg.oti.uml.xmi.SerializableDocument]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#asBuiltInMutableDocument" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asBuiltInMutableDocument(d:org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],artifactKind:org.omg.oti.json.common.OTIArtifactKind):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]"></a>
+      <a id="asBuiltInMutableDocument(LoadingMutableDocument[MagicDrawUML],OTIArtifactKind):\/[Set[Throwable],(BuiltInMutableDocument[MagicDrawUML],DocumentSet[MagicDrawUML])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asBuiltInMutableDocument</span><span class="params">(<span name="d">d: <span class="extype" name="org.omg.oti.uml.xmi.LoadingMutableDocument">LoadingMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>, <span name="artifactKind">artifactKind: <span class="extype" name="org.omg.oti.json.common.OTIArtifactKind">OTIArtifactKind</span></span>)</span><span class="result">: <span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], (<span class="extype" name="org.omg.oti.uml.xmi.BuiltInMutableDocument">BuiltInMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@asBuiltInMutableDocument(d:org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],artifactKind:org.omg.oti.json.common.OTIArtifactKind):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#asSerializableMutableDocument" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asSerializableMutableDocument(d:org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],artifactKind:org.omg.oti.json.common.OTIArtifactKind):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]"></a>
+      <a id="asSerializableMutableDocument(LoadingMutableDocument[MagicDrawUML],OTIArtifactKind):\/[Set[Throwable],(SerializableMutableDocument[MagicDrawUML],DocumentSet[MagicDrawUML])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asSerializableMutableDocument</span><span class="params">(<span name="d">d: <span class="extype" name="org.omg.oti.uml.xmi.LoadingMutableDocument">LoadingMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>, <span name="artifactKind">artifactKind: <span class="extype" name="org.omg.oti.json.common.OTIArtifactKind">OTIArtifactKind</span></span>)</span><span class="result">: <span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], (<span class="extype" name="org.omg.oti.uml.xmi.SerializableMutableDocument">SerializableMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@asSerializableMutableDocument(d:org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],artifactKind:org.omg.oti.json.common.OTIArtifactKind):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#builtInImmutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="builtInImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="builtInImmutableDocuments:Set[BuiltInImmutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">builtInImmutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInImmutableDocument">BuiltInImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@builtInImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#builtInMutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="builtInMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="builtInMutableDocuments:Set[BuiltInMutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">builtInMutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.BuiltInMutableDocument">BuiltInMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@builtInMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#builtInURIMapper" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="builtInURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper"></a>
+      <a id="builtInURIMapper:CatalogURIMapper"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">builtInURIMapper</span><span class="result">: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@builtInURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.AnyRef">AnyRef</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#computeElement2DocumentMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="computeElement2DocumentMap:scala.collection.immutable.Map[org.omg.oti.uml.read.api.UMLElement[Uml],org.omg.oti.uml.xmi.Document[Uml]]"></a>
+      <a id="computeElement2DocumentMap:Map[UMLElement[MagicDrawUML],Document[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">computeElement2DocumentMap</span><span class="result">: <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@computeElement2DocumentMap:scala.collection.immutable.Map[org.omg.oti.uml.read.api.UMLElement[Uml],org.omg.oti.uml.xmi.Document[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#dfs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="dfs(node:&lt;?&gt;,memo:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]"></a>
+      <a id="dfs(scalax.collection.constrained.mutable.Graph.NodeT,MMemo):Either[Document[MagicDrawUML],MMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dfs</span><span class="params">(<span name="node">node: <span class="extype" name="scalax.collection.mutable.GraphLike.NodeT">scalax.collection.constrained.mutable.Graph.NodeT</span></span>, <span name="memo">memo: <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@dfs(node:scalax.collection.constrained.mutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]#NodeT,memo:DocumentSet.this.MMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#dfs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="dfs(node:&lt;?&gt;,memo:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]"></a>
+      <a id="dfs(scalax.collection.constrained.immutable.Graph.NodeT,IMemo):Either[Document[MagicDrawUML],IMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dfs</span><span class="params">(<span name="node">node: <span class="extype" name="scalax.collection.GraphLike.NodeT">scalax.collection.constrained.immutable.Graph.NodeT</span></span>, <span name="memo">memo: <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@dfs(node:scalax.collection.constrained.immutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]#NodeT,memo:DocumentSet.this.IMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#documentOps" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="documentOps:org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps"></a>
+      <a id="documentOps:MagicDrawDocumentOps"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">documentOps</span><span class="result">: <a href="MagicDrawDocumentOps.html" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps">MagicDrawDocumentOps</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@documentOps:org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentOps" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#documentURIMapper" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="documentURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper"></a>
+      <a id="documentURIMapper:CatalogURIMapper"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">documentURIMapper</span><span class="result">: <span class="extype" name="org.omg.oti.uml.canonicalXMI.CatalogURIMapper">CatalogURIMapper</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@documentURIMapper:org.omg.oti.uml.canonicalXMI.CatalogURIMapper" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#edgeT" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="edgeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.canonicalXMI.DocumentEdge[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]]"></a>
+      <a id="edgeT:scala.reflect.api.JavaUniverse.TypeTag[DocumentEdge[Document[MagicDrawUML]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">edgeT</span><span class="result">: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentEdge">DocumentEdge</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@edgeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.canonicalXMI.DocumentEdge[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#freezeBuiltInMutableDocument" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="freezeBuiltInMutableDocument(d:org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]"></a>
+      <a id="freezeBuiltInMutableDocument(BuiltInMutableDocument[MagicDrawUML]):\/[Set[Throwable],(BuiltInImmutableDocument[MagicDrawUML],DocumentSet[MagicDrawUML])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freezeBuiltInMutableDocument</span><span class="params">(<span name="d">d: <span class="extype" name="org.omg.oti.uml.xmi.BuiltInMutableDocument">BuiltInMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>)</span><span class="result">: <span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], (<span class="extype" name="org.omg.oti.uml.xmi.BuiltInImmutableDocument">BuiltInImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@freezeBuiltInMutableDocument(d:org.omg.oti.uml.xmi.BuiltInMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.BuiltInImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#freezeSerializableMutableDocument" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="freezeSerializableMutableDocument(d:org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]"></a>
+      <a id="freezeSerializableMutableDocument(SerializableMutableDocument[MagicDrawUML]):\/[Set[Throwable],(SerializableImmutableDocument[MagicDrawUML],DocumentSet[MagicDrawUML])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freezeSerializableMutableDocument</span><span class="params">(<span name="d">d: <span class="extype" name="org.omg.oti.uml.xmi.SerializableMutableDocument">SerializableMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>)</span><span class="result">: <span class="extype" name="scalaz.\/">\/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], (<span class="extype" name="org.omg.oti.uml.xmi.SerializableImmutableDocument">SerializableImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@freezeSerializableMutableDocument(d:org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]):scalaz.\/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML],org.omg.oti.uml.canonicalXMI.DocumentSet[org.omg.oti.magicdraw.uml.read.MagicDrawUML])]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#iGraphFactory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="iGraphFactory:DocumentSet.this.TConnected[scalax.collection.constrained.immutable.Graph]"></a>
+      <a id="iGraphFactory:TConnected[Graph]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">iGraphFactory</span><span class="result">: <a href="#TConnected[CC[N,E[X]&lt;:scalax.collection.GraphPredef.EdgeLikeIn[X]]&lt;:scalax.collection.constrained.Graph[N,E]withscalax.collection.constrained.GraphLike[N,E,CC]]extendsAnyRef" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.TConnected">TConnected</a>[<span class="extype" name="scalax.collection.constrained.immutable.Graph">Graph</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@iGraphFactory:DocumentSet.this.TConnected[scalax.collection.constrained.immutable.Graph]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#loadingMutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadingMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="loadingMutableDocuments:Set[LoadingMutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadingMutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.LoadingMutableDocument">LoadingMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@loadingMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.LoadingMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#lookupDocumentByExtent" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="lookupDocumentByExtent(e:&lt;?&gt;):Option[org.omg.oti.uml.xmi.Document[Uml]]"></a>
+      <a id="lookupDocumentByExtent(UMLElement[MagicDrawUML]):Option[Document[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">lookupDocumentByExtent</span><span class="params">(<span name="e">e: <span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@lookupDocumentByExtent(e:org.omg.oti.uml.read.api.UMLElement[Uml]):Option[org.omg.oti.uml.xmi.Document[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#lookupDocumentByScope" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="lookupDocumentByScope(e:&lt;?&gt;):Option[org.omg.oti.uml.xmi.Document[Uml]]"></a>
+      <a id="lookupDocumentByScope(UMLElement[MagicDrawUML]):Option[Document[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">lookupDocumentByScope</span><span class="params">(<span name="e">e: <span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@lookupDocumentByScope(e:org.omg.oti.uml.read.api.UMLElement[Uml]):Option[org.omg.oti.uml.xmi.Document[Uml]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#mGraphFactory" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="mGraphFactory:DocumentSet.this.TConnected[scalax.collection.constrained.mutable.Graph]"></a>
+      <a id="mGraphFactory:TConnected[Graph]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mGraphFactory</span><span class="result">: <a href="#TConnected[CC[N,E[X]&lt;:scalax.collection.GraphPredef.EdgeLikeIn[X]]&lt;:scalax.collection.constrained.Graph[N,E]withscalax.collection.constrained.GraphLike[N,E,CC]]extendsAnyRef" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.TConnected">TConnected</a>[<span class="extype" name="scalax.collection.constrained.mutable.Graph">Graph</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@mGraphFactory:DocumentSet.this.TConnected[scalax.collection.constrained.mutable.Graph]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#myConfig" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="myConfig:scalax.collection.config.CoreConfig"></a>
+      <a id="myConfig:CoreConfig"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">myConfig</span><span class="result">: <span class="extype" name="scalax.collection.config.CoreConfig">CoreConfig</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@myConfig:scalax.collection.config.CoreConfig" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.AnyRef">AnyRef</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#nodeT" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="nodeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="nodeT:scala.reflect.api.JavaUniverse.TypeTag[Document[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nodeT</span><span class="result">: <span class="extype" name="scala.reflect.api.TypeTags.TypeTag">scala.reflect.api.JavaUniverse.TypeTag</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@nodeT:reflect.runtime.universe.TypeTag[org.omg.oti.uml.xmi.Document[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#ops" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ops:org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil"></a>
+      <a id="ops:MagicDrawUMLUtil"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ops</span><span class="result">: <a href="../read/MagicDrawUMLUtil.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil">MagicDrawUMLUtil</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@ops:org.omg.oti.magicdraw.uml.read.MagicDrawUMLUtil" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#otiCharacteristicsProvider" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="otiCharacteristicsProvider:org.omg.oti.uml.characteristics.OTICharacteristicsProvider[org.omg.oti.magicdraw.uml.read.MagicDrawUML]"></a>
+      <a id="otiCharacteristicsProvider:OTICharacteristicsProvider[MagicDrawUML]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">implicit </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">otiCharacteristicsProvider</span><span class="result">: <span class="extype" name="org.omg.oti.uml.characteristics.OTICharacteristicsProvider">OTICharacteristicsProvider</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@otiCharacteristicsProvider:org.omg.oti.uml.characteristics.OTICharacteristicsProvider[org.omg.oti.magicdraw.uml.read.MagicDrawUML]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#resolve" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="resolve(ignoreCrossReferencedElementFilter:&lt;?&gt;,unresolvedElementMapper:&lt;?&gt;,includeAllForwardRelationTriple:&lt;?&gt;,progressTelemetry:&lt;?&gt;):scalaz.\&amp;/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.canonicalXMI.ResolvedDocumentSet[Uml],scala.collection.immutable.Vector[org.omg.oti.uml.canonicalXMI.UnresolvedElementCrossReference[Uml]])]"></a>
+      <a id="resolve((UMLElement[MagicDrawUML])⇒Boolean,(UMLElement[MagicDrawUML])⇒Option[UMLElement[MagicDrawUML]],(Document[MagicDrawUML],RelationTriple[MagicDrawUML],Document[MagicDrawUML])⇒Boolean,DocumentResolverProgressTelemetry):\&amp;/[Set[Throwable],(ResolvedDocumentSet[MagicDrawUML],Vector[UnresolvedElementCrossReference[MagicDrawUML]])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">resolve</span><span class="params">(<span name="ignoreCrossReferencedElementFilter">ignoreCrossReferencedElementFilter: (<span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="unresolvedElementMapper">unresolvedElementMapper: (<span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]) ⇒ <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="org.omg.oti.uml.read.api.UMLElement">UMLElement</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>, <span name="includeAllForwardRelationTriple">includeAllForwardRelationTriple: (<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.RelationTriple">RelationTriple</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]) ⇒ <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="progressTelemetry">progressTelemetry: <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentResolverProgressTelemetry">DocumentResolverProgressTelemetry</span></span>)</span><span class="result">: <span class="extype" name="scalaz.\&amp;/">\&amp;/</span>[<span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="java.lang.Throwable">Throwable</span>], (<span class="extype" name="org.omg.oti.uml.canonicalXMI.ResolvedDocumentSet">ResolvedDocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="org.omg.oti.uml.canonicalXMI.UnresolvedElementCrossReference">UnresolvedElementCrossReference</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@resolve(ignoreCrossReferencedElementFilter:org.omg.oti.uml.read.api.UMLElement[Uml]=&gt;Boolean,unresolvedElementMapper:org.omg.oti.uml.read.api.UMLElement[Uml]=&gt;Option[org.omg.oti.uml.read.api.UMLElement[Uml]],includeAllForwardRelationTriple:(org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.RelationTriple[Uml],org.omg.oti.uml.xmi.Document[Uml])=&gt;Boolean,progressTelemetry:org.omg.oti.uml.canonicalXMI.DocumentResolverProgressTelemetry):scalaz.\&amp;/[scala.collection.immutable.Set[Throwable],(org.omg.oti.uml.canonicalXMI.ResolvedDocumentSet[Uml],scala.collection.immutable.Vector[org.omg.oti.uml.canonicalXMI.UnresolvedElementCrossReference[Uml]])]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#right" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="right(m:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]"></a>
+      <a id="right(MMemo):Either[Document[MagicDrawUML],MMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">right</span><span class="params">(<span name="m">m: <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@right(m:DocumentSet.this.MMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#right" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="right(m:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]"></a>
+      <a id="right(IMemo):Either[Document[MagicDrawUML],IMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">right</span><span class="params">(<span name="m">m: <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@right(m:DocumentSet.this.IMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#searchAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="searchAll(nodes:&lt;?&gt;,memo:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]"></a>
+      <a id="searchAll(Iterable[scalax.collection.constrained.mutable.Graph.NodeT],MMemo):Either[Document[MagicDrawUML],MMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">searchAll</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="scala.collection.Iterable">Iterable</span>[<span class="extype" name="scalax.collection.mutable.GraphLike.NodeT">scalax.collection.constrained.mutable.Graph.NodeT</span>]</span>, <span name="memo">memo: <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#MMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MMemo">MMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@searchAll(nodes:Iterable[scalax.collection.constrained.mutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]#NodeT],memo:DocumentSet.this.MMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.MMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#searchAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="searchAll(nodes:&lt;?&gt;,memo:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]"></a>
+      <a id="searchAll(Iterable[scalax.collection.constrained.immutable.Graph.NodeT],IMemo):Either[Document[MagicDrawUML],IMemo]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">searchAll</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="scala.collection.Iterable">Iterable</span>[<span class="extype" name="scalax.collection.GraphLike.NodeT">scalax.collection.constrained.immutable.Graph.NodeT</span>]</span>, <span name="memo">memo: <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <a href="#IMemoextendsProductwithSerializable" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.IMemo">IMemo</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@searchAll(nodes:Iterable[scalax.collection.constrained.immutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]#NodeT],memo:DocumentSet.this.IMemo):Either[org.omg.oti.uml.xmi.Document[Uml],DocumentSet.this.IMemo]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#serializableImmutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializableImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="serializableImmutableDocuments:Set[SerializableImmutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">serializableImmutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableImmutableDocument">SerializableImmutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@serializableImmutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableImmutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet#serializableMutableDocuments" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializableMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]"></a>
+      <a id="serializableMutableDocuments:Set[SerializableMutableDocument[MagicDrawUML]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">serializableMutableDocuments</span><span class="result">: <span class="extype" name="scala.collection.immutable.Set">Set</span>[<span class="extype" name="org.omg.oti.uml.xmi.SerializableMutableDocument">SerializableMutableDocument</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@serializableMutableDocuments:scala.collection.immutable.Set[org.omg.oti.uml.xmi.SerializableMutableDocument[org.omg.oti.magicdraw.uml.read.MagicDrawUML]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet">MagicDrawDocumentSet</a> → DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#topologicalSort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="topologicalSort(g:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],List[org.omg.oti.uml.xmi.Document[Uml]]]"></a>
+      <a id="topologicalSort(MutableDocumentSetGraph):Either[Document[MagicDrawUML],List[Document[MagicDrawUML]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">topologicalSort</span><span class="params">(<span name="g">g: <a href="#MutableDocumentSetGraph=scalax.collection.constrained.mutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.MutableDocumentSetGraph">MutableDocumentSetGraph</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="scala.collection.immutable.List">List</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@topologicalSort(g:DocumentSet.this.MutableDocumentSetGraph):Either[org.omg.oti.uml.xmi.Document[Uml],List[org.omg.oti.uml.xmi.Document[Uml]]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="org.omg.oti.uml.canonicalXMI.DocumentSet#topologicalSort" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="topologicalSort(g:&lt;?&gt;):Either[org.omg.oti.uml.xmi.Document[Uml],List[org.omg.oti.uml.xmi.Document[Uml]]]"></a>
+      <a id="topologicalSort(ImmutableDocumentSetGraph):Either[Document[MagicDrawUML],List[Document[MagicDrawUML]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">topologicalSort</span><span class="params">(<span name="g">g: <a href="#ImmutableDocumentSetGraph=scalax.collection.constrained.immutable.Graph[org.omg.oti.uml.xmi.Document[Uml],org.omg.oti.uml.canonicalXMI.DocumentEdge]" class="extmbr" name="org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet.ImmutableDocumentSetGraph">ImmutableDocumentSetGraph</a></span>)</span><span class="result">: <span class="extype" name="scala.Either">Either</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>], <span class="extype" name="scala.collection.immutable.List">List</span>[<span class="extype" name="org.omg.oti.uml.xmi.Document">Document</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@topologicalSort(g:DocumentSet.this.ImmutableDocumentSetGraph):Either[org.omg.oti.uml.xmi.Document[Uml],List[org.omg.oti.uml.xmi.Document[Uml]]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DocumentSet</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#org.omg.oti.magicdraw.uml.canonicalXMI.MagicDrawDocumentSet@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.Product">
+              <h3>Inherited from <span class="extype" name="scala.Product">Product</span></h3>
+            </div><div class="parent" name="scala.Equals">
+              <h3>Inherited from <span class="extype" name="scala.Equals">Equals</span></h3>
+            </div><div class="parent" name="org.omg.oti.uml.canonicalXMI.DocumentSet">
+              <h3>Inherited from <span class="extype" name="org.omg.oti.uml.canonicalXMI.DocumentSet">DocumentSet</span>[<a href="../read/MagicDrawUML.html" class="extype" name="org.omg.oti.magicdraw.uml.read.MagicDrawUML">MagicDrawUML</a>]</h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <span class="extype" name="scala.AnyRef">AnyRef</span></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
