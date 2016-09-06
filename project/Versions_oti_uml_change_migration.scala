@@ -1,6 +1,6 @@
 object Versions_oti_uml_change_migration {
 
-  // https://github.jpl.nasa.gov/imce/org.omg.oti.changeMigration
-  val version="2.7.0"
+  // https://github.com/TIWG/org.omg.oti.uml.change_migration
+  val version="3.0.1"
 
 }

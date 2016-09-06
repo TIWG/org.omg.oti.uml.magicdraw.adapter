@@ -5,91 +5,10 @@ import sbt._
 import gov.nasa.jpl.imce.sbt._
 import gov.nasa.jpl.imce.sbt.ProjectHelper._
 
-useGpg := true
-
 updateOptions := updateOptions.value.withCachedResolution(true)
-
-developers := List(
-  Developer(
-    id="rouquett",
-    name="Nicolas F. Rouquette",
-    email="nicolas.f.rouquette@jpl.nasa.gov",
-    url=url("https://gateway.jpl.nasa.gov/personal/rouquett/default.aspx")),
-  Developer(
-    id="melaasar",
-    name="Maged Elaasar",
-    email="maged.elaasar@jpl.nasa.gov",
-    url=url("https://gateway.jpl.nasa.gov/personal/melaasar/default.aspx")))
 
 import scala.io.Source
 import scala.util.control.Exception._
-
-def docSettings(diagrams:Boolean): Seq[Setting[_]] =
-  Seq(
-    sources in (Compile,doc) <<= (git.gitUncommittedChanges, sources in (Compile,compile)) map {
-      (uncommitted, compileSources) =>
-        if (uncommitted)
-          Seq.empty
-        else
-          compileSources
-    },
-
-    sources in (Test,doc) <<= (git.gitUncommittedChanges, sources in (Test,compile)) map {
-      (uncommitted, testSources) =>
-        if (uncommitted)
-          Seq.empty
-        else
-          testSources
-    },
-
-    scalacOptions in (Compile,doc) ++=
-      (if (diagrams)
-        Seq("-diagrams")
-      else
-        Seq()
-        ) ++
-        Seq(
-          "-doc-title", name.value,
-          "-doc-root-content", baseDirectory.value + "/rootdoc.txt"
-        ),
-    autoAPIMappings := ! git.gitUncommittedChanges.value,
-    apiMappings <++=
-      ( git.gitUncommittedChanges,
-        dependencyClasspath in Compile in doc,
-        IMCEKeys.nexusJavadocRepositoryRestAPIURL2RepositoryName,
-        IMCEKeys.pomRepositoryPathRegex,
-        streams ) map { (uncommitted, deps, repoURL2Name, repoPathRegex, s) =>
-        if (uncommitted)
-          Map[File, URL]()
-        else
-          (for {
-            jar <- deps
-            url <- jar.metadata.get(AttributeKey[ModuleID]("moduleId")).flatMap { moduleID =>
-              val urls = for {
-                (repoURL, repoName) <- repoURL2Name
-                (query, match2publishF) = IMCEPlugin.nexusJavadocPOMResolveQueryURLAndPublishURL(
-                  repoURL, repoName, moduleID)
-                url <- nonFatalCatch[Option[URL]]
-                  .withApply { (_: java.lang.Throwable) => None }
-                  .apply({
-                    val conn = query.openConnection.asInstanceOf[java.net.HttpURLConnection]
-                    conn.setRequestMethod("GET")
-                    conn.setDoOutput(true)
-                    repoPathRegex
-                      .findFirstMatchIn(Source.fromInputStream(conn.getInputStream).getLines.mkString)
-                      .map { m =>
-                        val javadocURL = match2publishF(m)
-                        s.log.info(s"Javadoc for: $moduleID")
-                        s.log.info(s"= mapped to: $javadocURL")
-                        javadocURL
-                      }
-                  })
-              } yield url
-              urls.headOption
-            }
-          } yield jar.data -> url).toMap
-      }
-  )
 
 resolvers := {
   val previous = resolvers.value
@@ -101,21 +20,23 @@ resolvers := {
 
 shellPrompt in ThisBuild := { state => Project.extract(state).currentRef.project + "> " }
 
+lazy val mdInstallDirectory = SettingKey[File]("md-install-directory", "MagicDraw Installation Directory")
+
+mdInstallDirectory in ThisBuild :=
+  (baseDirectory in ThisBuild).value / "target" / "md.package"
+
+cleanFiles += (mdInstallDirectory in ThisBuild).value
+
 lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
   .enablePlugins(IMCEGitPlugin)
   .enablePlugins(IMCEReleasePlugin)
   .settings(dynamicScriptsResourceSettings("org.omg.oti.uml.magicdraw.adapter"))
   .settings(IMCEPlugin.strictScalacFatalWarningsSettings)
-  .settings(docSettings(diagrams=false))
   .settings(IMCEReleasePlugin.packageReleaseProcessSettings)
   .settings(
     IMCEKeys.licenseYearOrRange := "2014-2016",
     IMCEKeys.organizationInfo := IMCEPlugin.Organizations.oti,
-    IMCEKeys.targetJDK := IMCEKeys.jdk17.value,
-
-    organization := "org.omg.tiwg",
-    organizationHomepage :=
-      Some(url("http://www.omg.org/members/sysml-rtf-wiki/doku.php?id=rtf5:groups:tools_infrastructure:index")),
+    IMCEKeys.targetJDK := IMCEKeys.jdk18.value,
 
     buildInfoKeys ++= Seq[BuildInfoKey](BuildInfoKey.action("buildDateUTC") { buildUTCDate.value }),
     buildInfoPackage := "org.omg.oti.uml.magicdraw.adapter",
@@ -135,8 +56,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     },
 
     git.baseVersion := Versions.version,
-    organizationName := "JPL, Caltech, Airbus & Object Management Group",
-    organizationHomepage := Some(url("http://solitaire.omg.org/browse/TIWG")),
 
     resourceDirectory in Compile :=
       baseDirectory.value / "resources",
@@ -150,17 +69,21 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     // disable publishing the test sources jar
     publishArtifact in(Test, packageSrc) := false,
 
-    unmanagedClasspath in Compile <++= unmanagedJars in Compile
+    unmanagedClasspath in Compile <++= unmanagedJars in Compile,
+
+    resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
+    resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg")
+
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
      "oti-uml-change_migration",
      "org.omg.oti.uml.change_migration",
      Seq(
         //  extra("artifact.kind" -> "generic.library")
-       "org.omg.tiwg" %% "oti-uml-change_migration"
+       "org.omg.tiwg" %% "org.omg.oti.uml.change_migration"
        % Versions_oti_uml_change_migration.version %
        "compile" withSources() withJavadoc() artifacts
-       Artifact("oti-uml-change_migration", "zip", "zip", Some("resource"), Seq(), None, Map())
+       Artifact("org.omg.oti.uml.change_migration", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -168,10 +91,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "org.omg.oti.uml.composite_structure_tree_analysis",
     Seq(
 //      //  extra("artifact.kind" -> "generic.library")
-      "org.omg.tiwg" %% "oti-uml-composite_structure_tree_analysis"
+      "org.omg.tiwg" %% "org.omg.oti.uml.composite_structure_tree_analysis"
         % Versions_oti_uml_composite_structure_tree_analysis.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -179,10 +102,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "org.omg.oti.uml.canonical_xmi.loader",
     Seq(
 //      //  extra("artifact.kind" -> "generic.library")
-      "org.omg.tiwg" %% "oti-uml-canonical_xmi-loader"
+      "org.omg.tiwg" %% "org.omg.oti.uml.canonical_xmi.loader"
         % Versions_oti_uml_canonical_xmi_loader.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("oti-uml-canonical_xmi-loader", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.canonical_xmi.loader", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -190,65 +113,58 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "org.omg.oti.uml.json.serialization",
     Seq(
       //      //  extra("artifact.kind" -> "generic.library")
-      "org.omg.tiwg" %% "org-omg-oti-uml-json-serialization"
+      "org.omg.tiwg" %% "org.omg.oti.uml.json.serialization"
         % Versions_oti_uml_json_serialization.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("org-omg-oti-uml-json-serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.json.serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
     )
   )
   .settings(
     libraryDependencies +=
-      "gov.nasa.jpl.imce.magicdraw.plugins" %% "imce_md18_0_sp6_dynamic-scripts"
+      "gov.nasa.jpl.imce" %% "imce.dynamic_scripts.magicdraw.plugin"
         % Versions_imce_md18_0_sp6_dynamic_scripts.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("imce_md18_0_sp6_dynamic-scripts", "zip", "zip", Some("resource"), Seq(), None, Map()),
+        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("resource"), Seq(), None, Map()),
 
-    extractArchives <<= (baseDirectory, update, streams) map {
-      (base, up, s) =>
+    extractArchives <<= (baseDirectory, update, streams, mdInstallDirectory in ThisBuild) map {
+      (base, up, s, mdInstallDir) =>
 
-        val mdInstallDir = base / "target" / "md.package"
         if (!mdInstallDir.exists) {
 
-          IO.createDirectory(mdInstallDir)
+          val parts = (for {
+            cReport <- up.configurations
+            if cReport.configuration == "compile"
+            mReport <- cReport.modules
+            if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
+            (artifact, archive) <- mReport.artifacts
+          } yield archive).sorted
 
-          val pfilter: DependencyFilter = new DependencyFilter {
-            def apply(c: String, m: ModuleID, a: Artifact): Boolean =
-              (a.`type` == "zip" || a.`type` == "resource") &&
-                a.extension == "zip" &&
-                m.organization == "gov.nasa.jpl.cae.magicdraw.packages"
-          }
-          val ps: Seq[File] = up.matching(pfilter)
-          ps.foreach { zip =>
-            val files = IO.unzip(zip, mdInstallDir)
-            s.log.info(
-              s"=> created md.install.dir=$mdInstallDir with ${files.size} " +
-                s"files extracted from zip: ${zip.getName}")
-          }
+          s.log.info(s"Extracting MagicDraw from ${parts.size} parts:")
+          parts.foreach { p => s.log.info(p.getAbsolutePath) }
 
-//          val mdDynamicScriptsDir = mdInstallDir / "dynamicScripts"
-//          IO.createDirectory(mdDynamicScriptsDir)
-//
-//          val zfilter: DependencyFilter = new DependencyFilter {
-//            def apply(c: String, m: ModuleID, a: Artifact): Boolean =
-//              (a.`type` == "zip" || a.`type` == "resource") &&
-//                a.extension == "zip" &&
-//                m.organization == "org.omg.tiwg"
-//          }
-//          val zs: Seq[File] = up.matching(zfilter)
-//          zs.foreach { zip =>
-//            val files = IO.unzip(zip, mdDynamicScriptsDir)
-//            s.log.info(
-//              s"=> extracted ${files.size} DynamicScripts files from zip: ${zip.getName}")
-//          }
+          val merged = File.createTempFile("md_merged", ".zip")
+          println(s"merged: ${merged.getAbsolutePath}")
 
-          val mdBinFolder = mdInstallDir / "bin"
-          require(mdBinFolder.exists, "md bin: $mdBinFolder")
+          val zip = File.createTempFile("md_no_install", ".zip")
+          println(s"zip: ${zip.getAbsolutePath}")
 
-        } else {
+          val script = File.createTempFile("unzip_md", ".sh")
+          println(s"script: ${script.getAbsolutePath}")
+
+          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
+          out.println("#!/bin/bash")
+          out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
+          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
+          out.close()
+
+          val result = sbt.Process(command="/bin/bash", arguments=Seq[String](script.getAbsolutePath)).!
+
+          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+
+        } else
           s.log.info(
             s"=> use existing md.install.dir=$mdInstallDir")
-        }
-
     },
 
     unmanagedJars in Compile <++= (baseDirectory, update, streams, extractArchives) map {
@@ -268,15 +184,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         mdJars
     },
 
-    compile <<= (compile in Compile) dependsOn extractArchives,
-
-    IMCEKeys.nexusJavadocRepositoryRestAPIURL2RepositoryName := Map(
-      "https://oss.sonatype.org/service/local" -> "releases",
-      "https://cae-nexuspro.jpl.nasa.gov/nexus/service/local" -> "JPL",
-      "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.beta.group" -> "JPL Beta Group",
-      "https://cae-nexuspro.jpl.nasa.gov/nexus/content/groups/jpl.public.group" -> "JPL Public Group"),
-    IMCEKeys.pomRepositoryPathRegex := """\<repositoryPath\>\s*([^\"]*)\s*\<\/repositoryPath\>""".r
-
+    compile <<= (compile in Compile) dependsOn extractArchives
   )
 
 def dynamicScriptsResourceSettings(projectName: String): Seq[Setting[_]] = {
