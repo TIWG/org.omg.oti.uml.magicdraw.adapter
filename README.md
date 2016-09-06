@@ -1,5 +1,8 @@
 # MagicDraw adapter for the OMG Tool-Neutral Interoperability (OTI) API
 
+[![Build Status](https://travis-ci.org/TIWG/org.omg.oti.uml.magicdraw.adapter.svg?branch=master)](https://travis-ci.org/TIWG/org.omg.oti.uml.magicdraw.adapter)
+[ ![Download](https://api.bintray.com/packages/tiwg/org.omg.tiwg/org.omg.oti.uml.magicdraw.adapter/images/download.svg) ](https://bintray.com/tiwg/org.omg.tiwg/org.omg.oti.uml.magicdraw.adapter/_latestVersion)
+ 
 ## MagicDraw-specific resources
 
 - `org.omg.oti.magicdraw/resources/OMG Tool Infrastructure.mdzip`
