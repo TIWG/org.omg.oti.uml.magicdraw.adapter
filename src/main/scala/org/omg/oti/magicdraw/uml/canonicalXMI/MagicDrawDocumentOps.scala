@@ -688,7 +688,7 @@ class MagicDrawDocumentOps
  * @see http://jdocs.nomagic.com/182/com/nomagic/ci/persistence/IProject.html#getLocationURI()
  */
 @deprecated("", "")
-class MagicDrawProjectAPIHelper(val iProject: IProject) extends AnyVal {
+class MagicDrawProjectAPIHelper(@scala.transient val iProject: IProject) extends AnyVal {
 
   def getResourceURI: URI =
     new URI(iProject.getLocationURI.toString)

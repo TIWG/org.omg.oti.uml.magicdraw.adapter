@@ -9,6 +9,7 @@ import scala.Range
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.collection.JavaConversions.collectionAsScalaIterable
 import scala.language.postfixOps
+import scala.util.control.Exception._
 import scalaz._, Scalaz._
 
 import com.nomagic.magicdraw.uml.ClassTypes
@@ -38,8 +39,6 @@ import org.eclipse.emf.ecore.xml.`type`.util.XMLTypeUtil
 
 /**
  * Scala adaptation of Yves Bernard's MTL utilities for TIWG
- *
- * @author Nicolas.F.Rouquette@jpl.nasa.gov
  */
 object Util {
 
@@ -417,21 +416,19 @@ endif
       } ).stripPrefix( "OMG." ) )
 
   def getImageLocationURL( i: Image )
-  : Set[java.lang.Throwable] \/ String =
-    i.getLocation match {
-      case null =>
-        Failure( new IllegalArgumentException( "An Image must have a non-null location URL" ) )
-      case loc =>
-        try {
-          val url = new URL( loc ) toString;
-          Success( getValidNCName( url ) )
-        }
-        catch {
-          case t: MalformedURLException =>
-            Failure( t )
-          case t: Throwable =>
-            Failure( t )
-        }
+  : Set[java.lang.Throwable] \/ String
+  = nonFatalCatch[Set[java.lang.Throwable] \/ String]
+    .withApply { (cause: Throwable) =>
+      Set[java.lang.Throwable](cause).left
+    }
+    .apply {
+      Option.apply(i.getLocation) match {
+        case None =>
+          Set[java.lang.Throwable](new IllegalArgumentException("An Image must have a non-null location URL")).left
+        case Some(loc) =>
+          val url = new URL(loc)
+          url.toString.right
+      }
     }
 
   /*
