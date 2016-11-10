@@ -216,16 +216,16 @@ def dynamicScriptsResourceSettings(projectName: String): Seq[Setting[_]] = {
       val srcT = (packageSrc in Test).value
       val docT = (packageDoc in Test).value
 
-      addIfExists(dir / ".classpath", ".classpath") ++
-        addIfExists(dir / "README.md", "README.md") ++
-        (dir / "profiles" ** "*.mdzip").pair(rebase(dir, "..")) ++
-        (dir / "resources" ***).pair(rebase(dir, projectName)) ++
-        addIfExists(bin, projectName + "/lib/" + bin.name) ++
-        addIfExists(binT, projectName + "/lib/" + binT.name) ++
-        addIfExists(src, projectName + "/lib.sources/" + src.name) ++
-        addIfExists(srcT, projectName + "/lib.sources/" + srcT.name) ++
-        addIfExists(doc, projectName + "/lib.javadoc/" + doc.name) ++
-        addIfExists(docT, projectName + "/lib.javadoc/" + docT.name)
+      (dir / "profiles" ** "*.mdzip").pair(rebase(dir, "..")) ++
+      (dir / "resources" ***).pair(rebase(dir, projectName)) ++
+      addIfExists(dir / ".classpath", projectName + "/.classpath") ++
+      addIfExists(dir / "README.md", projectName + "/README.md") ++
+      addIfExists(bin, projectName + "/lib/" + bin.name) ++
+      addIfExists(binT, projectName + "/lib/" + binT.name) ++
+      addIfExists(src, projectName + "/lib.sources/" + src.name) ++
+      addIfExists(srcT, projectName + "/lib.sources/" + srcT.name) ++
+      addIfExists(doc, projectName + "/lib.javadoc/" + doc.name) ++
+      addIfExists(docT, projectName + "/lib.javadoc/" + docT.name)
     },
 
     artifacts += {
