@@ -69,7 +69,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     // disable publishing the test sources jar
     publishArtifact in(Test, packageSrc) := false,
 
-    unmanagedClasspath in Compile <++= unmanagedJars in Compile,
+    unmanagedClasspath in Compile ++= (unmanagedJars in Compile).value,
 
     resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
     resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg")
@@ -79,7 +79,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
      "oti-uml-change_migration",
      "org.omg.oti.uml.change_migration",
      Seq(
-        //  extra("artifact.kind" -> "generic.library")
        "org.omg.tiwg" %% "org.omg.oti.uml.change_migration"
        % Versions_oti_uml_change_migration.version %
        "compile" withSources() withJavadoc() artifacts
@@ -90,7 +89,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "oti-uml-composite_structure_tree_analysis",
     "org.omg.oti.uml.composite_structure_tree_analysis",
     Seq(
-//      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "org.omg.oti.uml.composite_structure_tree_analysis"
         % Versions_oti_uml_composite_structure_tree_analysis.version %
         "compile" withSources() withJavadoc() artifacts
@@ -101,7 +99,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "oti-uml-canonical_xmi-loader",
     "org.omg.oti.uml.canonical_xmi.loader",
     Seq(
-//      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "org.omg.oti.uml.canonical_xmi.loader"
         % Versions_oti_uml_canonical_xmi_loader.version %
         "compile" withSources() withJavadoc() artifacts
@@ -112,7 +109,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     "org-omg-oti-uml-json-serialization",
     "org.omg.oti.uml.json.serialization",
     Seq(
-      //      //  extra("artifact.kind" -> "generic.library")
       "org.omg.tiwg" %% "org.omg.oti.uml.json.serialization"
         % Versions_oti_uml_json_serialization.version %
         "compile" withSources() withJavadoc() artifacts
@@ -185,7 +181,10 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       mdJars
     },
 
-    compile <<= (compile in Compile) dependsOn extractArchives
+    compile in Compile := {
+      val _ = extractArchives.value
+      (compile in Compile).value
+    }
   )
 
 def dynamicScriptsResourceSettings(projectName: String): Seq[Setting[_]] = {
