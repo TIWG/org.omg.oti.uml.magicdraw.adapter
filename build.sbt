@@ -94,7 +94,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       import Path.{flat, relativeTo}
       val base = (sourceManaged in Compile).value
       val srcs = (managedSources in Compile).value
-      srcs x (relativeTo(base) | flat)
+      srcs pair (relativeTo(base) | flat)
     },
 
     projectID := {
@@ -168,12 +168,12 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     libraryDependencies +=
       "gov.nasa.jpl.imce" %% "imce.dynamic_scripts.magicdraw.plugin"
         % Versions_imce_md18_0_sp6_dynamic_scripts.version %
-        "compile" withSources() withJavadoc() artifacts
-        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("resource"), Seq(), None, Map()),
-
-
+        "compile" withSources() withJavadoc() artifacts(
+        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("part1"), Seq(), None, Map()),
+        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("part2"), Seq(), None, Map())),
 
     extractArchives := {
+      val up = update.value
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
       if (!mdInstallDir.exists) {
@@ -185,89 +185,111 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
           net.virtualvoid.sbt.graph.DependencyGraphKeys.ignoreMissingUpdate.value.configuration("compile").get
 
         // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113
-        val g1 = fromConfigurationReport(runtimeDepGraph, crossV, zipFileSelector)
+        //val g1 = fromConfigurationReport(runtimeDepGraph, crossV, zipFileSelector)
 
-        for {
-          module <- g1.nodes
-          if module.id.organisation == "org.omg.tiwg.vendor.nomagic"
-          archive <- module.jarFile
-          extractFolder = mdInstallDir
-          _ = s.log.info(s"*** Extracting MD: $archive")
-          _ = s.log.info(s"*** Extract to: $extractFolder")
-          files = IO.unzip(archive, extractFolder)
-          _ = require(files.nonEmpty)
-          _ = s.log.info(s"*** Extracted ${files.size} files")
-        } yield ()
+        // This doesn't work!
+        // It yields only one of the 2 zip files: part1.zip
 
+        //val mdParts = (for {
+        //  module <- g1.nodes
+        //  if module.id.organisation == "org.omg.tiwg.vendor.nomagic"
+        //  archive <- module.jarFile
+        //} yield archive).sorted
+
+        val mdParts = (for {
+          cReport <- up.configurations
+          if cReport.configuration == "compile"
+          mReport <- cReport.modules
+          if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
+          (artifact, archive) <- mReport.artifacts
+        } yield archive).sorted
+
+
+        {
+          s.log.info(s"Extracting MagicDraw from ${mdParts.size} parts:")
+          mdParts.foreach { p => s.log.info(p.getAbsolutePath) }
+
+          val merged = File.createTempFile("md_merged", ".zip")
+          println(s"merged: ${merged.getAbsolutePath}")
+
+          val zip = File.createTempFile("md_no_install", ".zip")
+          println(s"zip: ${zip.getAbsolutePath}")
+
+          val script = File.createTempFile("unzip_md", ".sh")
+          println(s"script: ${script.getAbsolutePath}")
+
+          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
+          out.println("#!/bin/bash")
+          out.println(mdParts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
+          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
+          out.close()
+
+          val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
+          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+        }
+
+        // this doesn't work either! I get only part1.zip
         // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113
-        val g2 = fromConfigurationReport(compileDepGraph, crossV, pluginFileSelector)
+        //val g2 = fromConfigurationReport(compileDepGraph, crossV, pluginFileSelector)
 
-        for {
-          module <- g2.nodes
-          archive <- module.jarFile
-          extractFolder = mdInstallDir
-          _ = s.log.info(s"*** Extracting Plugin: $archive")
-          _ = s.log.info(s"*** Extract to: $extractFolder")
-          files = IO.unzip(archive, extractFolder)
-          _ = require(files.nonEmpty)
-          _ = s.log.info(s"*** Extracted ${files.size} files")
-        } yield ()
+        //val pluginParts = (for {
+        //  module <- g2.nodes
+        //  archive <- module.jarFile
+        //} yield archive).sorted
+
+        val pluginParts = (for {
+          cReport <- up.configurations
+          if cReport.configuration == "compile"
+          mReport <- cReport.modules
+          (artifact, archive) <- mReport.artifacts
+          if (artifact.name.startsWith("imce.dynamic_scripts.magicdraw.plugin"))
+          if (artifact.classifier.getOrElse("").startsWith("part"))
+          _ = s.log.info(s"artifact: $artifact")
+        } yield archive).sorted
+
+        {
+          s.log.info(s"Extracting Plugin from ${pluginParts.size} parts:")
+          pluginParts.foreach { p => s.log.info(p.getAbsolutePath) }
+
+          val merged = File.createTempFile("plugin_merged", ".zip")
+          println(s"merged: ${merged.getAbsolutePath}")
+
+          val zip = File.createTempFile("plugin_resource", ".zip")
+          println(s"zip: ${zip.getAbsolutePath}")
+
+          val script = File.createTempFile("unzip_plugin", ".sh")
+          println(s"script: ${script.getAbsolutePath}")
+
+          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
+          out.println("#!/bin/bash")
+          out.println(pluginParts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
+          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
+          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
+          out.close()
+
+          val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
+          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+        }
 
       } else
         s.log.info(
           s"=> use existing md.install.dir=$mdInstallDir")
     },
 
-//    extractArchives := {
-//      val base = baseDirectory.value
-//      val up = update.value
-//      val s = streams.value
-//      val mdInstallDir = (mdInstallDirectory in ThisBuild).value
-//
-//      if (!mdInstallDir.exists) {
-//
-//        val parts = (for {
-//          cReport <- up.configurations
-//          if cReport.configuration == "compile"
-//          mReport <- cReport.modules
-//          if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
-//          (artifact, archive) <- mReport.artifacts
-//        } yield archive).sorted
-//
-//        s.log.info(s"Extracting MagicDraw from ${parts.size} parts:")
-//        parts.foreach { p => s.log.info(p.getAbsolutePath) }
-//
-//        val merged = File.createTempFile("md_merged", ".zip")
-//        println(s"merged: ${merged.getAbsolutePath}")
-//
-//        val zip = File.createTempFile("md_no_install", ".zip")
-//        println(s"zip: ${zip.getAbsolutePath}")
-//
-//        val script = File.createTempFile("unzip_md", ".sh")
-//        println(s"script: ${script.getAbsolutePath}")
-//
-//        val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
-//        out.println("#!/bin/bash")
-//        out.println(parts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
-//        out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
-//        out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
-//        out.close()
-//
-//        val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
-//
-//        require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
-//
-//      } else
-//        s.log.info(
-//          s"=> use existing md.install.dir=$mdInstallDir")
-//    },
+    compile in Compile := (compile in Compile).dependsOn(unmanagedJars in Compile).value,
+
+    compileIncremental in Compile := (compileIncremental in Compile).dependsOn(unmanagedJars in Compile).value,
+
+    doc in Compile := (doc in Compile).dependsOn(unmanagedJars in Compile).value,
+
+    unmanagedJars in Compile := (unmanagedJars in Compile).dependsOn(extractArchives).value,
 
     unmanagedJars in Compile ++= {
       val base = baseDirectory.value
       val up = update.value
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
-      val _ = extractArchives.value
 
       val libJars = ((mdInstallDir / "lib") ** "*.jar").get
       val mdJars = libJars.map { jar => Attributed.blank(jar) }
@@ -275,11 +297,6 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
 
       mdJars
-    },
-
-    compile in Compile := {
-      val _ = extractArchives.value
-      (compile in Compile).value
     }
   )
 
