@@ -206,8 +206,8 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
 
         {
-          s.log.info(s"Extracting MagicDraw from ${mdParts.size} parts:")
-          mdParts.foreach { p => s.log.info(p.getAbsolutePath) }
+          s.log.warn(s"Extracting MagicDraw from ${mdParts.size} parts:")
+          mdParts.foreach { p => s.log.warn(p.getAbsolutePath) }
 
           val merged = File.createTempFile("md_merged", ".zip")
           println(s"merged: ${merged.getAbsolutePath}")
@@ -227,6 +227,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
           val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
           require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+          s.log.warn(s"Extracted.")
         }
 
         // this doesn't work either! I get only part1.zip
@@ -243,14 +244,13 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
           if cReport.configuration == "compile"
           mReport <- cReport.modules
           (artifact, archive) <- mReport.artifacts
-          if (artifact.name.startsWith("imce.dynamic_scripts.magicdraw.plugin"))
-          if (artifact.classifier.getOrElse("").startsWith("part"))
-          _ = s.log.info(s"artifact: $artifact")
+          if artifact.name.startsWith("imce.dynamic_scripts.magicdraw.plugin")
+          if artifact.classifier.getOrElse("").startsWith("part")
         } yield archive).sorted
 
         {
-          s.log.info(s"Extracting Plugin from ${pluginParts.size} parts:")
-          pluginParts.foreach { p => s.log.info(p.getAbsolutePath) }
+          s.log.warn(s"Extracting Plugin from ${pluginParts.size} parts:")
+          pluginParts.foreach { p => s.log.warn(p.getAbsolutePath) }
 
           val merged = File.createTempFile("plugin_merged", ".zip")
           println(s"merged: ${merged.getAbsolutePath}")
@@ -270,10 +270,12 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
 
           val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
           require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
+          s.log.warn(s"Extracted.")
+
         }
 
       } else
-        s.log.info(
+        s.log.warn(
           s"=> use existing md.install.dir=$mdInstallDir")
     },
 
