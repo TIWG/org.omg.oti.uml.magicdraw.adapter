@@ -291,10 +291,12 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
 
+      val _ = extractArchives.value
+
       val libJars = ((mdInstallDir / "lib") ** "*.jar").get
       val mdJars = libJars.map { jar => Attributed.blank(jar) }
 
-      s.log.info(s"=> Adding ${mdJars.size} unmanaged jars")
+      s.log.warn(s"=> Adding ${mdJars.size} unmanaged jars")
 
       mdJars
     }
