@@ -18,19 +18,21 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option,None,Some}
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLGeneralization 
   extends MagicDrawUMLDirectedRelationship
   with UMLGeneralization[MagicDrawUML] {
 
   override protected def e: Uml#Generalization
-  def getMagicDrawGeneralization = e
+  def getMagicDrawGeneralization: Uml#Generalization = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   /**
@@ -38,15 +40,17 @@ trait MagicDrawUMLGeneralization
    * there should be 3 values: None, Some(true), Some(false)
    * but the MD API only gives 2: true, false
    */
-  override def isSubstitutable: Option[Boolean] =
-    e.isSubstitutable match {
+  override def isSubstitutable
+  : Option[Boolean]
+  = e.isSubstitutable match {
     case true => None
     case false => Some( false )
   }
     
   // 9.14
-  override def generalizationSet: Set[UMLGeneralizationSet[Uml]] = 
-    e.getGeneralizationSet.to[Set]
+  override def generalizationSet
+  : Set[UMLGeneralizationSet[Uml]]
+  = e.getGeneralizationSet.to[Set]
   
 
 }
@@ -54,3 +58,27 @@ trait MagicDrawUMLGeneralization
 case class MagicDrawUMLGeneralizationImpl
 (e: MagicDrawUML#Generalization, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLGeneralization
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLGeneralizationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLGeneralization(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

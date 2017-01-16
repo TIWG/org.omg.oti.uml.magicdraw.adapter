@@ -18,30 +18,57 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInterruptibleActivityRegion 
   extends MagicDrawUMLActivityGroup
   with UMLInterruptibleActivityRegion[MagicDrawUML] {
 
   override protected def e: Uml#InterruptibleActivityRegion
-  def getMagicDrawInterruptibleActivityRegion = e
+  def getMagicDrawInterruptibleActivityRegion: Uml#InterruptibleActivityRegion = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def interruptingEdge: Set[UMLActivityEdge[Uml]] =
-    e.getInterruptingEdge.to[Set]
+  override def interruptingEdge
+  : Set[UMLActivityEdge[Uml]]
+  = e.getInterruptingEdge.to[Set]
   
-  override def node: Set[UMLActivityNode[Uml]] =
-    e.getNode.to[Set]
-  
+  override def node
+  : Set[UMLActivityNode[Uml]]
+  = e.getNode.to[Set]
 
 }
 
 case class MagicDrawUMLInterruptibleActivityRegionImpl
 (e: MagicDrawUML#InterruptibleActivityRegion, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInterruptibleActivityRegion
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInterruptibleActivityRegionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLInterruptibleActivityRegion(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

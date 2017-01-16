@@ -18,27 +18,60 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLComment 
   extends MagicDrawUMLElement
   with UMLComment[MagicDrawUML] {
 
   override protected def e: Uml#Comment
-  def getMagicDrawComment = e
-  import ops._
+  def getMagicDrawComment: Uml#Comment = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
-  
-  def annotatedElement = e.getAnnotatedElement.toSet[com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element]
-  def getCommentOwnerIndex = e.getOwner.getOwnedComment.toList.indexOf( e )  
-  def body = Option.apply(e.getBody)
+  override def annotatedElement
+  : Set[UMLElement[Uml]]
+  = e.getAnnotatedElement.to[Set]
+
+  override def getCommentOwnerIndex
+  : Int
+  = e.getOwner.getOwnedComment.toList.indexOf( e )
+
+  override def body
+  : Option[String]
+  = Option.apply(e.getBody)
 
 }
 
 case class MagicDrawUMLCommentImpl
 (e: MagicDrawUML#Comment, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLComment
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCommentImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLComment(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

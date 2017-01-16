@@ -29,23 +29,26 @@ trait MagicDrawUMLExecutionSpecification
   with UMLExecutionSpecification[MagicDrawUML] {
 
   override protected def e: Uml#ExecutionSpecification
-  def getMagicDrawExecutionSpecification = e
+  def getMagicDrawExecutionSpecification: Uml#ExecutionSpecification = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def finish: Option[UMLOccurrenceSpecification[Uml]] =
-    for {
+  override def finish
+  : Option[UMLOccurrenceSpecification[Uml]]
+  = for {
       result <- Option( e.getFinish )
     } yield result
     
-  override def start: Option[UMLOccurrenceSpecification[Uml]] =
-    for {
+  override def start
+  : Option[UMLOccurrenceSpecification[Uml]]
+  = for {
       result <- Option( e.getStart )
     } yield result
 
-  override def execution_executionOccurrenceSpecification: Set[UMLExecutionOccurrenceSpecification[Uml]] =
-    for {
+  override def execution_executionOccurrenceSpecification
+  : Set[UMLExecutionOccurrenceSpecification[Uml]]
+  = for {
       result <- e.get_executionOccurrenceSpecificationOfExecution.to[Set]
     } yield result
   

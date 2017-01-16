@@ -29,29 +29,36 @@ trait MagicDrawUMLActivityEdge
   with UMLActivityEdge[MagicDrawUML] {
 
   override protected def e: Uml#ActivityEdge
-  def getMagicDrawActivityEdge = e
-  override implicit val umlOps = ops
+  def getMagicDrawActivityEdge: Uml#ActivityEdge = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def guard: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option.apply( e.getGuard ) } yield result
+  override def guard
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option.apply( e.getGuard ) } yield result
     
-  override def inGroup: Set[UMLActivityGroup[Uml]] =
-    e.getInGroup.to[Set]
+  override def inGroup
+  : Set[UMLActivityGroup[Uml]]
+  = e.getInGroup.to[Set]
   
-  override def interrupts: Option[UMLInterruptibleActivityRegion[Uml]] =
-    for { result <- Option.apply( e.getInterrupts ) } yield result
+  override def interrupts
+  : Option[UMLInterruptibleActivityRegion[Uml]]
+  = for { result <- Option.apply( e.getInterrupts ) } yield result
   
-  override def source: Option[UMLActivityNode[Uml]] =
-    for { result <- Option.apply( e.getSource ) } yield result
+  override def source
+  : Option[UMLActivityNode[Uml]]
+  = for { result <- Option.apply( e.getSource ) } yield result
     
-  override def target: Option[UMLActivityNode[Uml]] =
-    for { result <- Option.apply( e.getTarget ) } yield result
+  override def target
+  : Option[UMLActivityNode[Uml]]
+  = for { result <- Option.apply( e.getTarget ) } yield result
       
-  override def weight: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option.apply( e.getWeight ) } yield result
+  override def weight
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option.apply( e.getWeight ) } yield result
 
-  override def realizingActivityEdge_informationFlow: Set[UMLInformationFlow[Uml]] =
-    e.get_informationFlowOfRealizingActivityEdge.to[Set]
+  override def realizingActivityEdge_informationFlow
+  : Set[UMLInformationFlow[Uml]]
+  = e.get_informationFlowOfRealizingActivityEdge.to[Set]
   
 }

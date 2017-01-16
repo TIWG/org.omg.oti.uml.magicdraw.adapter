@@ -20,7 +20,9 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
+
 
 import org.omg.oti.uml.read.api._
 
@@ -29,18 +31,44 @@ trait MagicDrawUMLUseCase
   with UMLUseCase[MagicDrawUML] {
 
   override protected def e: Uml#UseCase
-  def getMagicDrawUseCase = e
-  override implicit val umlOps = ops
+  def getMagicDrawUseCase: Uml#UseCase = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def subject: Set[UMLClassifier[Uml]] =
-    e.getSubject.to[Set]
+  override def subject
+  : Set[UMLClassifier[Uml]]
+  = e.getSubject.to[Set]
 
-	override def ownedUseCase_classifier: Option[UMLClassifier[Uml]] =
-    for { result <- Option(e.get_classifierOfOwnedUseCase()) } yield result
+	override def ownedUseCase_classifier
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option(e.get_classifierOfOwnedUseCase()) } yield result
 
 }
 
 case class MagicDrawUMLUseCaseImpl
 (e: MagicDrawUML#UseCase, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLUseCase
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLUseCaseImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLUseCase(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

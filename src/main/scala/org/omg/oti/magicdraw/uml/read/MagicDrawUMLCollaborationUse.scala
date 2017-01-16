@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLCollaborationUse 
   extends MagicDrawUMLNamedElement
   with UMLCollaborationUse[MagicDrawUML] {
 
   override protected def e: Uml#CollaborationUse
-  def getMagicDrawCollaborationUse = e
+  def getMagicDrawCollaborationUse: Uml#CollaborationUse = e
   import ops._
 
-  override def _type: Option[UMLCollaboration[Uml]] =
-    for { result <- Option.apply( e.getType ) } yield result
+  override def _type
+  : Option[UMLCollaboration[Uml]]
+  = for { result <- Option.apply( e.getType ) } yield result
 
 }
 
 case class MagicDrawUMLCollaborationUseImpl
 (e: MagicDrawUML#CollaborationUse, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLCollaborationUse
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCollaborationUseImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLState(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

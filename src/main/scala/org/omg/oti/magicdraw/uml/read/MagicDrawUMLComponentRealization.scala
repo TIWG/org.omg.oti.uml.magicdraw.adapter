@@ -20,26 +20,51 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.collection.JavaConversions._
-
-import scala.Option
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLComponentRealization 
   extends MagicDrawUMLRealization
   with UMLComponentRealization[MagicDrawUML] {
 
   override protected def e: Uml#ComponentRealization
-  def getMagicDrawComponentRealization = e
+  def getMagicDrawComponentRealization: Uml#ComponentRealization = e
   import ops._
 
 	override def abstraction: Option[UMLComponent[Uml]] =
     for { result <- Option.apply(e.getAbstraction) } yield result
     
-  override def realizingClassifier: Set[UMLClassifier[Uml]] =
-    umlClassifier( e.getRealizingClassifier.toSet ) 
+  override def realizingClassifier
+  : Set[UMLClassifier[Uml]]
+  = umlClassifier( e.getRealizingClassifier.toSet )
 
 }
 
 case class MagicDrawUMLComponentRealizationImpl
 (e: MagicDrawUML#ComponentRealization, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLComponentRealization
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLComponentRealizationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLComponentRealization(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

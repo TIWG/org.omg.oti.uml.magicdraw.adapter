@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLLiteralNull 
   extends MagicDrawUMLLiteralSpecification
   with UMLLiteralNull[MagicDrawUML] {
 
   override protected def e: Uml#LiteralNull
-  def getMagicDrawLiteralNull = e
+  def getMagicDrawLiteralNull: Uml#LiteralNull = e
 
 }
 
 case class MagicDrawUMLLiteralNullImpl
 (e: MagicDrawUML#LiteralNull, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLiteralNull
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLiteralNullImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLiteralNull(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

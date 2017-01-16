@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some,StringContext}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLTransition 
@@ -28,12 +28,13 @@ trait MagicDrawUMLTransition
   with UMLTransition[MagicDrawUML] {
 
   override protected def e: Uml#Transition
-  def getMagicDrawTransition = e
-  override implicit val umlOps = ops
+  def getMagicDrawTransition: Uml#Transition = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def kind: Option[UMLTransitionKind.Value] =
-    Option(e.getKind)
+  override def kind
+  : Option[UMLTransitionKind.Value]
+  = Option(e.getKind)
     .fold[Option[UMLTransitionKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.TransitionKindEnum.EXTERNAL =>
         Some(UMLTransitionKind.external)
@@ -43,29 +44,44 @@ trait MagicDrawUMLTransition
         Some(UMLTransitionKind.local)
     }
 
-  override def source: Option[UMLVertex[Uml]] =
-    for { result <- Option(e.getSource) } yield result
+  override def source
+  : Option[UMLVertex[Uml]]
+  = for { result <- Option(e.getSource) } yield result
 
-  override def target: Option[UMLVertex[Uml]] =
-    for { result <- Option(e.getTarget) } yield result
+  override def target
+  : Option[UMLVertex[Uml]]
+  = for { result <- Option(e.getTarget) } yield result
   
-  override def guard: Option[UMLConstraint[Uml]] =
-    for { result <- Option(e.getGuard) } yield result
+  override def guard
+  : Option[UMLConstraint[Uml]]
+  = for { result <- Option(e.getGuard) } yield result
 
 }
 
 case class MagicDrawUMLTransitionImpl
 (e: MagicDrawUML#Transition, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTransition
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLTransition(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTransitionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLTransition(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

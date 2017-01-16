@@ -21,20 +21,46 @@ package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read.api._
 import java.lang.Integer
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLLiteralUnlimitedNatural 
   extends MagicDrawUMLLiteralSpecification
   with UMLLiteralUnlimitedNatural[MagicDrawUML] {
 
   override protected def e: Uml#LiteralUnlimitedNatural
-  def getMagicDrawLiteralUnlimitedNatural = e
-  override implicit val umlOps = ops
+  def getMagicDrawLiteralUnlimitedNatural: Uml#LiteralUnlimitedNatural = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   //import umlOps._
   
-  override def value: Integer =
-    new Integer(e.getValue)
+  override def value: Integer = new Integer(e.getValue)
 
 }
 
 case class MagicDrawUMLLiteralUnlimitedNaturalImpl
 (e: MagicDrawUML#LiteralUnlimitedNatural, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLiteralUnlimitedNatural
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLiteralUnlimitedNaturalImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLiteralUnlimitedNatural(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

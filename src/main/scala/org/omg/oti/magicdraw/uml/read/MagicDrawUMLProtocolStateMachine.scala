@@ -21,28 +21,54 @@ package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read.api._
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
-import scala.Predef.???
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLProtocolStateMachine 
   extends MagicDrawUMLStateMachine
   with UMLProtocolStateMachine[MagicDrawUML] {
 
   override protected def e: Uml#ProtocolStateMachine
-  def getMagicDrawProtocolStateMachine = e
-  override implicit val umlOps = ops
+  def getMagicDrawProtocolStateMachine: Uml#ProtocolStateMachine = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 11.10
-	override def protocol_port: Set[UMLPort[Uml]] =
-    e.get_portOfProtocol().to[Set]
+	override def protocol_port
+  : Set[UMLPort[Uml]]
+  = e.get_portOfProtocol().to[Set]
   
   // 10.7
-  override def protocol_interface: Option[UMLInterface[Uml]] =
-    ???
+  override def protocol_interface
+  : Option[UMLInterface[Uml]]
+  = for { result <- Option.apply(e.getInterface) } yield result
 
 }
 
 case class MagicDrawUMLProtocolStateMachineImpl
 (e: MagicDrawUML#ProtocolStateMachine, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLProtocolStateMachine
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLProtocolStateMachineImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLProtocolStateMachine(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

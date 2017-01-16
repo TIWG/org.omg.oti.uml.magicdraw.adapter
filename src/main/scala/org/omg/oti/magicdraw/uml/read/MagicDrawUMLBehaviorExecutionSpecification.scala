@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLBehaviorExecutionSpecification 
   extends MagicDrawUMLExecutionSpecification
   with UMLBehaviorExecutionSpecification[MagicDrawUML] {
 
   override protected def e: Uml#BehaviorExecutionSpecification
-  def getMagicDrawBehaviorExecutionSpecification = e
+  def getMagicDrawBehaviorExecutionSpecification: Uml#BehaviorExecutionSpecification = e
   import ops._
 
-  override def behavior: Option[UMLBehavior[Uml]] =
-    for { result <- Option.apply( e.getBehavior ) } yield result
+  override def behavior
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option.apply( e.getBehavior ) } yield result
 
 }
 
 case class MagicDrawUMLBehaviorExecutionSpecificationImpl
 (e: MagicDrawUML#BehaviorExecutionSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLBehaviorExecutionSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLBehaviorExecutionSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLBehaviorExecutionSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

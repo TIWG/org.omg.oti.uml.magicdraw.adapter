@@ -19,38 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
-import scala.{Boolean, Option,None,Some,StringContext}
 
 trait MagicDrawUMLTimeConstraint 
   extends MagicDrawUMLIntervalConstraint
   with UMLTimeConstraint[MagicDrawUML] {
 
   override protected def e: Uml#TimeConstraint
-  def getMagicDrawTimeConstraint = e
-  override implicit val umlOps = ops
+  def getMagicDrawTimeConstraint: Uml#TimeConstraint = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
-  override def firstEvent: Option[Boolean] =
-    if (e.isFirstEvent) None
+  override def firstEvent
+  : Option[Boolean]
+  = if (e.isFirstEvent) None
     else Some( false )
     
-  abstract override def specification: Option[UMLTimeInterval[Uml]] =
-    super.specification
+  abstract override def specification
+  : Option[UMLTimeInterval[Uml]]
+  = super.specification
 
 }
 
 case class MagicDrawUMLTimeConstraintImpl
 (e: MagicDrawUML#TimeConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeConstraint
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLTimeConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTimeConstraintImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLTimeConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

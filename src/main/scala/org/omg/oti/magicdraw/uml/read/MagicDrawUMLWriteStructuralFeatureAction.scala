@@ -26,11 +26,12 @@ trait MagicDrawUMLWriteStructuralFeatureAction
   with UMLWriteStructuralFeatureAction[MagicDrawUML] {
 
   override protected def e: Uml#WriteStructuralFeatureAction
-  def getMagicDrawWriteStructuralFeatureAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawWriteStructuralFeatureAction: Uml#WriteStructuralFeatureAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def value: Option[UMLInputPin[Uml]] =
-    for { result <- Option( e.getValue ) } yield result
+  override def value
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option( e.getValue ) } yield result
     
 }

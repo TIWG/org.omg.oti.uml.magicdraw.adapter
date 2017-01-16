@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLConnectorEnd 
@@ -27,33 +27,45 @@ trait MagicDrawUMLConnectorEnd
   with UMLConnectorEnd[MagicDrawUML] {
 
   override protected def e: Uml#ConnectorEnd
-  def getMagicDrawConnectorEnd = e
+  def getMagicDrawConnectorEnd: Uml#ConnectorEnd = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def partWithPort: Option[UMLProperty[Uml]] =
-    for { result <- Option.apply(e.getPartWithPort) } yield result
+  override def partWithPort
+  : Option[UMLProperty[Uml]]
+  = for { result <- Option.apply(e.getPartWithPort) } yield result
   
-  override def role: Option[UMLConnectableElement[Uml]] =
-    for { result <- Option.apply(e.getRole) } yield result
+  override def role
+  : Option[UMLConnectableElement[Uml]]
+  = for { result <- Option.apply(e.getRole) } yield result
 
 }
 
 case class MagicDrawUMLConnectorEndImpl
 (e: MagicDrawUML#ConnectorEnd, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnectorEnd
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLConnectorEnd(ID=${e.getID}, " +
-      s"role=${role match { case Some(c) => c.toolSpecific_id; case None => "<none>"}}, " +
-      s"connector=${end_connector match { case Some(c) => c.toolSpecific_id; case None => "<none>"}})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConnectorEndImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLConnectorEnd(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

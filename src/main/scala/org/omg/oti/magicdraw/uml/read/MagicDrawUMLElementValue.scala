@@ -19,21 +19,47 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLElementValue 
   extends MagicDrawUMLValueSpecification
   with UMLElementValue[MagicDrawUML] {
   
   override protected def e: Uml#ElementValue
-  def getMagicDrawElementValue = e
+  def getMagicDrawElementValue: Uml#ElementValue = e
   import ops._
   
-  def element: Option[UMLElement[Uml]] =
-    for { result <- Option.apply( e.getElement ) } yield result
+  def element
+  : Option[UMLElement[Uml]]
+  = for { result <- Option.apply( e.getElement ) } yield result
 
 }
 
 case class MagicDrawUMLElementValueImpl
 (e: MagicDrawUML#ElementValue, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLElementValue
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLElementValueImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLElementValue(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

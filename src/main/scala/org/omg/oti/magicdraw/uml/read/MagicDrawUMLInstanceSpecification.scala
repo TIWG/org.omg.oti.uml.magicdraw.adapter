@@ -18,10 +18,11 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.{Boolean,Option}
 import scala.collection.immutable._
 import scala.collection.Iterable
 import scala.collection.JavaConversions._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -32,25 +33,49 @@ trait MagicDrawUMLInstanceSpecification
   with UMLInstanceSpecification[MagicDrawUML] {
 
   override protected def e: Uml#InstanceSpecification
-  def getMagicDrawInstanceSpecification = e
+  def getMagicDrawInstanceSpecification: Uml#InstanceSpecification = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   def isMagicDrawUMLAppliedStereotypeInstance: Boolean =
     e == e.getOwner.getAppliedStereotypeInstance
   
-  override def specification: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option( e.getSpecification ) } yield result
+  override def specification
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option( e.getSpecification ) } yield result
 
-  override def classifier: Iterable[UMLClassifier[Uml]] =
-    e.getClassifier.to[Seq]
+  override def classifier
+  : Iterable[UMLClassifier[Uml]]
+  = e.getClassifier.to[Seq]
   
-  override def instance_instanceValue: Set[UMLInstanceValue[Uml]] =
-    e.get_instanceValueOfInstance.to[Set]
+  override def instance_instanceValue
+  : Set[UMLInstanceValue[Uml]]
+  = e.get_instanceValueOfInstance.to[Set]
 
 }
 
 case class MagicDrawUMLInstanceSpecificationImpl
 (e: MagicDrawUML#InstanceSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInstanceSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInstanceSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString: String =
+    s"MagicDrawUMLInstanceSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString: String =
+    toString
+
+  override def valueTreeString: String =
+    toString
+}

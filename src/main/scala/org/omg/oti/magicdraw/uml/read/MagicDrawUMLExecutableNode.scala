@@ -29,27 +29,33 @@ trait MagicDrawUMLExecutableNode
   with UMLExecutableNode[MagicDrawUML] {
 
   override protected def e: Uml#ExecutableNode
-  def getMagicDrawExecutableNode = e
+  def getMagicDrawExecutableNode: Uml#ExecutableNode = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-	override def test_loopNode: Option[UMLLoopNode[Uml]] =
-    for { result <- Option.apply( e.get_loopNodeOfTest ) } yield result
+	override def test_loopNode
+  : Option[UMLLoopNode[Uml]]
+  = for { result <- Option.apply( e.get_loopNodeOfTest ) } yield result
     
-  override def bodyPart_loopNode: Option[UMLLoopNode[Uml]] =
-    for { result <- Option.apply( e.get_loopNodeOfBodyPart ) } yield result
+  override def bodyPart_loopNode
+  : Option[UMLLoopNode[Uml]]
+  = for { result <- Option.apply( e.get_loopNodeOfBodyPart ) } yield result
     
-  override def test_clause: Option[UMLClause[Uml]] =
-    for { result <- Option.apply( e.get_clauseOfTest ) } yield result
+  override def test_clause
+  : Option[UMLClause[Uml]]
+  = for { result <- Option.apply( e.get_clauseOfTest ) } yield result
     
-  override def setupPart_loopNode: Option[UMLLoopNode[Uml]] =
-    for { result <- Option.apply( e.get_loopNodeOfSetupPart ) } yield result
+  override def setupPart_loopNode
+  : Option[UMLLoopNode[Uml]]
+  = for { result <- Option.apply( e.get_loopNodeOfSetupPart ) } yield result
      
-	override def handlerBody_exceptionHandler: Set[UMLExceptionHandler[Uml]] =
-    for { result <- e.get_exceptionHandlerOfHandlerBody.to[Set] } yield result
+	override def handlerBody_exceptionHandler
+  : Set[UMLExceptionHandler[Uml]]
+  = for { result <- e.get_exceptionHandlerOfHandlerBody.to[Set] } yield result
   
-  override def body_clause: Option[UMLClause[Uml]] =
-    for { result <- Option.apply( e.get_clauseOfBody ) } yield result
+  override def body_clause
+  : Option[UMLClause[Uml]]
+  = for { result <- Option.apply( e.get_clauseOfBody ) } yield result
 
 }

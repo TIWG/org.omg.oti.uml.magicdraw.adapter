@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLReadSelfAction 
   extends MagicDrawUMLAction
   with UMLReadSelfAction[MagicDrawUML] {
 
   override protected def e: Uml#ReadSelfAction
-  def getMagicDrawReadSelfAction = e
+  def getMagicDrawReadSelfAction: Uml#ReadSelfAction = e
 
 }
 
 case class MagicDrawUMLReadSelfActionImpl
 (e: MagicDrawUML#ReadSelfAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLReadSelfAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLReadSelfActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLReadSelfAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

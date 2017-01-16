@@ -19,24 +19,50 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLReception 
   extends MagicDrawUMLBehavioralFeature
   with UMLReception[MagicDrawUML] {
 
   override protected def e: Uml#Reception
-  def getMagicDrawReception = e
+  def getMagicDrawReception: Uml#Reception = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 10.5
-  override def signal: Option[UMLSignal[Uml]] =
-    for { result <- Option(e.getSignal) } yield result
+  override def signal
+  : Option[UMLSignal[Uml]]
+  = for { result <- Option(e.getSignal) } yield result
 
 }
 
 case class MagicDrawUMLReceptionImpl
 (e: MagicDrawUML#Reception, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLReception
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLReceptionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLReception(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -31,16 +31,19 @@ trait MagicDrawUMLConnectableElement
   with UMLConnectableElement[MagicDrawUML] {
 
   override protected def e: Uml#ConnectableElement
-  def getMagicDrawConnectableElement = e
+  def getMagicDrawConnectableElement: Uml#ConnectableElement = e
   import ops._
 
-  override def end: Set[UMLConnectorEnd[Uml]] =
-    e.getEnd.to[Set]
+  override def end
+  : Set[UMLConnectorEnd[Uml]]
+  = e.getEnd.to[Set]
   
-  override def templateParameter: Option[UMLConnectableElementTemplateParameter[Uml]] =
-    for { result <- Option.apply( e.getTemplateParameter ) } yield result
+  override def templateParameter
+  : Option[UMLConnectableElementTemplateParameter[Uml]]
+  = for { result <- Option.apply( e.getTemplateParameter ) } yield result
 
-  override def represents_lifeline: Set[UMLLifeline[Uml]] =
-    e.get_lifelineOfRepresents.to[Set]
+  override def represents_lifeline
+  : Set[UMLLifeline[Uml]]
+  = e.get_lifelineOfRepresents.to[Set]
 
 }

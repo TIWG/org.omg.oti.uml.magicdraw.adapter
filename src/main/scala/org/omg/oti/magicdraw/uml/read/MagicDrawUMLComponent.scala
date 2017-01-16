@@ -18,19 +18,19 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
 
-import scala.StringContext
-import scala.Predef.String
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLComponent 
   extends MagicDrawUMLClass
   with UMLComponent[MagicDrawUML] {
 
   override protected def e: Uml#Component
-  def getMagicDrawComponent = e
+  def getMagicDrawComponent: Uml#Component = e
   import ops._
 
   override def isIndirectlyInstantiated = e.isIndirectlyInstantiated
@@ -41,22 +41,36 @@ trait MagicDrawUMLComponent
   
   override def required = e.getRequired.to[Set]
   
-  override def packagedElement: Set[UMLPackageableElement[Uml]] =
-    e.getPackagedElement.to[Set]
+  override def packagedElement
+  : Set[UMLPackageableElement[Uml]]
+  = e.getPackagedElement.to[Set]
   
 }
 
-case class MagicDrawUMLComponentImpl( val e: MagicDrawUML#Component, ops: MagicDrawUMLUtil )
+case class MagicDrawUMLComponentImpl
+( e: MagicDrawUML#Component, ops: MagicDrawUMLUtil )
 extends MagicDrawUMLComponent
-with sext.PrettyPrinting.TreeString
-with sext.PrettyPrinting.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLComponent(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLComponentImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLComponent(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

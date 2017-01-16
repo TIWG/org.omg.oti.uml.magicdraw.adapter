@@ -18,48 +18,76 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLActivityPartition 
   extends MagicDrawUMLActivityGroup
   with UMLActivityPartition[MagicDrawUML] {
 
   override protected def e: Uml#ActivityPartition
-  def getMagicDrawActivityPartition = e
-  override implicit val umlOps = ops
+  def getMagicDrawActivityPartition: Uml#ActivityPartition = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def edge: Set[UMLActivityEdge[Uml]] =
-    e.getEdge.to[Set]
+  override def edge
+  : Set[UMLActivityEdge[Uml]]
+  = e.getEdge.to[Set]
   
-  override def isDimension =
-    e.isDimension
+  override def isDimension: Boolean = e.isDimension
     
-  override def isExternal =
-    e.isExternal
+  override def isExternal: Boolean = e.isExternal
     
-  override def node: Set[UMLActivityNode[Uml]] =
-    e.getNode.to[Set]
+  override def node
+  : Set[UMLActivityNode[Uml]]
+  = e.getNode.to[Set]
   
-  override def represents: Option[UMLElement[Uml]] =
-    for { result <- Option.apply( e.getRepresents ) } yield result
+  override def represents
+  : Option[UMLElement[Uml]]
+  = for { result <- Option.apply( e.getRepresents ) } yield result
     
-  override def subpartition: Set[UMLActivityPartition[Uml]] =
-    e.getSubpartition.to[Set]
+  override def subpartition
+  : Set[UMLActivityPartition[Uml]]
+  = e.getSubpartition.to[Set]
   
-  override def superPartition: Option[UMLActivityPartition[Uml]] =
-    for { result <- Option.apply( e.getSuperPartition ) } yield result
+  override def superPartition
+  : Option[UMLActivityPartition[Uml]]
+  = for { result <- Option.apply( e.getSuperPartition ) } yield result
     
-  override def partition_activity: Option[UMLActivity[Uml]] =
-    for { result <- Option.apply( e.get_activityOfPartition ) } yield result
+  override def partition_activity
+  : Option[UMLActivity[Uml]]
+  = for { result <- Option.apply( e.get_activityOfPartition ) } yield result
 
 }
 
 case class MagicDrawUMLActivityPartitionImpl
 (e: MagicDrawUML#ActivityPartition, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLActivityPartition
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLActivityPartitionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLActivityPartitionID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

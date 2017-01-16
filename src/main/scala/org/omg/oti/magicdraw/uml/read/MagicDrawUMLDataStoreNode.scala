@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLDataStoreNode 
   extends MagicDrawUMLCentralBufferNode
   with UMLDataStoreNode[MagicDrawUML] {
 
   override protected def e: Uml#DataStoreNode
-  def getMagicDrawDataStoreNode = e
+  def getMagicDrawDataStoreNode: Uml#DataStoreNode = e
 
 }
 
 case class MagicDrawUMLDataStoreNodeImpl
 (e: MagicDrawUML#DataStoreNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDataStoreNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDataStoreNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDataStoreNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

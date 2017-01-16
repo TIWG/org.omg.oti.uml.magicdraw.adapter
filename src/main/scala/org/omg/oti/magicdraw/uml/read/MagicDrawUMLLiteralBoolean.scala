@@ -20,17 +20,44 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLLiteralBoolean 
   extends MagicDrawUMLLiteralSpecification
   with UMLLiteralBoolean[MagicDrawUML] {
 
   override protected def e: Uml#LiteralBoolean
-  def getMagicDrawLiteralBoolean = e
+  def getMagicDrawLiteralBoolean: Uml#LiteralBoolean = e
   
-  override def value = e.isValue
+  override def value: Boolean = e.isValue
 
 }
 
 case class MagicDrawUMLLiteralBooleanImpl
 (e: MagicDrawUML#LiteralBoolean, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLiteralBoolean
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLiteralBooleanImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLiteralBoolean(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

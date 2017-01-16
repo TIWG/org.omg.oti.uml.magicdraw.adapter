@@ -19,27 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLRemoveStructuralFeatureValueAction 
   extends MagicDrawUMLWriteStructuralFeatureAction
   with UMLRemoveStructuralFeatureValueAction[MagicDrawUML] {
 
   override protected def e: Uml#RemoveStructuralFeatureValueAction
-  def getMagicDrawRemoveStructuralFeatureValueAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawRemoveStructuralFeatureValueAction: Uml#RemoveStructuralFeatureValueAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.36
-	override def isRemoveDuplicates: Boolean =
-    e.isRemoveDuplicates
+	override def isRemoveDuplicates: Boolean = e.isRemoveDuplicates
   
   // 16.36
-	override def removeAt: Option[UMLInputPin[Uml]] =
-    for { result <- Option(e.getRemoveAt) } yield result
+	override def removeAt
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option(e.getRemoveAt) } yield result
 
 }
 
 case class MagicDrawUMLRemoveStructuralFeatureValueActionImpl
 (e: MagicDrawUML#RemoveStructuralFeatureValueAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLRemoveStructuralFeatureValueAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLRemoveStructuralFeatureValueActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLRemoveStructuralFeatureValueAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

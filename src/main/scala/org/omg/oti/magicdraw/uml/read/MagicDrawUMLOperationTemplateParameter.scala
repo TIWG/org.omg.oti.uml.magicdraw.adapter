@@ -19,23 +19,49 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLOperationTemplateParameter 
   extends MagicDrawUMLTemplateParameter
   with UMLOperationTemplateParameter[MagicDrawUML] {
 
   override protected def e: Uml#OperationTemplateParameter
-  def getMagicDrawOperationTemplateParameter = e
+  def getMagicDrawOperationTemplateParameter: Uml#OperationTemplateParameter = e
 
-  implicit val umlOps = ops
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def parameteredElement: Option[UMLOperation[Uml]] =
-    for { result <- Option( e.getParameteredElement ) } yield result
+  override def parameteredElement
+  : Option[UMLOperation[Uml]]
+  = for { result <- Option( e.getParameteredElement ) } yield result
 
 }
 
 case class MagicDrawUMLOperationTemplateParameterImpl
 (e: MagicDrawUML#OperationTemplateParameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOperationTemplateParameter
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLOperationTemplateParameterImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLOperationTemplateParameter(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

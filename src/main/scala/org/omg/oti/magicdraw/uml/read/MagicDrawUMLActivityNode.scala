@@ -28,22 +28,27 @@ trait MagicDrawUMLActivityNode
   with UMLActivityNode[MagicDrawUML] {
 
   override protected def e: Uml#ActivityNode
-  def getMagicDrawActivityNode = e
+  def getMagicDrawActivityNode: Uml#ActivityNode = e
   import ops._
 
-  override def inGroup =
-    e.getInGroup.to[Set]
+  override def inGroup
+  : Set[UMLActivityGroup[Uml]]
+  = e.getInGroup.to[Set]
   
-  override def inInterruptibleRegion =
-    e.getInInterruptibleRegion.to[Set]
+  override def inInterruptibleRegion
+  : Set[UMLInterruptibleActivityRegion[Uml]]
+  = e.getInInterruptibleRegion.to[Set]
   
-  override def inPartition =
-    e.getInPartition.to[Set]
+  override def inPartition
+  : Set[UMLActivityPartition[Uml]]
+  = e.getInPartition.to[Set]
   
-  override def incoming =
-    e.getIncoming.to[Set]
+  override def incoming
+  : Set[UMLActivityEdge[Uml]]
+  = e.getIncoming.to[Set]
   
-  override def outgoing =
-    e.getOutgoing.to[Set]
+  override def outgoing
+  : Set[UMLActivityEdge[Uml]]
+  = e.getOutgoing.to[Set]
   
 }

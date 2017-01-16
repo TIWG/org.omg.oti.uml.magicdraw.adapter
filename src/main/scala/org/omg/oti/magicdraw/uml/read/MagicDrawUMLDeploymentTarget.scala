@@ -25,6 +25,6 @@ trait MagicDrawUMLDeploymentTarget
   with UMLDeploymentTarget[MagicDrawUML] {
 
   override protected def e: Uml#DeploymentTarget
-  def getMagicDrawDeploymentTarget = e
+  def getMagicDrawDeploymentTarget: Uml#DeploymentTarget = e
 
 }

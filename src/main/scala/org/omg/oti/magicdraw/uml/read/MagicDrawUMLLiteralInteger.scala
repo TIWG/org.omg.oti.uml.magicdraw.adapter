@@ -18,21 +18,48 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import org.omg.oti.uml.read.api._
 import java.lang.Integer
+
+import org.omg.oti.uml.read.api._
+
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLLiteralInteger 
   extends MagicDrawUMLLiteralSpecification
   with UMLLiteralInteger[MagicDrawUML] {
 
   override protected def e: Uml#LiteralInteger
-  def getMagicDrawLiteralInteger = e
+  def getMagicDrawLiteralInteger: Uml#LiteralInteger = e
   
-  override def value: Integer =
-    new Integer(e.getValue)
+  override def value: Integer = new Integer(e.getValue)
 
 }
 
 case class MagicDrawUMLLiteralIntegerImpl
 (e: MagicDrawUML#LiteralInteger, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLiteralInteger
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLiteralIntegerImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLiteralInteger(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

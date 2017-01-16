@@ -18,30 +18,34 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
+import scala.Boolean
 
 trait MagicDrawUMLRedefinableElement 
   extends MagicDrawUMLNamedElement
   with UMLRedefinableElement[MagicDrawUML] {
 
   override protected def e: Uml#RedefinableElement
-  def getMagicDrawRedefinableElement = e
-  override implicit val umlOps = ops
+  def getMagicDrawRedefinableElement: Uml#RedefinableElement = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
     
-  override def isLeaf = e.isLeaf
+  override def isLeaf: Boolean = e.isLeaf
   
-  override def redefinedElement: Set[UMLRedefinableElement[Uml]] = 
-    e.getRedefinedElement.to[Set]
+  override def redefinedElement
+  : Set[UMLRedefinableElement[Uml]]
+  = e.getRedefinedElement.to[Set]
   
-  override def redefinitionContext: Iterable[UMLClassifier[Uml]] = 
-    e.getRedefinitionContext.toIterable
+  override def redefinitionContext
+  : Iterable[UMLClassifier[Uml]]
+  = e.getRedefinitionContext.toIterable
   
-  override def redefinedElement_redefinableElement: Set[UMLRedefinableElement[Uml]] =  
-    e.get_redefinableElementOfRedefinedElement.to[Set]
+  override def redefinedElement_redefinableElement
+  : Set[UMLRedefinableElement[Uml]]
+  = e.get_redefinableElementOfRedefinedElement.to[Set]
   
 }

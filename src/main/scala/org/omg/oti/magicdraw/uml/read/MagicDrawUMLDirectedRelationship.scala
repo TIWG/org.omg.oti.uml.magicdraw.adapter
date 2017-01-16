@@ -28,13 +28,15 @@ trait MagicDrawUMLDirectedRelationship
   with UMLDirectedRelationship[MagicDrawUML] {
 
   override protected def e: Uml#DirectedRelationship
-  def getMagicDrawDirectedRelationship = e
+  def getMagicDrawDirectedRelationship: Uml#DirectedRelationship = e
   import ops._
   
-  def source: Set[UMLElement[Uml]] =
-    e.getSource.to[Set]
+  def source
+  : Set[UMLElement[Uml]]
+  = e.getSource.to[Set]
 
-  def target: Set[UMLElement[Uml]] =
-    e.getTarget.to[Set]
+  def target
+  : Set[UMLElement[Uml]]
+  = e.getTarget.to[Set]
 
 }

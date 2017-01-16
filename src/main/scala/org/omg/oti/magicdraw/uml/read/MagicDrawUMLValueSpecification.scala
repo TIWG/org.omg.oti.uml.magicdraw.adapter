@@ -30,16 +30,17 @@ trait MagicDrawUMLValueSpecification
   with UMLValueSpecification[MagicDrawUML] {
 
   override protected def e: Uml#ValueSpecification
-  def getMagicDrawValueSpecification = e
+  def getMagicDrawValueSpecification: Uml#ValueSpecification = e
   import ops._
 
-  override def min_interval: Set[UMLInterval[Uml]] =
-    e.get_intervalOfMin.to[Set]
+  override def min_interval
+  : Set[UMLInterval[Uml]]
+  = e.get_intervalOfMin.to[Set]
     
-  override def max_interval: Set[UMLInterval[Uml]] =
-    e.get_intervalOfMax.to[Set]
-    
-  
+  override def max_interval
+  : Set[UMLInterval[Uml]]
+  = e.get_intervalOfMax.to[Set]
+
 	/**
 	 * <!-- begin-model-doc -->
 	 * <!-- end-model-doc -->
@@ -47,8 +48,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionUse.argument
 	 */
-	override def argument_interactionUse: Option[UMLInteractionUse[Uml]] =
-    for { result <- Option(e.get_interactionUseOfArgument()) } yield result
+	override def argument_interactionUse
+	: Option[UMLInteractionUse[Uml]]
+	= for { result <- Option(e.get_interactionUseOfArgument()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -57,8 +59,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLActivityEdge.guard
 	 */
-	override def guard_activityEdge: Option[UMLActivityEdge[Uml]] =
-    for { result <- Option(e.get_activityEdgeOfGuard()) } yield result
+	override def guard_activityEdge
+	: Option[UMLActivityEdge[Uml]]
+	= for { result <- Option(e.get_activityEdgeOfGuard()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -67,8 +70,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLMultiplicityElement.lowerValue
 	 */
-	override def lowerValue_owningLower: Option[UMLMultiplicityElement[Uml]] =
-    for { result <- Option(e.getOwningLower) } yield result
+	override def lowerValue_owningLower
+	: Option[UMLMultiplicityElement[Uml]]
+	= for { result <- Option(e.getOwningLower) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -77,8 +81,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionConstraint.maxint
 	 */
-	override def maxint_interactionConstraint: Option[UMLInteractionConstraint[Uml]] =
-    for { result <- Option(e.get_interactionConstraintOfMaxint()) } yield result
+	override def maxint_interactionConstraint
+	: Option[UMLInteractionConstraint[Uml]]
+	= for { result <- Option(e.get_interactionConstraintOfMaxint()) } yield result
 
   /**
     * <!-- begin-model-doc -->
@@ -87,8 +92,9 @@ trait MagicDrawUMLValueSpecification
     * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
     * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionConstraint.minint
     */
-  override def minint_interactionConstraint: Option[UMLInteractionConstraint[Uml]] =
-    for { result <- Option(e.get_interactionConstraintOfMinint()) } yield result
+  override def minint_interactionConstraint
+  : Option[UMLInteractionConstraint[Uml]]
+  = for { result <- Option(e.get_interactionConstraintOfMinint()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -97,8 +103,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInteractionUse.returnValue
 	 */
-	override def returnValue_interactionUse: Option[UMLInteractionUse[Uml]] =
-    for { result <- Option(e.get_interactionUseOfReturnValue()) } yield result
+	override def returnValue_interactionUse
+	: Option[UMLInteractionUse[Uml]]
+	= for { result <- Option(e.get_interactionUseOfReturnValue()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -107,11 +114,13 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLConstraint.specification
 	 */
-	override def specification_owningConstraint: Option[UMLConstraint[Uml]] =
-    for { result <- Option(e.getOwningConstraint) } yield result
+	override def specification_owningConstraint
+	: Option[UMLConstraint[Uml]]
+	= for { result <- Option(e.getOwningConstraint) } yield result
 
-	override def upperBound_objectNode: Option[UMLObjectNode[Uml]] =
-    for { result <- Option(e.get_objectNodeOfUpperBound()) } yield result
+	override def upperBound_objectNode
+	: Option[UMLObjectNode[Uml]]
+	= for { result <- Option(e.get_objectNodeOfUpperBound()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -120,8 +129,9 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLMultiplicityElement.upperValue
 	 */
-	override def upperValue_owningUpper: Option[UMLMultiplicityElement[Uml]] =
-    for { result <- Option(e.getOwningUpper) } yield result
+	override def upperValue_owningUpper
+	: Option[UMLMultiplicityElement[Uml]]
+	= for { result <- Option(e.getOwningUpper) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -130,7 +140,8 @@ trait MagicDrawUMLValueSpecification
 	 * UML metamodel property: derived="false" ordered="false" unique="true" aggregation="none" multiplicity="0..1"
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLActivityEdge.weight
 	 */
-	override def weight_activityEdge: Option[UMLActivityEdge[Uml]] =
-    for { result <- Option(e.get_activityEdgeOfWeight()) } yield result
+	override def weight_activityEdge
+	: Option[UMLActivityEdge[Uml]]
+	= for { result <- Option(e.get_activityEdgeOfWeight()) } yield result
 
 }

@@ -18,51 +18,68 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
-
-import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLConnector 
   extends MagicDrawUMLFeature
   with UMLConnector[MagicDrawUML] {
 
   override protected def e: Uml#Connector
-  def getMagicDrawConnector = e
-  override implicit val umlOps = ops
+  def getMagicDrawConnector: Uml#Connector = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def end: Seq[UMLConnectorEnd[Uml]] =
-    e.getEnd.to[Seq]
+  override def end
+  : Seq[UMLConnectorEnd[Uml]]
+  = e.getEnd.to[Seq]
   
-  override def _type: Option[UMLAssociation[Uml]] =
-    for { result <- Option.apply( e.getType ) } yield result
+  override def _type
+  : Option[UMLAssociation[Uml]]
+  = for { result <- Option.apply( e.getType ) } yield result
   
-  override def connector_message: Set[UMLMessage[Uml]] =
-    e.get_messageOfConnector.to[Set]
+  override def connector_message
+  : Set[UMLMessage[Uml]]
+  = e.get_messageOfConnector.to[Set]
   
-  override def contract: Set[UMLBehavior[Uml]] =
-    e.getContract.to[Set]
+  override def contract
+  : Set[UMLBehavior[Uml]]
+  = e.getContract.to[Set]
   
-  override def realizingConnector_informationFlow: Set[UMLInformationFlow[Uml]] =
-    e.get_informationFlowOfRealizingConnector.to[Set]
+  override def realizingConnector_informationFlow
+  : Set[UMLInformationFlow[Uml]]
+  = e.get_informationFlowOfRealizingConnector.to[Set]
 
 }
 
 case class MagicDrawUMLConnectorImpl
 (e: MagicDrawUML#Connector, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnector
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLConnector(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConnectorImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLConnector(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

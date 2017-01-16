@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLActor 
   extends MagicDrawUMLBehavioredClassifier
   with UMLActor[MagicDrawUML] {
 
   override protected def e: Uml#Actor
-  def getMagicDrawActor = e
+  def getMagicDrawActor: Uml#Actor = e
 
 }
 
 case class MagicDrawUMLActorImpl
 (e: MagicDrawUML#Actor, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLActor
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLActorImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLActor(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

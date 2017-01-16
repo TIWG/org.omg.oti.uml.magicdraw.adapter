@@ -20,24 +20,53 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,Option}
-import scala.Predef.???
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLDestroyObjectAction 
   extends MagicDrawUMLAction
   with UMLDestroyObjectAction[MagicDrawUML] {
 
   override protected def e: Uml#DestroyObjectAction
-  def getMagicDrawDestroyObjectAction = e
+  def getMagicDrawDestroyObjectAction: Uml#DestroyObjectAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
-  override def isDestroyLinks: Boolean = ???
+
+  override def isDestroyLinks: Boolean = e.isDestroyLinks
   
-  override def isDestroyOwnedObjects: Boolean = ???
-  
-	override def target: Option[UMLInputPin[Uml]] = ???
+  override def isDestroyOwnedObjects: Boolean = e.isDestroyOwnedObjects
+
+	override def target
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option( e.getTarget ) } yield result
 
 }
 
 case class MagicDrawUMLDestroyObjectActionImpl
 (e: MagicDrawUML#DestroyObjectAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDestroyObjectAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDestroyObjectActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDestroyObjectAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

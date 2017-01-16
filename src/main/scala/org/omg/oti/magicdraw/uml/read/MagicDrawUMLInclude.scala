@@ -20,14 +20,17 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLInclude 
   extends MagicDrawUMLNamedElement
   with MagicDrawUMLDirectedRelationship
   with UMLInclude[MagicDrawUML] {
 
   override protected def e: Uml#Include
-  def getMagicDrawInclude = e
-  override implicit val umlOps = ops
+  def getMagicDrawInclude: Uml#Include = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   //import umlOps._
 
 }
@@ -35,3 +38,27 @@ trait MagicDrawUMLInclude
 case class MagicDrawUMLIncludeImpl
 (e: MagicDrawUML#Include, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInclude
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLIncludeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLInclude(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

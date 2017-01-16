@@ -28,10 +28,11 @@ trait MagicDrawUMLTemplateableElement
   with UMLTemplateableElement[MagicDrawUML] {
 
   override protected def e: Uml#TemplateableElement
-  def getMagicDrawTemplateableElement = e
-  implicit val umlOps = ops
+  def getMagicDrawTemplateableElement: Uml#TemplateableElement = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def templateBinding: Set[UMLTemplateBinding[Uml]] =
-    e.getTemplateBinding.to[Set]
+  override def templateBinding
+  : Set[UMLTemplateBinding[Uml]]
+  = e.getTemplateBinding.to[Set]
 }

@@ -31,25 +31,28 @@ trait MagicDrawUMLObjectNode
   with UMLObjectNode[MagicDrawUML] {
 
   override protected def e: Uml#ObjectNode
-  def getMagicDrawObjectNode = e
+  def getMagicDrawObjectNode: Uml#ObjectNode = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def inState: Set[UMLState[Uml]] =
-    e.getInState.to[Set]
+  override def inState
+  : Set[UMLState[Uml]]
+  = e.getInState.to[Set]
   
-  override def isControlType: Boolean =
-    e.isControlType
+  override def isControlType: Boolean = e.isControlType
     
-  override def exceptionInput_exceptionHandler: Set[UMLExceptionHandler[Uml]] =
-    e.get_exceptionHandlerOfExceptionInput.to[Set]
+  override def exceptionInput_exceptionHandler
+  : Set[UMLExceptionHandler[Uml]]
+  = e.get_exceptionHandlerOfExceptionInput.to[Set]
 
-  override def selection: Option[UMLBehavior[Uml]] =
-    for { result <- Option( e.getSelection ) } yield result
+  override def selection
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option( e.getSelection ) } yield result
 
-  override def ordering: Option[UMLObjectNodeOrderingKind.Value] =
-    Option(e.getOrdering)
+  override def ordering
+  : Option[UMLObjectNodeOrderingKind.Value]
+  = Option(e.getOrdering)
     .fold[Option[UMLObjectNodeOrderingKind.Value]](None) {
       case ObjectNodeOrderingKindEnum.FIFO      => Some(UMLObjectNodeOrderingKind.FIFO)
       case ObjectNodeOrderingKindEnum.LIFO      => Some(UMLObjectNodeOrderingKind.LIFO)
@@ -57,7 +60,8 @@ trait MagicDrawUMLObjectNode
       case ObjectNodeOrderingKindEnum.UNORDERED => Some(UMLObjectNodeOrderingKind.unordered)
     }
 
-  override def upperBound: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option(e.getUpperBound) } yield result
+  override def upperBound
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option(e.getUpperBound) } yield result
 
 }

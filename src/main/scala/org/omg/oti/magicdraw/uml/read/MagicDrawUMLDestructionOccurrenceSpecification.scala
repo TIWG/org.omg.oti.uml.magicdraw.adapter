@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLDestructionOccurrenceSpecification 
   extends MagicDrawUMLMessageOccurrenceSpecification
   with UMLDestructionOccurrenceSpecification[MagicDrawUML] {
 
   override protected def e: Uml#DestructionOccurrenceSpecification
-  def getMagicDrawDestructionOccurrenceSpecification = e
+  def getMagicDrawDestructionOccurrenceSpecification: Uml#DestructionOccurrenceSpecification = e
 
 }
 
 case class MagicDrawUMLDestructionOccurrenceSpecificationImpl
 (e: MagicDrawUML#DestructionOccurrenceSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDestructionOccurrenceSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDestructionOccurrenceSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDestructionOccurrenceSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

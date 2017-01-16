@@ -29,14 +29,16 @@ trait MagicDrawUMLLinkAction
   with UMLLinkAction[MagicDrawUML] {
 
   override protected def e: Uml#LinkAction
-  def getMagicDrawLinkAction = e
+  def getMagicDrawLinkAction: Uml#LinkAction = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def endData: Iterable[UMLLinkEndData[Uml]] =
-    e.getEndData.toIterable
+  override def endData
+  : Iterable[UMLLinkEndData[Uml]]
+  = e.getEndData.toIterable
       
-  override def inputValue: Set[UMLInputPin[Uml]] =
-    e.getInputValue.to[Set]
+  override def inputValue
+  : Set[UMLInputPin[Uml]]
+  = e.getInputValue.to[Set]
 }

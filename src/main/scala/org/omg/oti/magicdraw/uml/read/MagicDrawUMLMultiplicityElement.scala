@@ -26,21 +26,21 @@ trait MagicDrawUMLMultiplicityElement
   with UMLMultiplicityElement[MagicDrawUML] {
 
   override protected def e: Uml#MultiplicityElement
-  def getMagicDrawMultiplicityElement = e
+  def getMagicDrawMultiplicityElement: Uml#MultiplicityElement = e
 
-  implicit val umlOps = ops
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def isOrdered: Boolean =
-    e.isOrdered
+  override def isOrdered: Boolean = e.isOrdered
   
-  override def isUnique: Boolean =
-    e.isUnique
+  override def isUnique: Boolean = e.isUnique
 
-  override def lowerValue: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option( e.getLowerValue ) } yield result
+  override def lowerValue
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option( e.getLowerValue ) } yield result
 
-  override def upperValue: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option( e.getUpperValue ) } yield result
+  override def upperValue
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option( e.getUpperValue ) } yield result
   
 }

@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLPackageMerge 
   extends MagicDrawUMLDirectedRelationship
   with UMLPackageMerge[MagicDrawUML] {
 
   override protected def e: Uml#PackageMerge
-  def getMagicDrawPackageMerge = e
+  def getMagicDrawPackageMerge: Uml#PackageMerge = e
 
 }
 
 case class MagicDrawUMLPackageMergeImpl
 (e: MagicDrawUML#PackageMerge, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPackageMerge
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPackageMergeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLPackageMerge(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

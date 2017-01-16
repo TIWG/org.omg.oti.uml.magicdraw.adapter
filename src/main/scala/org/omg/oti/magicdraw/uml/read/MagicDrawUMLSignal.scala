@@ -20,8 +20,9 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
+
 
 import org.omg.oti.uml.read.api._
 
@@ -30,44 +31,61 @@ trait MagicDrawUMLSignal
   with UMLSignal[MagicDrawUML] {
 
   override protected def e: Uml#Signal
-  def getMagicDrawSignal = e
-  override implicit val umlOps = ops
+  def getMagicDrawSignal: Uml#Signal = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 10.5
-  override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute().to[Seq]
+  override def ownedAttribute
+  : Seq[UMLProperty[Uml]]
+  = e.getOwnedAttribute.to[Seq]
   
   // 10.5
-  override def signal_reception: Set[UMLReception[Uml]] =
-    e.get_receptionOfSignal().to[Set]
+  override def signal_reception
+  : Set[UMLReception[Uml]]
+  = e.get_receptionOfSignal().to[Set]
   
   // 16.13
-  override def signal_broadcastSignalAction: Set[UMLBroadcastSignalAction[Uml]] =
-    e.get_broadcastSignalActionOfSignal().to[Set]
+  override def signal_broadcastSignalAction
+  : Set[UMLBroadcastSignalAction[Uml]]
+  = e.get_broadcastSignalActionOfSignal().to[Set]
   
   // 16.13
-  override def signal_sendSignalAction: Set[UMLSendSignalAction[Uml]] =
-    e.get_sendSignalActionOfSignal().to[Set]
+  override def signal_sendSignalAction
+  : Set[UMLSendSignalAction[Uml]]
+  = e.get_sendSignalActionOfSignal().to[Set]
   
   // 13.2
-  override def signal_signalEvent: Set[UMLSignalEvent[Uml]] =
-    e.get_signalEventOfSignal().to[Set]
+  override def signal_signalEvent
+  : Set[UMLSignalEvent[Uml]]
+  = e.get_signalEventOfSignal().to[Set]
 
 }
 
 case class MagicDrawUMLSignalImpl
 (e: MagicDrawUML#Signal, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLSignal
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLSignal(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLSignalImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLSignal(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

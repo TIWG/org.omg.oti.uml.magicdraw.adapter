@@ -25,6 +25,6 @@ trait MagicDrawUMLEncapsulatedClassifier
   with UMLEncapsulatedClassifier[MagicDrawUML] {
 
   override protected def e: Uml#EncapsulatedClassifier
-  def getMagicDrawEncapsulatedClassifier = e
+  def getMagicDrawEncapsulatedClassifier: Uml#EncapsulatedClassifier = e
 
 }

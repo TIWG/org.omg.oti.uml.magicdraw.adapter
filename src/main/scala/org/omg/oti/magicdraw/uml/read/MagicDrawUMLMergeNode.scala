@@ -20,16 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLMergeNode 
   extends MagicDrawUMLControlNode
   with UMLMergeNode[MagicDrawUML] {
 
   override protected def e: Uml#MergeNode
-  def getMagicDrawMergeNode = e
-
+  def getMagicDrawMergeNode: Uml#MergeNode = e
 
 }
 
 case class MagicDrawUMLMergeNodeImpl
 (e: MagicDrawUML#MergeNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLMergeNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLMergeNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLMergeNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

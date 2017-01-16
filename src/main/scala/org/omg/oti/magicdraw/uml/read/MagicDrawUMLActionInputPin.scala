@@ -19,17 +19,43 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLActionInputPin 
   extends MagicDrawUMLInputPin
   with UMLActionInputPin[MagicDrawUML] {
 
   override protected def e: Uml#ActionInputPin
-  def getMagicDrawActionInputPin = e
-  override implicit val umlOps = ops
+  def getMagicDrawActionInputPin: Uml#ActionInputPin = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
 }
 
 case class MagicDrawUMLActionInputPinImpl
 (e: MagicDrawUML#ActionInputPin, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLActionInputPin
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLActionInputPinImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLActionInputPin(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -19,27 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLReduceAction 
   extends MagicDrawUMLAction
   with UMLReduceAction[MagicDrawUML] {
 
   override protected def e: Uml#ReduceAction
-  def getMagicDrawReduceAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawReduceAction: Uml#ReduceAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.56
-  override def isOrdered: Boolean =
-    e.isOrdered
+  override def isOrdered: Boolean = e.isOrdered
   
   // 16.56
-  override def reducer: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getReducer) } yield result
+  override def reducer
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getReducer) } yield result
 
 }
 
 case class MagicDrawUMLReduceActionImpl
 (e: MagicDrawUML#ReduceAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLReduceAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLReduceActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLReduceAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

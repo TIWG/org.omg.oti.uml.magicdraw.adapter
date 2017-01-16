@@ -19,23 +19,49 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLReadExtentAction 
   extends MagicDrawUMLAction
   with UMLReadExtentAction[MagicDrawUML] {
 
   override protected def e: Uml#ReadExtentAction
-  def getMagicDrawReadExtentAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawReadExtentAction: Uml#ReadExtentAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.30
-  override def classifier: Option[UMLClassifier[Uml]] =
-    for { result <- Option(e.getClassifier) } yield result
+  override def classifier
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option(e.getClassifier) } yield result
 
 }
 
 case class MagicDrawUMLReadExtentActionImpl
 (e: MagicDrawUML#ReadExtentAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLReadExtentAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLReadExtentActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLReadExtentAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -20,9 +20,10 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Predef.???
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInteractionOperand 
   extends MagicDrawUMLNamespace
@@ -30,17 +31,46 @@ trait MagicDrawUMLInteractionOperand
   with UMLInteractionOperand[MagicDrawUML] {
 
   override protected def e: Uml#InteractionOperand
-  def getMagicDrawInteractionOperand = e
+  def getMagicDrawInteractionOperand: Uml#InteractionOperand = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
   // 17.11
-	override def fragment: Seq[UMLInteractionFragment[Uml]] = ???
+	override def fragment
+  : Seq[UMLInteractionFragment[Uml]]
+  = e.getFragment.to[Seq]
   
   // 17.11
-	override def guard: Option[UMLInteractionConstraint[Uml]] = ???
-
+	override def guard
+  : Option[UMLInteractionConstraint[Uml]]
+  = for { result <- Option(e.getGuard) } yield result
 
 }
 
 case class MagicDrawUMLInteractionOperandImpl
 (e: MagicDrawUML#InteractionOperand, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInteractionOperand
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInteractionOperandImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLInteractionOperand(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

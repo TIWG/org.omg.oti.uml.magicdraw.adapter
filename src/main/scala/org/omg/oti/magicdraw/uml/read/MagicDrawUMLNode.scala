@@ -19,6 +19,8 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLNode 
   extends MagicDrawUMLClass
@@ -26,10 +28,34 @@ trait MagicDrawUMLNode
   with UMLNode[MagicDrawUML] {
 
   override protected def e: Uml#Node
-  def getMagicDrawNode = e
+  def getMagicDrawNode: Uml#Node = e
 
 }
 
 case class MagicDrawUMLNodeImpl
 (e: MagicDrawUML#Node, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

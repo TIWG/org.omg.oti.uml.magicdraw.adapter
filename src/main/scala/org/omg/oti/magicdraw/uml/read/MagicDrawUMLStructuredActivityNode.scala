@@ -19,7 +19,9 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Boolean
+
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLStructuredActivityNode 
   extends MagicDrawUMLAction
@@ -28,13 +30,36 @@ trait MagicDrawUMLStructuredActivityNode
   with UMLStructuredActivityNode[MagicDrawUML] {
 
   override protected def e: Uml#StructuredActivityNode
-  def getMagicDrawStructuredActivityNode = e
+  def getMagicDrawStructuredActivityNode: Uml#StructuredActivityNode = e
 
-  override def mustIsolate: Boolean = 
-    e.isMustIsolate
+  override def mustIsolate: Boolean = e.isMustIsolate
 
 }
 
 case class MagicDrawUMLStructuredActivityNodeImpl
 (e: MagicDrawUML#StructuredActivityNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStructuredActivityNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStructuredActivityNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLStructuredActivityNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

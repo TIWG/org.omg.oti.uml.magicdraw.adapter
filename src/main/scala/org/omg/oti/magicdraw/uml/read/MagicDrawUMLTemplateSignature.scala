@@ -18,28 +18,56 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTemplateSignature 
   extends MagicDrawUMLElement
   with UMLTemplateSignature[MagicDrawUML] {
 
   override protected def e: Uml#TemplateSignature
-  def getMagicDrawTemplateSignature = e
-  implicit val umlOps = ops
+  def getMagicDrawTemplateSignature: Uml#TemplateSignature = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def ownedParameter: Seq[UMLTemplateParameter[Uml]] =
-    e.getOwnedParameter.to[Seq]
+  override def ownedParameter
+  : Seq[UMLTemplateParameter[Uml]]
+  = e.getOwnedParameter.to[Seq]
     
-  override def parameter: Seq[UMLTemplateParameter[Uml]] =
-    e.getParameter.to[Seq]
+  override def parameter
+  : Seq[UMLTemplateParameter[Uml]]
+  = e.getParameter.to[Seq]
 
 }
 
 case class MagicDrawUMLTemplateSignatureImpl
 (e: MagicDrawUML#TemplateSignature, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTemplateSignature
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTemplateSignatureImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLTemplateSignature(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

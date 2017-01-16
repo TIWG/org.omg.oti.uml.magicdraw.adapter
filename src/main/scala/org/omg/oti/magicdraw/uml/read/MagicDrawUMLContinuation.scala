@@ -20,20 +20,44 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Boolean
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLContinuation 
   extends MagicDrawUMLInteractionFragment
   with UMLContinuation[MagicDrawUML] {
 
   override protected def e: Uml#Continuation
-  def getMagicDrawContinuation = e
+  def getMagicDrawContinuation: Uml#Continuation = e
 
-  override def setting: Boolean =
-    e.isSetting
+  override def setting: Boolean = e.isSetting
 
 }
 
 case class MagicDrawUMLContinuationImpl
 (e: MagicDrawUML#Continuation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLContinuation
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLContinuationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLContinuation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

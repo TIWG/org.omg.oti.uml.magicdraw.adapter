@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLProtocolConformance 
   extends MagicDrawUMLDirectedRelationship
   with UMLProtocolConformance[MagicDrawUML] {
 
   override protected def e: Uml#ProtocolConformance
-  def getMagicDrawProtocolConformance = e
+  def getMagicDrawProtocolConformance: Uml#ProtocolConformance = e
 
 }
 
 case class MagicDrawUMLProtocolConformanceImpl
 (e: MagicDrawUML#ProtocolConformance, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLProtocolConformance
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLProtocolConformanceImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLProtocolConformance(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

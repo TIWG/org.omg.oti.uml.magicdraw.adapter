@@ -22,7 +22,7 @@ import org.omg.oti.uml.read.api._
 
 import scala.collection.Iterable
 import scala.collection.JavaConversions._
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLRegion 
@@ -31,28 +31,41 @@ trait MagicDrawUMLRegion
   with UMLRegion[MagicDrawUML] {
 
   override protected def e: Uml#Region
-  def getMagicDrawRegion = e
-  override implicit val umlOps = ops
+  def getMagicDrawRegion: Uml#Region = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 14.37
-  override def redefinitionContext: Iterable[UMLClassifier[Uml]] =
-    umlClassifier( e.getRedefinitionContext )
+  override def redefinitionContext
+  : Iterable[UMLClassifier[Uml]]
+  = umlClassifier( e.getRedefinitionContext )
 
 }
 
 case class MagicDrawUMLRegionImpl
 (e: MagicDrawUML#Region, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLRegion
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLRegion(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLRegionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLRegion(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

@@ -20,16 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLAbstraction 
   extends MagicDrawUMLDependency
   with UMLAbstraction[MagicDrawUML] {
 
   override protected def e: Uml#Abstraction
-  def getMagicDrawAbstraction = e
-
+  def getMagicDrawAbstraction: Uml#Abstraction = e
 
 }
 
 case class MagicDrawUMLAbstractionImpl
 (e: MagicDrawUML#Abstraction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLAbstraction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLAbstractionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLAbstraction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

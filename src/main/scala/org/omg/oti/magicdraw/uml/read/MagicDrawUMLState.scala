@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.collection.immutable._
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 import scala.collection.JavaConversions._
@@ -32,45 +32,63 @@ trait MagicDrawUMLState
   with UMLState[MagicDrawUML] {
 
   override protected def e: Uml#State
-  def getMagicDrawState = e
-  override implicit val umlOps = ops
+  def getMagicDrawState: Uml#State = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 14.1
-  def doActivity: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getDoActivity) } yield result
+  def doActivity
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getDoActivity) } yield result
 
-  def entry: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getEntry) } yield result
+  def entry
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getEntry) } yield result
 
-  def exit: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getExit) } yield result
+  def exit
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getExit) } yield result
   
   // 14.1
-  def submachine: Option[UMLStateMachine[Uml]] =
-    for { result <- Option(e.getSubmachine) } yield result
+  def submachine
+  : Option[UMLStateMachine[Uml]]
+  = for { result <- Option(e.getSubmachine) } yield result
   
   // 15.48
-  def inState_objectNode: Set[UMLObjectNode[Uml]] =
-    e.get_objectNodeOfInState.to[Set]
+  def inState_objectNode
+  : Set[UMLObjectNode[Uml]]
+  = e.get_objectNodeOfInState.to[Set]
   
-  override def stateInvariant: Option[UMLConstraint[Uml]] =
-    for { result <- Option(e.getStateInvariant) } yield result
+  override def stateInvariant
+  : Option[UMLConstraint[Uml]]
+  = for { result <- Option(e.getStateInvariant) } yield result
 
 }
 
 case class MagicDrawUMLStateImpl
 (e: MagicDrawUML#State, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLState
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLState(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStateImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLState(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

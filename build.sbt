@@ -121,7 +121,13 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
     unmanagedClasspath in Compile ++= (unmanagedJars in Compile).value,
 
     resolvers += Resolver.bintrayRepo("jpl-imce", "gov.nasa.jpl.imce"),
-    resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg")
+    resolvers += Resolver.bintrayRepo("tiwg", "org.omg.tiwg"),
+
+    resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases",
+    scalacOptions in (Compile, compile) += s"-P:artima-supersafe:config-file:${baseDirectory.value}/project/supersafe.cfg",
+    scalacOptions in (Test, compile) += s"-P:artima-supersafe:config-file:${baseDirectory.value}/project/supersafe.cfg",
+    scalacOptions in (Compile, doc) += "-Xplugin-disable:artima-supersafe",
+    scalacOptions in (Test, doc) += "-Xplugin-disable:artima-supersafe"
 
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -131,7 +137,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
        "org.omg.tiwg" %% "org.omg.oti.uml.change_migration"
        % Versions_oti_uml_change_migration.version %
        "compile" withSources() withJavadoc() artifacts
-       Artifact("org.omg.oti.uml.change_migration", "zip", "zip", Some("resource"), Seq(), None, Map())
+       Artifact("org.omg.oti.uml.change_migration", "zip", "zip", "resource")
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -141,7 +147,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "org.omg.tiwg" %% "org.omg.oti.uml.composite_structure_tree_analysis"
         % Versions_oti_uml_composite_structure_tree_analysis.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("org.omg.oti.uml.composite_structure_tree_analysis", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.composite_structure_tree_analysis", "zip", "zip", "resource")
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -151,7 +157,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "org.omg.tiwg" %% "org.omg.oti.uml.canonical_xmi.loader"
         % Versions_oti_uml_canonical_xmi_loader.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("org.omg.oti.uml.canonical_xmi.loader", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.canonical_xmi.loader", "zip", "zip", "resource")
     )
   )
   .dependsOnSourceProjectOrLibraryArtifacts(
@@ -161,7 +167,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "org.omg.tiwg" %% "org.omg.oti.uml.json.serialization"
         % Versions_oti_uml_json_serialization.version %
         "compile" withSources() withJavadoc() artifacts
-        Artifact("org.omg.oti.uml.json.serialization", "zip", "zip", Some("resource"), Seq(), None, Map())
+        Artifact("org.omg.oti.uml.json.serialization", "zip", "zip", "resource")
     )
   )
   .settings(
@@ -169,13 +175,15 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       "gov.nasa.jpl.imce" %% "imce.dynamic_scripts.magicdraw.plugin"
         % Versions_imce_md18_0_sp6_dynamic_scripts.version %
         "compile" withSources() withJavadoc() artifacts(
-        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("part1"), Seq(), None, Map()),
-        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", Some("part2"), Seq(), None, Map())),
+        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", "part1"),
+        Artifact("imce.dynamic_scripts.magicdraw.plugin", "zip", "zip", "part2")),
 
     extractArchives := {
+      val base = baseDirectory.value
       val up = update.value
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
+      val showDownloadProgress = true
       if (!mdInstallDir.exists) {
 
         val crossV = CrossVersion(scalaVersion.value, scalaBinaryVersion.value)(projectID.value)
@@ -184,51 +192,11 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
         val compileDepGraph =
           net.virtualvoid.sbt.graph.DependencyGraphKeys.ignoreMissingUpdate.value.configuration("compile").get
 
-        // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113
-        //val g1 = fromConfigurationReport(runtimeDepGraph, crossV, zipFileSelector)
-
-        // This doesn't work!
-        // It yields only one of the 2 zip files: part1.zip
-
-        //val mdParts = (for {
-        //  module <- g1.nodes
-        //  if module.id.organisation == "org.omg.tiwg.vendor.nomagic"
-        //  archive <- module.jarFile
-        //} yield archive).sorted
-
-        val mdParts = (for {
-          cReport <- up.configurations
-          if cReport.configuration == "compile"
-          mReport <- cReport.modules
-          if mReport.module.organization == "org.omg.tiwg.vendor.nomagic"
-          (artifact, archive) <- mReport.artifacts
-        } yield archive).sorted
-
-
-        {
-          s.log.warn(s"Extracting MagicDraw from ${mdParts.size} parts:")
-          mdParts.foreach { p => s.log.warn(p.getAbsolutePath) }
-
-          val merged = File.createTempFile("md_merged", ".zip")
-          println(s"merged: ${merged.getAbsolutePath}")
-
-          val zip = File.createTempFile("md_no_install", ".zip")
-          println(s"zip: ${zip.getAbsolutePath}")
-
-          val script = File.createTempFile("unzip_md", ".sh")
-          println(s"script: ${script.getAbsolutePath}")
-
-          val out = new java.io.PrintWriter(new java.io.FileOutputStream(script))
-          out.println("#!/bin/bash")
-          out.println(mdParts.map(_.getAbsolutePath).mkString("cat ", " ", s" > ${merged.getAbsolutePath}"))
-          out.println(s"zip -FF ${merged.getAbsolutePath} --out ${zip.getAbsolutePath}")
-          out.println(s"unzip -q ${zip.getAbsolutePath} -d ${mdInstallDir.getAbsolutePath}")
-          out.close()
-
-          val result = sbt.Process(command = "/bin/bash", arguments = Seq[String](script.getAbsolutePath)).!
-          require(0 <= result && result <= 2, s"Failed to execute script (exit=$result): ${script.getAbsolutePath}")
-          s.log.warn(s"Extracted.")
-        }
+        MagicDrawDownloader.fetchMagicDraw(
+          s.log, showDownloadProgress,
+          up,
+          credentials.value,
+          mdInstallDir, base / "target" / "no_install.zip")
 
         // this doesn't work either! I get only part1.zip
         // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113

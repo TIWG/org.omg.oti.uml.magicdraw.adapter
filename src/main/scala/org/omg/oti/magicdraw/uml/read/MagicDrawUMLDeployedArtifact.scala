@@ -28,11 +28,12 @@ trait MagicDrawUMLDeployedArtifact
   with UMLDeployedArtifact[MagicDrawUML] {
 
   override protected def e: Uml#DeployedArtifact
-  def getMagicDrawDeployedArtifact = e
+  def getMagicDrawDeployedArtifact: Uml#DeployedArtifact = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def deployedArtifact_deploymentForArtifact: Set[UMLDeployment[MagicDrawUML]] = 
-    e.get_deploymentOfDeployedArtifact.to[Set]
+  override def deployedArtifact_deploymentForArtifact
+  : Set[UMLDeployment[MagicDrawUML]]
+  = e.get_deploymentOfDeployedArtifact.to[Set]
 }

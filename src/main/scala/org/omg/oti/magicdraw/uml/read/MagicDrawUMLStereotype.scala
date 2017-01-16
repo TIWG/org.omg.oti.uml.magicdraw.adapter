@@ -22,24 +22,49 @@ import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLStereotype 
   extends MagicDrawUMLClass
   with UMLStereotype[MagicDrawUML] {
 
   override protected def e: Uml#Stereotype
-  def getMagicDrawStereotype = e
+  def getMagicDrawStereotype: Uml#Stereotype = e
   import ops._
   
-  def isStereotypeApplied( element: Uml#Element ): Boolean =
-    StereotypesHelper.hasStereotype( element, e )
+  def isStereotypeApplied( element: Uml#Element ): Boolean = StereotypesHelper.hasStereotype( element, e )
 
-  override def ownedStereotype_owningPackage: Option[UMLPackage[Uml]] =
-    for { result <- Option(e.getOwningPackage) } yield result
+  override def ownedStereotype_owningPackage
+  : Option[UMLPackage[Uml]]
+  = for { result <- Option(e.getOwningPackage) } yield result
 
 }
 
 case class MagicDrawUMLStereotypeImpl
 (e: MagicDrawUML#Stereotype, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStereotype
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStereotypeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLStereotype(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

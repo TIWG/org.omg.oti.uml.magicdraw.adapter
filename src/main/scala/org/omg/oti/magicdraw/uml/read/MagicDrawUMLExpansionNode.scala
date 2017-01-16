@@ -19,22 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
-import scala.Predef.???
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLExpansionNode 
   extends MagicDrawUMLObjectNode
   with UMLExpansionNode[MagicDrawUML] {
 
   override protected def e: Uml#ExpansionNode
-  def getMagicDrawExpansionNode = e
+  def getMagicDrawExpansionNode: Uml#ExpansionNode = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
-  override def regionAsInput: Option[UMLExpansionRegion[Uml]] = ???
+  override def regionAsInput
+  : Option[UMLExpansionRegion[Uml]]
+  =  for { result <- Option( e.getRegionAsInput ) } yield result
   
-	override def regionAsOutput: Option[UMLExpansionRegion[Uml]] = ???
+	override def regionAsOutput
+  : Option[UMLExpansionRegion[Uml]]
+  =  for { result <- Option( e.getRegionAsOutput ) } yield result
 
 }
 
 case class MagicDrawUMLExpansionNodeImpl
 (e: MagicDrawUML#ExpansionNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExpansionNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExpansionNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExpansionNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

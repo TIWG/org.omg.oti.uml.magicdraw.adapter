@@ -20,35 +20,70 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
-import scala.Predef.???
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLClause 
   extends MagicDrawUMLElement
   with UMLClause[MagicDrawUML] {
 
+  implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
   override protected def e: Uml#Clause
-  def getMagicDrawClause = e
+  def getMagicDrawClause: Uml#Clause = e
 
-	override def body: Set[UMLExecutableNode[Uml]] = ???
+	override def body
+  : Set[UMLExecutableNode[Uml]]
+  = e.getBody.to[Set]
   
-  override def bodyOutput: Seq[UMLOutputPin[Uml]] = ???
+  override def bodyOutput
+  : Seq[UMLOutputPin[Uml]]
+  = e.getBodyOutput.to[Seq]
   
-  override def decider: Option[UMLOutputPin[Uml]] = ???
-  
-  override def predecessorClause: Set[UMLClause[Uml]] = ???
-  
-  override def successorClause: Set[UMLClause[Uml]] = ???
-  
-	override def test: Set[UMLExecutableNode[Uml]] = ???
-  
-  
-  
+  override def decider
+  : Option[UMLOutputPin[Uml]]
+  = for { result <- Option(e.getDecider) } yield result
 
+  override def predecessorClause
+  : Set[UMLClause[Uml]]
+  = e.getPredecessorClause.to[Set]
+  
+  override def successorClause
+  : Set[UMLClause[Uml]]
+  = e.getSuccessorClause.to[Set]
+  
+	override def test
+  : Set[UMLExecutableNode[Uml]]
+  = e.getTest.to[Set]
 
 }
 
 case class MagicDrawUMLClauseImpl
 (e: MagicDrawUML#Clause, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClause
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLClauseImpl =>
+      this.hashCode == that.hashCode &&
+      this.e == that.e &&
+      this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLClause(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

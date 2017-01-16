@@ -18,29 +18,58 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLParameterSet 
   extends MagicDrawUMLNamedElement
   with UMLParameterSet[MagicDrawUML] {
 
   override protected def e: Uml#ParameterSet
-  def getMagicDrawParameterSet = e
+  def getMagicDrawParameterSet: Uml#ParameterSet = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def condition: Set[UMLConstraint[Uml]] =
-    e.getCondition.to[Set]
+  override def condition
+  : Set[UMLConstraint[Uml]]
+  = e.getCondition.to[Set]
   
-  override def parameter: Set[UMLParameter[Uml]] =
-    e.getParameter.to[Set]
+  override def parameter
+  : Set[UMLParameter[Uml]]
+  = e.getParameter.to[Set]
 
 }
 
 case class MagicDrawUMLParameterSetImpl
 (e: MagicDrawUML#ParameterSet, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLParameterSet
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLParameterSetImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLParameterSet(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

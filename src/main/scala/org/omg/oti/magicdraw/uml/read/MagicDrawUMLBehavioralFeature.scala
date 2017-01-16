@@ -31,12 +31,13 @@ trait MagicDrawUMLBehavioralFeature
   with UMLBehavioralFeature[MagicDrawUML] {
 
   override protected def e: Uml#BehavioralFeature
-  def getMagicDrawBehavioralFeature = e
-  override implicit val umlOps = ops
+  def getMagicDrawBehavioralFeature: Uml#BehavioralFeature = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def concurrency: Option[UMLCallConcurrencyKind.Value] =
-    Option.apply(e.getConcurrency)
+  override def concurrency
+  : Option[UMLCallConcurrencyKind.Value]
+  = Option.apply(e.getConcurrency)
     .fold[Option[UMLCallConcurrencyKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.commonbehaviors.mdcommunications.CallConcurrencyKindEnum.CONCURRENT =>
         Some(UMLCallConcurrencyKind.concurrent)
@@ -46,16 +47,18 @@ trait MagicDrawUMLBehavioralFeature
         Some(UMLCallConcurrencyKind.sequential)
     }
   
-  override def isAbstract: Boolean =
-    e.isAbstract
+  override def isAbstract: Boolean = e.isAbstract
   
-  override def method: Set[UMLBehavior[Uml]] =
-    e.getMethod.to[Set]
+  override def method
+  : Set[UMLBehavior[Uml]]
+  = e.getMethod.to[Set]
   
-  override def ownedParameter: Seq[UMLParameter[Uml]] =
-    e.getOwnedParameter.to[Seq]
+  override def ownedParameter
+  : Seq[UMLParameter[Uml]]
+  = e.getOwnedParameter.to[Seq]
   
-  override def raisedException: Set[UMLType[Uml]] =
-    e.getRaisedException.to[Set]
+  override def raisedException
+  : Set[UMLType[Uml]]
+  = e.getRaisedException.to[Set]
   
 }

@@ -21,7 +21,7 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 import scala.collection.immutable._
 
@@ -31,9 +31,9 @@ trait MagicDrawUMLArtifact
   with UMLArtifact[MagicDrawUML] {
 
   override protected def e: Uml#Artifact
-  def getMagicDrawArtifact = e
+  def getMagicDrawArtifact: Uml#Artifact = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
 	override def fileName: Option[String] =
@@ -43,15 +43,40 @@ trait MagicDrawUMLArtifact
     case s => Some( s )
   }
   
-  override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.to[Seq]
+  override def ownedAttribute
+  : Seq[UMLProperty[Uml]]
+  = e.getOwnedAttribute.to[Seq]
     
-  override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.to[Seq]
-
+  override def ownedOperation
+  : Seq[UMLOperation[Uml]]
+  = e.getOwnedOperation.to[Seq]
 
 }
 
 case class MagicDrawUMLArtifactImpl
 (e: MagicDrawUML#Artifact, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLArtifact
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLArtifactImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLArtifact(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

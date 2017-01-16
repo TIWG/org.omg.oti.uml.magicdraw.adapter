@@ -29,14 +29,16 @@ trait MagicDrawUMLInvocationAction
   with UMLInvocationAction[MagicDrawUML] {
 
   override protected def e: Uml#InvocationAction
-  def getMagicDrawInvocationAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawInvocationAction: Uml#InvocationAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def argument: Seq[UMLInputPin[Uml]] =
-    e.getArgument.to[Seq]
+  override def argument
+  : Seq[UMLInputPin[Uml]]
+  = e.getArgument.to[Seq]
     
-  override def onPort: Option[UMLPort[Uml]] =
-    for { result <- Option( e.getOnPort ) } yield result
+  override def onPort
+  : Option[UMLPort[Uml]]
+  = for { result <- Option( e.getOnPort ) } yield result
     
 }

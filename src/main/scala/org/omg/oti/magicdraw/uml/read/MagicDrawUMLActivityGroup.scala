@@ -29,13 +29,15 @@ trait MagicDrawUMLActivityGroup
   with UMLActivityGroup[MagicDrawUML] {
 
   override protected def e: Uml#ActivityGroup
-  def getMagicDrawActivityGroup = e
+  def getMagicDrawActivityGroup: Uml#ActivityGroup = e
   import ops._
 
-  override def containedEdge: Set[UMLActivityEdge[Uml]] =
-    e.getContainedEdge.to[Set]
+  override def containedEdge
+  : Set[UMLActivityEdge[Uml]]
+  = e.getContainedEdge.to[Set]
   
-	override def containedNode: Set[UMLActivityNode[Uml]] =
-    e.getContainedNode.to[Set]
+	override def containedNode
+  : Set[UMLActivityNode[Uml]]
+  = e.getContainedNode.to[Set]
   
 }

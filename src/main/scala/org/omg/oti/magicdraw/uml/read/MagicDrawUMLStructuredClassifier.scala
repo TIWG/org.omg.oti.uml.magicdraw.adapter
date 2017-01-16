@@ -28,14 +28,16 @@ trait MagicDrawUMLStructuredClassifier
   with UMLStructuredClassifier[MagicDrawUML] {
 
   override protected def e: Uml#StructuredClassifier
-  def getMagicDrawStructuredClassifier = e
-  override implicit val umlOps = ops
+  def getMagicDrawStructuredClassifier: Uml#StructuredClassifier = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.to[Seq]
+  override def ownedAttribute
+  : Seq[UMLProperty[Uml]]
+  = e.getOwnedAttribute.to[Seq]
 
-  override def role: Set[UMLConnectableElement[Uml]] =
-    e.getRole.to[Set]
+  override def role
+  : Set[UMLConnectableElement[Uml]]
+  = e.getRole.to[Set]
   
 }

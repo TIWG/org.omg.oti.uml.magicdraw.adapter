@@ -24,6 +24,7 @@ import org.omg.oti.uml.xmi._
 
 import org.omg.oti.magicdraw.uml.read._
 
+import scala.{Any,Boolean,Int}
 import scala.collection.immutable._
 
 /**
@@ -45,9 +46,21 @@ case class MagicDrawBuiltInImmutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with BuiltInImmutableDocument[MagicDrawUML] {
   
-  override val extent: Set[UMLElement[MagicDrawUML]] =
-    builtInExtent
-   
+  override val extent
+  : Set[UMLElement[MagicDrawUML]]
+  = builtInExtent
+
+  override val hashCode: Int = (info, documentURL, scope, builtInExtent).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawBuiltInImmutableDocument =>
+      (this.info == that.info) &&
+        (this.documentURL == that.documentURL) &&
+        (this.scope == that.scope) &&
+        (this.builtInExtent == that.builtInExtent)
+    case _ =>
+      false
+  }
 }
 
 case class MagicDrawBuiltInMutableDocument
@@ -58,9 +71,21 @@ case class MagicDrawBuiltInMutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with BuiltInMutableDocument[MagicDrawUML] {
   
-  override def extent: Set[UMLElement[MagicDrawUML]] =
-    builtInExtent
-   
+  override def extent
+  : Set[UMLElement[MagicDrawUML]]
+  = builtInExtent
+
+  override val hashCode: Int = (info, documentURL, scope).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawBuiltInMutableDocument =>
+      (this.info == that.info) &&
+        (this.documentURL == that.documentURL) &&
+        (this.scope == that.scope) &&
+        (this.builtInExtent == that.builtInExtent)
+    case _ =>
+      false
+  }
 }
 
 case class MagicDrawLoadingMutableDocument
@@ -70,9 +95,20 @@ case class MagicDrawLoadingMutableDocument
 (implicit val ops: MagicDrawUMLUtil)
  extends MagicDrawDocument with LoadingMutableDocument[MagicDrawUML] {
   
-  override def extent: Set[UMLElement[MagicDrawUML]] =
-    scope.allOwnedElements + scope
+  override def extent
+  : Set[UMLElement[MagicDrawUML]]
+  = scope.allOwnedElements + scope
 
+  override val hashCode: Int = (info, documentURL, scope).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawLoadingMutableDocument =>
+      (this.info == that.info) &&
+        (this.documentURL == that.documentURL) &&
+        (this.scope == that.scope)
+    case _ =>
+      false
+  }
 }
 
 case class MagicDrawSerializableImmutableDocument
@@ -83,9 +119,21 @@ case class MagicDrawSerializableImmutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableImmutableDocument[MagicDrawUML] {
 
-  override val extent: Set[UMLElement[MagicDrawUML]] =
-    serializableExtent
+  override val extent
+  : Set[UMLElement[MagicDrawUML]]
+  = serializableExtent
 
+  override val hashCode: Int = (info, documentURL, scope, serializableExtent).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawSerializableImmutableDocument =>
+      (this.info == that.info) &&
+        (this.documentURL == that.documentURL) &&
+        (this.scope == that.scope) &&
+        (this.serializableExtent == that.serializableExtent)
+    case _ =>
+      false
+  }
 }
 
 case class MagicDrawSerializableMutableDocument
@@ -96,7 +144,19 @@ case class MagicDrawSerializableMutableDocument
 (implicit val ops: MagicDrawUMLUtil)
   extends MagicDrawDocument with SerializableMutableDocument[MagicDrawUML] {
 
-  override def extent: Set[UMLElement[MagicDrawUML]] =
-    serializableExtent
+  override def extent
+  : Set[UMLElement[MagicDrawUML]]
+  = serializableExtent
 
+  override val hashCode: Int = (info, documentURL, scope).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawSerializableMutableDocument =>
+      (this.info == that.info) &&
+        (this.documentURL == that.documentURL) &&
+        (this.scope == that.scope) &&
+        (this.serializableExtent == that.serializableExtent)
+    case _ =>
+      false
+  }
 }

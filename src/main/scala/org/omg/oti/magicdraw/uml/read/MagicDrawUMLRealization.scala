@@ -20,14 +20,41 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLRealization 
   extends MagicDrawUMLAbstraction
   with UMLRealization[MagicDrawUML] {
 
   override protected def e: Uml#Realization
-  def getMagicDrawRealization = e
+  def getMagicDrawRealization: Uml#Realization = e
 }
 
 case class MagicDrawUMLRealizationImpl
 (e: MagicDrawUML#Realization, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLRealization
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLRealizationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLRealization(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

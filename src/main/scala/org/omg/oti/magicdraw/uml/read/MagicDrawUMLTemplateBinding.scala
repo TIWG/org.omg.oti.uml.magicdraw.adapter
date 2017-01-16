@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLTemplateBinding 
   extends MagicDrawUMLDirectedRelationship
   with UMLTemplateBinding[MagicDrawUML] {
 
   override protected def e: Uml#TemplateBinding
-  def getMagicDrawTemplateBinding = e
+  def getMagicDrawTemplateBinding: Uml#TemplateBinding = e
 
 }
 
 case class MagicDrawUMLTemplateBindingImpl
 (e: MagicDrawUML#TemplateBinding, ops: MagicDrawUMLUtil)
   extends  MagicDrawUMLTemplateBinding
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTemplateBindingImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLTemplateBinding(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

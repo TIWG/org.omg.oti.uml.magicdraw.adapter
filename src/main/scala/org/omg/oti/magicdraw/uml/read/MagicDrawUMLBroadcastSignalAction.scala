@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLBroadcastSignalAction 
   extends MagicDrawUMLInvocationAction
   with UMLBroadcastSignalAction[MagicDrawUML] {
 
   override protected def e: Uml#BroadcastSignalAction
-  def getMagicDrawBroadcastSignalAction = e
+  def getMagicDrawBroadcastSignalAction: Uml#BroadcastSignalAction = e
   import ops._
 
-  override def signal: Option[UMLSignal[Uml]] =
-    for { result <- Option.apply( e.getSignal ) } yield result
+  override def signal
+  : Option[UMLSignal[Uml]]
+  = for { result <- Option.apply( e.getSignal ) } yield result
 
 }
 
 case class MagicDrawUMLBroadcastSignalActionImpl
 (e: MagicDrawUML#BroadcastSignalAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLBroadcastSignalAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLBroadcastSignalActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLBroadcastSignalAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

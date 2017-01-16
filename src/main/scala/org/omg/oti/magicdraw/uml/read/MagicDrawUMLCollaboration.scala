@@ -22,6 +22,8 @@ import org.omg.oti.uml.read.api._
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLCollaboration 
   extends MagicDrawUMLBehavioredClassifier
@@ -29,17 +31,43 @@ trait MagicDrawUMLCollaboration
   with UMLCollaboration[MagicDrawUML] {
 
   override protected def e: Uml#Collaboration
-  def getMagicDrawCollaboration = e
+  def getMagicDrawCollaboration: Uml#Collaboration = e
   import ops._
 
-  override def collaborationRole: Set[UMLConnectableElement[Uml]] =
-    e.getCollaborationRole.to[Set]
+  override def collaborationRole
+  : Set[UMLConnectableElement[Uml]]
+  = e.getCollaborationRole.to[Set]
   
-  override def type_collaborationUse: Set[UMLCollaborationUse[Uml]] =
-    e.get_collaborationUseOfType.to[Set]
+  override def type_collaborationUse
+  : Set[UMLCollaborationUse[Uml]]
+  = e.get_collaborationUseOfType.to[Set]
 
 }
 
 case class MagicDrawUMLCollaborationImpl
 (e: MagicDrawUML#Collaboration, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLCollaboration
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCollaborationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLCollaboration(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

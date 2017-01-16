@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLExecutionEnvironment 
   extends MagicDrawUMLNode
   with UMLExecutionEnvironment[MagicDrawUML] {
 
   override protected def e: Uml#ExecutionEnvironment
-  def getMagicDrawExecutionEnvironment = e
+  def getMagicDrawExecutionEnvironment: Uml#ExecutionEnvironment = e
 
 }
 
 case class MagicDrawUMLExecutionEnvironmentImpl
 (e: MagicDrawUML#ExecutionEnvironment, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExecutionEnvironment
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExecutionEnvironmentImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExecutionEnvironment(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

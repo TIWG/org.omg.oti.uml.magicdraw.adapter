@@ -29,16 +29,18 @@ trait MagicDrawUMLStructuralFeature
   with UMLStructuralFeature[MagicDrawUML] {
 
   override protected def e: Uml#StructuralFeature
-  def getMagicDrawStructuralFeature = e
-  override implicit val umlOps = ops
+  def getMagicDrawStructuralFeature: Uml#StructuralFeature = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
  
   override def isReadOnly = e.isReadOnly
   
-  override def definingFeature_slot: Set[UMLSlot[Uml]] =
-    e.get_slotOfDefiningFeature.to[Set]
+  override def definingFeature_slot
+  : Set[UMLSlot[Uml]]
+  = e.get_slotOfDefiningFeature.to[Set]
   
-  override def structuralFeature_structuralFeatureAction: Set[UMLStructuralFeatureAction[Uml]] =
-    e.get_structuralFeatureActionOfStructuralFeature.to[Set]
+  override def structuralFeature_structuralFeatureAction
+  : Set[UMLStructuralFeatureAction[Uml]]
+  = e.get_structuralFeatureActionOfStructuralFeature.to[Set]
   
 }

@@ -18,11 +18,12 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
-import scala.Predef.{???,String}
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInteraction 
   extends MagicDrawUMLBehavior
@@ -30,33 +31,51 @@ trait MagicDrawUMLInteraction
   with UMLInteraction[MagicDrawUML] {
 
   override protected def e: Uml#Interaction
-  def getMagicDrawInteraction = e
-  override implicit val umlOps = ops
-  //import umlOps._
+  def getMagicDrawInteraction: Uml#Interaction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
   // 17.1
-	override def formalGate: Set[UMLGate[Uml]] = ???
+	override def formalGate
+  : Set[UMLGate[Uml]]
+  = e.getFormalGate.to[Set]
   
   // 17.1
-  override def fragment: Seq[UMLInteractionFragment[Uml]] = ???
+  override def fragment
+  : Seq[UMLInteractionFragment[Uml]]
+  = e.getFragment.to[Seq]
   
   // 17.18
-  override def refersTo_interactionUse: Set[UMLInteractionUse[Uml]] = ???
+  override def refersTo_interactionUse
+  : Set[UMLInteractionUse[Uml]]
+  = e.get_interactionUseOfRefersTo().to[Set]
 
 }
 
 case class MagicDrawUMLInteractionImpl
 (e: MagicDrawUML#Interaction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInteraction
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLInteraction(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInteractionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLInteraction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

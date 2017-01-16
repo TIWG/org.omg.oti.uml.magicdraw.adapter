@@ -25,6 +25,6 @@ trait MagicDrawUMLWriteLinkAction
   with UMLWriteLinkAction[MagicDrawUML] {
 
   override protected def e: Uml#WriteLinkAction
-  def getMagicDrawWriteLinkAction = e
+  def getMagicDrawWriteLinkAction: Uml#WriteLinkAction = e
 
 }

@@ -18,12 +18,12 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
-
-import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLStringExpression 
   extends MagicDrawUMLExpression
@@ -31,31 +31,45 @@ trait MagicDrawUMLStringExpression
   with UMLStringExpression[MagicDrawUML] {
 
   override protected def e: Uml#StringExpression
-  def getMagicDrawStringExpression = e
-  override implicit val umlOps = ops
+  def getMagicDrawStringExpression: Uml#StringExpression = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   // 8.2
-  override def subExpression: Seq[UMLStringExpression[Uml]] =
-    e.getSubExpression.to[Seq]
+  override def subExpression
+  : Seq[UMLStringExpression[Uml]]
+  = e.getSubExpression.to[Seq]
     
-	override def nameExpression_namedElement: Option[UMLNamedElement[Uml]] =
-    for { result <- Option(e.get_namedElementOfNameExpression()) } yield result
+	override def nameExpression_namedElement
+  : Option[UMLNamedElement[Uml]]
+  = for { result <- Option(e.get_namedElementOfNameExpression()) } yield result
 
 }
 
 case class MagicDrawUMLStringExpressionImpl
 (e: MagicDrawUML#StringExpression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStringExpression
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLStringExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStringExpressionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLStringExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

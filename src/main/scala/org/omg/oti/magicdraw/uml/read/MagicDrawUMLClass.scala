@@ -22,9 +22,10 @@ import scala.collection.JavaConversions._
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,StringContext}
-import scala.Predef.String
 import scala.collection.immutable._
+
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLClass 
   extends MagicDrawUMLEncapsulatedClassifier
@@ -32,12 +33,13 @@ trait MagicDrawUMLClass
   with UMLClass[MagicDrawUML] {
 
   override protected def e: Uml#Class
-  def getMagicDrawClass = e
-  override implicit val umlOps = ops
+  def getMagicDrawClass: Uml#Class = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def extension: Set[UMLExtension[Uml]] =
-    e.getExtension.to[Set]
+  override def extension
+  : Set[UMLExtension[Uml]]
+  = e.getExtension.to[Set]
   
   override def isAbstract: Boolean =
     e.isAbstract
@@ -45,14 +47,17 @@ trait MagicDrawUMLClass
   override def isActive: Boolean =
     e.isActive
   
-  override def nestedClassifier: Seq[UMLClassifier[Uml]] =
-    e.getNestedClassifier.to[Seq]
+  override def nestedClassifier
+  : Seq[UMLClassifier[Uml]]
+  = e.getNestedClassifier.to[Seq]
   
-  override def ownedAttribute: Seq[UMLProperty[Uml]] =
-    e.getOwnedAttribute.to[Seq]
+  override def ownedAttribute
+  : Seq[UMLProperty[Uml]]
+  = e.getOwnedAttribute.to[Seq]
   
-  override def ownedOperation: Seq[UMLOperation[Uml]] =
-    e.getOwnedOperation.to[Seq]
+  override def ownedOperation
+  : Seq[UMLOperation[Uml]]
+  = e.getOwnedOperation.to[Seq]
   
 
 }
@@ -60,15 +65,27 @@ trait MagicDrawUMLClass
 case class MagicDrawUMLClassImpl
 (e: MagicDrawUML#Class, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClass
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLClassImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

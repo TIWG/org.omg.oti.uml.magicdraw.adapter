@@ -20,7 +20,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -29,49 +30,80 @@ trait MagicDrawUMLLoopNode
   with UMLLoopNode[MagicDrawUML] {
 
   override protected def e: Uml#LoopNode
-  def getMagicDrawLoopNode = e
+  def getMagicDrawLoopNode: Uml#LoopNode = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.45
-  override def bodyOutput: Seq[UMLOutputPin[Uml]] =
-    e.getBodyOutput().to[Seq]
+  override def bodyOutput
+  : Seq[UMLOutputPin[Uml]]
+  = e.getBodyOutput.to[Seq]
 
   // 16.45
-  override def bodyPart: Set[UMLExecutableNode[Uml]] =
-    e.getBodyPart().to[Set]
+  override def bodyPart
+  : Set[UMLExecutableNode[Uml]]
+  = e.getBodyPart.to[Set]
 
   // 16.45
-  override def decider: Option[UMLOutputPin[Uml]] =
-    for { result <- Option(e.getDecider()) } yield result
+  override def decider
+  : Option[UMLOutputPin[Uml]]
+  = for { result <- Option(e.getDecider) } yield result
 
   // 16.45
-  override def isTestedFirst: Boolean =
-    e.isTestedFirst()
+  override def isTestedFirst: Boolean = e.isTestedFirst
 
   // 16.45
-  override def loopVariable: Seq[UMLOutputPin[Uml]] =
-    e.getLoopVariable().to[Seq]
+  override def loopVariable
+  : Seq[UMLOutputPin[Uml]]
+  = e.getLoopVariable.to[Seq]
 
   // 16.45
-  override def loopVariableInput: Seq[UMLInputPin[Uml]] =
-    e.getLoopVariableInput().to[Seq]
+  override def loopVariableInput
+  : Seq[UMLInputPin[Uml]]
+  = e.getLoopVariableInput.to[Seq]
 
   // 16.45
-  override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult().to[Seq]
+  override def result
+  : Seq[UMLOutputPin[Uml]]
+  = e.getResult.to[Seq]
 
   // 16.45
-  override def setupPart: Set[UMLExecutableNode[Uml]] =
-    e.getSetupPart().to[Set]
+  override def setupPart
+  : Set[UMLExecutableNode[Uml]]
+  = e.getSetupPart.to[Set]
 
   // 16.45
-  override def test: Set[UMLExecutableNode[Uml]] =
-    e.getTest().to[Set]
+  override def test
+  : Set[UMLExecutableNode[Uml]]
+  = e.getTest.to[Set]
 
 }
 
 case class MagicDrawUMLLoopNodeImpl
 (e: MagicDrawUML#LoopNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLoopNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLoopNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLoopNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

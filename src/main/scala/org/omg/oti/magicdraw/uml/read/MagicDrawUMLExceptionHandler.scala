@@ -18,10 +18,12 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-
 import org.omg.oti.uml.read.api._
-import scala.Option
-import scala.Predef.???
+
+import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 import scala.collection.immutable._
 
 trait MagicDrawUMLExceptionHandler 
@@ -29,19 +31,52 @@ trait MagicDrawUMLExceptionHandler
   with UMLExceptionHandler[MagicDrawUML] {
 
   override protected def e: Uml#ExceptionHandler
-  def getMagicDrawExceptionHandler = e
+  def getMagicDrawExceptionHandler: Uml#ExceptionHandler = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
-  override def exceptionInput: Option[UMLObjectNode[Uml]] = ???
+  override def exceptionInput
+  : Option[UMLObjectNode[Uml]]
+  = for { result <- Option( e.getExceptionInput ) } yield result
   
-	override def exceptionType: Set[UMLClassifier[Uml]] = ??? 
+	override def exceptionType
+  : Set[UMLClassifier[Uml]]
+  = e.getExceptionType.to[Set]
   
-	override def handlerBody: Option[UMLExecutableNode[Uml]] = ???
+	override def handlerBody
+  : Option[UMLExecutableNode[Uml]]
+  = for { result <- Option( e.getHandlerBody ) } yield result
   
-	override def protectedNode: Option[UMLExecutableNode[Uml]] = ???
-  
+	override def protectedNode
+  : Option[UMLExecutableNode[Uml]]
+  = for { result <- Option( e.getProtectedNode ) } yield result
 
 }
 
 case class MagicDrawUMLExceptionHandlerImpl
 (e: MagicDrawUML#ExceptionHandler, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExceptionHandler
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExceptionHandlerImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExceptionHandler(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

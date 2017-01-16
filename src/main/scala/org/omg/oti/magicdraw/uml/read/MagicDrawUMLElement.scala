@@ -19,7 +19,6 @@
 package org.omg.oti.magicdraw.uml.read
 
 import com.nomagic.magicdraw.uml.UUIDRegistry
-import com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper
 
 import org.omg.oti.json.common.OTIPrimitiveTypes._
@@ -47,7 +46,7 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 
   protected def e: Uml#Element
 
-  def getMagicDrawElement = e
+  def getMagicDrawElement: Uml#Element = e
 
   // Element
 
@@ -173,5 +172,5 @@ trait MagicDrawUMLElement extends UMLElement[MagicDrawUML] {
 case class MagicDrawSelectInContainmentTree(e: com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element) {
 
   def makeRunnable: Runnable =
-    new SelectInContainmentTreeRunnable(e)
+    new com.nomagic.magicdraw.uml.actions.SelectInContainmentTreeRunnable(e)
 }

@@ -20,20 +20,51 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Predef.???
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLConsiderIgnoreFragment 
   extends MagicDrawUMLCombinedFragment
   with UMLConsiderIgnoreFragment[MagicDrawUML] {
 
   override protected def e: Uml#ConsiderIgnoreFragment
-  def getMagicDrawConsiderIgnoreFragment = e
+  def getMagicDrawConsiderIgnoreFragment: Uml#ConsiderIgnoreFragment = e
 
-  override def message: Set[UMLNamedElement[Uml]] = ???
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
+
+  override def message
+  : Set[UMLNamedElement[Uml]]
+  = e.getMessage.to[Set]
 
 }
 
 case class MagicDrawUMLConsiderIgnoreFragmentImpl
 (e: MagicDrawUML#ConsiderIgnoreFragment, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConsiderIgnoreFragment
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConsiderIgnoreFragmentImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLConsiderIgnoreFragment(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}
