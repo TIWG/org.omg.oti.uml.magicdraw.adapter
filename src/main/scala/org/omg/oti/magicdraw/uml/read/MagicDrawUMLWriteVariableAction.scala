@@ -25,8 +25,8 @@ trait MagicDrawUMLWriteVariableAction
   with UMLWriteVariableAction[MagicDrawUML] {
 
   override protected def e: Uml#WriteVariableAction
-  def getMagicDrawWriteVariableAction = e
+  def getMagicDrawWriteVariableAction: Uml#WriteVariableAction = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
 }

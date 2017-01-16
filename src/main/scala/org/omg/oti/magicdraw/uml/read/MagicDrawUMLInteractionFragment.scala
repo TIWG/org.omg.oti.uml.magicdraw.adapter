@@ -29,15 +29,17 @@ trait MagicDrawUMLInteractionFragment
   with UMLInteractionFragment[MagicDrawUML] {
 
   override protected def e: Uml#InteractionFragment
-  def getMagicDrawInteractionFragment = e
+  def getMagicDrawInteractionFragment: Uml#InteractionFragment = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def covered: Iterable[UMLLifeline[Uml]] =
-    e.getCovered.toIterable
+  override def covered
+  : Iterable[UMLLifeline[Uml]]
+  = e.getCovered.toIterable
     
-  override def generalOrdering: Set[UMLGeneralOrdering[Uml]] =
-    e.getGeneralOrdering.to[Set]
+  override def generalOrdering
+  : Set[UMLGeneralOrdering[Uml]]
+  = e.getGeneralOrdering.to[Set]
   
 }

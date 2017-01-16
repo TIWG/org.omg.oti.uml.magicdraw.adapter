@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLClearVariableAction 
   extends MagicDrawUMLVariableAction
   with UMLClearVariableAction[MagicDrawUML] {
 
   override protected def e: Uml#ClearVariableAction
-  def getMagicDrawClearVariableAction = e
+  def getMagicDrawClearVariableAction: Uml#ClearVariableAction = e
 
 }
 
 case class MagicDrawUMLClearVariableActionImpl
 (e: MagicDrawUML#ClearVariableAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClearVariableAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLClearVariableActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLClearVariableAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

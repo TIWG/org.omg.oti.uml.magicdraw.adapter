@@ -18,11 +18,12 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.Option
-import scala.Predef.???
-import scala.collection.immutable._
-
 import org.omg.oti.uml.read.api._
+
+import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLExtend 
   extends MagicDrawUMLNamedElement
@@ -30,18 +31,46 @@ trait MagicDrawUMLExtend
   with UMLExtend[MagicDrawUML] {
 
   override protected def e: Uml#Extend
-  def getMagicDrawExtend = e
-  override implicit val umlOps = ops
-  //import umlOps._
+  def getMagicDrawExtend: Uml#Extend = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
  
   // 18.1
-  override def condition: Option[UMLConstraint[Uml]] = ???
+  override def condition
+  : Option[UMLConstraint[Uml]]
+  = for { result <- Option.apply( e.getCondition ) } yield result
     
   // 18.1
-	override def extensionLocation: Seq[UMLExtensionPoint[Uml]] = ??? 
+	override def extensionLocation
+  : Seq[UMLExtensionPoint[Uml]]
+  = e.getExtensionLocation.to[Seq]
 
 }
 
 case class MagicDrawUMLExtendImpl
 (e: MagicDrawUML#Extend, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExtend
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExtendImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExtend(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -28,14 +28,16 @@ trait MagicDrawUMLNamespace
   with UMLNamespace[MagicDrawUML] {
 
   override protected def e: Uml#Namespace
-  def getMagicDrawNamespace = e
+  def getMagicDrawNamespace: Uml#Namespace = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def member: Set[UMLNamedElement[Uml]] =
-    e.getMember.to[Set]
+  override def member
+  : Set[UMLNamedElement[Uml]]
+  = e.getMember.to[Set]
 
-  override def ownedMember: Set[UMLNamedElement[Uml]] =
-    e.getOwnedMember.to[Set]
+  override def ownedMember
+  : Set[UMLNamedElement[Uml]]
+  = e.getOwnedMember.to[Set]
 }

@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
@@ -30,62 +30,87 @@ trait MagicDrawUMLConstraint
   with UMLConstraint[MagicDrawUML] {
 
   override protected def e: Uml#Constraint
-  def getMagicDrawConstraint = e
+  def getMagicDrawConstraint: Uml#Constraint = e
   import ops._
   
-  override def constrainedElement: Seq[UMLElement[Uml]] =
-    for { c <- e.getConstrainedElement.to[Seq] } yield umlElement( c )
+  override def constrainedElement
+  : Seq[UMLElement[Uml]]
+  = for { c <- e.getConstrainedElement.to[Seq] } yield umlElement( c )
   
-  override def bodyCondition_bodyContext: Option[UMLOperation[Uml]] =
-    for { result <- Option.apply( e.getBodyContext ) } yield result
+  override def bodyCondition_bodyContext
+  : Option[UMLOperation[Uml]]
+  = for { result <- Option.apply( e.getBodyContext ) } yield result
 
-  override def context: Option[UMLNamespace[Uml]] =
-    for { result <- Option.apply( e.getContext ) } yield result
+  override def context
+  : Option[UMLNamespace[Uml]]
+  = for { result <- Option.apply( e.getContext ) } yield result
     
-  override def guard_transition: Option[UMLTransition[Uml]] =
-    for { result <- Option.apply( e.get_transitionOfGuard ) } yield result
+  override def guard_transition
+  : Option[UMLTransition[Uml]]
+  = for { result <- Option.apply( e.get_transitionOfGuard ) } yield result
 
-  override def localPostcondition_action: Option[UMLAction[Uml]] =
-    for { result <- Option.apply( e.get_actionOfLocalPostcondition ) } yield result
+  override def localPostcondition_action
+  : Option[UMLAction[Uml]]
+  = for { result <- Option.apply( e.get_actionOfLocalPostcondition ) } yield result
 
-  override def localPrecondition_action: Option[UMLAction[Uml]] =
-    for { result <- Option.apply( e.get_actionOfLocalPrecondition ) } yield result
+  override def localPrecondition_action
+  : Option[UMLAction[Uml]]
+  = for { result <- Option.apply( e.get_actionOfLocalPrecondition ) } yield result
     
-  override def postCondition_owningTransition: Option[UMLProtocolTransition[Uml]] =
-    for { result <- Option.apply( e.getOwningTransition ) } yield result
+  override def postCondition_owningTransition
+  : Option[UMLProtocolTransition[Uml]]
+  = for { result <- Option.apply( e.getOwningTransition ) } yield result
     
-  override def postcondition_behavior: Option[UMLBehavior[Uml]] =
-    for { result <- Option.apply( e.get_behaviorOfPrecondition ) } yield result
+  override def postcondition_behavior
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option.apply( e.get_behaviorOfPrecondition ) } yield result
     
-  override def postcondition_postContext: Option[UMLOperation[Uml]] =
-    for { result <- Option.apply( e.getPostContext ) } yield result
+  override def postcondition_postContext
+  : Option[UMLOperation[Uml]]
+  = for { result <- Option.apply( e.getPostContext ) } yield result
 
-  override def precondition_behavior: Option[UMLBehavior[Uml]] =
-    for { result <- Option.apply( e.get_behaviorOfPrecondition ) } yield result
+  override def precondition_behavior
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option.apply( e.get_behaviorOfPrecondition ) } yield result
     
-  override def precondition_preContext: Option[UMLOperation[Uml]] =
-    for { result <- Option.apply( e.getPreContext ) } yield result
+  override def precondition_preContext
+  : Option[UMLOperation[Uml]]
+  = for { result <- Option.apply( e.getPreContext ) } yield result
     
-  override def specification: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option.apply( e.getSpecification ) } yield result
+  override def specification
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option.apply( e.getSpecification ) } yield result
     
-  override def stateInvariant_owningState: Option[UMLState[Uml]] =
-    for { result <- Option.apply( e.getOwningState ) } yield result
+  override def stateInvariant_owningState
+  : Option[UMLState[Uml]]
+  = for { result <- Option.apply( e.getOwningState ) } yield result
 
 }
 
 case class MagicDrawUMLConstraintImpl
 (e: MagicDrawUML#Constraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConstraint
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConstraintImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

@@ -19,40 +19,66 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLObjectFlow 
   extends MagicDrawUMLActivityEdge
   with UMLObjectFlow[MagicDrawUML] {
 
   override protected def e: Uml#ObjectFlow
-  def getMagicDrawObjectFlow = e
+  def getMagicDrawObjectFlow: Uml#ObjectFlow = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 15.1
-  override def isMulticast: Boolean =
-    e.isMulticast
+  override def isMulticast: Boolean = e.isMulticast
   
   // 15.1
-  override def isMultireceive: Boolean =
-    e.isMultireceive
+  override def isMultireceive: Boolean = e.isMultireceive
   
   // 15.1
-  override def selection: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getSelection()) } yield result
+  override def selection
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getSelection) } yield result
   
   // 15.1
-  override def transformation: Option[UMLBehavior[Uml]] =
-    for { result <- Option(e.getTransformation()) } yield result
+  override def transformation
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option(e.getTransformation) } yield result
   
   // 15.1
-  override def decisionInputFlow_decisionNode: Option[UMLDecisionNode[Uml]] =
-    for { result <- Option(e.get_decisionNodeOfDecisionInputFlow()) } yield result
+  override def decisionInputFlow_decisionNode
+  : Option[UMLDecisionNode[Uml]]
+  = for { result <- Option(e.get_decisionNodeOfDecisionInputFlow()) } yield result
 
 }
 
 case class MagicDrawUMLObjectFlowImpl
 (e: MagicDrawUML#ObjectFlow, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLObjectFlow
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLObjectFlowImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLObjectFlow(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

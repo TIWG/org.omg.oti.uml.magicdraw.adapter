@@ -19,24 +19,51 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLExtensionPoint 
   extends MagicDrawUMLRedefinableElement
   with UMLExtensionPoint[MagicDrawUML] {
 
   override protected def e: Uml#ExtensionPoint
-  def getMagicDrawExtensionPoint = e
-  override implicit val umlOps = ops
+  def getMagicDrawExtensionPoint: Uml#ExtensionPoint = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   override def extensionLocation_extension
-  : Set[UMLExtend[Uml]] =
-    e.getExtension.to[Set]
+  : Set[UMLExtend[Uml]]
+  = e.getExtension.to[Set]
 
 }
 
 case class MagicDrawUMLExtensionPointImpl
 (e: MagicDrawUML#ExtensionPoint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExtensionPoint
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExtensionPointImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExtensionPoint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -28,16 +28,16 @@ trait MagicDrawUMLPin
   with UMLPin[MagicDrawUML] {
 
   override protected def e: Uml#Pin
-  def getMagicDrawPin = e
+  def getMagicDrawPin: Uml#Pin = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def isControl: Boolean =
-    e.isControl
-    
-	override def upperValue: Option[UMLValueSpecification[Uml]] =
-    ( Option.apply(e.getUpperBound), Option.apply(e.getUpperValue) ) match {
+  override def isControl: Boolean = e.isControl
+
+	override def upperValue
+  : Option[UMLValueSpecification[Uml]]
+  = ( Option.apply(e.getUpperBound), Option.apply(e.getUpperValue) ) match {
     case ( Some( v ), None ) => Some( v )
     case ( None, Some( v ) ) => Some( v )
     case ( Some( v1 ), Some( v2 ) ) => 

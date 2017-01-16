@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLConnectableElementTemplateParameter 
   extends MagicDrawUMLTemplateParameter
   with UMLConnectableElementTemplateParameter[MagicDrawUML] {
 
   override protected def e: Uml#ConnectableElementTemplateParameter
-  def getMagicDrawConnectableElementTemplateParameter = e
+  def getMagicDrawConnectableElementTemplateParameter: Uml#ConnectableElementTemplateParameter = e
   import ops._
 
-  override def parameteredElement: Option[UMLConnectableElement[Uml]] =
-    for { result <- Option.apply( e.getParameteredElement ) } yield result
+  override def parameteredElement
+  : Option[UMLConnectableElement[Uml]]
+  = for { result <- Option.apply( e.getParameteredElement ) } yield result
 
 }
 
 case class MagicDrawUMLConnectableElementTemplateParameterImpl
 (e: MagicDrawUML#ConnectableElementTemplateParameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnectableElementTemplateParameter
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConnectableElementTemplateParameterImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLConnectableElementTemplateParameter(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

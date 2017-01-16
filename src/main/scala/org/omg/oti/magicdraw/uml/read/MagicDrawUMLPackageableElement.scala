@@ -31,13 +31,14 @@ trait MagicDrawUMLPackageableElement
   with UMLPackageableElement[MagicDrawUML] {
 
   override protected def e: Uml#PackageableElement
-  def getMagicDrawPackageableElement = e
+  def getMagicDrawPackageableElement: Uml#PackageableElement = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def visibility: Option[UMLVisibilityKind.Value] =
-    Option.apply(e.getVisibility)
+  override def visibility
+  : Option[UMLVisibilityKind.Value]
+  = Option.apply(e.getVisibility)
     .fold[Option[UMLVisibilityKind.Value]] {
         Some(UMLVisibilityKind.public)
      }{
@@ -51,13 +52,16 @@ trait MagicDrawUMLPackageableElement
           Some(UMLVisibilityKind._package)
       }
 
-  override def importedMember_namespace: Set[UMLNamespace[Uml]] =
-    throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.importedMember_namespace not available")
+  override def importedMember_namespace
+  : Set[UMLNamespace[Uml]]
+  = throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.importedMember_namespace not available")
 
-  override def deployedElement_deploymentTarget: Set[UMLDeploymentTarget[Uml]] =
-    throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.deployedElement_deploymentTarget not available")
+  override def deployedElement_deploymentTarget
+  : Set[UMLDeploymentTarget[Uml]]
+  = throw UMLError.umlAdaptationError("MagicDrawUMLNamespace.deployedElement_deploymentTarget not available")
 
-  override def utilizedElement_manifestation: Set[UMLManifestation[Uml]] =
-    e.get_manifestationOfUtilizedElement.to[Set]
+  override def utilizedElement_manifestation
+  : Set[UMLManifestation[Uml]]
+  = e.get_manifestationOfUtilizedElement.to[Set]
   
 }

@@ -25,6 +25,6 @@ trait MagicDrawUMLVertex
   with UMLVertex[MagicDrawUML] {
 
   override protected def e: Uml#Vertex
-  def getMagicDrawVertex = e
+  def getMagicDrawVertex: Uml#Vertex = e
 
 }

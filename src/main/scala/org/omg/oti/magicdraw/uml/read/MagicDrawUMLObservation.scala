@@ -26,15 +26,17 @@ trait MagicDrawUMLObservation
   with UMLObservation[MagicDrawUML] {
 
   override protected def e: Uml#Observation
-  def getMagicDrawObservation = e
+  def getMagicDrawObservation: Uml#Observation = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def observation_timeExpression =
-    for { result <- Option( e.get_timeExpressionOfObservation ) } yield result
+  override def observation_timeExpression
+  : Option[UMLTimeExpression[Uml]]
+  = for { result <- Option( e.get_timeExpressionOfObservation ) } yield result
     
-  override def observation_duration: Option[UMLDuration[Uml]] =
-    for { result <- Option( e.get_durationOfObservation ) } yield result
+  override def observation_duration
+  : Option[UMLDuration[Uml]]
+  = for { result <- Option( e.get_durationOfObservation ) } yield result
     
 }

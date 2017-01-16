@@ -18,40 +18,54 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.{Option,StringContext}
-import scala.Predef.String
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLExpression 
   extends MagicDrawUMLValueSpecification
   with UMLExpression[MagicDrawUML] {
 
   override protected def e: Uml#Expression
-  def getMagicDrawExpression = e
+  def getMagicDrawExpression: Uml#Expression = e
   override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
-  //import ops._
   
-  def symbol = Option.apply( e.getSymbol )
-  def operand = e.getOperand.to[Seq]
+  def symbol: Option[String] = Option.apply( e.getSymbol )
+
+  def operand
+  : Seq[UMLValueSpecification[Uml]]
+  = e.getOperand.to[Seq]
 
 }
 
 case class MagicDrawUMLExpressionImpl
 (e: MagicDrawUML#Expression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExpression
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExpressionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

@@ -20,26 +20,50 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Boolean
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLAddVariableValueAction 
   extends MagicDrawUMLWriteVariableAction
   with UMLAddVariableValueAction[MagicDrawUML] {
 
   override protected def e: Uml#AddVariableValueAction
-  def getMagicDrawAddVariableValueAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawAddVariableValueAction: Uml#AddVariableValueAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def insertAt: Option[UMLInputPin[Uml]] =
-    for { result <- Option.apply( e.getInsertAt ) } yield result
+  override def insertAt
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option.apply( e.getInsertAt ) } yield result
     
-  override def isReplaceAll: Boolean =
-    e.isReplaceAll
+  override def isReplaceAll: Boolean = e.isReplaceAll
 
 }
 
 case class MagicDrawUMLAddVariableValueActionImpl
 (e: MagicDrawUML#AddVariableValueAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLAddVariableValueAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLAddVariableValueActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLAddVariableValueAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

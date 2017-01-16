@@ -21,22 +21,49 @@ package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read.api._
 import scala.collection.Iterable
 import scala.collection.JavaConversions._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLStateInvariant 
   extends MagicDrawUMLInteractionFragment
   with UMLStateInvariant[MagicDrawUML] {
 
   override protected def e: Uml#StateInvariant
-  def getMagicDrawStateInvariant = e
-  override implicit val umlOps = ops
+  def getMagicDrawStateInvariant: Uml#StateInvariant = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 17.6
-	override def covered: Iterable[UMLLifeline[Uml]] =
-    e.getCovered.toIterable
+	override def covered
+  : Iterable[UMLLifeline[Uml]]
+  = e.getCovered.toIterable
 
 }
 
 case class MagicDrawUMLStateInvariantImpl
 (e: MagicDrawUML#StateInvariant, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLStateInvariant
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStateInvariantImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLStateInvariant(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

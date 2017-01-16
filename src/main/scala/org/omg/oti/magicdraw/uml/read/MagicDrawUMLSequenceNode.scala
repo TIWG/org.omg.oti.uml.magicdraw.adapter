@@ -18,26 +18,53 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLSequenceNode 
   extends MagicDrawUMLStructuredActivityNode
   with UMLSequenceNode[MagicDrawUML] {
 
   override protected def e: Uml#SequenceNode
-  def getMagicDrawSequenceNode = e
-  override implicit val umlOps = ops
+  def getMagicDrawSequenceNode: Uml#SequenceNode = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.45
-  override def executableNode: Seq[UMLExecutableNode[Uml]] =
-    e.getExecutableNode.to[Seq]
+  override def executableNode
+  : Seq[UMLExecutableNode[Uml]]
+  = e.getExecutableNode.to[Seq]
 
 }
 
 case class MagicDrawUMLSequenceNodeImpl
 (e: MagicDrawUML#SequenceNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLSequenceNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLSequenceNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLSequenceNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

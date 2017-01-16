@@ -20,7 +20,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -29,18 +30,44 @@ trait MagicDrawUMLUnmarshallAction
   with UMLUnmarshallAction[MagicDrawUML] {
 
   override protected def e: Uml#UnmarshallAction
-  def getMagicDrawUnmarshallAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawUnmarshallAction: Uml#UnmarshallAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
     
-  override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.to[Seq]
+  override def result
+  : Seq[UMLOutputPin[Uml]]
+  = e.getResult.to[Seq]
     
-  override def unmarshallType: Option[UMLClassifier[Uml]] =
-    for { result <- Option( e.getUnmarshallType ) } yield result
+  override def unmarshallType
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option( e.getUnmarshallType ) } yield result
 
 }
 
 case class MagicDrawUMLUnmarshallActionImpl
 (e: MagicDrawUML#UnmarshallAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLUnmarshallAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLUnmarshallActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLUnmarshallAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

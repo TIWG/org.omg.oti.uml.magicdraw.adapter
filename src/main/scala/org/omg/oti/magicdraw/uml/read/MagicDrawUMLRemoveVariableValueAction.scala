@@ -19,27 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLRemoveVariableValueAction 
   extends MagicDrawUMLWriteVariableAction
   with UMLRemoveVariableValueAction[MagicDrawUML] {
 
   override protected def e: Uml#RemoveVariableValueAction
-  def getMagicDrawRemoveVariableValueAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawRemoveVariableValueAction: Uml#RemoveVariableValueAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.37
-  override def isRemoveDuplicates: Boolean =
-    e.isRemoveDuplicates
+  override def isRemoveDuplicates: Boolean = e.isRemoveDuplicates
   
   // 16.37  
-	override def removeAt: Option[UMLInputPin[Uml]] =
-    for { result <- Option(e.getRemoveAt) } yield result
+	override def removeAt
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option(e.getRemoveAt) } yield result
 
 }
 
 case class MagicDrawUMLRemoveVariableValueActionImpl
 (e: MagicDrawUML#RemoveVariableValueAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLRemoveVariableValueAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLRemoveVariableValueActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLRemoveVariableValueAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

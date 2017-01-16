@@ -20,22 +20,48 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLActivityParameterNode 
   extends MagicDrawUMLObjectNode
   with UMLActivityParameterNode[MagicDrawUML] {
 
   override protected def e: Uml#ActivityParameterNode
-  def getMagicDrawActivityParameterNode = e
-  override implicit val umlOps = ops
+  def getMagicDrawActivityParameterNode: Uml#ActivityParameterNode = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def parameter: Option[UMLParameter[Uml]] = 
-    for { result <- Option.apply( e.getParameter ) } yield result
+  override def parameter
+  : Option[UMLParameter[Uml]]
+  = for { result <- Option.apply( e.getParameter ) } yield result
 
 }
 
 case class MagicDrawUMLActivityParameterNodeImpl
 (e: MagicDrawUML#ActivityParameterNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLActivityParameterNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLActivityParameterNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLActivityParameterNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

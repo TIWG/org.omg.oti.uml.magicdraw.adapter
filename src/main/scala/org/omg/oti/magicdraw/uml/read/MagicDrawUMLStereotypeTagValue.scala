@@ -30,7 +30,7 @@ import scala.collection.immutable._
 import scala.collection.Iterable
 
 import scala.Predef.{Map => _, Set => _, _}
-import scala.{Int,Option,None,Ordering,Some,Tuple2}
+import scala.{Any,Boolean,Int,Option,None,Ordering,Some,Tuple2}
 import scalaz._, Scalaz._
 
 sealed abstract class MagicDrawUMLStereotypeTagValue
@@ -43,6 +43,21 @@ case class MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference
  override val stereotypeTagPropertyType: MagicDrawUMLClass)
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagExtendedMetaclassPropertyElementReference[MagicDrawUML] {
+
+  override val hashCode
+  : Int
+  = (extendedElement, appliedStereotype, stereotypeTagProperty, stereotypeTagPropertyType).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStereotypeTagExtendedMetaclassPropertyElementReference =>
+      this.hashCode == that.hashCode &&
+        this.extendedElement == that.extendedElement &&
+        this.appliedStereotype == that.appliedStereotype &&
+        this.stereotypeTagProperty == that.stereotypeTagProperty &&
+        this.stereotypeTagPropertyType == that.stereotypeTagPropertyType
+    case _ =>
+      false
+  }
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
@@ -71,6 +86,22 @@ case class MagicDrawUMLStereotypeTagPropertyMetaclassElementReference
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagPropertyMetaclassElementReference[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (extendedElement, appliedStereotype, stereotypeTagProperty, stereotypeTagPropertyType, tagPropertyValueElementReferences).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStereotypeTagPropertyMetaclassElementReference =>
+      this.hashCode == that.hashCode &&
+        this.extendedElement == that.extendedElement &&
+        this.appliedStereotype == that.appliedStereotype &&
+        this.stereotypeTagProperty == that.stereotypeTagProperty &&
+        this.stereotypeTagPropertyType == that.stereotypeTagPropertyType &&
+        this.tagPropertyValueElementReferences == that.tagPropertyValueElementReferences
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
   : Set[java.lang.Throwable] \/ Iterable[scala.xml.Elem] =
@@ -98,8 +129,24 @@ case class MagicDrawUMLStereotypeTagStereotypeInstanceValue
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagStereotypeInstanceValue[MagicDrawUML] {
 
-  override val tagPropertyValueElementReferences: Iterable[MagicDrawUMLElement] =
-    tagPropertyValueAppliedStereotypeAndElementReferences.map(_._2)
+  override val hashCode
+  : Int
+  = (extendedElement, appliedStereotype, stereotypeTagProperty, stereotypeTagPropertyType).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStereotypeTagStereotypeInstanceValue =>
+      this.hashCode == that.hashCode &&
+        this.extendedElement == that.extendedElement &&
+        this.appliedStereotype == that.appliedStereotype &&
+        this.stereotypeTagProperty == that.stereotypeTagProperty &&
+        this.stereotypeTagPropertyType == that.stereotypeTagPropertyType
+    case _ =>
+      false
+  }
+
+  override val tagPropertyValueElementReferences
+  : Iterable[MagicDrawUMLElement]
+  = tagPropertyValueAppliedStereotypeAndElementReferences.map(_._2)
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])
@@ -140,6 +187,22 @@ case class MagicDrawUMLStereotypeTagPropertyClassifierValue
  override val values: Iterable[MagicDrawTagPropertyClassifierValue])
   extends MagicDrawUMLStereotypeTagValue
   with UMLStereotypeTagPropertyClassifierValue[MagicDrawUML] {
+
+  override val hashCode
+  : Int
+  = (extendedElement, appliedStereotype, stereotypeTagProperty, stereotypeTagPropertyType, values).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLStereotypeTagPropertyClassifierValue =>
+      this.hashCode == that.hashCode &&
+        this.extendedElement == that.extendedElement &&
+        this.appliedStereotype == that.appliedStereotype &&
+        this.stereotypeTagProperty == that.stereotypeTagProperty &&
+        this.stereotypeTagPropertyType == that.stereotypeTagPropertyType &&
+        this.values == that.values
+    case _ =>
+      false
+  }
 
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding, idg: IDGenerator[MagicDrawUML])

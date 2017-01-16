@@ -19,24 +19,27 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLPackageImport 
   extends MagicDrawUMLDirectedRelationship
   with UMLPackageImport[MagicDrawUML] {
 
   override protected def e: Uml#PackageImport
-  def getMagicDrawPackageImport = e
+  def getMagicDrawPackageImport: Uml#PackageImport = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 12.12
-  override def metamodelReference_profile: Option[UMLProfile[Uml]] =
-    for { result <- Option(e.get_profileOfMetamodelReference()) } yield result
+  override def metamodelReference_profile
+  : Option[UMLProfile[Uml]]
+  = for { result <- Option(e.get_profileOfMetamodelReference()) } yield result
   
-  override def visibility: Option[UMLVisibilityKind.Value] =
-    Option(e.getVisibility)
+  override def visibility
+  : Option[UMLVisibilityKind.Value]
+  = Option(e.getVisibility)
     .fold[Option[UMLVisibilityKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
         Some(UMLVisibilityKind.public)
@@ -53,3 +56,27 @@ trait MagicDrawUMLPackageImport
 case class MagicDrawUMLPackageImportImpl
 (e: MagicDrawUML#PackageImport, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPackageImport
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPackageImportImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLPackageImport(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

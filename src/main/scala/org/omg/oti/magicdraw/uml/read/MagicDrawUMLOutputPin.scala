@@ -20,7 +20,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -29,34 +30,65 @@ trait MagicDrawUMLOutputPin
   with UMLOutputPin[MagicDrawUML] {
 
   override protected def e: Uml#OutputPin
-  def getMagicDrawOutputPin = e
+  def getMagicDrawOutputPin: Uml#OutputPin = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def bodyOutput_clause: Set[UMLClause[Uml]] =
-   e.get_clauseOfBodyOutput.to[Set]
+  override def bodyOutput_clause
+  : Set[UMLClause[Uml]]
+  = e.get_clauseOfBodyOutput.to[Set]
       
-  override def decider_clause: Option[UMLClause[Uml]] =
-    for { result <- Option( e.get_clauseOfDecider ) } yield result
+  override def decider_clause
+  : Option[UMLClause[Uml]]
+  = for { result <- Option( e.get_clauseOfDecider ) } yield result
 
-  override def decider_loopNode: Option[UMLLoopNode[Uml]] =
-    for { result <- Option( e.get_loopNodeOfDecider ) } yield result
+  override def decider_loopNode
+  : Option[UMLLoopNode[Uml]]
+  = for { result <- Option( e.get_loopNodeOfDecider ) } yield result
   
-  override def bodyOutput_loopNode: Set[UMLLoopNode[Uml]] =
-    e.get_loopNodeOfBodyOutput.to[Set]
+  override def bodyOutput_loopNode
+  : Set[UMLLoopNode[Uml]]
+  = e.get_loopNodeOfBodyOutput.to[Set]
 
-  override def loopVariable_loopNode: Option[UMLLoopNode[Uml]] =
-    for { result <- Option(e.get_loopNodeOfLoopVariable()) } yield result
+  override def loopVariable_loopNode
+  : Option[UMLLoopNode[Uml]]
+  = for { result <- Option(e.get_loopNodeOfLoopVariable()) } yield result
   
-  override def output_action: Option[UMLAction[Uml]] =
-    for { result <- Option(e.get_actionOfOutput()) } yield result
+  override def output_action
+  : Option[UMLAction[Uml]]
+  = for { result <- Option(e.get_actionOfOutput()) } yield result
 
-  override def result_acceptEventAction: Option[UMLAcceptEventAction[Uml]] =
-    for { result <- Option(e.get_acceptEventActionOfResult()) } yield result
+  override def result_acceptEventAction
+  : Option[UMLAcceptEventAction[Uml]]
+  = for { result <- Option(e.get_acceptEventActionOfResult()) } yield result
 
 }
 
 case class MagicDrawUMLOutputPinImpl
 (e: MagicDrawUML#OutputPin, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOutputPin
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLOutputPinImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLOutputPin(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

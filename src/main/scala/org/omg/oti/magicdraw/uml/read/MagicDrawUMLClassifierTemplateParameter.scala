@@ -18,32 +18,58 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-import scala.collection.immutable._
-
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,Option}
+import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLClassifierTemplateParameter 
   extends MagicDrawUMLTemplateParameter
   with UMLClassifierTemplateParameter[MagicDrawUML] {
 
   override protected def e: Uml#ClassifierTemplateParameter
-  def getMagicDrawClassifierTemplateParameter = e
+  def getMagicDrawClassifierTemplateParameter: Uml#ClassifierTemplateParameter = e
   import ops._
 
   override def allowSubstitutable: Boolean =
     e.isAllowSubstitutable
     
-  override def constrainingClassifier: Set[UMLClassifier[Uml]] =
-    e.getConstrainingClassifier.to[Set]
+  override def constrainingClassifier
+  : Set[UMLClassifier[Uml]]
+  = e.getConstrainingClassifier.to[Set]
  
-  override def parameteredElement: Option[UMLClassifier[Uml]] =
-    for { result <- Option.apply( e.getParameteredElement ) } yield result
+  override def parameteredElement
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option.apply( e.getParameteredElement ) } yield result
 
 }
 
 case class MagicDrawUMLClassifierTemplateParameterImpl
 (e: MagicDrawUML#ClassifierTemplateParameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClassifierTemplateParameter
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLClassifierTemplateParameterImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLClassifierTemplateParameter(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

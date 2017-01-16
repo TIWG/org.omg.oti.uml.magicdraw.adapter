@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 import org.omg.oti.uml.read._
 
-import scala.{Boolean,Double,Int}
+import scala.{Any,Boolean,Double,Int}
 import scala.Predef.{???,String}
 import scala.collection.immutable._
 import scala.collection.Iterable
@@ -46,10 +46,23 @@ case class MagicDrawTagPropertyEnumerationLiteralValue
   extends MagicDrawTagPropertyProfileLifecycleIndependentClassifierValue
   with TagPropertyEnumerationLiteralValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyEnumerationLiteralValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(
       scala.xml.Elem(
         prefix = null,
         label = property.name.get,
@@ -66,10 +79,23 @@ case class MagicDrawTagPropertyInstanceSpecificationValue
   extends MagicDrawTagPropertyProfileLifecycleIndependentClassifierValue
   with TagPropertyInstanceSpecificationValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyInstanceSpecificationValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(
       scala.xml.Elem(
         prefix = null,
         label = property.name.get,
@@ -90,10 +116,23 @@ case class MagicDrawTagPropertyBooleanValue
   extends MagicDrawTagPropertyPrimitiveValue
   with TagPropertyBooleanValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyBooleanValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(scala.xml.Elem(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -109,10 +148,23 @@ case class MagicDrawTagPropertyIntegerValue
   extends MagicDrawTagPropertyPrimitiveValue
   with TagPropertyIntegerValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyIntegerValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(scala.xml.Elem(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -128,10 +180,23 @@ case class MagicDrawTagPropertyUnlimitedNaturalValue
   extends MagicDrawTagPropertyPrimitiveValue
   with TagPropertyUnlimitedNaturalValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyUnlimitedNaturalValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(scala.xml.Elem(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -147,10 +212,23 @@ case class MagicDrawTagPropertyRealValue
   extends MagicDrawTagPropertyPrimitiveValue
   with TagPropertyRealValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyRealValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(scala.xml.Elem(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -166,10 +244,23 @@ case class MagicDrawTagPropertyStringValue
   extends MagicDrawTagPropertyPrimitiveValue
   with TagPropertyStringValue[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyStringValue =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    \/-(scala.xml.Elem(
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = \/-(scala.xml.Elem(
       prefix = null,
       label = property.name.get,
       attributes = scala.xml.Null,
@@ -211,14 +302,27 @@ case class MagicDrawTagPropertyProfileLifecycleDependentClassifierValueReference
 extends MagicDrawTagPropertyProfileLifecycleDependentClassifierValue
 with TagPropertyProfileLifecycleDependentClassifierValueReference[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, value).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyProfileLifecycleDependentClassifierValueReference =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.value == that.value
+    case _ =>
+      false
+  }
+
   override def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    ???
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = ???
 
   override val tagPropertyValueElementReferences
-  : Iterable[MagicDrawUMLElement] =
-    Iterable()
+  : Iterable[MagicDrawUMLElement]
+  = Iterable()
 
 }
 
@@ -228,13 +332,26 @@ case class MagicDrawTagPropertyProfileLifecycleDependentClassifierValueObject
 extends MagicDrawTagPropertyProfileLifecycleDependentClassifierValue
 with TagPropertyProfileLifecycleDependentClassifierValueObject[MagicDrawUML] {
 
+  override val hashCode
+  : Int
+  = (property, attributeValues).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawTagPropertyProfileLifecycleDependentClassifierValueObject =>
+      this.hashCode == that.hashCode &&
+        this.property == that.property &&
+        this.attributeValues == that.attributeValues
+    case _ =>
+      false
+  }
+
   def serialize
   (implicit xmiScopes: scala.xml.NamespaceBinding)
-  : Set[java.lang.Throwable] \/ scala.xml.Elem =
-    ???
+  : Set[java.lang.Throwable] \/ scala.xml.Elem
+  = ???
 
   override val tagPropertyValueElementReferences
-  : Iterable[MagicDrawUMLElement] =
-    Iterable()
+  : Iterable[MagicDrawUMLElement]
+  = Iterable()
 
 }

@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLForkNode 
   extends MagicDrawUMLControlNode
   with UMLForkNode[MagicDrawUML] {
 
   override protected def e: Uml#ForkNode
-  def getMagicDrawForkNode = e
+  def getMagicDrawForkNode: Uml#ForkNode = e
 
 }
 
 case class MagicDrawUMLForkNodeImpl
 (e: MagicDrawUML#ForkNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLForkNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLForkNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLForkNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

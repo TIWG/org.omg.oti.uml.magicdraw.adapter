@@ -20,7 +20,8 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
 
@@ -29,20 +30,46 @@ trait MagicDrawUMLSlot
   with UMLSlot[MagicDrawUML] {
 
   override protected def e: Uml#Slot
-  def getMagicDrawSlot = e
-  implicit val umlOps = ops
+  def getMagicDrawSlot: Uml#Slot = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
     
   // 9.27
-  def definingFeature: Option[UMLStructuralFeature[Uml]] =
-    for { result <- Option( e.getDefiningFeature ) } yield result
+  def definingFeature
+  : Option[UMLStructuralFeature[Uml]]
+  = for { result <- Option( e.getDefiningFeature ) } yield result
 
   // 9.27
-  override def value: Seq[UMLValueSpecification[Uml]] =
-    e.getValue.to[Seq]
+  override def value
+  : Seq[UMLValueSpecification[Uml]]
+  = e.getValue.to[Seq]
 
 }
 
 case class MagicDrawUMLSlotImpl
 (e: MagicDrawUML#Slot, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLSlot
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLSlotImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLSlot(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

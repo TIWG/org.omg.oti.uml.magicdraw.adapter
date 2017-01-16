@@ -18,26 +18,30 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
-
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLCreateLinkAction 
   extends MagicDrawUMLWriteLinkAction
   with UMLCreateLinkAction[MagicDrawUML] {
 
   override protected def e: Uml#CreateLinkAction
-  def getMagicDrawCreateLinkAction = e
+  def getMagicDrawCreateLinkAction: Uml#CreateLinkAction = e
   import ops._
 
-  override def endData: Iterable[UMLLinkEndCreationData[Uml]] =
-    umlLinkEndData( e.getEndData.toIterable ) selectByKindOf 
+  override def endData
+  : Iterable[UMLLinkEndCreationData[Uml]]
+  = umlLinkEndData( e.getEndData.toIterable ) selectByKindOf
     { case d: UMLLinkEndCreationData[Uml] => d }
     
-  override def inputValue: Set[UMLInputPin[Uml]] =
-    e.getInputValue.to[Set]
+  override def inputValue
+  : Set[UMLInputPin[Uml]]
+  = e.getInputValue.to[Set]
 
 
 }
@@ -45,3 +49,27 @@ trait MagicDrawUMLCreateLinkAction
 case class MagicDrawUMLCreateLinkActionImpl
 (e: MagicDrawUML#CreateLinkAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLCreateLinkAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCreateLinkActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLCreateLinkAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

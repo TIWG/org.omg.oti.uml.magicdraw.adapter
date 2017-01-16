@@ -19,27 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLGeneralOrdering 
   extends MagicDrawUMLNamedElement
   with UMLGeneralOrdering[MagicDrawUML] {
 
   override protected def e: Uml#GeneralOrdering
-  def getMagicDrawGeneralOrdering = e
-  override implicit val umlOps = ops
+  def getMagicDrawGeneralOrdering: Uml#GeneralOrdering = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
 	override def after
-  : Option[UMLOccurrenceSpecification[Uml]] =
-  for { result <- Option(e.getAfter) } yield result
+  : Option[UMLOccurrenceSpecification[Uml]]
+  = for { result <- Option(e.getAfter) } yield result
   
   override def before
-  : Option[UMLOccurrenceSpecification[Uml]] =
-  for { result <- Option(e.getBefore) } yield result
+  : Option[UMLOccurrenceSpecification[Uml]]
+  = for { result <- Option(e.getBefore) } yield result
 
 }
 
 case class MagicDrawUMLGeneralOrderingImpl
 (e: MagicDrawUML#GeneralOrdering, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLGeneralOrdering
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLGeneralOrderingImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLGeneralOrdering(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

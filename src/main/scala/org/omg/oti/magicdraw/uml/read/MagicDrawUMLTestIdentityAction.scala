@@ -19,25 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTestIdentityAction 
   extends MagicDrawUMLAction
   with UMLTestIdentityAction[MagicDrawUML] {
 
   override protected def e: Uml#TestIdentityAction
-  def getMagicDrawTestIdentityAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawTestIdentityAction: Uml#TestIdentityAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def first: Option[UMLInputPin[Uml]] =
-    for { result <- Option( e.getFirst ) } yield result
+  override def first
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option( e.getFirst ) } yield result
 
-  override def second: Option[UMLInputPin[Uml]] =
-    for { result <- Option( e.getSecond ) } yield result
+  override def second
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option( e.getSecond ) } yield result
 
 }
 
 case class MagicDrawUMLTestIdentityActionImpl
 (e: MagicDrawUML#TestIdentityAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTestIdentityAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTestIdentityActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLTestIdentityAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

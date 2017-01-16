@@ -18,11 +18,10 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-
-import org.omg.oti.uml.read.api._
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLOpaqueExpression 
@@ -30,41 +29,56 @@ trait MagicDrawUMLOpaqueExpression
   with UMLOpaqueExpression[MagicDrawUML] {
 
   override protected def e: Uml#OpaqueExpression
-  def getMagicDrawOpaqueExpression = e
-  override implicit val umlOps = ops
+  def getMagicDrawOpaqueExpression: Uml#OpaqueExpression = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 8.2
-  override def behavior: Option[UMLBehavior[Uml]] = 
-    for { result <- Option( e.getBehavior ) } yield result
+  override def behavior
+  : Option[UMLBehavior[Uml]]
+  = for { result <- Option( e.getBehavior ) } yield result
   
   // 8.2
-  override def body: Seq[String] =
-    e.getBody.to[Seq]
+  override def body
+  : Seq[String]
+  = e.getBody.to[Seq]
   
   // 8.2
-  override def language: Seq[String] =
-    e.getLanguage.to[Seq]
+  override def language
+  : Seq[String]
+  = e.getLanguage.to[Seq]
   
   // 8.2
   override def result
-  : Option[UMLParameter[Uml]] =
-  for { result <- Option(e.getResult) } yield result
+  : Option[UMLParameter[Uml]]
+  = for { result <- Option(e.getResult) } yield result
 
 }
 
 case class MagicDrawUMLOpaqueExpressionImpl
 (e: MagicDrawUML#OpaqueExpression, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOpaqueExpression
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLOpaqueExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLOpaqueExpressionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLOpaqueExpression(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

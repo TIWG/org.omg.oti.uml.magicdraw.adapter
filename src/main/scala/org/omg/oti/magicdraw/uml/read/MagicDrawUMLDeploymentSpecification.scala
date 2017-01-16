@@ -19,8 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLDeploymentSpecification 
@@ -28,16 +27,42 @@ trait MagicDrawUMLDeploymentSpecification
   with UMLDeploymentSpecification[MagicDrawUML] {
 
   override protected def e: Uml#DeploymentSpecification
-  def getMagicDrawDeploymentSpecification = e
+  def getMagicDrawDeploymentSpecification: Uml#DeploymentSpecification = e
 
-  override def deploymentLocation: Option[String] =
-    Option.apply(e.getDeploymentLocation)
+  override def deploymentLocation
+  : Option[String]
+  = Option.apply(e.getDeploymentLocation)
   
-  override def executionLocation: Option[String] =
-    Option.apply(e.getExecutionLocation)
+  override def executionLocation
+  : Option[String]
+  = Option.apply(e.getExecutionLocation)
 
 }
 
 case class MagicDrawUMLDeploymentSpecificationImpl
 (e: MagicDrawUML#DeploymentSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDeploymentSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDeploymentSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDeploymentSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

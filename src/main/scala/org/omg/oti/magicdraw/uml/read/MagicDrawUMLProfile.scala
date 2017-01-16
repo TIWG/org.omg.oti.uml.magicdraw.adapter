@@ -20,8 +20,9 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
+
 import org.omg.oti.uml.read.api._
 
 trait MagicDrawUMLProfile 
@@ -29,36 +30,51 @@ trait MagicDrawUMLProfile
   with UMLProfile[MagicDrawUML] {
 
   override protected def e: Uml#Profile
-  def getMagicDrawProfile = e
-  override implicit val umlOps = ops
+  def getMagicDrawProfile: Uml#Profile = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   // 12.12
-  override def metamodelReference = 
-    e.getMetamodelReference.to[Set]
+  override def metamodelReference
+  : Set[UMLPackageImport[Uml]]
+  = e.getMetamodelReference.to[Set]
 
   // 12.12
-  override def metaclassReference = 
-    e.getMetaclassReference.to[Set]
+  override def metaclassReference
+  : Set[UMLElementImport[Uml]]
+  = e.getMetaclassReference.to[Set]
   
   // 12.12
-  override def profile_stereotype: Set[UMLStereotype[Uml]] =
-    allNestedPackages.flatMap(p => p.ownedStereotype).to[Set]
+  override def profile_stereotype
+  : Set[UMLStereotype[Uml]]
+  = allNestedPackages.flatMap(p => p.ownedStereotype).to[Set]
 
 }
 
 case class MagicDrawUMLProfileImpl
 (e: MagicDrawUML#Profile, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLProfile
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLProfile(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLProfileImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLProfile(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

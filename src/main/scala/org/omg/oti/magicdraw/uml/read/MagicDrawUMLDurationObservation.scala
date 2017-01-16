@@ -18,43 +18,59 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.StringContext
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-
-import org.omg.oti.uml.read.api._
-import scala.Predef.{Set=>_,Map=>_,_}
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLDurationObservation 
   extends MagicDrawUMLObservation
   with UMLDurationObservation[MagicDrawUML] {
 
   override protected def e: Uml#DurationObservation
-  def getMagicDrawDurationObservation = e
-  override implicit val umlOps = ops
+  def getMagicDrawDurationObservation: Uml#DurationObservation = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def event =
-    e.getEvent.to[Seq]
+  override def event
+  : Seq[UMLNamedElement[Uml]]
+  = e.getEvent.to[Seq]
     
-  override def firstEvent =
-    e.isFirstEvent().map ((b) => if (b) true else false).to[Seq]
-  
+  override def firstEvent
+  : Seq[Boolean]
+  = e.isFirstEvent.map {
+    case java.lang.Boolean.TRUE => true
+    case _ => false
+  }.to[Seq]
 
 }
 
 case class MagicDrawUMLDurationObservationImpl
 (e: MagicDrawUML#DurationObservation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDurationObservation
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLDurationObservation(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDurationObservationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLDurationObservation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

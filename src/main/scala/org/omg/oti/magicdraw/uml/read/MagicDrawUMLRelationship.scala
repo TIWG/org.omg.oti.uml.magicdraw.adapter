@@ -28,14 +28,16 @@ trait MagicDrawUMLRelationship
   with UMLRelationship[MagicDrawUML] {
 
   override protected def e: Uml#Relationship
-  def getMagicDrawRelationship = e
-  implicit val umlOps = ops
+  def getMagicDrawRelationship: Uml#Relationship = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def relatedElement: Set[UMLElement[Uml]] =
-    e.getRelatedElement.to[Set]
+  override def relatedElement
+  : Set[UMLElement[Uml]]
+  = e.getRelatedElement.to[Set]
   
-  override def realization_abstraction: Set[UMLInformationFlow[Uml]] =
-    e.get_abstraction.to[Set]
+  override def realization_abstraction
+  : Set[UMLInformationFlow[Uml]]
+  = e.get_abstraction.to[Set]
   
 }

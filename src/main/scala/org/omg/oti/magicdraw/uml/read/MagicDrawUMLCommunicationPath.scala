@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLCommunicationPath 
   extends MagicDrawUMLAssociation
   with UMLCommunicationPath[MagicDrawUML] {
 
   override protected def e: Uml#CommunicationPath
-  def getMagicDrawCommunicationPath = e
+  def getMagicDrawCommunicationPath: Uml#CommunicationPath = e
 
 }
 
 case class MagicDrawUMLCommunicationPathImpl
 (e: MagicDrawUML#CommunicationPath, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLCommunicationPath
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCommunicationPathImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLCommunicationPath(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

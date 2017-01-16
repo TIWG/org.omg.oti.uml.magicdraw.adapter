@@ -19,23 +19,49 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLProtocolTransition 
   extends MagicDrawUMLTransition
   with UMLProtocolTransition[MagicDrawUML] {
 
   override protected def e: Uml#ProtocolTransition
-  def getMagicDrawProtocolTransition = e
-  override implicit val umlOps = ops
+  def getMagicDrawProtocolTransition: Uml#ProtocolTransition = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 14.41
-  override def postCondition: Option[UMLConstraint[Uml]] =
-    for { result <- Option(e.getPostCondition) } yield result
+  override def postCondition
+  : Option[UMLConstraint[Uml]]
+  = for { result <- Option(e.getPostCondition) } yield result
 
 }
 
 case class MagicDrawUMLProtocolTransitionImpl
 (e: MagicDrawUML#ProtocolTransition, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLProtocolTransition
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLProtocolTransitionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLProtocolTransition(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -30,29 +30,34 @@ trait MagicDrawUMLAction
   with UMLAction[MagicDrawUML] {
 
   override protected def e: Uml#Action
-  def getMagicDrawAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawAction: Uml#Action = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def context: Option[UMLClassifier[Uml]] =
-    for { result <- Option.apply( e.getContext ) } yield result
+  override def context
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option.apply( e.getContext ) } yield result
   
-  override def input: Seq[UMLInputPin[Uml]] =
-    e.getInput.to[Seq]
+  override def input
+  : Seq[UMLInputPin[Uml]]
+  = e.getInput.to[Seq]
   
-  override def isLocallyReentrant: Boolean =
-    e.isLocallyReentrant
+  override def isLocallyReentrant: Boolean = e.isLocallyReentrant
   
-  override def localPostcondition: Set[UMLConstraint[Uml]] =
-    e.getLocalPostcondition.to[Set]
+  override def localPostcondition
+  : Set[UMLConstraint[Uml]]
+  = e.getLocalPostcondition.to[Set]
   
-  override def localPrecondition: Set[UMLConstraint[Uml]] =
-    e.getLocalPrecondition.to[Set]
+  override def localPrecondition
+  : Set[UMLConstraint[Uml]]
+  = e.getLocalPrecondition.to[Set]
   
-  override def output: Seq[UMLOutputPin[Uml]] =
-    e.getOutput.to[Seq]
+  override def output
+  : Seq[UMLOutputPin[Uml]]
+  = e.getOutput.to[Seq]
 
-  override def action_actionExecutionSpecification: Set[UMLActionExecutionSpecification[Uml]] =
-    e.get_actionExecutionSpecificationOfAction.to[Set]
+  override def action_actionExecutionSpecification
+  : Set[UMLActionExecutionSpecification[Uml]]
+  = e.get_actionExecutionSpecificationOfAction.to[Set]
   
 }

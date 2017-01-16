@@ -22,14 +22,16 @@ import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLConnectionPointReference 
   extends MagicDrawUMLVertex
   with UMLConnectionPointReference[MagicDrawUML] {
 
   override protected def e: Uml#ConnectionPointReference
-  def getMagicDrawConnectionPointReference = e
-  override implicit val umlOps = ops
+  def getMagicDrawConnectionPointReference: Uml#ConnectionPointReference = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 14.1
@@ -47,3 +49,27 @@ trait MagicDrawUMLConnectionPointReference
 case class MagicDrawUMLConnectionPointReferenceImpl
 (e: MagicDrawUML#ConnectionPointReference, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLConnectionPointReference
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLConnectionPointReferenceImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLConnectionPointReference(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

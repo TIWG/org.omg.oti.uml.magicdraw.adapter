@@ -24,38 +24,70 @@ import scala.Option
 import scala.Predef.???
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTemplateParameter 
   extends MagicDrawUMLElement
   with UMLTemplateParameter[MagicDrawUML] {
 
   override protected def e: Uml#TemplateParameter
-  def getMagicDrawTemplateParameter = e
+  def getMagicDrawTemplateParameter: Uml#TemplateParameter = e
   import ops._
 
-  override def default: Option[UMLParameterableElement[Uml]] =
-    for { result <- Option( e.getDefault ) } yield result
+  override def default
+  : Option[UMLParameterableElement[Uml]]
+  = for { result <- Option( e.getDefault ) } yield result
   
-  override def ownedParameteredElement: Option[UMLParameterableElement[Uml]] = 
-    for { result <- Option( e.getOwnedParameteredElement ) } yield result
+  override def ownedParameteredElement
+  : Option[UMLParameterableElement[Uml]]
+  = for { result <- Option( e.getOwnedParameteredElement ) } yield result
 
-  override def parameteredElement: Option[UMLParameterableElement[Uml]] =
-    for { result <- Option(e.getParameteredElement) } yield result
+  override def parameteredElement
+  : Option[UMLParameterableElement[Uml]]
+  = for { result <- Option(e.getParameteredElement) } yield result
   
   // 7.3
-  override def parameter_templateSignature: Set[UMLTemplateSignature[Uml]] =
-    e.get_templateSignatureOfParameter.to[Set]
+  override def parameter_templateSignature
+  : Set[UMLTemplateSignature[Uml]]
+  = e.get_templateSignatureOfParameter.to[Set]
   
   // 7.4
-  override def formal_templateParameterSubstitution: Set[UMLTemplateParameterSubstitution[Uml]] =
-    e.get_templateParameterSubstitutionOfFormal.to[Set]
+  override def formal_templateParameterSubstitution
+  : Set[UMLTemplateParameterSubstitution[Uml]]
+  = e.get_templateParameterSubstitutionOfFormal.to[Set]
    
   // 9.4
-  override def inheritedParameter_redefinableTemplateSignature: Set[UMLRedefinableTemplateSignature[Uml]] =
-    ???
+  override def inheritedParameter_redefinableTemplateSignature
+  : Set[UMLRedefinableTemplateSignature[Uml]]
+  = ???
 
 }
 
 case class MagicDrawUMLTemplateParameterImpl
 (e: MagicDrawUML#TemplateParameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTemplateParameter
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTemplateParameterImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLTemplateParameter(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

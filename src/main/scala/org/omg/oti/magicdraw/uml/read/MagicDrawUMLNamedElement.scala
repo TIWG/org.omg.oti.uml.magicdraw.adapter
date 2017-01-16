@@ -30,25 +30,29 @@ trait MagicDrawUMLNamedElement
   with UMLNamedElement[MagicDrawUML] {
 
   override protected def e: Uml#NamedElement
-  def getMagicDrawNamedElement = e
-  implicit val umlOps = ops
+  def getMagicDrawNamedElement: Uml#NamedElement = e
+  implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def clientDependency: Set[UMLDependency[Uml]] =
-    e.getClientDependency.to[Set]
+  override def clientDependency
+  : Set[UMLDependency[Uml]]
+  = e.getClientDependency.to[Set]
   
-  override def name: Option[String] =
-    e.getName match {
+  override def name
+  : Option[String]
+  = e.getName match {
       case null => None
       case "" => None
       case n => Some(n)
     }
   
-  override def qualifiedName: Option[String] =
-    Option.apply( e.getQualifiedName )
+  override def qualifiedName
+  : Option[String]
+  = Option.apply( e.getQualifiedName )
   
-  override def visibility: Option[UMLVisibilityKind.Value] =
-    Option.apply(e.getVisibility) match {
+  override def visibility
+  : Option[UMLVisibilityKind.Value]
+  = Option.apply(e.getVisibility) match {
       case None =>
         None
       case Some(v) => v match {
@@ -63,26 +67,32 @@ trait MagicDrawUMLNamedElement
       }
     }
   
-  override def event_durationObservation: Set[UMLDurationObservation[Uml]] =
-    e.get_durationObservationOfEvent.to[Set]
+  override def event_durationObservation
+  : Set[UMLDurationObservation[Uml]]
+  = e.get_durationObservationOfEvent.to[Set]
   
-  override def event_timeObservation: Set[UMLTimeObservation[Uml]] =
-    e.get_timeObservationOfEvent.to[Set]
+  override def event_timeObservation
+  : Set[UMLTimeObservation[Uml]]
+  = e.get_timeObservationOfEvent.to[Set]
 
-  override def member_memberNamespace: Set[UMLNamespace[Uml]] =
-    e.get_namespaceOfMember.to[Set]
+  override def member_memberNamespace
+  : Set[UMLNamespace[Uml]]
+  = e.get_namespaceOfMember.to[Set]
 
-  override def signature_message: Set[UMLMessage[Uml]] =
-    e.get_messageOfSignature.to[Set]
+  override def signature_message
+  : Set[UMLMessage[Uml]]
+  = e.get_messageOfSignature.to[Set]
 
-  override def message_considerIgnoreFragment: Set[UMLConsiderIgnoreFragment[Uml]] =
-    e.get_considerIgnoreFragmentOfMessage.to[Set]
+  override def message_considerIgnoreFragment
+  : Set[UMLConsiderIgnoreFragment[Uml]]
+  = e.get_considerIgnoreFragmentOfMessage.to[Set]
 
   /**
    * @todo move this to UMLNamedElementOps
    */
-  override def inheritedMember_inheritingClassifier: Set[UMLClassifier[Uml]] =
-    member_memberNamespace
+  override def inheritedMember_inheritingClassifier
+  : Set[UMLClassifier[Uml]]
+  = member_memberNamespace
     .selectByKindOf { case cls: UMLClassifier[Uml] => cls }
     .filter { case cls => cls.inheritedMember.contains( this ) }
 

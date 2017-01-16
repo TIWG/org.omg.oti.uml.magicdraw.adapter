@@ -22,35 +22,64 @@ import scala.collection.JavaConversions._
 import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInteractionUse 
   extends MagicDrawUMLInteractionFragment
   with UMLInteractionUse[MagicDrawUML] {
 
   override protected def e: Uml#InteractionUse
-  def getMagicDrawInteractionUse = e
-  override implicit val umlOps = ops
+  def getMagicDrawInteractionUse: Uml#InteractionUse = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 17.18
-  override def argument: Seq[UMLValueSpecification[Uml]] =
-    e.getArgument.to[Seq]
+  override def argument
+  : Seq[UMLValueSpecification[Uml]]
+  = e.getArgument.to[Seq]
   
   // 17.18
-  override def refersTo: Option[UMLInteraction[Uml]] =
-    for { result <- Option(e.getRefersTo) } yield result
+  override def refersTo
+  : Option[UMLInteraction[Uml]]
+  = for { result <- Option(e.getRefersTo) } yield result
   
   // 17.18
-  override def returnValue: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option(e.getReturnValue) } yield result
+  override def returnValue
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option(e.getReturnValue) } yield result
   
   // BUG: NO FIGURE!
-  override def returnValueRecipient: Option[UMLProperty[Uml]] =
-    for { result <- Option(e.getReturnValueRecipient) } yield result
+  override def returnValueRecipient
+  : Option[UMLProperty[Uml]]
+  = for { result <- Option(e.getReturnValueRecipient) } yield result
 
 }
 
 case class MagicDrawUMLInteractionUseImpl
 (e: MagicDrawUML#InteractionUse, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInteractionUse
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInteractionUseImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLInteractionUse(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option,None,Some,StringContext}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
@@ -32,8 +32,8 @@ trait MagicDrawUMLProperty
   with UMLProperty[MagicDrawUML] {
 
   override protected def e: Uml#Property
-  def getMagicDrawProperty = e
-  override implicit val umlOps = ops
+  def getMagicDrawProperty: Uml#Property = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   override def aggregation: Option[UMLAggregationKind.Value] =
@@ -47,61 +47,71 @@ trait MagicDrawUMLProperty
         Some(UMLAggregationKind.shared)
   }
 
-  override def defaultValue: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option( e.getDefaultValue ) } yield result
+  override def defaultValue
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option( e.getDefaultValue ) } yield result
   
-  override def isComposite: Boolean =
-    e.isComposite
+  override def isComposite: Boolean = e.isComposite
   
-  override def isDerived: Boolean =
-    e.isDerived
+  override def isDerived: Boolean = e.isDerived
   
-  override def isDerivedUnion: Boolean =
-    e.isDerivedUnion
+  override def isDerivedUnion: Boolean = e.isDerivedUnion
   
-  override def isID: Boolean =
-    e.isID
+  override def isID: Boolean = e.isID
     
-  override def qualifier: Seq[UMLProperty[Uml]] =
-    e.getQualifier.to[Seq]
+  override def qualifier
+  : Seq[UMLProperty[Uml]]
+  = e.getQualifier.to[Seq]
   
-  override def subsettedProperty: Set[UMLProperty[Uml]] =
-    e.getSubsettedProperty.to[Set]
+  override def subsettedProperty
+  : Set[UMLProperty[Uml]]
+  = e.getSubsettedProperty.to[Set]
   
-  override def returnValueRecipient_interactionUse: Set[UMLInteractionUse[Uml]] =
-    e.get_interactionUseOfReturnValueRecipient().to[Set]
+  override def returnValueRecipient_interactionUse
+  : Set[UMLInteractionUse[Uml]]
+  = e.get_interactionUseOfReturnValueRecipient().to[Set]
     
-  override def qualifier_readLinkObjectEndQualifierAction: Option[UMLReadLinkObjectEndQualifierAction[Uml]] =
-    for {
+  override def qualifier_readLinkObjectEndQualifierAction
+  : Option[UMLReadLinkObjectEndQualifierAction[Uml]]
+  = for {
       result <- e.get_readLinkObjectEndQualifierActionOfQualifier().toList.headOption
     } yield result
 
-  override def qualifier_qualifierValue: Set[UMLQualifierValue[Uml]] =
-    e.get_qualifierValueOfQualifier().to[Set]
+  override def qualifier_qualifierValue
+  : Set[UMLQualifierValue[Uml]]
+  = e.get_qualifierValueOfQualifier().to[Set]
     
-  override def part_structuredClassifier: Option[UMLStructuredClassifier[Uml]] =
-    for { result <- Option(e.get_structuredClassifierOfOwnedAttribute()) } yield result
+  override def part_structuredClassifier
+  : Option[UMLStructuredClassifier[Uml]]
+  = for { result <- Option(e.get_structuredClassifierOfOwnedAttribute()) } yield result
   
-  override def end_linkEndData: Set[UMLLinkEndData[Uml]] =
-    e.get_linkEndDataOfEnd().to[Set]
+  override def end_linkEndData
+  : Set[UMLLinkEndData[Uml]]
+  = e.get_linkEndDataOfEnd().to[Set]
   
-  override def end_readLinkObjectEndAction: Option[UMLReadLinkObjectEndAction[Uml]] =
-    for { result <- e.get_readLinkObjectEndActionOfEnd().toList.headOption } yield result
+  override def end_readLinkObjectEndAction
+  : Option[UMLReadLinkObjectEndAction[Uml]]
+  = for { result <- e.get_readLinkObjectEndActionOfEnd().toList.headOption } yield result
 
-  override def partWithPort_connectorEnd: Set[UMLConnectorEnd[Uml]] =
-    e.get_connectorEndOfPartWithPort().to[Set]
+  override def partWithPort_connectorEnd
+  : Set[UMLConnectorEnd[Uml]]
+  = e.get_connectorEndOfPartWithPort().to[Set]
   
-  override def definingEnd_connectorEnd: Set[UMLConnectorEnd[Uml]] =
-    e.getEnd.to[Set]
+  override def definingEnd_connectorEnd
+  : Set[UMLConnectorEnd[Uml]]
+  = e.getEnd.to[Set]
   
-  override def attribute_classifier: Option[UMLClassifier[Uml]] =
-    for { result <- Option(e.getClassifier()) } yield result
+  override def attribute_classifier
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option(e.getClassifier) } yield result
   
-  override def navigableOwnedEnd_association: Option[UMLAssociation[Uml]] =
-    for { result <- Option( e.get_associationOfNavigableOwnedEnd ) } yield result
+  override def navigableOwnedEnd_association
+  : Option[UMLAssociation[Uml]]
+  = for { result <- Option( e.get_associationOfNavigableOwnedEnd ) } yield result
   
-  override def opposite_property: Option[UMLProperty[Uml]] =
-    association.fold[Option[UMLProperty[Uml]]](None) { a =>
+  override def opposite_property
+  : Option[UMLProperty[Uml]]
+  = association.fold[Option[UMLProperty[Uml]]](None) { a =>
       a.memberEnd find (_ != this )
     }
   
@@ -111,17 +121,29 @@ trait MagicDrawUMLProperty
 }
 
 case class MagicDrawUMLPropertyImpl
-( val e: MagicDrawUML#Property, ops: MagicDrawUMLUtil )
+( e: MagicDrawUML#Property, ops: MagicDrawUMLUtil )
 extends MagicDrawUMLProperty
 with sext.PrettyPrinting.TreeString
 with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLProperty(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPropertyImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLProperty(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

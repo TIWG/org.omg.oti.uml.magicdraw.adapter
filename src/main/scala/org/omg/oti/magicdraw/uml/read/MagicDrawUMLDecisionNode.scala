@@ -19,15 +19,16 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLDecisionNode 
   extends MagicDrawUMLControlNode
   with UMLDecisionNode[MagicDrawUML] {
 
   override protected def e: Uml#DecisionNode
-  def getMagicDrawDecisionNode = e
-  override implicit val umlOps = ops
+  def getMagicDrawDecisionNode: Uml#DecisionNode = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   override def decisionInput
@@ -43,3 +44,27 @@ trait MagicDrawUMLDecisionNode
 case class MagicDrawUMLDecisionNodeImpl
 (e: MagicDrawUML#DecisionNode, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDecisionNode
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDecisionNodeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDecisionNode(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

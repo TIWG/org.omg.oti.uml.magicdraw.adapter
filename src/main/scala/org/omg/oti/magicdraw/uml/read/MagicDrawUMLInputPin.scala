@@ -19,23 +19,26 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInputPin 
   extends MagicDrawUMLPin
   with UMLInputPin[MagicDrawUML] {
 
   override protected def e: Uml#InputPin
-  def getMagicDrawInputPin = e
+  def getMagicDrawInputPin: Uml#InputPin = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-	override def value_linkEndData: Option[UMLLinkEndData[Uml]] =
-    for { result <- Option( e.get_linkEndDataOfValue ) } yield result
+	override def value_linkEndData
+  : Option[UMLLinkEndData[Uml]]
+  = for { result <- Option( e.get_linkEndDataOfValue ) } yield result
   
-	override def value_qualifierValue: Option[UMLQualifierValue[Uml]] =
-    for { result <- Option( e.get_qualifierValueOfValue ) } yield result
+	override def value_qualifierValue
+  : Option[UMLQualifierValue[Uml]]
+  = for { result <- Option( e.get_qualifierValueOfValue ) } yield result
 
     
 	/**
@@ -46,8 +49,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLInvocationAction.argument
 	 */
 	override def argument_invocationAction
-	: Option[UMLInvocationAction[Uml]] =
-  for { result <- Option(e.get_invocationActionOfArgument) } yield result
+	: Option[UMLInvocationAction[Uml]]
+  = for { result <- Option(e.get_invocationActionOfArgument) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -57,8 +60,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLinkEndDestructionData.destroyAt
 	 */
 	override def destroyAt_linkEndDestructionData
-  : Option[UMLLinkEndDestructionData[Uml]] =
-  for { result <- Option(e.get_linkEndDestructionDataOfDestroyAt) } yield result
+  : Option[UMLLinkEndDestructionData[Uml]]
+  = for { result <- Option(e.get_linkEndDestructionDataOfDestroyAt) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -68,8 +71,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.first
 	 */
 	override def first_testIdentityAction
-  : Option[UMLTestIdentityAction[Uml]] =
-  for { result <- Option(e.get_testIdentityActionOfFirst()) } yield result
+  : Option[UMLTestIdentityAction[Uml]]
+  = for { result <- Option(e.get_testIdentityActionOfFirst()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -79,8 +82,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLAction.input
 	 */
 	override def input_action
-  : Option[UMLAction[Uml]] =
-  for { result <- Option(e.get_actionOfInput()) } yield result
+  : Option[UMLAction[Uml]]
+  = for { result <- Option(e.get_actionOfInput()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -90,8 +93,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLLinkEndCreationData.insertAt
 	 */
 	override def insertAt_linkEndCreationData
-  : Option[UMLLinkEndCreationData[Uml]] =
-  for { result <- Option(e.get_linkEndCreationDataOfInsertAt()) } yield result
+  : Option[UMLLinkEndCreationData[Uml]]
+  = for { result <- Option(e.get_linkEndCreationDataOfInsertAt()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -101,8 +104,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLStructuralFeatureAction._object
 	 */
 	override def object_structuralFeatureAction
-  : Option[UMLStructuralFeatureAction[Uml]] =
-  for { result <- Option(e.get_structuralFeatureActionOfObject()) } yield result
+  : Option[UMLStructuralFeatureAction[Uml]]
+  = for { result <- Option(e.get_structuralFeatureActionOfObject()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -134,8 +137,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLReplyAction.returnInformation
 	 */
 	override def returnInformation_replyAction
-  : Option[UMLReplyAction[Uml]] =
-  for { result <- Option(e.get_replyActionOfReturnInformation()) } yield result
+  : Option[UMLReplyAction[Uml]]
+  = for { result <- Option(e.get_replyActionOfReturnInformation()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -145,8 +148,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLTestIdentityAction.second
 	 */
 	override def second_testIdentityAction
-  : Option[UMLTestIdentityAction[Uml]] =
-  for { result <- Option(e.get_testIdentityActionOfSecond()) } yield result
+  : Option[UMLTestIdentityAction[Uml]]
+  = for { result <- Option(e.get_testIdentityActionOfSecond()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -167,8 +170,8 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteStructuralFeatureAction.value
 	 */
 	override def value_writeStructuralFeatureAction
-  : Option[UMLWriteStructuralFeatureAction[Uml]] =
-  for { result <- Option(e.get_writeStructuralFeatureActionOfValue()) } yield result
+  : Option[UMLWriteStructuralFeatureAction[Uml]]
+  = for { result <- Option(e.get_writeStructuralFeatureActionOfValue()) } yield result
 
 	/**
 	 * <!-- begin-model-doc -->
@@ -178,11 +181,35 @@ trait MagicDrawUMLInputPin
 	 * Opposite of UML metamodel property: org.omg.oti.uml.read.api.UMLWriteVariableAction.value
 	 */
 	override def value_writeVariableAction
-  : Option[UMLWriteVariableAction[Uml]] =
-  for { result <- Option(e.get_writeVariableActionOfValue()) } yield result
+  : Option[UMLWriteVariableAction[Uml]]
+	= for { result <- Option(e.get_writeVariableActionOfValue()) } yield result
 
 }
 
 case class MagicDrawUMLInputPinImpl
 (e: MagicDrawUML#InputPin, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInputPin
+		with sext.PrettyPrinting.TreeString
+		with sext.PrettyPrinting.ValueTreeString {
+
+	override val hashCode: Int = (e, ops).##
+
+	override def equals(other: Any): Boolean = other match {
+		case that: MagicDrawUMLInputPinImpl =>
+			this.hashCode == that.hashCode &&
+				this.e == that.e &&
+				this.ops == that.ops
+	}
+
+	override def toString
+	: String
+	= s"MagicDrawUMLInputPin(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+	override def treeString
+	: String
+	= toString
+
+	override def valueTreeString
+	: String
+	= toString
+}

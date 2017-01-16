@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLImage 
@@ -27,21 +27,27 @@ trait MagicDrawUMLImage
   with UMLImage[MagicDrawUML] {
 
   override protected def e: Uml#Image
-  def getMagicDrawImage = e
+  def getMagicDrawImage: Uml#Image = e
   
-  def content: Option[String] = e.getContent  match {
+  def content
+  : Option[String]
+  = e.getContent  match {
     case null => None
     case "" => None
     case s => Some( s )
   }
   
-  def format: Option[String] = e.getFormat match {
+  def format
+  : Option[String]
+  = e.getFormat match {
     case null => None
     case "" => None
     case s => Some( s )
   }
   
-  def location: Option[String] = e.getLocation match {
+  def location
+  : Option[String]
+  = e.getLocation match {
     case null => None
     case "" => None
     case s => Some( s )
@@ -52,3 +58,27 @@ trait MagicDrawUMLImage
 case class MagicDrawUMLImageImpl
 (e: MagicDrawUML#Image, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLImage
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLImageImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLImage(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

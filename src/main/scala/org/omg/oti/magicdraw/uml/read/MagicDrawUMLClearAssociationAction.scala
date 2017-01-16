@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLClearAssociationAction 
   extends MagicDrawUMLAction
   with UMLClearAssociationAction[MagicDrawUML] {
 
   override protected def e: Uml#ClearAssociationAction
-  def getMagicDrawClearAssociationAction = e
+  def getMagicDrawClearAssociationAction: Uml#ClearAssociationAction = e
   import ops._
 
-  override def association: Option[UMLAssociation[Uml]] =
-    for { result <- Option.apply( e.getAssociation ) } yield result
+  override def association
+  : Option[UMLAssociation[Uml]]
+  = for { result <- Option.apply( e.getAssociation ) } yield result
 
 }
 
 case class MagicDrawUMLClearAssociationActionImpl
 (e: MagicDrawUML#ClearAssociationAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLClearAssociationAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLClearAssociationActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLClearAssociationAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

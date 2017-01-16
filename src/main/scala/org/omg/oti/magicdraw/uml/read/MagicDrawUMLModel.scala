@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLModel 
@@ -27,14 +27,39 @@ trait MagicDrawUMLModel
   with UMLModel[MagicDrawUML] {
 
   override protected def e: Uml#Model
-  def getMagicDrawModel = e
+  def getMagicDrawModel: Uml#Model = e
   
   // 12.1  
-	override def viewpoint: Option[String] =
-    Option.apply(e.getViewpoint)
+	override def viewpoint
+  : Option[String]
+  = Option.apply(e.getViewpoint)
 
 }
 
 case class MagicDrawUMLModelImpl
 (e: MagicDrawUML#Model, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLModel
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLModelImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLModel(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

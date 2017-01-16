@@ -25,6 +25,6 @@ trait MagicDrawUMLControlNode
   with UMLControlNode[MagicDrawUML] {
 
   override protected def e: Uml#ControlNode
-  def getMagicDrawControlNode = e
+  def getMagicDrawControlNode: Uml#ControlNode = e
 
 }

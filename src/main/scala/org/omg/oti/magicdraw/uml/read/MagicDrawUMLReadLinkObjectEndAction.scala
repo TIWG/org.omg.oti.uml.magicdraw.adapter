@@ -19,24 +19,50 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLReadLinkObjectEndAction 
   extends MagicDrawUMLAction
   with UMLReadLinkObjectEndAction[MagicDrawUML] {
 
   override protected def e: Uml#ReadLinkObjectEndAction
-  def getMagicDrawReadLinkObjectEndAction = e
+  def getMagicDrawReadLinkObjectEndAction: Uml#ReadLinkObjectEndAction = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 16.35
-	override def end: Option[UMLProperty[Uml]] =
-    for { result <- Option(e.getEnd) } yield result
+	override def end
+  : Option[UMLProperty[Uml]]
+  = for { result <- Option(e.getEnd) } yield result
 
 }
 
 case class MagicDrawUMLReadLinkObjectEndActionImpl
 (e: MagicDrawUML#ReadLinkObjectEndAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLReadLinkObjectEndAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLReadLinkObjectEndActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLReadLinkObjectEndAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

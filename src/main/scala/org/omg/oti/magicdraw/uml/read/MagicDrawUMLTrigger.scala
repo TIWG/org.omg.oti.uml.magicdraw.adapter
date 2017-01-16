@@ -19,30 +19,34 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Option,None,Some}
-import scala.collection.immutable._
 import scala.collection.JavaConversions._
+import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLTrigger 
   extends MagicDrawUMLNamedElement
   with UMLTrigger[MagicDrawUML] {
 
   override protected def e: Uml#Trigger
-  def getMagicDrawTrigger = e
-  override implicit val umlOps = ops
+  def getMagicDrawTrigger: Uml#Trigger = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 13.2
-  override def event: Option[UMLEvent[Uml]] =
-    for { result <- Option(e.getEvent) } yield result
+  override def event
+  : Option[UMLEvent[Uml]]
+  = for { result <- Option(e.getEvent) } yield result
   
   // 13.2
-  override def port: Set[UMLPort[Uml]] =
-    e.getPort.to[Set]
+  override def port
+  : Set[UMLPort[Uml]]
+  = e.getPort.to[Set]
   
   // 16.39
-  override def replyToCall_replyAction: Option[UMLReplyAction[Uml]] =
-    e
+  override def replyToCall_replyAction
+  : Option[UMLReplyAction[Uml]]
+  = e
     .get_replyActionOfReplyToCall()
     .headOption
     .fold[Option[UMLReplyAction[Uml]]](None){ ra =>
@@ -54,3 +58,27 @@ trait MagicDrawUMLTrigger
 case class MagicDrawUMLTriggerImpl
 (e: MagicDrawUML#Trigger, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTrigger
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTriggerImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLTrigger(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

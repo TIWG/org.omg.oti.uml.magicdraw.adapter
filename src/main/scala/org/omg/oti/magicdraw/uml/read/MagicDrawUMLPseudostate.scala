@@ -20,22 +20,23 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.collection.JavaConversions._
-import scala.{Option,Some}
+import scala.{Any,Boolean,Int,Option,Some,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLPseudostate 
   extends MagicDrawUMLVertex
   with UMLPseudostate[MagicDrawUML] {
 
   override protected def e: Uml#Pseudostate
-  def getMagicDrawPseudostate = e
-  override implicit val umlOps = ops
+  def getMagicDrawPseudostate: Uml#Pseudostate = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 14.1
   override def kind
-  : Option[UMLPseudostateKind.Value] =
-  Option(e.getKind)
-  .fold[Option[UMLPseudostateKind.Value]](Option.empty[UMLPseudostateKind.Value]){
+  : Option[UMLPseudostateKind.Value]
+  = Option(e.getKind)
+    .fold[Option[UMLPseudostateKind.Value]](Option.empty[UMLPseudostateKind.Value]){
     case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.INITIAL =>
       Some(UMLPseudostateKind.initial)
     case com.nomagic.uml2.ext.magicdraw.statemachines.mdbehaviorstatemachines.PseudostateKindEnum.DEEPHISTORY =>
@@ -60,16 +61,40 @@ trait MagicDrawUMLPseudostate
   
   // 14.1
   override def entry_connectionPointReference
-  : Option[UMLConnectionPointReference[Uml]] =
-  for { result <- e.get_connectionPointReferenceOfEntry.headOption } yield result
+  : Option[UMLConnectionPointReference[Uml]]
+  = for { result <- e.get_connectionPointReferenceOfEntry.headOption } yield result
   
   // 14.1
   override def exit_connectionPointReference
-  : Option[UMLConnectionPointReference[Uml]] =
-  for { result <- e.get_connectionPointReferenceOfExit.headOption } yield result
+  : Option[UMLConnectionPointReference[Uml]]
+  = for { result <- e.get_connectionPointReferenceOfExit.headOption } yield result
 
 }
 
 case class MagicDrawUMLPseudostateImpl
 (e: MagicDrawUML#Pseudostate, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPseudostate
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPseudostateImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLPseudoState(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

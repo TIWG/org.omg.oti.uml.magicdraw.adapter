@@ -21,7 +21,7 @@ package org.omg.oti.magicdraw.uml.read
 import scala.collection.JavaConversions._
 import org.omg.oti.uml.read.api._
 import scala.collection.immutable._
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLInformationFlow 
@@ -30,40 +30,62 @@ trait MagicDrawUMLInformationFlow
   with UMLInformationFlow[MagicDrawUML] {
 
   override protected def e: Uml#InformationFlow
-  def getMagicDrawInformationFlow = e
+  def getMagicDrawInformationFlow: Uml#InformationFlow = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
   // 20.1  
-	override def conveyed: Set[UMLClassifier[Uml]] = e.getConveyed.to[Set]
+	override def conveyed
+  : Set[UMLClassifier[Uml]]
+  = e.getConveyed.to[Set]
     
   // 20.1  
-	override def realization: Set[UMLRelationship[Uml]] = e.getRealization.to[Set]
+	override def realization
+  : Set[UMLRelationship[Uml]]
+  = e.getRealization.to[Set]
   
   // 20.1  
-	override def realizingActivityEdge: Set[UMLActivityEdge[Uml]] = e.getRealizingActivityEdge.to[Set]
+	override def realizingActivityEdge
+  : Set[UMLActivityEdge[Uml]]
+  = e.getRealizingActivityEdge.to[Set]
 	
   // 20.1
-  override def realizingConnector: Set[UMLConnector[Uml]] = e.getRealizingConnector.to[Set]
+  override def realizingConnector
+  : Set[UMLConnector[Uml]]
+  = e.getRealizingConnector.to[Set]
 	
   // 20.1  
-  override def realizingMessage: Set[UMLMessage[Uml]] = e.getRealizingMessage.to[Set]
+  override def realizingMessage
+  : Set[UMLMessage[Uml]]
+  = e.getRealizingMessage.to[Set]
 
 }
 
 case class MagicDrawUMLInformationFlowImpl
 (e: MagicDrawUML#InformationFlow, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInformationFlow
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLInformationFlow(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInformationFlowImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLInformationFlow(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

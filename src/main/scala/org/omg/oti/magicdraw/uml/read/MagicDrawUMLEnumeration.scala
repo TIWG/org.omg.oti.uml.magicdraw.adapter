@@ -23,7 +23,8 @@ import scala.collection.immutable._
 
 import org.omg.oti.uml.read.api._
 
-import scala.StringContext
+import scala.collection.immutable.Seq
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLEnumeration 
@@ -31,27 +32,40 @@ trait MagicDrawUMLEnumeration
   with UMLEnumeration[MagicDrawUML] {
 
   override protected def e: Uml#Enumeration
-  def getMagicDrawEnumeration = e
-  override implicit val umlOps = ops
+  def getMagicDrawEnumeration: Uml#Enumeration = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def ownedLiteral = e.getOwnedLiteral.to[Seq]
-  
+  override def ownedLiteral
+  : Seq[UMLEnumerationLiteral[Uml]]
+  = e.getOwnedLiteral.to[Seq]
 
 }
 
 case class MagicDrawUMLEnumerationImpl
 (e: MagicDrawUML#Enumeration, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLEnumeration
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLEnumeration(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLEnumerationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLEnumeration(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

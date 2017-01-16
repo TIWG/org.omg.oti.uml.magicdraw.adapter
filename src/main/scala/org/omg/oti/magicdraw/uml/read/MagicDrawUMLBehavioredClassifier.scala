@@ -25,8 +25,7 @@ trait MagicDrawUMLBehavioredClassifier
   with UMLBehavioredClassifier[MagicDrawUML] {
 
   override protected def e: Uml#BehavioredClassifier
-  def getMagicDrawBehavioredClassifier = e
-  override implicit val umlOps = ops
-  //import umlOps._
+  def getMagicDrawBehavioredClassifier: Uml#BehavioredClassifier = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
 }

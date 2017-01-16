@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLIntervalConstraint 
@@ -28,27 +28,40 @@ trait MagicDrawUMLIntervalConstraint
   with UMLIntervalConstraint[MagicDrawUML] {
 
   override protected def e: Uml#IntervalConstraint
-  def getMagicDrawIntervalConstraint = e
+  def getMagicDrawIntervalConstraint: Uml#IntervalConstraint = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
-  abstract override def specification: Option[UMLInterval[Uml]] =
-    super.specification
+  abstract override def specification
+  : Option[UMLInterval[Uml]]
+  = super.specification
 
 }
 
 case class MagicDrawUMLIntervalConstraintImpl
 (e: MagicDrawUML#IntervalConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLIntervalConstraint
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLIntervalConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLIntervalConstraintImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLIntervalConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

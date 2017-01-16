@@ -30,14 +30,14 @@ trait MagicDrawUMLCallAction
   with UMLCallAction[MagicDrawUML] {
 
   override protected def e: Uml#CallAction
-  def getMagicDrawCallAction = e
-  override implicit val umlOps = ops
+  def getMagicDrawCallAction: Uml#CallAction = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def isSynchronous: Boolean =
-    e.isSynchronous
+  override def isSynchronous: Boolean = e.isSynchronous
    
-  override def result: Seq[UMLOutputPin[Uml]] =
-    e.getResult.to[Seq]
+  override def result
+  : Seq[UMLOutputPin[Uml]]
+  = e.getResult.to[Seq]
     
 }

@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLGate 
   extends MagicDrawUMLMessageEnd
   with UMLGate[MagicDrawUML] {
 
   override protected def e: Uml#Gate
-  def getMagicDrawGate = e
+  def getMagicDrawGate: Uml#Gate = e
 
 }
 
 case class MagicDrawUMLGateImpl
 (e: MagicDrawUML#Gate, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLGate
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLGateImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLGate(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

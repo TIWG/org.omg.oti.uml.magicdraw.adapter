@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 import scala.collection.immutable._
 import scala.collection.Iterable
@@ -30,12 +30,12 @@ trait MagicDrawUMLEnumerationLiteral
   with UMLEnumerationLiteral[MagicDrawUML] {
 
   override protected def e: Uml#EnumerationLiteral
-  def getMagicDrawEnumerationLiteral = e
+  def getMagicDrawEnumerationLiteral: Uml#EnumerationLiteral = e
   import ops._
 
-  override def classifier: Iterable[UMLEnumeration[Uml]] =
-    Iterable(e.getEnumeration)
-
+  override def classifier
+  : Iterable[UMLEnumeration[Uml]]
+  = Iterable(e.getEnumeration)
 
 }
 
@@ -45,12 +45,24 @@ case class MagicDrawUMLEnumerationLiteralImpl
   with sext.PrettyPrinting.TreeString
   with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLEnumerationLiteral(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLEnumerationLiteralImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLEnumerationLiteral(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

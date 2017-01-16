@@ -18,9 +18,10 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.Predef.String
-
 import java.net.URI
+
+import scala.{Any,Int,Boolean}
+import scala.Predef.String
 
 trait MagicDrawUML extends org.omg.oti.uml.read.api.UML {
 
@@ -320,7 +321,20 @@ sealed trait MagicDrawLoadURL {
 case class MagicDrawLocalProjectLoadURL
 ( override val externalDocumentResourceURL: URI,
   magicDrawLocalProjectResource: URI )
-extends MagicDrawLoadURL
+extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = (externalDocumentResourceURL, magicDrawLocalProjectResource).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawLocalProjectLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
+        this.magicDrawLocalProjectResource == that.magicDrawLocalProjectResource
+  }
+
+}
 
 /**
  * Load an external OTI Document as a MagicDraw Server Project
@@ -331,7 +345,20 @@ extends MagicDrawLoadURL
 case class MagicDrawServerProjectLoadURL
 ( override val externalDocumentResourceURL: URI,
   magicDrawServerProjectResource: URI )
-  extends MagicDrawLoadURL
+  extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = (externalDocumentResourceURL, magicDrawServerProjectResource).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawServerProjectLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
+        this.magicDrawServerProjectResource == that.magicDrawServerProjectResource
+  }
+
+}
 
 /**
  * Load an external OTI SerializableDocument as a MagicDraw Local Attached Module
@@ -344,7 +371,20 @@ case class MagicDrawServerProjectLoadURL
 case class MagicDrawAttachedLocalModuleSerializableDocumentLoadURL
 ( override val externalDocumentResourceURL: URI,
   magicDrawAttachedLocalModuleResource: URI )
-  extends MagicDrawLoadURL
+  extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = (externalDocumentResourceURL, magicDrawAttachedLocalModuleResource).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawAttachedLocalModuleSerializableDocumentLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
+        this.magicDrawAttachedLocalModuleResource == that.magicDrawAttachedLocalModuleResource
+  }
+
+}
 
 /**
  * Load an external OTI SerializableDocument as a MagicDraw Teamwork Attached Module
@@ -355,7 +395,20 @@ case class MagicDrawAttachedLocalModuleSerializableDocumentLoadURL
 case class MagicDrawAttachedServerModuleSerializableDocumentLoadURL
 ( override val externalDocumentResourceURL: URI,
   magicDrawAttachedServerModuleResource: URI )
-  extends MagicDrawLoadURL
+  extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = (externalDocumentResourceURL, magicDrawAttachedServerModuleResource).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawAttachedServerModuleSerializableDocumentLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
+        this.magicDrawAttachedServerModuleResource == that.magicDrawAttachedServerModuleResource
+  }
+
+}
 
 /**
  * Load an external OTI BuiltInDocument as a MagicDraw Local Attached Module
@@ -368,7 +421,20 @@ case class MagicDrawAttachedServerModuleSerializableDocumentLoadURL
 case class MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL
 ( override val externalDocumentResourceURL: URI,
   magicDrawStandardSystemProfileResourceRelativePath: String )
-  extends MagicDrawLoadURL
+  extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = (externalDocumentResourceURL, magicDrawStandardSystemProfileResourceRelativePath).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
+        this.magicDrawStandardSystemProfileResourceRelativePath == that.magicDrawStandardSystemProfileResourceRelativePath
+  }
+
+}
 
 /**
  * Import an external OTI Document into the current MagicDraw project
@@ -377,4 +443,16 @@ case class MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL
  */
 case class MagicDrawImportLoadURL
 ( override val externalDocumentResourceURL: URI )
-  extends MagicDrawLoadURL
+  extends MagicDrawLoadURL {
+
+  override val hashCode
+  : Int
+  = externalDocumentResourceURL.##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawImportLoadURL =>
+      this.hashCode == that.hashCode &&
+        this.externalDocumentResourceURL == that.externalDocumentResourceURL
+  }
+
+}

@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef._
 import java.lang.Integer
 
@@ -28,19 +28,45 @@ trait MagicDrawUMLExtensionEnd
   with UMLExtensionEnd[MagicDrawUML] {
 
   override protected def e: Uml#ExtensionEnd
-  def getMagicDrawExtensionEnd = e
+  def getMagicDrawExtensionEnd: Uml#ExtensionEnd = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def lower: Integer =
-    e.getLower
+  override def lower
+  : Integer
+  = e.getLower
   
-  override def _type: Option[UMLStereotype[Uml]] =
-    super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
+  override def _type
+  : Option[UMLStereotype[Uml]]
+  = super[MagicDrawUMLProperty]._type.selectByKindOf { case s: UMLStereotype[Uml] => s }
 
 }
 
 case class MagicDrawUMLExtensionEndImpl
 (e: MagicDrawUML#ExtensionEnd, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExtensionEnd
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExtensionEndImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExtensionEnd(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

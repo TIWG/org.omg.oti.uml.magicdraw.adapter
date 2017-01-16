@@ -20,10 +20,11 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Option,None,Some,StringContext}
-import scala.Predef.{require,String}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.collection.Iterable
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
+import scala.Predef.{require,String}
 
 trait MagicDrawUMLAssociation 
   extends MagicDrawUMLClassifier
@@ -31,22 +32,32 @@ trait MagicDrawUMLAssociation
   with UMLAssociation[MagicDrawUML] {
   
   override protected def e: Uml#Association
-  def getMagicDrawAssociation = e
+  def getMagicDrawAssociation: Uml#Association = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def isDerived = e.isDerived
+  override def isDerived: Boolean = e.isDerived
   
-  override def ownedEnd = e.getOwnedEnd.toIterable
+  override def ownedEnd
+  : Iterable[UMLProperty[Uml]]
+  = e.getOwnedEnd.toIterable
   
-  override def navigableOwnedEnd = e.getNavigableOwnedEnd.to[Set]
+  override def navigableOwnedEnd
+  : Set[UMLProperty[Uml]]
+  = e.getNavigableOwnedEnd.to[Set]
   
-  override def memberEnd = e.getMemberEnd.to[Seq]
+  override def memberEnd
+  : Seq[UMLProperty[Uml]]
+  = e.getMemberEnd.to[Seq]
   
-  override def type_connector = e.get_connectorOfType.to[Set]
+  override def type_connector
+  : Set[UMLConnector[Uml]]
+  = e.get_connectorOfType.to[Set]
     
-  override def association_clearAssociationAction: Option[UMLClearAssociationAction[Uml]] = {
+  override def association_clearAssociationAction
+  : Option[UMLClearAssociationAction[Uml]]
+  = {
     val actions = e.get_clearAssociationActionOfAssociation
     require(actions.size <= 1)
     if (actions.isEmpty) None
@@ -58,15 +69,27 @@ trait MagicDrawUMLAssociation
 case class MagicDrawUMLAssociationImpl
 (e: MagicDrawUML#Association, ops: MagicDrawUMLUtil)
 extends MagicDrawUMLAssociation
-with sext.PrettyPrinting.TreeString
-with sext.PrettyPrinting.ValueTreeString {
+  with sext.PrettyPrinting.TreeString
+  with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLAssociation(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLAssociationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLAssociation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

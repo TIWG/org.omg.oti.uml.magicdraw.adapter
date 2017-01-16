@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option,None,Some,StringContext}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 
 import org.omg.oti.uml.UMLError
@@ -32,25 +32,28 @@ trait MagicDrawUMLParameter
   with UMLParameter[MagicDrawUML] {
 
   override protected def e: Uml#Parameter
-  def getMagicDrawParameter = e
+  def getMagicDrawParameter: Uml#Parameter = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-	override def default: Option[String] = 
-    e.getDefault match {
+	override def default
+  : Option[String]
+  = e.getDefault match {
     case null => None
     case "" => None
     case s => Some( s )
   }
 
 	// 9.9
-  override def defaultValue: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option( e.getDefaultValue ) } yield result
+  override def defaultValue
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option( e.getDefaultValue ) } yield result
   
   // 9.9
-  override def direction: Option[UMLParameterDirectionKind.Value] =
-    Option(e.getDirection)
+  override def direction
+  : Option[UMLParameterDirectionKind.Value]
+  = Option(e.getDirection)
     .fold[Option[UMLParameterDirectionKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.ParameterDirectionKindEnum.IN =>
         Some(UMLParameterDirectionKind.in)
@@ -63,8 +66,9 @@ trait MagicDrawUMLParameter
   }
   
   // 9.9
-  override def effect: Option[UMLParameterEffectKind.Value] =
-    Option(e.getEffect)
+  override def effect
+  : Option[UMLParameterEffectKind.Value]
+  = Option(e.getEffect)
     .fold[Option[UMLParameterEffectKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.activities.mdcompleteactivities.ParameterEffectKindEnum.CREATE =>
         Some( UMLParameterEffectKind.create )
@@ -77,39 +81,52 @@ trait MagicDrawUMLParameter
     }
   
   // 9.9
-  override def isException: Boolean =
-    e.isException
+  override def isException: Boolean = e.isException
   
   // 9.9
-  override def isStream: Boolean =
-    e.isStream
+  override def isStream: Boolean = e.isStream
 
   // 9.9
-  override def parameterSet: Set[UMLParameterSet[Uml]] =
-    e.getParameterSet.to[Set]
+  override def parameterSet
+  : Set[UMLParameterSet[Uml]]
+  = e.getParameterSet.to[Set]
 
   // 9.9
-  override def parameter_activityParameterNode: Set[UMLActivityParameterNode[Uml]] =
-    e.get_activityParameterNodeOfParameter().to[Set]
+  override def parameter_activityParameterNode
+  : Set[UMLActivityParameterNode[Uml]]
+  = e.get_activityParameterNodeOfParameter().to[Set]
 
   // 9.9
-  override def result_opaqueExpression: Set[UMLOpaqueExpression[Uml]] =
-    throw UMLError.umlAdaptationError(s"MagicDrawUMLParameter.result_opaqueExpression is undefined!")
+  override def result_opaqueExpression
+  : Set[UMLOpaqueExpression[Uml]]
+  = throw UMLError.umlAdaptationError(s"MagicDrawUMLParameter.result_opaqueExpression is undefined!")
 
 }
 
 case class MagicDrawUMLParameterImpl
 (e: MagicDrawUML#Parameter, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLParameter
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLParameter(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLParameterImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLParameter(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

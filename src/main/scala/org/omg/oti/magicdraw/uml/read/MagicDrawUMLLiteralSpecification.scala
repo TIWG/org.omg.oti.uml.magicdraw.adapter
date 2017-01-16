@@ -25,5 +25,5 @@ trait MagicDrawUMLLiteralSpecification
   with UMLLiteralSpecification[MagicDrawUML] {
 
   override protected def e: Uml#LiteralSpecification
-  def getMagicDrawLiteralSpecification = e
+  def getMagicDrawLiteralSpecification: Uml#LiteralSpecification = e
 }

@@ -20,21 +20,28 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 import scala.Option
-import scala.Predef.???
 
 trait MagicDrawUMLMessageEnd 
   extends MagicDrawUMLNamedElement
   with UMLMessageEnd[MagicDrawUML] {
 
   override protected def e: Uml#MessageEnd
-  def getMagicDrawMessageEnd = e
+  def getMagicDrawMessageEnd: Uml#MessageEnd = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
   // 17.7
-  override def message: Option[UMLMessage[Uml]] = ???
+  override def message
+  : Option[UMLMessage[Uml]]
+  = for { result <- Option(e.getMessage) } yield result
   
   // 17.7
-  override def receiveEvent_endMessage: Option[UMLMessage[Uml]] = ???
+  override def receiveEvent_endMessage
+  : Option[UMLMessage[Uml]]
+  = for { result <- Option(e.get_messageOfReceiveEvent()) } yield result
   
   // 17.7
-  override def sendEvent_endMessage: Option[UMLMessage[Uml]] = ???
+  override def sendEvent_endMessage
+  : Option[UMLMessage[Uml]]
+  = for { result <- Option(e.get_messageOfSendEvent()) } yield result
 }

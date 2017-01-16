@@ -20,21 +20,47 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLCallEvent 
   extends MagicDrawUMLMessageEvent
   with UMLCallEvent[MagicDrawUML] {
 
   override protected def e: Uml#CallEvent
-  def getMagicDrawCallEvent = e
+  def getMagicDrawCallEvent: Uml#CallEvent = e
   import ops._
 
-  override def operation: Option[UMLOperation[Uml]] =
-    for { result <- Option.apply( e.getOperation ) } yield result
+  override def operation
+  : Option[UMLOperation[Uml]]
+  = for { result <- Option.apply( e.getOperation ) } yield result
 
 }
 
 case class MagicDrawUMLCallEventImpl
 (e: MagicDrawUML#CallEvent, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLCallEvent
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLCallEventImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLCallEvent(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

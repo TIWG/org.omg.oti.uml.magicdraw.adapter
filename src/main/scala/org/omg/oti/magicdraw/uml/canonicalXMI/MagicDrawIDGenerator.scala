@@ -36,7 +36,6 @@ case class MagicDrawIDGenerator
 ( override implicit val documentSet: DocumentSet[MagicDrawUML] )
   extends DocumentIDGenerator[MagicDrawUML] {
 
-  import umlOps._
   implicit val idg = this
 
   val element2id = scala.collection.mutable.HashMap[
@@ -60,14 +59,14 @@ case class MagicDrawIDGenerator
     }
   
   // -------------
-  val MD_crule0: ContainedElement2IDRule = {
+  val MD_crule0: MagicDrawIDGenerator.this.umlOps.ContainedElement2IDRule = {
     case ( owner, ownerID, cf, is: MagicDrawUMLInstanceSpecification )
       if is.isMagicDrawUMLAppliedStereotypeInstance =>
       val id = OTI_ID.unwrap(ownerID) + "_" + IDGenerator.xmlSafeID( cf.propertyName ) + ".appliedStereotypeInstance"
       OTI_ID( id ).right
   }
 
-  val MD_crule1a0: ContainedElement2IDRule = {
+  val MD_crule1a0: MagicDrawIDGenerator.this.umlOps.ContainedElement2IDRule = {
     case ( owner, ownerID, cf, ev: MagicDrawUMLElementValue ) =>
       ev.element
       .fold[Set[java.lang.Throwable] \/ (String @@ OTI_ID)](
@@ -104,10 +103,12 @@ case class MagicDrawIDGenerator
       }
   }
 
-  protected val elementRules =
-    List( rule0 )
+  protected val elementRules
+  : List[MagicDrawIDGenerator.this.umlOps.Element2IDRule]
+  = List( rule0 )
 
-  protected val containmentRules =
-    List( MD_crule0, crule1, MD_crule1a0, crule1a, crule3, crule1b, crule2, crule4, crule5, crule6 )
+  protected val containmentRules
+  : List[MagicDrawIDGenerator.this.umlOps.ContainedElement2IDRule]
+  = List( MD_crule0, crule1, MD_crule1a0, crule1a, crule3, crule1b, crule2, crule4, crule5, crule6 )
 
 }

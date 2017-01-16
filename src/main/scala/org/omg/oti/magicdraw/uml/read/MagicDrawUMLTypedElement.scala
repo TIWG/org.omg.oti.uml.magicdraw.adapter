@@ -27,11 +27,12 @@ trait MagicDrawUMLTypedElement
   with UMLTypedElement[MagicDrawUML] {
 
   override protected def e: Uml#TypedElement
-  def getMagicDrawTypedElement = e
-  override implicit val umlOps = ops
+  def getMagicDrawTypedElement: Uml#TypedElement = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  def _type: Option[UMLType[Uml]] =
-    for { result <- Option( e.getType ) } yield result
+  def _type
+  : Option[UMLType[Uml]]
+  = for { result <- Option( e.getType ) } yield result
   
 }

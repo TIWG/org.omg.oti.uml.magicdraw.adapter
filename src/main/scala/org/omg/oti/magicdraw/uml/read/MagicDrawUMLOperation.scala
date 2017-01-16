@@ -18,10 +18,10 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.{Boolean,Option,StringContext}
-import scala.Predef.{Set=>_,Map=>_,_}
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.{int2Integer,String}
 
 import org.omg.oti.uml.UMLError
 import org.omg.oti.uml.read.api._
@@ -34,66 +34,86 @@ trait MagicDrawUMLOperation
   with UMLOperation[MagicDrawUML] {
 
   override protected def e: Uml#Operation
-  def getMagicDrawOperation = e
-  override implicit val umlOps = ops
+  def getMagicDrawOperation: Uml#Operation = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
   
-  override def bodyCondition: Option[UMLConstraint[Uml]] =
-    for { result <- Option( e.getBodyCondition ) } yield result
+  override def bodyCondition
+  : Option[UMLConstraint[Uml]]
+  = for { result <- Option( e.getBodyCondition ) } yield result
   
-  override def isOrdered: Boolean =
-    e.isOrdered
+  override def isOrdered: Boolean = e.isOrdered
   
-  override def isQuery: Boolean =
-    e.isQuery
+  override def isQuery: Boolean = e.isQuery
   
-  override def isUnique: Boolean =
-    e.isQuery
+  override def isUnique: Boolean = e.isQuery
   
-  override def lower: Option[Integer] =
-    for { result <- Option( e.getLower ) } yield result
+  override def lower
+  : Option[Integer]
+  = for { result <- Option( e.getLower ) } yield result
     
-  override def ownedParameter: Seq[UMLParameter[Uml]] =
-    e.getOwnedParameter.to[Seq]
+  override def ownedParameter
+  : Seq[UMLParameter[Uml]]
+  = e.getOwnedParameter.to[Seq]
   
-  override def postcondition: Set[UMLConstraint[Uml]] =
-    e.getPostcondition.to[Set]
+  override def postcondition
+  : Set[UMLConstraint[Uml]]
+  = e.getPostcondition.to[Set]
 
-  override def precondition: Set[UMLConstraint[Uml]] =
-    e.getPrecondition.to[Set]
+  override def precondition
+  : Set[UMLConstraint[Uml]]
+  = e.getPrecondition.to[Set]
 
-  override def templateParameter: Option[UMLOperationTemplateParameter[Uml]] =
-    for { result <- Option( e.getTemplateParameter ) } yield result
+  override def templateParameter
+  : Option[UMLOperationTemplateParameter[Uml]]
+  = for { result <- Option( e.getTemplateParameter ) } yield result
   
-  override def _type: Option[UMLType[Uml]] =
-    for { result <- Option( e.getType ) } yield result
+  override def _type
+  : Option[UMLType[Uml]]
+  = for { result <- Option( e.getType ) } yield result
   
-  override def upper: Option[Integer] =
-    for { result <- Option( e.getUpper ) } yield result
+  override def upper
+  : Option[Integer]
+  = for { result <- Option( e.getUpper ) } yield result
   
-  override def operation_callOperationAction: Set[UMLCallOperationAction[Uml]] =
-    e.get_callOperationActionOfOperation.to[Set]
+  override def operation_callOperationAction
+  : Set[UMLCallOperationAction[Uml]]
+  = e.get_callOperationActionOfOperation.to[Set]
   
-  override def referred_protocolTransition: Set[UMLProtocolTransition[Uml]] =
-    throw UMLError.umlAdaptationError(s"MagicDrawUMLOperation.referred_protocolTransition not available")
+  override def referred_protocolTransition
+  : Set[UMLProtocolTransition[Uml]]
+  = throw UMLError.umlAdaptationError(s"MagicDrawUMLOperation.referred_protocolTransition not available")
   
-  override def operation_callEvent: Set[UMLCallEvent[Uml]] =
-    e.get_callEventOfOperation.to[Set]
+  override def operation_callEvent
+  : Set[UMLCallEvent[Uml]]
+  = e.get_callEventOfOperation.to[Set]
 
 }
 
 case class MagicDrawUMLOperationImpl
 (e: MagicDrawUML#Operation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOperation
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLOperation(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLOperationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLOperation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

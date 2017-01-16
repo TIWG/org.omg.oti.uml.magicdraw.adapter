@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option,None,Some,StringContext}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 import org.omg.oti.uml.read.api._
 
@@ -29,8 +29,8 @@ trait MagicDrawUMLPort
   with UMLPort[MagicDrawUML] {
 
   override protected def e: Uml#Port
-  def getMagicDrawPort = e
-  override implicit val umlOps = ops
+  def getMagicDrawPort: Uml#Port = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 11.10
@@ -45,8 +45,9 @@ trait MagicDrawUMLPort
   override def isService: Boolean =
     e.isService
 
-  override def ownedPort_encapsulatedClassifier: Option[UMLEncapsulatedClassifier[Uml]] =
-    for {
+  override def ownedPort_encapsulatedClassifier
+  : Option[UMLEncapsulatedClassifier[Uml]]
+  = for {
       c <- Option(e.getClassifier)
       result <- umlClassifier(c) match {
         case ec: UMLEncapsulatedClassifier[Uml] =>
@@ -57,44 +58,63 @@ trait MagicDrawUMLPort
     } yield result
 
   // 11.10
-  override def protocol: Option[UMLProtocolStateMachine[Uml]] = 
-    for { result <- Option( e.getProtocol ) } yield result
+  override def protocol
+  : Option[UMLProtocolStateMachine[Uml]]
+  = for { result <- Option( e.getProtocol ) } yield result
   
   // 11.10
-  override def provided: Set[UMLInterface[Uml]] =
-    e.getProvided.to[Set]
+  override def provided
+  : Set[UMLInterface[Uml]]
+  = e.getProvided.to[Set]
   
   // 11.10
-  override def required: Set[UMLInterface[Uml]] =
-    e.getRequired.to[Set]
+  override def required
+  : Set[UMLInterface[Uml]]
+  = e.getRequired.to[Set]
   
   // 13.2
-	override def port_trigger: Set[UMLTrigger[Uml]] =
-    e.get_triggerOfPort.to[Set]
+	override def port_trigger
+  : Set[UMLTrigger[Uml]]
+  = e.get_triggerOfPort.to[Set]
   
   // 16.13
-  override def onPort_invocationAction: Set[UMLInvocationAction[Uml]] =
-    e.get_invocationActionOfOnPort.to[Set]
+  override def onPort_invocationAction
+  : Set[UMLInvocationAction[Uml]]
+  = e.get_invocationActionOfOnPort.to[Set]
   
-  override def redefinedPort: Set[UMLPort[Uml]] =
-    e.getRedefinedPort.to[Set]
+  override def redefinedPort
+  : Set[UMLPort[Uml]]
+  = e.getRedefinedPort.to[Set]
     
-  override def redefinedPort_port: Set[UMLPort[Uml]] =
-    e.get_portOfRedefinedPort.to[Set]
+  override def redefinedPort_port
+  : Set[UMLPort[Uml]]
+  = e.get_portOfRedefinedPort.to[Set]
 }
 
 case class MagicDrawUMLPortImpl
-( val e: MagicDrawUML#Port, ops: MagicDrawUMLUtil )
+( e: MagicDrawUML#Port, ops: MagicDrawUMLUtil )
   extends MagicDrawUMLPort
   with sext.PrettyPrinting.TreeString
   with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLPort(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPortImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLPort(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLPrimitiveType 
@@ -27,22 +27,34 @@ trait MagicDrawUMLPrimitiveType
   with UMLPrimitiveType[MagicDrawUML]  {
 
   override protected def e: Uml#PrimitiveType
-  def getMagicDrawPrimitiveType = e
+  def getMagicDrawPrimitiveType: Uml#PrimitiveType = e
 
 }
 
 case class MagicDrawUMLPrimitiveTypeImpl
 (e: MagicDrawUML#PrimitiveType, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLPrimitiveType
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLPrimitiveType(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLPrimitiveTypeImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLPrimitiveType(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

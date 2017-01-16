@@ -19,15 +19,16 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLInteractionConstraint 
   extends MagicDrawUMLConstraint
   with UMLInteractionConstraint[MagicDrawUML] {
 
   override protected def e: Uml#InteractionConstraint
-  def getMagicDrawInteractionConstraint = e
-  override implicit val umlOps = ops
+  def getMagicDrawInteractionConstraint: Uml#InteractionConstraint = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 17.11
@@ -45,3 +46,27 @@ trait MagicDrawUMLInteractionConstraint
 case class MagicDrawUMLInteractionConstraintImpl
 (e: MagicDrawUML#InteractionConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLInteractionConstraint
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLInteractionConstraintImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLInteractionConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

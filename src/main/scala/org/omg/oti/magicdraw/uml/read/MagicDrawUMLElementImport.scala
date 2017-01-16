@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.{Option,None,Some}
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLElementImport 
@@ -28,23 +28,26 @@ trait MagicDrawUMLElementImport
   with UMLElementImport[MagicDrawUML] {
 
   override protected def e: Uml#ElementImport
-  def getMagicDrawElementImport = e
+  def getMagicDrawElementImport: Uml#ElementImport = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def alias: Option[String] =
-    e.getAlias match {
+  override def alias
+  : Option[String]
+  = e.getAlias match {
     case null => None
     case "" => None
     case s => Some( s )
   }
 
-  override def metaclassReference_profile: Option[UMLProfile[Uml]] =
-    for { result <- Option.apply( e.get_profileOfMetaclassReference ) } yield result
+  override def metaclassReference_profile
+  : Option[UMLProfile[Uml]]
+  = for { result <- Option.apply( e.get_profileOfMetaclassReference ) } yield result
     
-  override def visibility: Option[UMLVisibilityKind.Value] =
-    Option.apply(e.getVisibility)
+  override def visibility
+  : Option[UMLVisibilityKind.Value]
+  = Option.apply(e.getVisibility)
     .fold[Option[UMLVisibilityKind.Value]](None) {
       case com.nomagic.uml2.ext.magicdraw.classes.mdkernel.VisibilityKindEnum.PUBLIC =>
         Some(UMLVisibilityKind.public)
@@ -62,3 +65,27 @@ trait MagicDrawUMLElementImport
 case class MagicDrawUMLElementImportImpl
 (e: MagicDrawUML#ElementImport, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLElementImport
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLElementImportImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLElementImport(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -19,16 +19,17 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api.{UMLDiagram, UMLElement, UMLNamespace}
-import scala.Option
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLDiagram 
   extends MagicDrawUMLNamedElement
   with UMLDiagram[MagicDrawUML] {
   
   override protected def e: Uml#Diagram
-  def getMagicDrawDiagram = e
+  def getMagicDrawDiagram: Uml#Diagram = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   override def context
@@ -41,5 +42,30 @@ trait MagicDrawUMLDiagram
 
 }
 
-case class MagicDrawUMLDiagramImpl( val e: MagicDrawUML#Diagram, ops: MagicDrawUMLUtil )
+case class MagicDrawUMLDiagramImpl
+( e: MagicDrawUML#Diagram, ops: MagicDrawUMLUtil )
   extends MagicDrawUMLDiagram
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDiagramImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLDiagram(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

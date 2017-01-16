@@ -25,6 +25,6 @@ trait MagicDrawUMLMessageEvent
   with UMLMessageEvent[MagicDrawUML] {
 
   override protected def e: Uml#MessageEvent
-  def getMagicDrawMessageEvent = e
+  def getMagicDrawMessageEvent: Uml#MessageEvent = e
 
 }

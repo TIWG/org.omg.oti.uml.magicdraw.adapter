@@ -19,7 +19,7 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLTimeObservation 
@@ -27,12 +27,13 @@ trait MagicDrawUMLTimeObservation
   with UMLTimeObservation[MagicDrawUML] {
 
   override protected def e: Uml#TimeObservation
-  def getMagicDrawTimeObservation = e
-  override implicit val umlOps = ops
+  def getMagicDrawTimeObservation: Uml#TimeObservation = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def event: Option[UMLNamedElement[Uml]] =
-    for { result <- Option( e.getEvent ) } yield result
+  override def event
+  : Option[UMLNamedElement[Uml]]
+  = for { result <- Option( e.getEvent ) } yield result
     
   override def firstEvent: Boolean =
     e.isFirstEvent
@@ -42,15 +43,27 @@ trait MagicDrawUMLTimeObservation
 case class MagicDrawUMLTimeObservationImpl
 (e: MagicDrawUML#TimeObservation, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLTimeObservation
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLTimeObservation(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLTimeObservationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLTimeObservation(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

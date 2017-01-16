@@ -19,26 +19,67 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.Option
-import scala.Predef.???
+import scala.{Any,Boolean,Int,Option,None,Some,StringContext}
+import scala.Predef.String
+
 
 trait MagicDrawUMLExpansionRegion 
   extends MagicDrawUMLStructuredActivityNode
   with UMLExpansionRegion[MagicDrawUML] {
 
   override protected def e: Uml#ExpansionRegion
-  def getMagicDrawExpansionRegion = e
+  def getMagicDrawExpansionRegion: Uml#ExpansionRegion = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
 
-  override def inputElement: Set[UMLExpansionNode[Uml]] = ???
+  override def inputElement
+  : Set[UMLExpansionNode[Uml]]
+  = e.getInputElement.to[Set]
   
-  override def mode: Option[UMLExpansionKind.Value] = ???
-  
-  override def outputElement: Set[UMLExpansionNode[Uml]] = ???
-  
+  override def mode
+  : Option[UMLExpansionKind.Value]
+  = Option(e.getMode).fold[Option[UMLExpansionKind.Value]](None) {
+    case com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.ITERATIVE =>
+      Some(UMLExpansionKind.iterative)
+    case com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.PARALLEL =>
+      Some(UMLExpansionKind.parallel)
+    case com.nomagic.uml2.ext.magicdraw.activities.mdextrastructuredactivities.ExpansionKindEnum.STREAM =>
+      Some(UMLExpansionKind.stream)
+  }
+
+  override def outputElement
+  : Set[UMLExpansionNode[Uml]]
+  = e.getOutputElement.to[Set]
 
 }
 
 case class MagicDrawUMLExpansionRegionImpl
 (e: MagicDrawUML#ExpansionRegion, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExpansionRegion
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExpansionRegionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExpansionRegion(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

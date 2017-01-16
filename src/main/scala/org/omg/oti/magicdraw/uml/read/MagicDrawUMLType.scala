@@ -29,21 +29,25 @@ trait MagicDrawUMLType
   with UMLType[MagicDrawUML] {
 
   override protected def e: Uml#Type
-  def getMagicDrawType = e
-  override implicit val umlOps = ops
+  def getMagicDrawType: Uml#Type = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def _package: Option[UMLPackage[Uml]] =
-    for { result <- Option(e.getOwningPackage) } yield result
+  override def _package
+  : Option[UMLPackage[Uml]]
+  = for { result <- Option(e.getOwningPackage) } yield result
 
-  override def type_operation: Set[UMLOperation[Uml]] =
-    type_typedElement
+  override def type_operation
+  : Set[UMLOperation[Uml]]
+  = type_typedElement
     .selectByKindOf { case op: UMLOperation[Uml] => op }
   
-  override def type_typedElement: Set[UMLTypedElement[Uml]] =
-    e.get_typedElementOfType.to[Set]
+  override def type_typedElement
+  : Set[UMLTypedElement[Uml]]
+  = e.get_typedElementOfType.to[Set]
     
-  override def raisedException_behavioralFeature: Set[UMLBehavioralFeature[Uml]] =
-    e.get_behavioralFeatureOfRaisedException.to[Set]
+  override def raisedException_behavioralFeature
+  : Set[UMLBehavioralFeature[Uml]]
+  = e.get_behavioralFeatureOfRaisedException.to[Set]
 
 }

@@ -22,15 +22,16 @@ import org.omg.oti.uml.read.api._
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLGeneralizationSet 
   extends MagicDrawUMLPackageableElement
   with UMLGeneralizationSet[MagicDrawUML] {
 
   override protected def e: Uml#GeneralizationSet
-  def getMagicDrawGeneralizationSet = e
-  override implicit val umlOps = ops
+  def getMagicDrawGeneralizationSet: Uml#GeneralizationSet = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 9.14
@@ -47,10 +48,34 @@ trait MagicDrawUMLGeneralizationSet
   // 9.14
   override def powertype
   : Option[UMLClassifier[Uml]]
-  =  for { result <- Option( e.getPowertype ) } yield result
+  = for { result <- Option( e.getPowertype ) } yield result
 
 }
 
 case class MagicDrawUMLGeneralizationSetImpl
 (e: MagicDrawUML#GeneralizationSet, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLGeneralizationSet
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLGeneralizationSetImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLGeneralizationSet(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

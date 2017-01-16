@@ -20,15 +20,42 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
+
 trait MagicDrawUMLRaiseExceptionAction 
   extends MagicDrawUMLAction
   with UMLRaiseExceptionAction[MagicDrawUML] {
 
   override protected def e: Uml#RaiseExceptionAction
-  def getMagicDrawRaiseExceptionAction = e
+  def getMagicDrawRaiseExceptionAction: Uml#RaiseExceptionAction = e
 
 }
 
 case class MagicDrawUMLRaiseExceptionActionImpl
 (e: MagicDrawUML#RaiseExceptionAction, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLRaiseExceptionAction
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLRaiseExceptionActionImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLRaiseExceptionAction(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

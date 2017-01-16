@@ -30,19 +30,23 @@ trait MagicDrawUMLParameterableElement
   with UMLParameterableElement[MagicDrawUML] {
 
   override protected def e: Uml#ParameterableElement
-  def getMagicDrawParameterableElement = e
+  def getMagicDrawParameterableElement: Uml#ParameterableElement = e
   import ops._
 
-  override def owningTemplateParameter: Option[UMLTemplateParameter[Uml]] =
-    for { result <- Option(e.getOwningTemplateParameter) } yield result
+  override def owningTemplateParameter
+  : Option[UMLTemplateParameter[Uml]]
+  = for { result <- Option(e.getOwningTemplateParameter) } yield result
 
-  override def templateParameter: Option[UMLTemplateParameter[Uml]] =
-    for { result <- Option(e.getTemplateParameter) } yield result
+  override def templateParameter
+  : Option[UMLTemplateParameter[Uml]]
+  = for { result <- Option(e.getTemplateParameter) } yield result
 
-  override def actual_templateParameterSubstitution: Set[UMLTemplateParameterSubstitution[Uml]] =
-    e.get_templateParameterSubstitutionOfActual.to[Set]
+  override def actual_templateParameterSubstitution
+  : Set[UMLTemplateParameterSubstitution[Uml]]
+  = e.get_templateParameterSubstitutionOfActual.to[Set]
 
-  override def default_templateParameter: Set[UMLTemplateParameter[Uml]] =
-    e.get_templateParameterOfDefault.to[Set]
+  override def default_templateParameter
+  : Set[UMLTemplateParameter[Uml]]
+  = e.get_templateParameterOfDefault.to[Set]
 
 }

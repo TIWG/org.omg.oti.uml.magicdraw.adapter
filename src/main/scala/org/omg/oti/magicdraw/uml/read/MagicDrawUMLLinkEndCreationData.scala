@@ -19,26 +19,52 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.{Boolean,Option}
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
+
 
 trait MagicDrawUMLLinkEndCreationData 
   extends MagicDrawUMLLinkEndData
   with UMLLinkEndCreationData[MagicDrawUML] {
 
   override protected def e: Uml#LinkEndCreationData
-  def getMagicDrawLinkEndCreationData = e
+  def getMagicDrawLinkEndCreationData: Uml#LinkEndCreationData = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def insertAt: Option[UMLInputPin[Uml]] =
-    for { result <- Option( e.getInsertAt ) } yield result
+  override def insertAt
+  : Option[UMLInputPin[Uml]]
+  = for { result <- Option( e.getInsertAt ) } yield result
     
-  override def isReplaceAll: Boolean =
-    e.isReplaceAll
+  override def isReplaceAll: Boolean = e.isReplaceAll
 
 }
 
 case class MagicDrawUMLLinkEndCreationDataImpl
 (e: MagicDrawUML#LinkEndCreationData, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLinkEndCreationData
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLinkEndCreationDataImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLinkEndCreationData(ID=${e.getID})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import scala.collection.JavaConversions._
 import scala.collection.immutable._
-import scala.{Boolean,Option,StringContext}
+import scala.{Any,Boolean,Int,Option,StringContext}
 import scala.Predef.String
 
 import org.omg.oti.uml.read.api._
@@ -30,30 +30,44 @@ trait MagicDrawUMLDurationConstraint
   with UMLDurationConstraint[MagicDrawUML] {
 
   override protected def e: Uml#DurationConstraint
-  def getMagicDrawDurationConstraint = e
+  def getMagicDrawDurationConstraint: Uml#DurationConstraint = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
 
-  abstract override def specification: Option[UMLDurationInterval[Uml]] =
-    super.specification
+  abstract override def specification
+  : Option[UMLDurationInterval[Uml]]
+  = super.specification
     
-  override def firstEvent: Set[Boolean] =
-    e.isFirstEvent.map(b => b.booleanValue()).toSet[Boolean]
+  override def firstEvent
+  : Set[Boolean]
+  = e.isFirstEvent.map(b => b.booleanValue()).toSet[Boolean]
 
 }
 
 case class MagicDrawUMLDurationConstraintImpl
 (e: MagicDrawUML#DurationConstraint, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLDurationConstraint
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLDurationConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLDurationConstraintImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLDurationConstraint(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

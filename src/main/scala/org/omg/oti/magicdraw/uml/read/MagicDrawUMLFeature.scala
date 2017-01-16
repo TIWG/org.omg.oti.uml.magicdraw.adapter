@@ -26,15 +26,15 @@ trait MagicDrawUMLFeature
   with UMLFeature[MagicDrawUML] {
 
   override protected def e: Uml#Feature
-  def getMagicDrawFeature = e
+  def getMagicDrawFeature: Uml#Feature = e
 
-  override implicit val umlOps = ops
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
-  override def isStatic: Boolean =
-    e.isStatic
+  override def isStatic: Boolean = e.isStatic
 
-  override def featuringClassifier: Option[UMLClassifier[Uml]] =
-    for { result <- Option(e.getFeaturingClassifier) } yield result
+  override def featuringClassifier
+  : Option[UMLClassifier[Uml]]
+  = for { result <- Option(e.getFeaturingClassifier) } yield result
 
 }

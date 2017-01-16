@@ -20,7 +20,7 @@ package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
 
-import scala.StringContext
+import scala.{Any,Boolean,Int,StringContext}
 import scala.Predef.String
 
 trait MagicDrawUMLAssociationClass 
@@ -29,22 +29,34 @@ trait MagicDrawUMLAssociationClass
   with UMLAssociationClass[MagicDrawUML] {
 
   override protected def e: Uml#AssociationClass
-  def getMagicDrawAssociationClass = e
+  def getMagicDrawAssociationClass: Uml#AssociationClass = e
 
 }
 
 case class MagicDrawUMLAssociationClassImpl
 (e: MagicDrawUML#AssociationClass, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLAssociationClass
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLAssociationClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLAssociationClassImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLAssociationClass(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }

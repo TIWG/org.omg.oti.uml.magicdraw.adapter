@@ -19,21 +19,48 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
-import scala.Option
-import scala.Predef.???
+
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLExecutionOccurrenceSpecification 
   extends MagicDrawUMLOccurrenceSpecification
   with UMLExecutionOccurrenceSpecification[MagicDrawUML] {
 
   override protected def e: Uml#ExecutionOccurrenceSpecification
-  def getMagicDrawExecutionOccurrenceSpecification = e
+  def getMagicDrawExecutionOccurrenceSpecification: Uml#ExecutionOccurrenceSpecification = e
+  import ops._
 
-  override def execution: Option[UMLExecutionSpecification[Uml]] = ???
-  
+  override def execution
+  : Option[UMLExecutionSpecification[Uml]]
+  = for { result <- Option.apply( e.getExecution ) } yield result
 
 }
 
 case class MagicDrawUMLExecutionOccurrenceSpecificationImpl
 (e: MagicDrawUML#ExecutionOccurrenceSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLExecutionOccurrenceSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLExecutionOccurrenceSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLExecutionOccurrenceSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

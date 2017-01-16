@@ -19,30 +19,69 @@
 package org.omg.oti.magicdraw.uml.read
 
 import org.omg.oti.uml.read.api._
+
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
 import scala.collection.Iterable
-import scala.Predef.???
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLOccurrenceSpecification 
   extends MagicDrawUMLInteractionFragment
   with UMLOccurrenceSpecification[MagicDrawUML] {
 
   override protected def e: Uml#OccurrenceSpecification
-  def getMagicDrawOccurrenceSpecification = e
+  def getMagicDrawOccurrenceSpecification: Uml#OccurrenceSpecification = e
 
-	override def covered: Iterable[UMLLifeline[Uml]] = ???
+  override implicit val umlOps: MagicDrawUMLUtil = ops
+  import umlOps._
+
+	override def covered
+  : Iterable[UMLLifeline[Uml]]
+  = e.getCovered.to[Iterable]
   
-  override def toAfter: Set[UMLGeneralOrdering[Uml]] = ???
+  override def toAfter
+  : Set[UMLGeneralOrdering[Uml]]
+  = e.getToAfter.to[Set]
   
-  override def toBefore: Set[UMLGeneralOrdering[Uml]] = ???
+  override def toBefore
+  : Set[UMLGeneralOrdering[Uml]]
+  = e.getToBefore.to[Set]
   
-  override def finish_executionSpecification: Set[UMLExecutionSpecification[Uml]] = ???
+  override def finish_executionSpecification
+  : Set[UMLExecutionSpecification[Uml]]
+  = e.get_executionSpecificationOfFinish().to[Set]
   
-  override def start_executionSpecification: Set[UMLExecutionSpecification[Uml]] = ???
-  
+  override def start_executionSpecification
+  : Set[UMLExecutionSpecification[Uml]]
+  = e.get_executionSpecificationOfStart().to[Set]
 
 }
 
 case class MagicDrawUMLOccurrenceSpecificationImpl
 (e: MagicDrawUML#OccurrenceSpecification, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLOccurrenceSpecification
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLOccurrenceSpecificationImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLOccurrenceSpecification(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

@@ -28,9 +28,10 @@ trait MagicDrawUMLEvent
   with UMLEvent[MagicDrawUML] {
 
   override protected def e: Uml#Event
-  def getMagicDrawEvent = e
+  def getMagicDrawEvent: Uml#Event = e
   import ops._
 
-  override def event_trigger: Set[UMLTrigger[Uml]] =
-    e.get_triggerOfEvent.to[Set]
+  override def event_trigger
+  : Set[UMLTrigger[Uml]]
+  = e.get_triggerOfEvent.to[Set]
 }

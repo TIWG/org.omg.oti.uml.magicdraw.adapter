@@ -18,45 +18,73 @@
 
 package org.omg.oti.magicdraw.uml.read
 
+import org.omg.oti.uml.read.api._
+
 import scala.collection.JavaConversions._
-import org.omg.oti.uml.read.api._
-
 import scala.collection.immutable._
-import scala.Option
-
-import org.omg.oti.uml.read.api._
+import scala.{Any,Boolean,Int,Option,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLLifeline 
   extends MagicDrawUMLNamedElement
   with UMLLifeline[MagicDrawUML] {
 
   override protected def e: Uml#Lifeline
-  def getMagicDrawLifeline = e
-  override implicit val umlOps = ops
+  def getMagicDrawLifeline: Uml#Lifeline = e
+  override implicit val umlOps: MagicDrawUMLUtil = ops
   import umlOps._
 
   // 17.6
-	override def coveredBy: Set[UMLInteractionFragment[Uml]] =
-    e.getCoveredBy.to[Set]
+	override def coveredBy
+  : Set[UMLInteractionFragment[Uml]]
+  = e.getCoveredBy.to[Set]
   
   // 17.6
-	override def decomposedAs: Option[UMLPartDecomposition[Uml]] =
-    for { result <- Option(e.getDecomposedAs) } yield result
+	override def decomposedAs
+  : Option[UMLPartDecomposition[Uml]]
+  = for { result <- Option(e.getDecomposedAs) } yield result
   
   // 17.6  
-	override def represents: Option[UMLConnectableElement[Uml]] =
-    for { result <- Option(e.getRepresents) } yield result
+	override def represents
+  : Option[UMLConnectableElement[Uml]]
+  = for { result <- Option(e.getRepresents) } yield result
   
   // 17.6
-	override def selector: Option[UMLValueSpecification[Uml]] =
-    for { result <- Option(e.getSelector) } yield result
+	override def selector
+  : Option[UMLValueSpecification[Uml]]
+  = for { result <- Option(e.getSelector) } yield result
   
   // 17.6
-	override def covered_events: Seq[UMLOccurrenceSpecification[Uml]] =
-    e.get_occurrenceSpecificationOfCovered.to[Seq]
+	override def covered_events
+  : Seq[UMLOccurrenceSpecification[Uml]]
+  = e.get_occurrenceSpecificationOfCovered.to[Seq]
 
 }
 
 case class MagicDrawUMLLifelineImpl
 (e: MagicDrawUML#Lifeline, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLLifeline
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
+
+  override val hashCode: Int = (e, ops).##
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLLifelineImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
+
+  override def toString
+  : String
+  = s"MagicDrawUMLLifeline(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
+}

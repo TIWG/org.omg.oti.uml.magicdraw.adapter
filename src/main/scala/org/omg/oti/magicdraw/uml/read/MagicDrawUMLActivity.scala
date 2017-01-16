@@ -18,45 +18,55 @@
 
 package org.omg.oti.magicdraw.uml.read
 
-import scala.collection.JavaConversions._
-
 import org.omg.oti.uml.read.api._
 
-import scala.{Boolean,StringContext}
-import scala.Predef.String
+import scala.collection.JavaConversions._
 import scala.collection.immutable._
+import scala.{Any,Boolean,Int,StringContext}
+import scala.Predef.String
 
 trait MagicDrawUMLActivity 
   extends MagicDrawUMLBehavior
   with UMLActivity[MagicDrawUML] {
 
   override protected def e: Uml#Activity
-  def getMagicDrawActivity = e
+  def getMagicDrawActivity: Uml#Activity = e
   import ops._
 
-  override def isReadOnly: Boolean =
-    e.isReadOnly
+  override def isReadOnly: Boolean = e.isReadOnly
   
-  override def isSingleExecution: Boolean =
-    e.isSingleExecution
+  override def isSingleExecution: Boolean = e.isSingleExecution
   
-  override def partition: Set[UMLActivityPartition[Uml]] =
-    e.getPartition.to[Set]
+  override def partition
+  : Set[UMLActivityPartition[Uml]]
+  = e.getPartition.to[Set]
 
 }
 
 case class MagicDrawUMLActivityImpl
 (e: MagicDrawUML#Activity, ops: MagicDrawUMLUtil)
   extends MagicDrawUMLActivity
-  with sext.PrettyPrinting.TreeString
-  with sext.PrettyPrinting.ValueTreeString {
+    with sext.PrettyPrinting.TreeString
+    with sext.PrettyPrinting.ValueTreeString {
 
-  override def toString: String =
-    s"MagicDrawUMLActivity(ID=${e.getID}, qname=${e.getQualifiedName})"
+  override val hashCode: Int = (e, ops).##
 
-  override def treeString: String =
-    toString
+  override def equals(other: Any): Boolean = other match {
+    case that: MagicDrawUMLActivityImpl =>
+      this.hashCode == that.hashCode &&
+        this.e == that.e &&
+        this.ops == that.ops
+  }
 
-  override def valueTreeString: String =
-    toString
+  override def toString
+  : String
+  = s"MagicDrawUMLActivity(ID=${e.getID}, qname=${e.getQualifiedName})"
+
+  override def treeString
+  : String
+  = toString
+
+  override def valueTreeString
+  : String
+  = toString
 }
