@@ -185,27 +185,12 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
       val showDownloadProgress = true
       if (!mdInstallDir.exists) {
-
-        val crossV = CrossVersion(scalaVersion.value, scalaBinaryVersion.value)(projectID.value)
-        val runtimeDepGraph =
-          net.virtualvoid.sbt.graph.DependencyGraphKeys.ignoreMissingUpdate.value.configuration("runtime").get
-        val compileDepGraph =
-          net.virtualvoid.sbt.graph.DependencyGraphKeys.ignoreMissingUpdate.value.configuration("compile").get
-
+        
         MagicDrawDownloader.fetchMagicDraw(
           s.log, showDownloadProgress,
           up,
           credentials.value,
           mdInstallDir, base / "target" / "no_install.zip")
-
-        // this doesn't work either! I get only part1.zip
-        // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113
-        //val g2 = fromConfigurationReport(compileDepGraph, crossV, pluginFileSelector)
-
-        //val pluginParts = (for {
-        //  module <- g2.nodes
-        //  archive <- module.jarFile
-        //} yield archive).sorted
 
         val pluginParts = (for {
           cReport <- up.configurations
