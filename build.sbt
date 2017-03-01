@@ -27,9 +27,8 @@ def zipFileSelector
 def pluginFileSelector
 ( a: Artifact, f: File)
 : Boolean
-= (a.`type` == "zip" || a.`type` == "resource") &&
-  a.extension == "zip" &&
-  a.name.endsWith("plugin_2.11")
+= a.name.startsWith("imce.dynamic_scripts.magicdraw.plugin") &&
+  a.classifier.getOrElse("").startsWith("part")
 
 // @see https://github.com/jrudolph/sbt-dependency-graph/issues/113
 def fromConfigurationReport
@@ -44,21 +43,26 @@ def fromConfigurationReport
   : Seq[(net.virtualvoid.sbt.graph.Module, Seq[net.virtualvoid.sbt.graph.Edge])]
   = {
     val chosenVersion = orgArt.modules.find(!_.evicted).map(_.module.revision)
-    orgArt.modules.map(moduleEdge(chosenVersion))
+    orgArt.modules.flatMap(moduleEdge(chosenVersion))
   }
 
   def moduleEdge(chosenVersion: Option[String])(report: ModuleReport)
-  : (net.virtualvoid.sbt.graph.Module, Seq[net.virtualvoid.sbt.graph.Edge]) = {
+  : Seq[(net.virtualvoid.sbt.graph.Module, Seq[net.virtualvoid.sbt.graph.Edge])] = {
     val evictedByVersion = if (report.evicted) chosenVersion else None
 
-    val jarFile = report.artifacts.find(selector.tupled).map(_._2)
-    (net.virtualvoid.sbt.graph.Module(
-      id = report.module,
-      license = report.licenses.headOption.map(_._1),
-      evictedByVersion = evictedByVersion,
-      jarFile = jarFile,
-      error = report.problem),
-      report.callers.map(caller ⇒ net.virtualvoid.sbt.graph.Edge(caller.caller, report.module)))
+    report
+      .artifacts
+      .filter(selector.tupled)
+      .map { case (artifact, file) =>
+
+        (net.virtualvoid.sbt.graph.Module(
+          id = report.module,
+          license = report.licenses.headOption.map(_._1),
+          evictedByVersion = evictedByVersion,
+          jarFile = Some(file),
+          error = report.problem),
+          report.callers.map(caller ⇒ net.virtualvoid.sbt.graph.Edge(caller.caller, report.module)))
+      }
   }
 
   val (nodes, edges) = report.details.flatMap(moduleEdges).unzip
@@ -184,6 +188,29 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
       val s = streams.value
       val mdInstallDir = (mdInstallDirectory in ThisBuild).value
       val showDownloadProgress = true
+      val crossV = CrossVersion(scalaVersion.value, scalaBinaryVersion.value)(projectID.value)
+      val compileDepGraph =
+        net.virtualvoid.sbt.graph.DependencyGraphKeys.ignoreMissingUpdate.value.configuration("compile").get
+
+      val pluginParts = (for {
+        cReport <- up.configurations
+        if cReport.configuration == "compile"
+        mReport <- cReport.modules
+        (artifact, archive) <- mReport.artifacts
+        if artifact.name.startsWith("imce.dynamic_scripts.magicdraw.plugin")
+        if artifact.classifier.getOrElse("").startsWith("part")
+      } yield archive).sorted
+      s.log.warn(s"Extracting Plugin from ${pluginParts.size} parts:")
+      pluginParts.foreach { p => s.log.warn(p.getAbsolutePath) }
+
+      val pparts = fromConfigurationReport(compileDepGraph, crossV, pluginFileSelector)
+      for {
+        module <- pparts.nodes
+        if module.id.name.startsWith("imce.dynamic_scripts.magicdraw.plugin")
+      } yield {
+        s.log.info(s"part: $module")
+      }
+
       if (!mdInstallDir.exists) {
         
         MagicDrawDownloader.fetchMagicDraw(
@@ -192,19 +219,7 @@ lazy val core = Project("oti-uml-magicdraw-adapter", file("."))
           credentials.value,
           mdInstallDir, base / "target" / "no_install.zip")
 
-        val pluginParts = (for {
-          cReport <- up.configurations
-          if cReport.configuration == "compile"
-          mReport <- cReport.modules
-          (artifact, archive) <- mReport.artifacts
-          if artifact.name.startsWith("imce.dynamic_scripts.magicdraw.plugin")
-          if artifact.classifier.getOrElse("").startsWith("part")
-        } yield archive).sorted
-
         {
-          s.log.warn(s"Extracting Plugin from ${pluginParts.size} parts:")
-          pluginParts.foreach { p => s.log.warn(p.getAbsolutePath) }
-
           val merged = File.createTempFile("plugin_merged", ".zip")
           println(s"merged: ${merged.getAbsolutePath}")
 
