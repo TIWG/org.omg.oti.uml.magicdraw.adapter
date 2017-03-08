@@ -52,6 +52,8 @@ case class MagicDrawUMLPartDecompositionImpl
       this.hashCode == that.hashCode &&
         this.e == that.e &&
         this.ops == that.ops
+    case _ =>
+      false
   }
 
   override def toString

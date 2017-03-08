@@ -332,6 +332,8 @@ extends MagicDrawLoadURL {
       this.hashCode == that.hashCode &&
         this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
         this.magicDrawLocalProjectResource == that.magicDrawLocalProjectResource
+    case _ =>
+      false
   }
 
 }
@@ -356,6 +358,8 @@ case class MagicDrawServerProjectLoadURL
       this.hashCode == that.hashCode &&
         this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
         this.magicDrawServerProjectResource == that.magicDrawServerProjectResource
+    case _ =>
+      false
   }
 
 }
@@ -382,6 +386,8 @@ case class MagicDrawAttachedLocalModuleSerializableDocumentLoadURL
       this.hashCode == that.hashCode &&
         this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
         this.magicDrawAttachedLocalModuleResource == that.magicDrawAttachedLocalModuleResource
+    case _ =>
+      false
   }
 
 }
@@ -432,6 +438,8 @@ case class MagicDrawAttachedLocalModuleBuiltInDocumentLoadURL
       this.hashCode == that.hashCode &&
         this.externalDocumentResourceURL == that.externalDocumentResourceURL &&
         this.magicDrawStandardSystemProfileResourceRelativePath == that.magicDrawStandardSystemProfileResourceRelativePath
+    case _ =>
+      false
   }
 
 }
@@ -453,6 +461,8 @@ case class MagicDrawImportLoadURL
     case that: MagicDrawImportLoadURL =>
       this.hashCode == that.hashCode &&
         this.externalDocumentResourceURL == that.externalDocumentResourceURL
+    case _ =>
+      false
   }
 
 }
